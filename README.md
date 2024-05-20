@@ -1,2 +1,9 @@
 # Techie
-E-commerce website for tech products
+## E-commerce website for tech products
+
+Database diagram (as of right now). The product entity (table) is inherited by various child entities (laptop, smartphone, etc.), which add their own fields (attributes) in addition to the attributes of the parent product entity :
+
+<img src="src/main/resources/static/images/diagram.png" alt="Database Diagram" width="900" height="700">
+
+
+
