@@ -18,8 +18,8 @@ public class CommentImage {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    @Column(name = "image_id", nullable = false)
+    private String imageId;   // Cloudinary public ID for the image;
 
     @Override
     public boolean equals(Object o) {

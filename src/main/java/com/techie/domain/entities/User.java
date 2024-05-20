@@ -33,7 +33,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "profile_image_url")
-    private String profileImageUrl;
+    @Column(name = "profile_image_id")
+    private String profileImageId;      // Cloudinary public ID for the image
 
 }
