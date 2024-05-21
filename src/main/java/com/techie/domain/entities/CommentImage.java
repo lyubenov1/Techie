@@ -19,7 +19,7 @@ public class CommentImage {
     private Comment comment;
 
     @Column(name = "image_id", nullable = false)
-    private String imageId;   // Cloudinary public ID for the image;
+    private String imageUrl;
 
     @Override
     public boolean equals(Object o) {

@@ -17,7 +17,7 @@ public class Category {
     private String name;
 
     @Column(nullable = false)
-    private String imageId;   // Cloudinary public ID for the image
+    private String imageUrl;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;

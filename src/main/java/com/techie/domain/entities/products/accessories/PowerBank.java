@@ -14,9 +14,6 @@ public class PowerBank extends Product {
     @Column(nullable = false)
     private int batteryCapacity;
 
-    @Column
-    private int numberOfPorts;
-
     @Column(nullable = false)
     private int color;
 

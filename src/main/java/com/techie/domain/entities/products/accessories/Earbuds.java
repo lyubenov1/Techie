@@ -14,10 +14,10 @@ public class Earbuds extends Product {
     @Column(nullable = false)
     private String connectionType;
 
-    @Column(nullable = false)
+    @Column
     private String batteryLife;
 
-    @Column(nullable = false)
+    @Column
     private String batteryLifeWithCase;
 
     @Column(nullable = false)

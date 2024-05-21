@@ -18,7 +18,7 @@ public class ProductImage {
     private Product product;
 
     @Column(nullable = false)
-    private String imageId;   // Cloudinary public ID for the image
+    private String imageUrl;
 
     @Override
     public boolean equals(Object o) {

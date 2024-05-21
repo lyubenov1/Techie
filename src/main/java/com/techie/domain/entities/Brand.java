@@ -21,9 +21,6 @@ public class Brand {
     private String description;
 
     @Column(nullable = false)
-    private String logoId;   // Cloudinary public ID for the image
-
-    @Column(nullable = false, unique = true)
-    private String websiteUrl;
+    private String logoUrl;
 
 }
