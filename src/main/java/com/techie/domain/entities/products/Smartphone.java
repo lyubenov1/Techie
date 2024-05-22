@@ -18,28 +18,25 @@ public class Smartphone extends Product {
     private String screenResolution;
 
     @Column(nullable = false)
-    private int ram;
+    private String ram;
 
     @Column(nullable = false)
-    private int storage;
+    private String storage;
 
     @Column(nullable = false)
-    private int batteryCapacity;
+    private String batteryCapacity;
 
     @Column(nullable = false)
-    private int frontCamera;
+    private String frontCamera;
 
     @Column(nullable = false)
-    private int rearCamera;
+    private String rearCamera;
 
     @Column(nullable = false)
-    private int brightness;
+    private String refreshRate;
 
     @Column(nullable = false)
-    private int refreshRate;
-
-    @Column(nullable = false)
-    private int color;
+    private String color;
 
     @Column(nullable = false)
     private int yearOfRelease;

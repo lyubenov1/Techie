@@ -15,5 +15,5 @@ public class Charger extends Product {
     private String adapterType;
 
     @Column(nullable = false)
-    private int wattage;
+    private String wattage;
 }

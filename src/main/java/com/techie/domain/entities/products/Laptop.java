@@ -24,13 +24,13 @@ public class Laptop extends Product {
     private String gpu;
 
     @Column(nullable = false)
-    private int ram;
+    private String ram;
 
     @Column(nullable = false)
     private String storageType;
 
     @Column(nullable = false)
-    private int storage;
+    private String storage;
 
     @Column(nullable = false)
     private String operatingSystem;

@@ -24,13 +24,13 @@ public class Earbuds extends Product {
     private boolean anc = false;
 
     @Column
-    private int bluetoothVersion;
+    private String bluetoothVersion;
 
     @Column(nullable = false)
-    private int fit;
+    private String fit;
 
     @Column(nullable = false)
-    private int color;
+    private String color;
 
     @Column(nullable = false)
     private int yearOfRelease;

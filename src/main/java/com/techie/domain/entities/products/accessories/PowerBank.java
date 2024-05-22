@@ -12,9 +12,9 @@ import lombok.*;
 public class PowerBank extends Product {
 
     @Column(nullable = false)
-    private int batteryCapacity;
+    private String batteryCapacity;
 
     @Column(nullable = false)
-    private int color;
+    private String color;
 
 }

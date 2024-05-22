@@ -25,9 +25,39 @@ INSERT INTO categories (name, image_url, parent_id) VALUES
 ('Powerbanks', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg', 4);
 
 
-/*  Smartphones
 
-INSERT INTO products() VALUES
-(),
+-- Smartphones
 
- */
+INSERT INTO products (name, original_price, category_id, brand_id, stock, description) VALUES
+('Apple - iPhone 15 Pro 128GB - Black Titanium', 999.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 128GB - White Titanium', 999.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 128GB - Blue Titanium', 999.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 128GB - Natural Titanium', 999.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 256GB - Black Titanium', 1099.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 256GB - White Titanium', 1099.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 256GB - Blue Titanium', 1099.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 256GB - Natural Titanium', 1099.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 512GB - Black Titanium', 1299.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 512GB - White Titanium', 1299.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 512GB - Blue Titanium', 1299.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 512GB - Natural Titanium', 1299.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 1TB - Black Titanium', 1499.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 1TB - White Titanium', 1499.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 1TB - Blue Titanium', 1499.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro 1TB - Natural Titanium', 1499.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 256GB - Black Titanium', 1199.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 256GB - White Titanium', 1199.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 256GB - Blue Titanium', 1199.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 256GB - Natural Titanium', 1199.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 512GB - Black Titanium', 1399.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 512GB - White Titanium', 1399.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 512GB - Blue Titanium', 1399.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 512GB - Natural Titanium', 1399.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 1TB - Black Titanium', 1599.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 1TB - White Titanium', 1599.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 1TB - Blue Titanium', 1599.00, 2, 1, 50, 'dummy description'),
+('Apple - iPhone 15 Pro Max 1TB - Natural Titanium', 1599.00, 2, 1, 50, 'dummy description');
+
+
+INSERT INTO smartphones (id, screen_size, screen_resolution, ram, storage, battery_capacity, front_camera, rear_camera, refresh_rate, color, year_of_release) VALUES
+(1, '6.1 inches', '2556 x 1179', 8, 128, '3274 mAh', '12MP', '48MP + 12MP + 12MP', '', ''),
