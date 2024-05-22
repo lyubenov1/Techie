@@ -20,7 +20,7 @@ public class Brand {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String logoUrl;
 
 }
