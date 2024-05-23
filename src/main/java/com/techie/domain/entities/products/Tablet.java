@@ -39,6 +39,9 @@ public class Tablet extends Product {
     private String color;
 
     @Column(nullable = false)
+    private String operatingSystem;
+
+    @Column(nullable = false)
     private int yearOfRelease;
 
 }

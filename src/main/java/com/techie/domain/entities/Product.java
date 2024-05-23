@@ -2,6 +2,7 @@ package com.techie.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.proxy.*;
 
 import java.math.*;
 import java.util.*;
@@ -41,7 +42,7 @@ public class Product {
     private String description;
 
     @Column(name = "average_rating")
-    private double averageRating; // TODO: implement average rating logic
+    private Double averageRating; // TODO: implement average rating logic
 
     public void addImage(ProductImage image) {
         productImages.add(image);
@@ -53,4 +54,23 @@ public class Product {
         image.setProduct(null);
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o)
+                .getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Product product = (Product) o;
+        return getId() != null && Objects.equals(getId(), product.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer().getPersistentClass()
+                .hashCode() : getClass().hashCode();
+    }
 }

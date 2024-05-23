@@ -2,6 +2,9 @@ package com.techie.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.proxy.*;
+
+import java.util.*;
 
 @Setter
 @Getter
@@ -21,16 +24,22 @@ public class ProductImage {
     private String imageUrl;
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductImage)) return false;
-        return id != null &&
-                id.equals(((ProductImage) o).getId());
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o)
+                .getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        ProductImage that = (ProductImage) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer().getPersistentClass()
+                .hashCode() : getClass().hashCode();
     }
-
 }
