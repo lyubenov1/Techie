@@ -583,7 +583,7 @@ public class SmartPhoneData {
     public static final List<String> galaxy_S24_ULTRA_black = List.of(
             "Samsung - Galaxy S24 Ultra - 256GB - Titanium Black",
             "Samsung - Galaxy S24 Ultra - 512GB - Titanium Black",
-            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Black"
+            "Samsung - Galaxy S24 Ultra - 1TB - Titanium Black"
     );
 
     public static final List<String> galaxy_S24_ULTRA_black_urls = List.of(
@@ -595,7 +595,7 @@ public class SmartPhoneData {
     public static final List<String> galaxy_S24_ULTRA_yellow = List.of(
             "Samsung - Galaxy S24 Ultra - 256GB - Titanium Yellow",
             "Samsung - Galaxy S24 Ultra - 512GB - Titanium Yellow",
-            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Yellow"
+            "Samsung - Galaxy S24 Ultra - 1TB - Titanium Yellow"
     );
 
     public static final List<String> galaxy_S24_ULTRA_yellow_urls = List.of(
@@ -607,7 +607,7 @@ public class SmartPhoneData {
     public static final List<String> galaxy_S24_ULTRA_violet = List.of(
             "Samsung - Galaxy S24 Ultra - 256GB - Titanium Violet",
             "Samsung - Galaxy S24 Ultra - 512GB - Titanium Violet",
-            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Violet"
+            "Samsung - Galaxy S24 Ultra - 1TB - Titanium Violet"
     );
 
     public static final List<String> galaxy_S24_ULTRA_violet_urls = List.of(
@@ -619,7 +619,7 @@ public class SmartPhoneData {
     public static final List<String> galaxy_S24_ULTRA_grey = List.of(
             "Samsung - Galaxy S24 Ultra - 256GB - Titanium Gray",
             "Samsung - Galaxy S24 Ultra - 512GB - Titanium Gray",
-            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Gray"
+            "Samsung - Galaxy S24 Ultra - 1TB - Titanium Gray"
     );
 
     public static final List<String> galaxy_S24_ULTRA_grey_urls = List.of(
@@ -740,5 +740,355 @@ public class SmartPhoneData {
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296586/Products/Smartphones/Samsung/Galaxy%20s23/base%20cream/3_tsvxe6.jpg"
     );
 
+    // Huawei -----------------------------------------------------------------------------------------
 
+    public static final List<String> nova_10SE_black = List.of(
+            "Huawei - Nova 10 SE - 128GB 6GB RAM - Starry Black",
+            "Huawei - Nova 10 SE - 128GB 8GB RAM - Starry Black",
+            "Huawei - Nova 10 SE - 256GB 8GB RAM - Starry Black"
+    );
+
+    public static final List<String> nova_10SE_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295434/Products/Smartphones/Huawei/Nova%2010%20SE%20Black/1_fkzskx.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292587/Products/Smartphones/Huawei/Nova%2010%20SE%20Black/2_p9schu.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292801/Products/Smartphones/Huawei/Nova%2010%20SE%20Black/3_ptjj0z.jpg"
+    );
+
+    public static final List<String> nova_10SE_silver = List.of(
+            "Huawei - Nova 10 SE - 128GB 6GB RAM - Starry Silver",
+            "Huawei - Nova 10 SE - 128GB 8GB RAM - Starry Silver",
+            "Huawei - Nova 10 SE - 256GB 8GB RAM - Starry Silver"
+    );
+
+    public static final List<String> nova_10SE_silver_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716294114/Products/Smartphones/Huawei/Nova%2010%20SE%20Silver/1_t0bdxr.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292590/Products/Smartphones/Huawei/Nova%2010%20SE%20Silver/2_cf1xh1.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292594/Products/Smartphones/Huawei/Nova%2010%20SE%20Silver/3_ofhbdx.jpg"
+    );
+
+    public static final List<String> nova_12SE_green = List.of(
+            "Huawei - Nova 12 SE - 256GB 8GB RAM - Green"
+    );
+
+    public static final List<String> nova_12SE_green_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292812/Products/Smartphones/Huawei/Nova%2012%20SE%20green/1_ensc1i.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292798/Products/Smartphones/Huawei/Nova%2012%20SE%20green/2_zzhnda.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292597/Products/Smartphones/Huawei/Nova%2012%20SE%20green/3_yobabr.jpg"
+    );
+
+    public static final List<String> nova_Y91_silver = List.of(
+            "Huawei - Nova Y91 - 128GB 6GB RAM - Moonlight Silver",
+            "Huawei - Nova Y91 - 128GB 8GB RAM - Moonlight Silver",
+            "Huawei - Nova Y91 - 256GB 8GB RAM - Moonlight Silver"
+    );
+
+    public static final List<String> nova_Y91_silver_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292793/Products/Smartphones/Huawei/Nova%20Y91%20silver/1_pnjmnr.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292795/Products/Smartphones/Huawei/Nova%20Y91%20silver/2_o4vzdm.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295426/Products/Smartphones/Huawei/Nova%20Y91%20silver/3_ztlpmw.jpg"
+    );
+
+    public static final List<String> pura70_black = List.of(
+            "Huawei - Pura 70 - 256GB - Black",
+            "Huawei - Pura 70 - 512GB - Black",
+            "Huawei - Pura 70 - 1TB - Black"
+    );
+
+    public static final List<String> pura70_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295426/Products/Smartphones/Huawei/Pura%2070%20black/1_rheurx.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292972/Products/Smartphones/Huawei/Pura%2070%20black/2_lpokop.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295432/Products/Smartphones/Huawei/Pura%2070%20black/3_tewtou.png"
+    );
+
+    public static final List<String> pura70_white = List.of(
+            "Huawei - Pura 70 - 256GB - White",
+            "Huawei - Pura 70 - 512GB - White",
+            "Huawei - Pura 70 - 1TB - White"
+    );
+
+    public static final List<String> pura70_white_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295437/Products/Smartphones/Huawei/Pura%2070%20white/1_f4tuia.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292804/Products/Smartphones/Huawei/Pura%2070%20white/2_qygxfz.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292599/Products/Smartphones/Huawei/Pura%2070%20white/3_wo1tg1.png"
+    );
+
+    public static final List<String> pura70_pro_black = List.of(
+            "Huawei - Pura 70 Pro - 256GB - Black",
+            "Huawei - Pura 70 Pro - 512GB - Black",
+            "Huawei - Pura 70 Pro - 1TB - Black"
+    );
+
+    public static final List<String> pura70_pro_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292969/Products/Smartphones/Huawei/Pura%2070%20Pro%20black/1_rou6ti.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716293414/Products/Smartphones/Huawei/Pura%2070%20Pro%20black/2_jszuns.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292578/Products/Smartphones/Huawei/Pura%2070%20Pro%20black/3_bsnqcf.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292581/Products/Smartphones/Huawei/Pura%2070%20Pro%20black/4_qxoxrx.jpg"
+    );
+
+    public static final List<String> pura70_pro_white = List.of(
+            "Huawei - Pura 70 Pro - 256GB - White",
+            "Huawei - Pura 70 Pro - 512GB - White",
+            "Huawei - Pura 70 Pro - 1TB - White"
+    );
+
+    public static final List<String> pura70_pro_white_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716294398/Products/Smartphones/Huawei/Pura%2070%20pro%20white/1_il2ujx.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716294145/Products/Smartphones/Huawei/Pura%2070%20pro%20white/2_angexk.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716295429/Products/Smartphones/Huawei/Pura%2070%20pro%20white/3_sftcnn.png"
+    );
+
+    public static final List<String> pura70_ultra_black = List.of(
+            "Huawei - Pura 70 Ultra - 512GB - Black",
+            "Huawei - Pura 70 Ultra - 1TB - Black"
+    );
+
+    public static final List<String> pura70_ultra_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292713/Products/Smartphones/Huawei/Pura%2070%20Ultra%20black/1_jtawvj.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292716/Products/Smartphones/Huawei/Pura%2070%20Ultra%20black/2_sdqumd.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292585/Products/Smartphones/Huawei/Pura%2070%20Ultra%20black/3_wagons.png"
+    );
+
+    public static final List<String> pura70_ultra_green = List.of(
+            "Huawei - Pura 70 Ultra - 512GB - Green",
+            "Huawei - Pura 70 Ultra - 1TB - Green"
+    );
+
+    public static final List<String> pura70_ultra_green_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716293023/Products/Smartphones/Huawei/Pura%2070%20Ultra%20green/1_zh4nzu.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292619/Products/Smartphones/Huawei/Pura%2070%20Ultra%20green/2_z0bcea.png",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292719/Products/Smartphones/Huawei/Pura%2070%20Ultra%20green/3_wlxpcu.png"
+    );
+
+
+    // Nothing -----------------------------------------------------------------------------------
+
+    public static final List<String> nothing2_black = List.of(
+            "Nothing - Phone (2) - 128GB 8GB RAM - Dark Gray",
+            "Nothing - Phone (2) - 256GB 12GB RAM - Dark Gray",
+            "Nothing - Phone (2) - 512GB 12GB RAM - Dark Gray"
+    );
+
+    public static final List<String> nothing2_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296781/Products/Smartphones/Nothing/2%20black/1_cxjocl.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296768/Products/Smartphones/Nothing/2%20black/2_bjgrjl.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296758/Products/Smartphones/Nothing/2%20black/3_pvfx52.jpg"
+    );
+
+    public static final List<String> nothing2_white = List.of(
+            "Nothing - Phone (2) - 128GB 8GB RAM - White",
+            "Nothing - Phone (2) - 256GB 12GB RAM - White",
+            "Nothing - Phone (2) - 512GB 12GB RAM - White"
+    );
+
+    public static final List<String> nothing2_white_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296785/Products/Smartphones/Nothing/2%20white/1_zpabne.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296772/Products/Smartphones/Nothing/2%20white/2_dtm2zx.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296755/Products/Smartphones/Nothing/2%20white/3_ki8qe9.jpg"
+    );
+
+    public static final List<String> nothing2a_black = List.of(
+            "Nothing - Phone (2a) - 128GB 8GB RAM - Black",
+            "Nothing - Phone (2a) - 256GB 8GB RAM - Black",
+            "Nothing - Phone (2a) - 256GB 12GB RAM - Black"
+    );
+
+    public static final List<String> nothing2a_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296775/Products/Smartphones/Nothing/2a%20black/1_fzagul.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296752/Products/Smartphones/Nothing/2a%20black/2_blab3d.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296766/Products/Smartphones/Nothing/2a%20black/3_b0t4hr.jpg"
+    );
+
+    public static final List<String> nothing2a_white = List.of(
+            "Nothing - Phone (2a) - 128GB 8GB RAM - White",
+            "Nothing - Phone (2a) - 256GB 8GB RAM - White",
+            "Nothing - Phone (2a) - 256GB 12GB RAM - White"
+    );
+
+    public static final List<String> nothing2a_white_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296788/Products/Smartphones/Nothing/2a%20white/1_yqswto.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296761/Products/Smartphones/Nothing/2a%20white/2_whlt5o.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296778/Products/Smartphones/Nothing/2a%20white/3_psaqhe.jpg"
+            );
+
+
+    // Google -----------------------------------------------------------------------------------------------------
+
+    public static final List<String> pixel_fold_obsidian = List.of(
+            "Google - Pixel Fold - 256GB - Obsidian",
+            "Google - Pixel Fold - 512GB - Obsidian"
+    );
+
+    public static final List<String> pixel_fold_obsidian_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292477/Products/Smartphones/Google/FOLD%20obsidian/1_pcvqj8.jpg"
+    );
+
+    public static final List<String> pixel_fold_porcelain = List.of(
+            "Google - Pixel Fold - 256GB - Porcelain",
+            "Google - Pixel Fold - 512GB - Porcelain"
+    );
+
+    public static final List<String> pixel_fold_porcelain_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292497/Products/Smartphones/Google/FOLD%20porcelain/2_exu9fj.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292499/Products/Smartphones/Google/FOLD%20porcelain/1_txa9io.jpg"
+    );
+
+    public static final List<String> pixel_7a_charcoal = List.of(
+            "Google - Pixel 7a - 128GB - Charcoal"
+    );
+
+    public static final List<String> pixel_7a_charcoal_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292000/Products/Smartphones/Google/7%20series/7A%20Charcoal/1_niqqs7.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291984/Products/Smartphones/Google/7%20series/7A%20Charcoal/2_oh60er.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291992/Products/Smartphones/Google/7%20series/7A%20Charcoal/3_inbifq.jpg"
+    );
+
+    public static final List<String> pixel_7a_sea = List.of(
+            "Google - Pixel 7a - 128GB - Sea"
+    );
+
+    public static final List<String> pixel_7a_sea_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292025/Products/Smartphones/Google/7%20series/7A%20Sea/1_mous01.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292017/Products/Smartphones/Google/7%20series/7A%20Sea/2_ztshiw.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292009/Products/Smartphones/Google/7%20series/7A%20Sea/3_vbbghg.jpg"
+    );
+
+    public static final List<String> pixel_7a_snow = List.of(
+            "Google - Pixel 7a - 128GB - Snow"
+    );
+
+    public static final List<String> pixel_7a_snow_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292066/Products/Smartphones/Google/7%20series/7A%20Snow/1_zowcjd.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292058/Products/Smartphones/Google/7%20series/7A%20Snow/2_is7inh.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292051/Products/Smartphones/Google/7%20series/7A%20Snow/3_slswy9.jpg"
+    );
+
+    public static final List<String> pixel_7_lemongrass = List.of(
+            "Google - Pixel 7 - 128GB - Lemongrass",
+            "Google - Pixel 7 - 256GB - Lemongrass"
+    );
+
+    public static final List<String> pixel_7_lemongrass_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292146/Products/Smartphones/Google/7%20series/Base%20lemongrass/1_nj2xd8.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292145/Products/Smartphones/Google/7%20series/Base%20lemongrass/2_pd7z68.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292147/Products/Smartphones/Google/7%20series/Base%20lemongrass/3_uevy4d.jpg"
+    );
+
+    public static final List<String> pixel_7_snow = List.of(
+            "Google - Pixel 7 - 128GB - Snow",
+            "Google - Pixel 7 - 256GB - Snow"
+    );
+
+    public static final List<String> pixel_7_snow_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292221/Products/Smartphones/Google/7%20series/base%20snow/1_xazizk.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292221/Products/Smartphones/Google/7%20series/base%20snow/2_bhusyt.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292222/Products/Smartphones/Google/7%20series/base%20snow/3_gculki.jpg"
+    );
+
+    public static final List<String> pixel_7_pro_obsidian = List.of(
+            "Google - Pixel 7 Pro - 128GB 12GB RAM - Obsidian",
+            "Google - Pixel 7 Pro - 256GB 12GB RAM - Obsidian",
+            "Google - Pixel 7 Pro - 512GB 12GB RAM - Obsidian",
+            "Google - Pixel 7 Pro - 128GB 8GB RAM - Obsidian",
+            "Google - Pixel 7 Pro - 256GB 8GB RAM - Obsidian"
+    );
+
+    public static final List<String> pixel_7_pro_obsidian_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292274/Products/Smartphones/Google/7%20series/pro%20obsidian/1_li09by.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292273/Products/Smartphones/Google/7%20series/pro%20obsidian/2_qypkkn.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292276/Products/Smartphones/Google/7%20series/pro%20obsidian/3_mlxj8q.jpg"
+    );
+
+    public static final List<String> pixel_8_pro_obsidian = List.of(
+            "Google - Pixel 8 Pro - 128GB - Obsidian",
+            "Google - Pixel 8 Pro - 256GB - Obsidian",
+            "Google - Pixel 8 Pro - 512GB - Obsidian",
+            "Google - Pixel 8 Pro - 1TB - Obsidian"
+    );
+
+    public static final List<String> pixel_8_pro_obsidian_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292420/Products/Smartphones/Google/8%20series/pro%20obsidian/1_wdef64.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292421/Products/Smartphones/Google/8%20series/pro%20obsidian/2_umd9bl.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292417/Products/Smartphones/Google/8%20series/pro%20obsidian/3_j4krjr.jpg"
+    );
+
+    public static final List<String> pixel_8_pro_bay = List.of(
+            "Google - Pixel 8 Pro - 128GB - Bay",
+            "Google - Pixel 8 Pro - 256GB - Bay",
+            "Google - Pixel 8 Pro - 512GB - Bay",
+            "Google - Pixel 8 Pro - 1TB - Bay"
+    );
+
+    public static final List<String> pixel_8_pro_bay_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292393/Products/Smartphones/Google/8%20series/pro%20bay/1_f95pd1.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292397/Products/Smartphones/Google/8%20series/pro%20bay/2_qzyxtx.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292391/Products/Smartphones/Google/8%20series/pro%20bay/3_xaw3hk.jpg"
+    );
+
+    public static final List<String> pixel_8_pro_porcelain = List.of(
+            "Google - Pixel 8 Pro - 128GB - Porcelain",
+            "Google - Pixel 8 Pro - 256GB - Porcelain",
+            "Google - Pixel 8 Pro - 512GB - Porcelain",
+            "Google - Pixel 8 Pro - 1TB - Porcelain"
+    );
+
+    public static final List<String> pixel_8_pro_porcelain_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292430/Products/Smartphones/Google/8%20series/pro%20porcelain/1_xlhjfc.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292439/Products/Smartphones/Google/8%20series/pro%20porcelain/2_csmmom.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292437/Products/Smartphones/Google/8%20series/pro%20porcelain/3_mzxymn.jpg"
+    );
+
+    public static final List<String> pixel_8_obsidian = List.of(
+            "Google - Pixel 8 - 128GB - Obsidian",
+            "Google - Pixel 8 - 256GB - Obsidian"
+    );
+
+    public static final List<String> pixel_8_obsidian_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292367/Products/Smartphones/Google/8%20series/base%20obsidian/1_z1qnbb.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292372/Products/Smartphones/Google/8%20series/base%20obsidian/2_mj74ft.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292366/Products/Smartphones/Google/8%20series/base%20obsidian/3_s1lmrx.jpg"
+    );
+
+    public static final List<String> pixel_8_rose = List.of(
+            "Google - Pixel 8 - 128GB - Rose",
+            "Google - Pixel 8 - 256GB - Rose"
+    );
+
+    public static final List<String> pixel_8_rose_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292380/Products/Smartphones/Google/8%20series/base%20rose/1_iy48qh.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292378/Products/Smartphones/Google/8%20series/base%20rose/2_wnts34.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292382/Products/Smartphones/Google/8%20series/base%20rose/3_zk01oc.jpg"
+    );
+
+    public static final List<String> pixel_8a_obsidian = List.of(
+            "Google - Pixel 8a - 128GB - Obsidian",
+            "Google - Pixel 8a - 256GB - Obsidian"
+    );
+
+    public static final List<String> pixel_8a_obsidian_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292330/Products/Smartphones/Google/8%20series/8A%20obsidian/1_nfpmnt.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292329/Products/Smartphones/Google/8%20series/8A%20obsidian/2_ebpqeb.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292332/Products/Smartphones/Google/8%20series/8A%20obsidian/3_osmunp.jpg"
+    );
+
+    public static final List<String> pixel_8a_bay = List.of(
+            "Google - Pixel 8a - 128GB - Bay",
+            "Google - Pixel 8a - 256GB - Bay"
+    );
+
+    public static final List<String> pixel_8a_bay_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292320/Products/Smartphones/Google/8%20series/8A%20bay/1_n8wf4w.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292317/Products/Smartphones/Google/8%20series/8A%20bay/2_ks5zv4.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292318/Products/Smartphones/Google/8%20series/8A%20bay/3_fgkca6.jpg"
+    );
+
+    public static final List<String> pixel_8a_porcelain = List.of(
+            "Google - Pixel 8a - 128GB - Porcelain",
+            "Google - Pixel 8a - 256GB - Porcelain"
+    );
+
+    public static final List<String> pixel_8a_porcelain_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292353/Products/Smartphones/Google/8%20series/8A%20porcelain/1_cxic2i.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292351/Products/Smartphones/Google/8%20series/8A%20porcelain/2_e5peng.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716292355/Products/Smartphones/Google/8%20series/8A%20porcelain/3_thwwgx.jpg"
+    );
 }

@@ -68,8 +68,38 @@ public class ImageUrlRepo {
         imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_yellow, SmartPhoneData.galaxy_S24_ULTRA_yellow_urls);
         imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_violet, SmartPhoneData.galaxy_S24_ULTRA_violet_urls);
 
+        imageMap.put(SmartPhoneData.nova_Y91_silver, SmartPhoneData.nova_Y91_silver_urls);
+        imageMap.put(SmartPhoneData.nova_10SE_black, SmartPhoneData.nova_10SE_black_urls);
+        imageMap.put(SmartPhoneData.nova_12SE_green, SmartPhoneData.nova_12SE_green_urls);
+        imageMap.put(SmartPhoneData.nova_10SE_silver, SmartPhoneData.nova_10SE_silver_urls);
+        imageMap.put(SmartPhoneData.pura70_black, SmartPhoneData.pura70_black_urls);
+        imageMap.put(SmartPhoneData.pura70_white, SmartPhoneData.pura70_white_urls);
+        imageMap.put(SmartPhoneData.pura70_pro_black, SmartPhoneData.pura70_pro_black_urls);
+        imageMap.put(SmartPhoneData.pura70_pro_white, SmartPhoneData.pura70_pro_white_urls);
+        imageMap.put(SmartPhoneData.pura70_ultra_black, SmartPhoneData.pura70_ultra_black_urls);
+        imageMap.put(SmartPhoneData.pura70_ultra_green, SmartPhoneData.pura70_ultra_green_urls);
 
+        imageMap.put(SmartPhoneData.nothing2_black, SmartPhoneData.nothing2_black_urls);
+        imageMap.put(SmartPhoneData.nothing2_white, SmartPhoneData.nothing2_white_urls);
+        imageMap.put(SmartPhoneData.nothing2a_black, SmartPhoneData.nothing2a_black_urls);
+        imageMap.put(SmartPhoneData.nothing2a_white, SmartPhoneData.nothing2a_white_urls);
 
+        imageMap.put(SmartPhoneData.pixel_fold_obsidian,SmartPhoneData.pixel_fold_obsidian_urls);
+        imageMap.put(SmartPhoneData.pixel_fold_porcelain,SmartPhoneData.pixel_fold_porcelain_urls);
+        imageMap.put(SmartPhoneData.pixel_7a_charcoal,SmartPhoneData.pixel_7a_charcoal_urls);
+        imageMap.put(SmartPhoneData.pixel_7a_sea,SmartPhoneData.pixel_7a_sea_urls);
+        imageMap.put(SmartPhoneData.pixel_7a_snow,SmartPhoneData.pixel_7a_snow_urls);
+        imageMap.put(SmartPhoneData.pixel_7_lemongrass,SmartPhoneData.pixel_7_lemongrass_urls);
+        imageMap.put(SmartPhoneData.pixel_7_snow,SmartPhoneData.pixel_7_snow_urls);
+        imageMap.put(SmartPhoneData.pixel_7_pro_obsidian,SmartPhoneData.pixel_7_pro_obsidian_urls);
+        imageMap.put(SmartPhoneData.pixel_8_pro_obsidian,SmartPhoneData.pixel_8_pro_obsidian_urls);
+        imageMap.put(SmartPhoneData.pixel_8_pro_bay,SmartPhoneData.pixel_8_pro_bay_urls);
+        imageMap.put(SmartPhoneData.pixel_8_pro_porcelain,SmartPhoneData.pixel_8_pro_porcelain_urls);
+        imageMap.put(SmartPhoneData.pixel_8_obsidian,SmartPhoneData.pixel_8_obsidian_urls);
+        imageMap.put(SmartPhoneData.pixel_8_rose,SmartPhoneData.pixel_8_rose_urls);
+        imageMap.put(SmartPhoneData.pixel_8a_bay,SmartPhoneData.pixel_8a_bay_urls);
+        imageMap.put(SmartPhoneData.pixel_8a_obsidian,SmartPhoneData.pixel_8a_obsidian_urls);
+        imageMap.put(SmartPhoneData.pixel_8a_porcelain,SmartPhoneData.pixel_8a_porcelain_urls);
     }
 
     public Map<List<String>, List<String>> getImageMap() {
