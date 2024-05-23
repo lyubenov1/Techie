@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 @Component
-public class ProductImagePopulator {
+ public class ProductImagePopulator {
 
-    private final ProductImageService productImageService;
+     private final ProductImageService productImageService;
 
-    @Autowired
-    public ProductImagePopulator(ProductImageService productImageService) {
-        this.productImageService = productImageService;
-    }
+     @Autowired
+     public ProductImagePopulator(ProductImageService productImageService) {
+         this.productImageService = productImageService;
+     }
 
-    @PostConstruct
-    public void populateProductImageEntity() {
-        productImageService.saveProductImages();
-    }
-}
+     @PostConstruct
+     public void populateProductImageEntity() {
+         productImageService.saveProductImages();
+     }
+ }

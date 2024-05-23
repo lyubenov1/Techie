@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SmartPhoneData {
 
-    //  Iphone 15 series ---------------------------------------------------------------------
+    //  Iphone ---------------------------------------------------------------------
     public static final List<String> iphone15_black_models = List.of(
             "Apple - iPhone 15 128GB - Black",
             "Apple - iPhone 15 256GB - Black",
@@ -148,9 +148,6 @@ public class SmartPhoneData {
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291427/Products/Smartphones/Apple/15%20series/pro%20white%20titanium/4_q6tebw.jpg"
     );
 
-
-    //   Iphone 14 series -------------------------------------------------------------------------
-
     public static final List<String> iphone14_midnight_models = List.of(
             "Apple - iPhone 14 128GB - Midnight",
             "Apple - iPhone 14 256GB - Midnight",
@@ -279,8 +276,6 @@ public class SmartPhoneData {
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291106/Products/Smartphones/Apple/14%20series/pro%20white/3_egir6y.jpg"
     );
 
-
-    //  Iphone 13 series  ---------------------------------------------------------------------------------
 
     public static final List<String> iphone13_green_models = List.of(
             "Apple - iPhone 13 128GB - Green",
@@ -411,8 +406,6 @@ public class SmartPhoneData {
     );
 
 
-    //  Iphone SE 2022
-
     public static final List<String> iphoneSE_midnight = List.of(
             "Apple - iPhone SE (3rd generation) 64GB - Midnight",
             "Apple - iPhone SE (3rd generation) 128GB - Midnight",
@@ -448,4 +441,304 @@ public class SmartPhoneData {
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291602/Products/Smartphones/Apple/SE%202022/starlight/2_gmn1zl.jpg",
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716291586/Products/Smartphones/Apple/SE%202022/starlight/3_fnmmfs.jpg"
     );
+
+
+    // Samsung -----------------------------------------------------------------------------------
+
+    public static final List<String> galaxy_a55_navy = List.of(
+            "Samsung - Galaxy A55 - 8GB RAM 128GB - Navy",
+            "Samsung - Galaxy A55 - 8GB RAM 256GB - Navy",
+            "Samsung - Galaxy A55 - 12GB RAM 256GB - Navy"
+    );
+
+    public static final List<String> galaxy_a55_navy_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296692/Products/Smartphones/Samsung/GALAXY%20A55/navy/1_cfkq0a.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296632/Products/Smartphones/Samsung/GALAXY%20A55/navy/2_zyefuj.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296723/Products/Smartphones/Samsung/GALAXY%20A55/navy/3_m5kbsu.jpg"
+    );
+
+
+    public static final List<String> galaxy_a55_lemon = List.of(
+            "Samsung - Galaxy A55 - 8GB RAM 128GB - Lemon",
+            "Samsung - Galaxy A55 - 8GB RAM 256GB - Lemon",
+            "Samsung - Galaxy A55 - 12GB RAM 256GB - Lemon"
+    );
+
+    public static final List<String> galaxy_a55_lemon_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296695/Products/Smartphones/Samsung/GALAXY%20A55/lemon/1_itocu1.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296635/Products/Smartphones/Samsung/GALAXY%20A55/lemon/2_h21jz4.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296698/Products/Smartphones/Samsung/GALAXY%20A55/lemon/3_lfneql.jpg"
+    );
+
+
+    public static final List<String> galaxy_a55_lilac = List.of(
+            "Samsung - Galaxy A55 - 8GB RAM 128GB - Lilac",
+            "Samsung - Galaxy A55 - 8GB RAM 256GB - Lilac",
+            "Samsung - Galaxy A55 - 12GB RAM 256GB - Lilac"
+    );
+
+    public static final List<String> galaxy_a55_lilac_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296714/Products/Smartphones/Samsung/GALAXY%20A55/lilac/1_ypywpl.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296701/Products/Smartphones/Samsung/GALAXY%20A55/lilac/2_rt5oa9.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296679/Products/Smartphones/Samsung/GALAXY%20A55/lilac/3_vpsdkq.jpg"
+    );
+
+
+    public static final List<String> galaxy_a55_blue = List.of(
+            "Samsung - Galaxy A55 - 8GB RAM 128GB - IceBlue",
+            "Samsung - Galaxy A55 - 8GB RAM 256GB - IceBlue",
+            "Samsung - Galaxy A55 - 12GB RAM 256GB - IceBlue"
+    );
+
+    public static final List<String> galaxy_a55_blue_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296732/Products/Smartphones/Samsung/GALAXY%20A55/blue/1_pp6m66.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296616/Products/Smartphones/Samsung/GALAXY%20A55/blue/2_gf08tp.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296720/Products/Smartphones/Samsung/GALAXY%20A55/blue/3_tosq7w.jpg"
+    );
+
+
+    public static final List<String> galaxy_z_flip_5_mint = List.of(
+            "Samsung - Galaxy Z FLIP 5 - 256GB - Mint",
+            "Samsung - Galaxy Z FLIP 5 - 512GB - Mint"
+    );
+
+    public static final List<String> galaxy_z_flip_5_mint_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296524/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/mint/1_a7ikoc.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296528/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/mint/2_siwlp4.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296531/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/mint/3_s8z4ky.jpg"
+    );
+
+    public static final List<String> galaxy_z_flip_5_graphite = List.of(
+            "Samsung - Galaxy Z FLIP 5 - 256GB - Graphite",
+            "Samsung - Galaxy Z FLIP 5 - 512GB - Graphite"
+    );
+
+    public static final List<String> galaxy_z_flip_5_graphite_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296506/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/graphite/1_lknfvx.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296509/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/graphite/2_sflrlg.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296512/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/graphite/3_wzxwga.jpg"
+    );
+
+    public static final List<String> galaxy_z_flip_5_lavender = List.of(
+            "Samsung - Galaxy Z FLIP 5 - 256GB - Lavender",
+            "Samsung - Galaxy Z FLIP 5 - 512GB - Lavender"
+    );
+
+    public static final List<String> galaxy_z_flip_5_lavender_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296515/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/lavender/1_fqr94q.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296518/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/lavender/2_hitnl9.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296521/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/lavender/3_gqkl2c.jpg"
+    );
+
+    public static final List<String> galaxy_z_flip_5_cream = List.of(
+            "Samsung - Galaxy Z FLIP 5 - 256GB - Cream",
+            "Samsung - Galaxy Z FLIP 5 - 512GB - Cream"
+    );
+
+    public static final List<String> galaxy_z_flip_5_cream_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296503/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/cream/1_js3heq.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296503/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/cream/2_ghk2tf.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296571/Products/Smartphones/Samsung/GALAXY%20Z%20FLIP%205/cream/3_ymqw3e.jpg"
+    );
+
+    public static final List<String> galaxy_z_fold_5_cream = List.of(
+            "Samsung - Galaxy Z FOLD 5 - 256GB - Cream",
+            "Samsung - Galaxy Z FOLD 5 - 512GB - Cream",
+            "Samsung - Galaxy Z FOLD 5 - 1TB - Cream"
+    );
+
+    public static final List<String> galaxy_z_fold_5_cream_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296552/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/cream/1_fpmi8u.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296654/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/cream/2_jbqfba.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296555/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/cream/3_ggnyyf.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296558/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/cream/4_j37ruu.jpg"
+    );
+
+    public static final List<String> galaxy_z_fold_5_blue = List.of(
+            "Samsung - Galaxy Z FOLD 5 - 256GB - Icy Blue",
+            "Samsung - Galaxy Z FOLD 5 - 512GB - Icy Blue",
+            "Samsung - Galaxy Z FOLD 5 - 1TB - Icy Blue"
+    );
+
+    public static final List<String> galaxy_z_fold_5_blue_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296540/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/blue/1_awi6cp.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296543/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/blue/2_njjwlj.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296546/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/blue/3_h7eoj3.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296549/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/blue/4_exwdqm.jpg"
+    );
+
+    public static final List<String> galaxy_z_fold_5_black = List.of(
+            "Samsung - Galaxy Z FOLD 5 - 256GB - Phantom Black",
+            "Samsung - Galaxy Z FOLD 5 - 512GB - Phantom Black",
+            "Samsung - Galaxy Z FOLD 5 - 1TB - Phantom Black"
+    );
+
+    public static final List<String> galaxy_z_fold_5_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296534/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/black/1_laglon.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296562/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/black/2_iffrg6.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296565/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/black/3_eer9zf.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296537/Products/Smartphones/Samsung/GALAXY%20Z%20FOLD%205/black/4_vo9cyh.jpg"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_black = List.of(
+            "Samsung - Galaxy S24 Ultra - 256GB - Titanium Black",
+            "Samsung - Galaxy S24 Ultra - 512GB - Titanium Black",
+            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Black"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296726/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20black/1_llap4i.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296583/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20black/2_i4wsxq.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296663/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20black/3_yexfea.jpg"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_yellow = List.of(
+            "Samsung - Galaxy S24 Ultra - 256GB - Titanium Yellow",
+            "Samsung - Galaxy S24 Ultra - 512GB - Titanium Yellow",
+            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Yellow"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_yellow_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296682/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20gold/1_xpufjz.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296589/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20gold/2_u2beoz.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296672/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20gold/3_bbuqiz.jpg"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_violet = List.of(
+            "Samsung - Galaxy S24 Ultra - 256GB - Titanium Violet",
+            "Samsung - Galaxy S24 Ultra - 512GB - Titanium Violet",
+            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Violet"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_violet_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296666/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20violet/1_bzrt8p.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296613/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20violet/2_plcjtv.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296735/Products/Smartphones/Samsung/Galaxy%20S24/ultra%20violet/3_ltnbr5.jpg"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_grey = List.of(
+            "Samsung - Galaxy S24 Ultra - 256GB - Titanium Gray",
+            "Samsung - Galaxy S24 Ultra - 512GB - Titanium Gray",
+            "Samsung - Galaxy S24 Ultra - 1 TB - Titanium Gray"
+    );
+
+    public static final List<String> galaxy_S24_ULTRA_grey_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296707/Products/Smartphones/Samsung/Galaxy%20S24/Ultra%20grey%20titanium/1_p84kqo.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296595/Products/Smartphones/Samsung/Galaxy%20S24/Ultra%20grey%20titanium/2_guueyw.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296610/Products/Smartphones/Samsung/Galaxy%20S24/Ultra%20grey%20titanium/3_wzqiuk.jpg"
+    );
+
+    public static final List<String> galaxy_S24_grey = List.of(
+            "Samsung - Galaxy S24 - 128GB - Marble Grey",
+            "Samsung - Galaxy S24 - 256GB - Marble Grey",
+            "Samsung - Galaxy S24 - 512GB - Marble Grey",
+            "Samsung - Galaxy S24+ - 256GB - Marble Grey",
+            "Samsung - Galaxy S24+ - 512GB - Marble Grey"
+    );
+
+    public static final List<String> galaxy_S24_grey_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296650/Products/Smartphones/Samsung/Galaxy%20S24/base%20grey/1_ulhz2p.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296657/Products/Smartphones/Samsung/Galaxy%20S24/base%20grey/2_o4jsco.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296660/Products/Smartphones/Samsung/Galaxy%20S24/base%20grey/3_t3oobh.jpg"
+    );
+
+    public static final List<String> galaxy_S24_black = List.of(
+            "Samsung - Galaxy S24 - 128GB - Onyx Black",
+            "Samsung - Galaxy S24 - 256GB - Onyx Black",
+            "Samsung - Galaxy S24 - 512GB - Onyx Black",
+            "Samsung - Galaxy S24+ - 256GB - Onyx Black",
+            "Samsung - Galaxy S24+ - 512GB - Onyx Black"
+    );
+
+    public static final List<String> galaxy_S24_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296710/Products/Smartphones/Samsung/Galaxy%20S24/base%20black/1_zjph9e.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296599/Products/Smartphones/Samsung/Galaxy%20S24/base%20black/2_wio5oy.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296622/Products/Smartphones/Samsung/Galaxy%20S24/base%20black/3_afrhjt.jpg"
+    );
+
+    public static final List<String> galaxy_S24_yellow = List.of(
+            "Samsung - Galaxy S24 - 128GB - Amber Yellow",
+            "Samsung - Galaxy S24 - 256GB - Amber Yellow",
+            "Samsung - Galaxy S24 - 512GB - Amber Yellow",
+            "Samsung - Galaxy S24+ - 256GB - Amber Yellow",
+            "Samsung - Galaxy S24+ - 512GB - Amber Yellow"
+    );
+
+    public static final List<String> galaxy_S24_yellow_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296647/Products/Smartphones/Samsung/Galaxy%20S24/base%20yellow/1_x7pfrl.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296592/Products/Smartphones/Samsung/Galaxy%20S24/base%20yellow/2_vxexud.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296717/Products/Smartphones/Samsung/Galaxy%20S24/base%20yellow/3_delm56.jpg"
+    );
+
+    public static final List<String> galaxy_S24_violet = List.of(
+            "Samsung - Galaxy S24 - 128GB - Cobalt Violet",
+            "Samsung - Galaxy S24 - 256GB - Cobalt Violet",
+            "Samsung - Galaxy S24 - 512GB - Cobalt Violet",
+            "Samsung - Galaxy S24+ - 256GB - Cobalt Violet",
+            "Samsung - Galaxy S24+ - 512GB - Cobalt Violet"
+    );
+
+    public static final List<String> galaxy_S24_violet_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296641/Products/Smartphones/Samsung/Galaxy%20S24/base%20violet/1_rsmziy.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296568/Products/Smartphones/Samsung/Galaxy%20S24/base%20violet/2_uunvqb.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296644/Products/Smartphones/Samsung/Galaxy%20S24/base%20violet/3_vwdefe.jpg"
+    );
+
+    public static final List<String> galaxy_S23_black = List.of(
+            "Samsung - Galaxy S23 - 128GB - Phantom Black",
+            "Samsung - Galaxy S23 - 256GB - Phantom Black",
+            "Samsung - Galaxy S23 - 512GB - Phantom Black",
+            "Samsung - Galaxy S23+ - 256GB - Phantom Black",
+            "Samsung - Galaxy S23+ - 512GB - Phantom Black"
+    );
+
+    public static final List<String> galaxy_S23_black_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296619/Products/Smartphones/Samsung/Galaxy%20s23/base%20black/1_p90oiw.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296638/Products/Smartphones/Samsung/Galaxy%20s23/base%20black/2_oiyedd.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296704/Products/Smartphones/Samsung/Galaxy%20s23/base%20black/3_xhf80m.jpg"
+    );
+
+    public static final List<String> galaxy_S23_graphite = List.of(
+            "Samsung - Galaxy S23 - 128GB - Graphite",
+            "Samsung - Galaxy S23 - 256GB - Graphite",
+            "Samsung - Galaxy S23 - 512GB - Graphite",
+            "Samsung - Galaxy S23+ - 256GB - Graphite",
+            "Samsung - Galaxy S23+ - 512GB - Graphite"
+    );
+
+    public static final List<String> galaxy_S23_graphite_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296729/Products/Smartphones/Samsung/Galaxy%20s23/base%20graphite/1_xqehpp.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296574/Products/Smartphones/Samsung/Galaxy%20s23/base%20graphite/2_xjxofa.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296669/Products/Smartphones/Samsung/Galaxy%20s23/base%20graphite/3_fo1k0w.jpg"
+    );
+
+    public static final List<String> galaxy_S23_green = List.of(
+            "Samsung - Galaxy S23 - 128GB - Green",
+            "Samsung - Galaxy S23 - 256GB - Green",
+            "Samsung - Galaxy S23 - 512GB - Green",
+            "Samsung - Galaxy S23+ - 256GB - Green",
+            "Samsung - Galaxy S23+ - 512GB - Green"
+    );
+
+    public static final List<String> galaxy_S23_green_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296580/Products/Smartphones/Samsung/Galaxy%20s23/base%20green/1_e09qal.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296602/Products/Smartphones/Samsung/Galaxy%20s23/base%20green/2_jjfrjp.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296738/Products/Smartphones/Samsung/Galaxy%20s23/base%20green/3_cs4jry.jpg"
+    );
+
+    public static final List<String> galaxy_S23_cream = List.of(
+            "Samsung - Galaxy S23 - 128GB - Cream",
+            "Samsung - Galaxy S23 - 256GB - Cream",
+            "Samsung - Galaxy S23 - 512GB - Cream",
+            "Samsung - Galaxy S23+ - 256GB - Cream",
+            "Samsung - Galaxy S23+ - 512GB - Cream"
+    );
+
+    public static final List<String> galaxy_S23_cream_urls = List.of(
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296675/Products/Smartphones/Samsung/Galaxy%20s23/base%20cream/1_kt7mqx.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296577/Products/Smartphones/Samsung/Galaxy%20s23/base%20cream/2_wh9fzb.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716296586/Products/Smartphones/Samsung/Galaxy%20s23/base%20cream/3_tsvxe6.jpg"
+    );
+
+
 }

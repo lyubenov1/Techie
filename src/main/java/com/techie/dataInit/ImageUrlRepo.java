@@ -43,6 +43,33 @@ public class ImageUrlRepo {
         imageMap.put(SmartPhoneData.iphone13_pro_graphite_models, SmartPhoneData.iphone13_pro_graphite_imageUrls);
         imageMap.put(SmartPhoneData.iphone13_pro_silver_models, SmartPhoneData.iphone13_pro_silver_imageUrls);
         imageMap.put(SmartPhoneData.iphone13_pro_sierraBlue_models, SmartPhoneData.iphone13_pro_sierraBlue_imageUrls);
+
+        imageMap.put(SmartPhoneData.galaxy_a55_blue, SmartPhoneData.galaxy_a55_blue_urls);
+        imageMap.put(SmartPhoneData.galaxy_a55_navy, SmartPhoneData.galaxy_a55_navy_urls);
+        imageMap.put(SmartPhoneData.galaxy_a55_lilac, SmartPhoneData.galaxy_a55_lilac_urls);
+        imageMap.put(SmartPhoneData.galaxy_a55_lemon, SmartPhoneData.galaxy_a55_lemon_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_flip_5_cream, SmartPhoneData.galaxy_z_flip_5_cream_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_flip_5_graphite, SmartPhoneData.galaxy_z_flip_5_graphite_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_flip_5_lavender, SmartPhoneData.galaxy_z_flip_5_lavender_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_flip_5_mint, SmartPhoneData.galaxy_z_flip_5_mint_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_fold_5_black, SmartPhoneData.galaxy_z_fold_5_black_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_fold_5_blue, SmartPhoneData.galaxy_z_fold_5_blue_urls);
+        imageMap.put(SmartPhoneData.galaxy_z_fold_5_cream, SmartPhoneData.galaxy_z_fold_5_cream_urls);
+        imageMap.put(SmartPhoneData.galaxy_S23_black, SmartPhoneData.galaxy_S23_black_urls);
+        imageMap.put(SmartPhoneData.galaxy_S23_cream, SmartPhoneData.galaxy_S23_cream_urls);
+        imageMap.put(SmartPhoneData.galaxy_S23_green, SmartPhoneData.galaxy_S23_green_urls);
+        imageMap.put(SmartPhoneData.galaxy_S23_graphite, SmartPhoneData.galaxy_S23_graphite_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_black, SmartPhoneData.galaxy_S24_black_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_grey, SmartPhoneData.galaxy_S24_grey_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_violet, SmartPhoneData.galaxy_S24_violet_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_yellow, SmartPhoneData.galaxy_S24_yellow_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_black, SmartPhoneData.galaxy_S24_ULTRA_black_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_grey, SmartPhoneData.galaxy_S24_ULTRA_grey_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_yellow, SmartPhoneData.galaxy_S24_ULTRA_yellow_urls);
+        imageMap.put(SmartPhoneData.galaxy_S24_ULTRA_violet, SmartPhoneData.galaxy_S24_ULTRA_violet_urls);
+
+
+
     }
 
     public Map<List<String>, List<String>> getImageMap() {
