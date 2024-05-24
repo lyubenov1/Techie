@@ -446,7 +446,57 @@ INSERT INTO products (name, original_price, category_id, brand_id, stock, descri
 ('Samsung - Galaxy Tab S9 Ultra - 256GB 12GB RAM - Graphite', 1299.00, 3, 2, 50, 'dummy description'),
 ('Samsung - Galaxy Tab S9 Ultra - 512GB 12GB RAM - Graphite', 1399.00, 3, 2, 50, 'dummy description'),
 ('Samsung - Galaxy Tab S9 Ultra - 1TB 12GB RAM - Graphite', 1599.00, 3, 2, 50, 'dummy description'),
-('Samsung - Galaxy Tab S9 Ultra - 1TB 16GB RAM - Graphite', 1699.00, 3, 2, 50, 'dummy description');
+('Samsung - Galaxy Tab S9 Ultra - 1TB 16GB RAM - Graphite', 1699.00, 3, 2, 50, 'dummy description'),
+
+
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 8GB RAM - Midnight', 1299.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 16GB RAM - Midnight', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 8GB RAM - Starlight', 1299.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 16GB RAM - Starlight', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 8GB RAM - Space Gray', 1299.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 13" (M3 chip) - 512GB SSD 16GB RAM - Space Gray', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 8GB RAM - Midnight', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 16GB RAM - Midnight', 1699.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 8GB RAM - Starlight', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 16GB RAM - Starlight', 1699.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 8GB RAM - Space Gray', 1499.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Air 15" (M3 chip) - 512GB SSD 16GB RAM - Space Gray', 1699.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 8GB RAM - Silver', 1799.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 8GB RAM - Space Black', 1799.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 16GB RAM - Silver', 1999.00, 1, 1, 50, 'dummy description'),
+('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 16GB RAM - Space Black', 1999.00, 1, 1, 50, 'dummy description'),
+
+('Acer - Chromebook Plus 515 – 15.6" - Steel Gray', 399.00, 1, 5, 50, 'dummy description'),
+('Acer - Aspire 3 Thin & Light Laptop - 15.6" - Steam Blue', 599.00, 1, 5, 50, 'dummy description'),
+('Acer - Nitro V ANV15-51-789J 15.6" - Obsidian Black', 1099.00, 1, 5, 50, 'dummy description'),
+('Acer - Predator Helios 18 Gaming Laptop - 18"  - Abyssal Black', 2999.00, 1, 5, 50, 'dummy description'),
+('Acer - Chromebook 516 GE Cloud Gaming Laptop - 16" - Titanium Gray', 649.00, 1, 5, 50, 'dummy description'),
+('Acer - Chromebook 315 – 15.6" - Silver', 199.00, 1, 5, 50, 'dummy description'),
+('Acer - Predator Helios Neo 16" - Steel Gray', 1199.00, 1, 5, 50, 'dummy description'),
+('Acer - Aspire Vero - 15.6” - Cobblestone Gray', 629.00, 1, 5, 50, 'dummy description'),
+('Acer - Chromebook 314 Laptop -14" - Charcoal Black', 269.00, 1, 5, 50, 'dummy description'),
+('Acer - Nitro V ANV15-41-R2Y3 Gaming Laptop– 15.6" - Obsidian Black', 949.00, 1, 5, 50, 'dummy description'),
+
+('Dell G15 15.6" FHD 120Hz Gaming Laptop - 1TB SSD - Dark Shadow Gray w/ Black Thermal Shelf" - Obsidian Black', 899.00, 1, 6, 50, 'dummy description'),
+('Dell - Inspiron 16.0" 2-in-1 Touch Laptop - 512GB SSD - Dark River Blue', 849.00, 1, 6, 50, 'dummy description'),
+('Dell – Inspiron 14” 2-in-1 Touch Laptop – 1TB SDD - Ice Blue', 999.00, 1, 6, 50, 'dummy description'),
+('Dell - 16" 13th Generation Gaming Laptop - 1TB SSD - Metallic Nightshade', 1599.00, 1, 6, 50, 'dummy description'),
+('Dell - Inspiron 14.0" 2-in-1 Touch Laptop - 512GB SSD - Platinum Silver', 729.00, 1, 6, 50, 'dummy description'),
+('Dell Inspiron 15 Touch Screen Laptop –512GB SSD - Carbon Black', 629.00, 1, 6, 50, 'dummy description'),
+
+('Lenovo - Yoga 7i 2-in-1 16" 2K Touchscreen Laptop - 1TB SSD - Storm Grey', 1049.00, 1, 8, 50, 'dummy description'),
+('Lenovo - Ideapad 1 15.6" Full HD Touchscreen Laptop - 256GB SSD - Abyss Blue', 579.00, 1, 8, 50, 'dummy description'),
+('Lenovo - Ideapad 1 15.6" Full HD Touchscreen Laptop - 512GB SSD - Cloud Gray', 799.00, 1, 8, 50, 'dummy description'),
+('Lenovo - Yoga 7 16" WUXGA 2 in 1 Touch Screen Laptop - 512GB SSD - Arctic Grey', 749.00, 1, 8, 50, 'dummy description'),
+('Lenovo - Legion Slim 5 14.5" OLED Gaming Laptop - 1 TB SSD - Storm Grey', 1479.00, 1, 8, 50, 'dummy description'),
+
+('HP - 14" Laptop - 64GB eMMC - Snowflake White', 179.00, 1, 7, 50, 'dummy description'),
+('HP - 14" Laptop - 128GB eMMC - Rose Gold', 199.00, 1, 7, 50, 'dummy description'),
+('HP - 14" Laptop - 64GB eMMC - Indigo Blue', 179.00, 1, 7, 50, 'dummy description'),
+('HP - Envy 2-in-1 15.6" Full HD Touch-Screen Laptop - 256GB SSD - Natural Silver', 919.00, 1, 7, 50, 'dummy description'),
+('HP - Victus 15.6" Full HD 144Hz Gaming Laptop - 512GB SSD - Performance Blue', 879.00, 1, 7, 50, 'dummy description'),
+('HP - 14" Chromebook Laptop - 64GB eMMC - Modern Gray', 299.00, 1, 7, 50, 'dummy description'),
+('HP - Envy 17.3" Full HD Touch-Screen Laptop - 1TB SSD - Glacier Silver', 1349.00, 1, 7, 50, 'dummy description');
 
 
 
@@ -872,3 +922,56 @@ INSERT INTO tablets (id, screen_size, screen_resolution, ram, storage, battery_c
 (415, '14.6 inches', '2960 x 1848 pixels', '12 GB', '512 GB', '11200 mAh', '12 + 12 MP', '13 + 8 MP', '120 Hz', 'graphite', 'Android', 2023),
 (416, '14.6 inches', '2960 x 1848 pixels', '12 GB', '1 TB', '11200 mAh', '12 + 12 MP', '13 + 8 MP', '120 Hz', 'graphite', 'Android', 2023),
 (417, '14.6 inches', '2960 x 1848 pixels', '16 GB', '1 TB', '11200 mAh', '12 + 12 MP', '13 + 8 MP', '120 Hz', 'graphite', 'Android', 2023);
+
+
+INSERT INTO laptops (id,screen_size, screen_resolution, processor, gpu, ram, storage_type, storage, operating_system, color, year_of_release) VALUES
+(418, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'blue', 2024),
+(419, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'blue', 2024),
+(420, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'white', 2024),
+(421, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'white', 2024),
+(422, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'grey', 2024),
+(423, '13.6 inches', '2560 x 1664 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'grey', 2024),
+(424, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'blue', 2024),
+(425, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '512 GB', 'macOS', 'blue', 2024),
+(426, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'white', 2024),
+(427, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '512 GB', 'macOS', 'white', 2024),
+(428, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '512 GB', 'macOS', 'grey', 2024),
+(429, '15.3 inches', '2880 x 1864 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '512 GB', 'macOS', 'grey', 2024),
+(430, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '1 TB', 'macOS', 'silver', 2023),
+(431, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '1 TB', 'macOS', 'black', 2023),
+(432, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '1 TB', 'macOS', 'silver', 2023),
+(433, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '1 TB', 'macOS', 'black', 2023),
+
+(434, '15.6 inches', '1920 x 1080 pixels', 'Intel 12th Generation Core i3', 'Intel UHD Graphics', '8 GB', 'UFS', '128 GB', 'Chrome OS', 'grey', 2023),
+(435, '15.6 inches', '1920 x 1080 pixels', 'AMD Ryzen 5 7000 Series', 'AMD Radeon', '8 GB', 'SSD', '512 GB', 'Windows 11', 'blue', 2023),
+(436, '15.6 inches', '3024 x 1964 pixels', 'Intel 13th Generation Core i7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
+(437, '18 inches', '2560 x 1600 pixels', 'Intel Core i9 14th Generation', 'NVIDIA GeForce RTX 4090', '32 GB', 'SSD', '1 TB', 'Windows 11', 'black', 2024),
+(438, '16 inches', '2560 x 1600 pixels', 'Intel 12th Generation Core i5', 'Intel Iris Xe Graphics', '8 GB', 'SSD', '256 GB', 'Chrome OS', 'grey', 2022),
+(439, '15.6 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Chrome OS', 'silver', 2023),
+(440, '16 inches', '1920 x 1200 pixels', 'Intel 13th Generation Core i5', 'NVIDIA GeForce RTX 4050', '16 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
+(441, '15.6 inches', '1920 x 1080 pixels', 'Intel 13th Generation Core i5', 'Intel Iris Xe Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
+(442, '14 inches', '1920 x 1080 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Chrome OS', 'black', 2022),
+(443, '15.6 inches', '1920 x 1080 pixels', 'AMD Ryzen 5 7000 Series', 'NVIDIA GeForce RTX 4050', '16 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
+
+(444, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2024),
+(445, '16 inches', '1920 x 1200 pixels', 'AMD Ryzen 5 7530U', 'AMD Radeon', '16 GB', 'SSD', '512 GB', 'Windows 11', 'blue', 2023),
+(446, '14 inches', '1920 x 1200 pixels', 'Intel Core 7 Processor', 'Intel Graphics', '16 GB', 'SSD', '1 TB', 'Windows 11', 'blue', 2024),
+(447, '16 inches', '2560 x 1600 pixels', 'Intel Core i9', 'NVIDIA GeForce RTX 4060', '32 GB', 'SSD', '1 TB', 'Windows 11', 'black', 2023),
+(448, '14 inches', '1920 x 1200 pixels', '13th Gen Intel Core i5', 'Intel Iris Xe Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'silver', 2023),
+(449, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i5', 'Intel UHD Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
+
+(450, '16 inches', '1920 x 1200 pixels', 'Intel Core Ultra 7', 'Intel Graphics', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2024),
+(451, '15.6 inches', '1920 x 1080 pixels', 'Ryzen 5 7520U', 'AMD Radeon Graphics', '8 GB', 'SSD', '256 GB', 'Windows 11', 'blue', 2023),
+(452, '15.6 inches', '1920 x 1080 pixels', 'Ryzen 7 5700U', 'AMD Radeon Graphics', '16 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
+(453, '16 inches', '1920 x 1200 pixels', 'AMD Ryzen 5 7535U', 'AMD Radeon', '8 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
+(454, '14.5 inches', '2880 x 1800 pixels', 'Ryzen 7 7840HS', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2023),
+
+(455, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Windows 11', 'white', 2022),
+(456, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '128 GB', 'Windows 11', 'gold', 2022),
+(457, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Windows 11', 'blue', 2022),
+(458, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i5', 'NVIDIA GeForce RTX 4060', '8 GB', 'SSD', '256 GB', 'Windows 11', 'silver', 2023),
+(459, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i5', 'NVIDIA GeForce RTX 4060', '8 GB', 'SSD', '512 GB', 'Windows 11', 'blue', 2023),
+(460, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Chrome OS', 'grey', 2022),
+(461, '17.3 inches', '1920 x 1080 pixels', 'Intel Core Ultra 7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'silver', 2024);
+
+

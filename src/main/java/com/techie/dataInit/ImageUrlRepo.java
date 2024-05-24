@@ -123,6 +123,43 @@ public class ImageUrlRepo {
         imageMap.put(TabletData.samsung_tab_s9_ultra_beige, TabletData.samsung_tab_s9_ultra_beige_urls);
         imageMap.put(TabletData.samsung_tab_s9_ultra_graphite, TabletData.samsung_tab_s9_ultra_graphite_urls);
 
+        imageMap.put(LaptopData.macbook_air_gray, LaptopData.macbook_air_gray_urls);
+        imageMap.put(LaptopData.macbook_air_midnight, LaptopData.macbook_air_midnight_urls);
+        imageMap.put(LaptopData.macbook_air_starlight, LaptopData.macbook_air_starlight_urls);
+        imageMap.put(LaptopData.macbook_pro_black, LaptopData.macbook_pro_black_urls);
+        imageMap.put(LaptopData.macbook_pro_silver, LaptopData.macbook_pro_silver_urls);
+
+        imageMap.put(LaptopData.acer_one,LaptopData.acer_one_urls);
+        imageMap.put(LaptopData.acer_two,LaptopData.acer_two_urls);
+        imageMap.put(LaptopData.acer_three,LaptopData.acer_three_urls);
+        imageMap.put(LaptopData.acer_four,LaptopData.acer_four_urls);
+        imageMap.put(LaptopData.acer_five,LaptopData.acer_five_urls);
+        imageMap.put(LaptopData.acer_six,LaptopData.acer_six_urls);
+        imageMap.put(LaptopData.acer_seven,LaptopData.acer_seven_urls);
+        imageMap.put(LaptopData.acer_eight,LaptopData.acer_eight_urls);
+        imageMap.put(LaptopData.acer_nine,LaptopData.acer_nine_urls);
+        imageMap.put(LaptopData.acer_ten,LaptopData.acer_ten_urls);
+
+        imageMap.put(LaptopData.dell_one,LaptopData.dell_one_urls);
+        imageMap.put(LaptopData.dell_two,LaptopData.dell_two_urls);
+        imageMap.put(LaptopData.dell_three,LaptopData.dell_three_urls);
+        imageMap.put(LaptopData.dell_four,LaptopData.dell_four_urls);
+        imageMap.put(LaptopData.dell_five,LaptopData.dell_five_urls);
+        imageMap.put(LaptopData.dell_six,LaptopData.dell_six_urls);
+
+        imageMap.put(LaptopData.lenovo_one,LaptopData.lenovo_one_urls);
+        imageMap.put(LaptopData.lenovo_two,LaptopData.lenovo_two_urls);
+        imageMap.put(LaptopData.lenovo_three,LaptopData.lenovo_three_urls);
+        imageMap.put(LaptopData.lenovo_four,LaptopData.lenovo_four_urls);
+        imageMap.put(LaptopData.lenovo_five,LaptopData.lenovo_five_urls);
+
+        imageMap.put(LaptopData.hp_one,LaptopData.hp_one_urls);
+        imageMap.put(LaptopData.hp_two,LaptopData.hp_two_urls);
+        imageMap.put(LaptopData.hp_three,LaptopData.hp_three_urls);
+        imageMap.put(LaptopData.hp_four,LaptopData.hp_four_urls);
+        imageMap.put(LaptopData.hp_five,LaptopData.hp_five_urls);
+        imageMap.put(LaptopData.hp_six,LaptopData.hp_six_urls);
+        imageMap.put(LaptopData.hp_seven,LaptopData.hp_seven_urls);
 
     }
 
