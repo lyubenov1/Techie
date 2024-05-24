@@ -108,6 +108,20 @@ public class ImageUrlRepo {
         imageMap.put(TabletData.ipad_air_starlight, TabletData.ipad_air_starlight_urls);
         imageMap.put(TabletData.ipad_silver, TabletData.ipad_silver_urls);
         imageMap.put(TabletData.ipad_blue, TabletData.ipad_blue_urls);
+        imageMap.put(TabletData.huawei_matepad_grey, TabletData.huawei_matepad_grey_urls);
+        imageMap.put(TabletData.huawei_matepadT_blue, TabletData.huawei_matepadT_blue_urls);
+
+        imageMap.put(TabletData.lenovo_tab_m10, TabletData.lenovo_tab_m10_urls);
+        imageMap.put(TabletData.lenovo_tab_m11, TabletData.lenovo_tab_m11_urls);
+        imageMap.put(TabletData.lenovo_tab_p11, TabletData.lenovo_tab_p11_urls);
+        imageMap.put(TabletData.lenovo_tab_p12, TabletData.lenovo_tab_p12_urls);
+
+        imageMap.put(TabletData.samsung_tab_a9_navy, TabletData.samsung_tab_a9_navy_urls);
+        imageMap.put(TabletData.samsung_tab_a9_silver, TabletData.samsung_tab_a9_silver_urls);
+        imageMap.put(TabletData.samsung_tabs9_graphite, TabletData.samsung_tabs9_graphite_urls);
+        imageMap.put(TabletData.samsung_tabs9_plus_graphite_, TabletData.samsung_tabs9_plus_graphite_urls);
+        imageMap.put(TabletData.samsung_tab_s9_ultra_beige, TabletData.samsung_tab_s9_ultra_beige_urls);
+        imageMap.put(TabletData.samsung_tab_s9_ultra_graphite, TabletData.samsung_tab_s9_ultra_graphite_urls);
 
 
     }
