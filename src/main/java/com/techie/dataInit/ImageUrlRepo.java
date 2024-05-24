@@ -100,6 +100,16 @@ public class ImageUrlRepo {
         imageMap.put(SmartPhoneData.pixel_8a_bay,SmartPhoneData.pixel_8a_bay_urls);
         imageMap.put(SmartPhoneData.pixel_8a_obsidian,SmartPhoneData.pixel_8a_obsidian_urls);
         imageMap.put(SmartPhoneData.pixel_8a_porcelain,SmartPhoneData.pixel_8a_porcelain_urls);
+
+        imageMap.put(TabletData.ipad_pro_black, TabletData.ipad_pro_black_urls);
+        imageMap.put(TabletData.ipad_pro_silver, TabletData.ipad_pro_silver_urls);
+        imageMap.put(TabletData.ipad_air_gray, TabletData.ipad_air_gray_urls);
+        imageMap.put(TabletData.ipad_air_purple, TabletData.ipad_air_purple_urls);
+        imageMap.put(TabletData.ipad_air_starlight, TabletData.ipad_air_starlight_urls);
+        imageMap.put(TabletData.ipad_silver, TabletData.ipad_silver_urls);
+        imageMap.put(TabletData.ipad_blue, TabletData.ipad_blue_urls);
+
+
     }
 
     public Map<List<String>, List<String>> getImageMap() {
