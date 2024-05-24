@@ -14,6 +14,9 @@ INSERT INTO brands (name, description, logo_url) VALUES
 ('JBL', 'dummy description', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716289647/Brands/Jbl_y5uwm3.png'),
 ('Cellularline', 'dummy description', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716289156/Brands/Cellularline_ouu025.jpg');
 
+INSERT INTO brands (name) VALUES
+('Native Union');
+
 
 INSERT INTO categories (name, image_url, parent_id) VALUES
 ('Laptops', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716233519/Categories/Laptops.jpg', NULL),
@@ -465,7 +468,6 @@ INSERT INTO products (name, original_price, category_id, brand_id, stock, descri
 ('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 8GB RAM - Space Black', 1799.00, 1, 1, 50, 'dummy description'),
 ('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 16GB RAM - Silver', 1999.00, 1, 1, 50, 'dummy description'),
 ('Apple - Macbook Pro 14" (M3 chip) - 1 TB SSD 16GB RAM - Space Black', 1999.00, 1, 1, 50, 'dummy description'),
-
 ('Acer - Chromebook Plus 515 – 15.6" - Steel Gray', 399.00, 1, 5, 50, 'dummy description'),
 ('Acer - Aspire 3 Thin & Light Laptop - 15.6" - Steam Blue', 599.00, 1, 5, 50, 'dummy description'),
 ('Acer - Nitro V ANV15-51-789J 15.6" - Obsidian Black', 1099.00, 1, 5, 50, 'dummy description'),
@@ -476,27 +478,52 @@ INSERT INTO products (name, original_price, category_id, brand_id, stock, descri
 ('Acer - Aspire Vero - 15.6” - Cobblestone Gray', 629.00, 1, 5, 50, 'dummy description'),
 ('Acer - Chromebook 314 Laptop -14" - Charcoal Black', 269.00, 1, 5, 50, 'dummy description'),
 ('Acer - Nitro V ANV15-41-R2Y3 Gaming Laptop– 15.6" - Obsidian Black', 949.00, 1, 5, 50, 'dummy description'),
-
 ('Dell G15 15.6" FHD 120Hz Gaming Laptop - 1TB SSD - Dark Shadow Gray w/ Black Thermal Shelf" - Obsidian Black', 899.00, 1, 6, 50, 'dummy description'),
 ('Dell - Inspiron 16.0" 2-in-1 Touch Laptop - 512GB SSD - Dark River Blue', 849.00, 1, 6, 50, 'dummy description'),
 ('Dell – Inspiron 14” 2-in-1 Touch Laptop – 1TB SDD - Ice Blue', 999.00, 1, 6, 50, 'dummy description'),
 ('Dell - 16" 13th Generation Gaming Laptop - 1TB SSD - Metallic Nightshade', 1599.00, 1, 6, 50, 'dummy description'),
 ('Dell - Inspiron 14.0" 2-in-1 Touch Laptop - 512GB SSD - Platinum Silver', 729.00, 1, 6, 50, 'dummy description'),
 ('Dell Inspiron 15 Touch Screen Laptop –512GB SSD - Carbon Black', 629.00, 1, 6, 50, 'dummy description'),
-
 ('Lenovo - Yoga 7i 2-in-1 16" 2K Touchscreen Laptop - 1TB SSD - Storm Grey', 1049.00, 1, 8, 50, 'dummy description'),
 ('Lenovo - Ideapad 1 15.6" Full HD Touchscreen Laptop - 256GB SSD - Abyss Blue', 579.00, 1, 8, 50, 'dummy description'),
 ('Lenovo - Ideapad 1 15.6" Full HD Touchscreen Laptop - 512GB SSD - Cloud Gray', 799.00, 1, 8, 50, 'dummy description'),
 ('Lenovo - Yoga 7 16" WUXGA 2 in 1 Touch Screen Laptop - 512GB SSD - Arctic Grey', 749.00, 1, 8, 50, 'dummy description'),
 ('Lenovo - Legion Slim 5 14.5" OLED Gaming Laptop - 1 TB SSD - Storm Grey', 1479.00, 1, 8, 50, 'dummy description'),
-
 ('HP - 14" Laptop - 64GB eMMC - Snowflake White', 179.00, 1, 7, 50, 'dummy description'),
 ('HP - 14" Laptop - 128GB eMMC - Rose Gold', 199.00, 1, 7, 50, 'dummy description'),
 ('HP - 14" Laptop - 64GB eMMC - Indigo Blue', 179.00, 1, 7, 50, 'dummy description'),
 ('HP - Envy 2-in-1 15.6" Full HD Touch-Screen Laptop - 256GB SSD - Natural Silver', 919.00, 1, 7, 50, 'dummy description'),
 ('HP - Victus 15.6" Full HD 144Hz Gaming Laptop - 512GB SSD - Performance Blue', 879.00, 1, 7, 50, 'dummy description'),
 ('HP - 14" Chromebook Laptop - 64GB eMMC - Modern Gray', 299.00, 1, 7, 50, 'dummy description'),
-('HP - Envy 17.3" Full HD Touch-Screen Laptop - 1TB SSD - Glacier Silver', 1349.00, 1, 7, 50, 'dummy description');
+('HP - Envy 17.3" Full HD Touch-Screen Laptop - 1TB SSD - Glacier Silver', 1349.00, 1, 7, 50, 'dummy description'),
+
+('Native Union - 10" USB Type C-to-USB Type A Cable - Zebra', 29.99, 5, 15, 50, 'Charge your mobile phone or tablet conveniently with this Native Union belt cable. The 10-foot length offers flexible placement, extending the distance between the socket and device for easy reach while charging. This Native Union belt cable features a reinforced construction with DuPont Kevlar fiber that offers durability, and a genuine leather strap ensures tangle-free use.'),
+('Insignia - 10" USB-A to Lightning Charge-and-Sync Cable - Moon Gray', 15.99, 5, 12, 50, 'Whether you’re calling loved ones, texting friends, or ordering takeout food online, your phone is vital to your lifestyle. It’s important to keep it charged and ready to go at a moment’s notice. The Insignia NS-MLA1021MG 10 ft. Lightning to USB Charge-and-Sync Cable is more than up to the task. It’ll not only charge your Lightning-enabled iPhone, iPad or iPod, but also let you transfer files and sync your device. Its long 10 ft. length gives you flexible placement options and its braided jacket keeps the cable both protected and looking stylish. Trust this Insignia Lightning to USB Cable to help keep you ready for the challenges of everyday life.'),
+('Apple - 6.6" (2M) USB Type C-to-Lightning Charging Cable - White', 24.99, 5, 1, 50, 'This 6.6'' (2M) USB-C 2.0 cable connects your iPhone, iPad, or iPod with Lightning connector to your computer''s USB-C port for syncing and charging. Or you can connect to the Apple USB-C Power Adapter for convenient charging from a wall outlet.'),
+('Apple - 3.3" USB Type C-to-Lightning Charging Cable - White', 19.99, 5, 1, 50, 'Connect your iPhone, iPad, or iPod with Lightning connector to your USB-C or Thunderbolt 3 (USB-C) enabled Mac for syncing and charging, or to your USB-C enabled iPad for charging. You can also use this cable with your Apple 18W, 20W, 29W, 30W, 61W, 87W or 96W USB‑C Power Adapter to charge your iOS device and even take advantage of the fast-charging feature on select iPhone and iPad models.'),
+('Apple - 6.6" USB Type A-to-Lightning Charging Cable - White', 29.99, 5, 1, 50, 'Connect your compatible Apple® device to your computer''s USB port with this Apple MD819ZM/A cable which features a Lightning connector to help charge and sync your iPad® mini, iPad with Retina, iPhone® 5, 5s or 5c and more.'),
+('Insignia - 10" USB-A to USB-CA Charge-and-Sync Cable - Charcoal', 12.99, 5, 12, 50, 'When your smartphone battery dies, you lose the ability to stay connected. Whether it’s social media, your calendar or just the internet, nothing’s worse than a device with a low battery and no way to charge it. The Insignia 10'' USB-A to USB-C Charge-and-Sync Cable lets you power and transfer files from USB-C smartphones, tablets and more. Slim connectors with a textured grip fit into cases, keeping your device protected. With a charcoal-gray braided design, you can count on its durable exterior for everyday use. This long 10 ft. cable keeps you connected to everything that’s important.'),
+('Samsung - 65W 6" USB Type C-to-USB Type C Device Cable - Black', 24.99, 5, 2, 50, 'Enjoy fast charging and fast data transmission at the same time. With up to 65W power delivery on Samsung laptops, up to 45W Super Fast Charging 2.0 on compatible smartphones and USB 2.0 data transfer speeds, you don''t have to switch cables for optimized performance.'),
+('Insignia - 4" USB-A to USB-C Charge-and-Sync Cable (2 Pack) - Charcoal', 14.99, 5, 12, 50, 'When your smartphone battery dies, you lose the ability to stay connected. Whether it’s social media, your calendar or just the internet, nothing’s worse than a device with a low battery and no way to charge it. The Insignia NS-MCA421C2 4'' USB-A to USB-C Charge-and-Sync Cable (2 Pack) lets you power and transfer files from USB-C smartphones, tablets and more. Slim connectors with a textured grip fit into cases, keeping your device protected. With a charcoal-gray braided design, you can count on its durable exterior for everyday use. This long 4 ft. cable keeps you connected to everything that’s important.'),
+('Anker - PowerLine III Flow USB-C to Lightning Cable 6-ft - Purple', 29.99, 5, 10, 50, 'PowerLine III Flow USB-C to Lightning Cable: Super Strong, Surprisingly Soft. Once you’ve held this surprisingly soft silica gel cable in your hand, you’ll never go back to regular cables. Features a triple-layered system of copper wires, flexible graphene, and silica gel for enhanced flexibility without any loss in durability. The result is a cable with a tensile strength of 220 lbs (100 kg) and a 25,000-bend lifespan. More than enough to take the strain of a dangling iPhone or iPad. Use the included silica gel strap to keep the cable neatly coiled when stored away in a drawer, bag, pocket, or anywhere else. Note: Travel pouch not included. Find a look to suit you and your iPhone. PowerLine III Flow comes in 5 fresh finishes: Coral Pink, Lavender Grey, Mint Green, Cloud White, and Midnight Black. Compatible with Power Delivery fast charging to charge your iPhone, iPad, or any other Lightning device at its maximum possible speed. Note: Requires a compatible Power Delivery high-speed charger.'),
+('Anker - 322 USB-A to USB-C Cable - 6ft, Nylon - Black', 11.99, 5, 10, 50, 'Experience superior quality with our USB-C to USB-C cable, crafted from high-quality materials and tested to withstand up to 175 lbs without breaking, ensuring a lifespan of up to 12,000 uses. Safety is our priority, and this product has passed rigorous tests to meet USB-IF''s strict safety standards, delivering a safe and reliable charging experience. Enjoy universal compatibility as this cable works seamlessly with all USB-C devices, including phones, laptops, cameras, and a wide range of Samsung Galaxy and Pixel models. Trust in our commitment to quality and safety.'),
+('Insignia - 150" Cat-6 Ethernet Cable - Gray', 54.99, 5, 12, 50, 'Set up a versatile home network with this Insignia Ethernet cable. Its 150-foot length provides plenty of leeway, so you can connect to a network switch or modem in another room, and it supports 10/100/1000 Mbps speeds for versatile use. This Insignia Ethernet cable has snagless connectors, so you can plug and unplug it numerous times without wearing it down.'),
+('Insignia™ - 25" 4K Ultra HD HDMI Cable - Black', 79.99, 5, 12, 50, 'Use this Insignia HDMI cable to set up your ideal entertainment system in your home. An in-wall rating keeps the tangle of wires from view, and the 25-foot length offers a range of placement options. This Insignia HDMI cable handles the latest in 4K HDMI systems, and Ethernet capabilities expand your possibilities.'),
+
+('Apple - MagSafe iPhone Charger - White', 33.99, 6, 1, 50, 'The MagSafe Charger makes wireless charging a snap. The perfectly aligned magnets attach to your iPhone 15, iPhone 15 Pro, iPhone 13 or iPhone 13 Pro, iPhone 12 or iPhone 12 Pro and provide faster wireless charging.'),
+('Samsung - SmartThings Station with Power Adapter - Black', 79.99, 6, 2, 50, 'Invite intelligence into your home. Beyond charging your device, SmartThings Station is designed to make your day and night run smoothly with smart features, automated experiences and convenient control of your home.'),
+('Samsung - Wireless Charger Pad Trio - Black', 89.99, 6, 2, 50, 'With room to hold three devices at once — a smartwatch and two phones, or a smartwatch, earbuds, and phone — you can power up your ecosystem all at once**. So when you’re done for the day, just put your devices down in one place to be ready for tomorrow.'),
+('Samsung - 25W Super Fast Charging Wall Charger USB-C - Black', 15.99, 6, 2, 50, 'Super fast charging up to 25W with compatible devices and other USB devices will charge at varying rates also works with USB-C cable.'),
+('Insignia™ - 72.5W 2-Port USB-C/USB Foldable Wall Charger for Laptops, Smartphone, and Tablet - White', 22.99, 6, 12, 50, 'Don’t let your laptop or smartphone battery die as you work throughout the day. The Insignia NS-PW372AC1W22 72.5W 2-Port USB-C/USB Wall Charger has a 72.5-watt output to quickly charge your laptop, smartphone, tablet or other device. It has a USB-C and a standard USB port so you can connect your cables (not included) and charge two devices simultaneously. Its compact and durable body with a foldable plug easily fits into a purse or pocket, ready for when you need it. A simple white design pairs well with your other accessories. Keep your laptop and phone both working as hard as you do with this dual-port, easy-to-carry charger.'),
+('Samsung - Super Fast Charging 65W Trio Adapter - Black', 59.99, 6, 2, 50, 'Maximize your charging time. Power up a wide range of devices from earbuds to laptops.'),
+('Google - 30W USB-C Charger and Cable - Clearly White', 35.00, 6, 3, 50, 'Charge your Google products and other USB-C devices quickly with the 30W USB-C Charger. It’s compact enough to take wherever you go.'),
+('Apple - 20W USB-C Power Adapter - White', 14.99, 6, 1, 50, 'The Apple 20W USB-C Power Adapter offers fast, efficient charging at home, in the office, or on the go. While the power adapter is compatible with any USB-C-enabled device, Apple recommends pairing it with the 11-inch iPad Pro and 12.9-inch iPad Pro (3rd generation) for optimal charging performance. The Apple 20W USB-C Power Adapter offers fast, efficient charging at home, in the office, or on the go. Pair it with iPhone 8 or later for fast charging–50 percent battery in around 35 minutes.* Or pair it with the iPad Pro and iPad Air for optimal charging performance. Compatible with any USB-C enabled device. *Charging cable sold separately.'),
+('Insignia™ - 30W USB-C Foldable Compact Wall Charger Bundle with 6’ USB-C to C cable for Smartphones, Tablets and More - White', 24.99, 6, 12, 50, 'Don’t let the battery of your device die as you work throughout the day. The Insignia NS-MW3130C1W24B 30W USB-C Foldable Compact Wall Charger for Smartphones, Tablets and More has a 30-watt output to quickly charge all your USB-C devices. Its compact, durable body and a foldable plug easily fit into a purse or pocket, ready for when you need it. An included 6 ft. USB-C cable provides flexible placement options and is braided for an improved look and feel. All that and a simple white design pairs well with your other accessories. Keep your devices working as hard as you do with this easy-to-carry charger.'),
+('Anker - 735 65W 3 Port USB Foldable Fast Wall Charger with GaN for iPhone/Samsung/Tablets/Laptops - Black', 39.99, 6, 10, 50, 'Instead of filling up your house (and the planet) with an extra charger for each new device you buy, Anker 735 charger has the power you need to charge the majority of your personal devices with just a single charger.');
+
+
+
+
 
 
 
@@ -941,7 +968,6 @@ INSERT INTO laptops (id,screen_size, screen_resolution, processor, gpu, ram, sto
 (431, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '8 GB', 'SSD', '1 TB', 'macOS', 'black', 2023),
 (432, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '1 TB', 'macOS', 'silver', 2023),
 (433, '14.2 inches', '3024 x 1964 pixels', 'Apple M3', 'Apple M3 GPU (10-core)', '16 GB', 'SSD', '1 TB', 'macOS', 'black', 2023),
-
 (434, '15.6 inches', '1920 x 1080 pixels', 'Intel 12th Generation Core i3', 'Intel UHD Graphics', '8 GB', 'UFS', '128 GB', 'Chrome OS', 'grey', 2023),
 (435, '15.6 inches', '1920 x 1080 pixels', 'AMD Ryzen 5 7000 Series', 'AMD Radeon', '8 GB', 'SSD', '512 GB', 'Windows 11', 'blue', 2023),
 (436, '15.6 inches', '3024 x 1964 pixels', 'Intel 13th Generation Core i7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
@@ -952,20 +978,17 @@ INSERT INTO laptops (id,screen_size, screen_resolution, processor, gpu, ram, sto
 (441, '15.6 inches', '1920 x 1080 pixels', 'Intel 13th Generation Core i5', 'Intel Iris Xe Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
 (442, '14 inches', '1920 x 1080 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Chrome OS', 'black', 2022),
 (443, '15.6 inches', '1920 x 1080 pixels', 'AMD Ryzen 5 7000 Series', 'NVIDIA GeForce RTX 4050', '16 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
-
 (444, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2024),
 (445, '16 inches', '1920 x 1200 pixels', 'AMD Ryzen 5 7530U', 'AMD Radeon', '16 GB', 'SSD', '512 GB', 'Windows 11', 'blue', 2023),
 (446, '14 inches', '1920 x 1200 pixels', 'Intel Core 7 Processor', 'Intel Graphics', '16 GB', 'SSD', '1 TB', 'Windows 11', 'blue', 2024),
 (447, '16 inches', '2560 x 1600 pixels', 'Intel Core i9', 'NVIDIA GeForce RTX 4060', '32 GB', 'SSD', '1 TB', 'Windows 11', 'black', 2023),
 (448, '14 inches', '1920 x 1200 pixels', '13th Gen Intel Core i5', 'Intel Iris Xe Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'silver', 2023),
 (449, '15.6 inches', '1920 x 1080 pixels', 'Intel Core i5', 'Intel UHD Graphics', '8 GB', 'SSD', '512 GB', 'Windows 11', 'black', 2024),
-
 (450, '16 inches', '1920 x 1200 pixels', 'Intel Core Ultra 7', 'Intel Graphics', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2024),
 (451, '15.6 inches', '1920 x 1080 pixels', 'Ryzen 5 7520U', 'AMD Radeon Graphics', '8 GB', 'SSD', '256 GB', 'Windows 11', 'blue', 2023),
 (452, '15.6 inches', '1920 x 1080 pixels', 'Ryzen 7 5700U', 'AMD Radeon Graphics', '16 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
 (453, '16 inches', '1920 x 1200 pixels', 'AMD Ryzen 5 7535U', 'AMD Radeon', '8 GB', 'SSD', '512 GB', 'Windows 11', 'grey', 2023),
 (454, '14.5 inches', '2880 x 1800 pixels', 'Ryzen 7 7840HS', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'grey', 2023),
-
 (455, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Windows 11', 'white', 2022),
 (456, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '128 GB', 'Windows 11', 'gold', 2022),
 (457, '14 inches', '1366 x 768 pixels', 'Intel Celeron', 'Intel UHD Graphics 600', '4 GB', 'eMMC', '64 GB', 'Windows 11', 'blue', 2022),
@@ -975,3 +998,29 @@ INSERT INTO laptops (id,screen_size, screen_resolution, processor, gpu, ram, sto
 (461, '17.3 inches', '1920 x 1080 pixels', 'Intel Core Ultra 7', 'NVIDIA GeForce RTX 4060', '16 GB', 'SSD', '1 TB', 'Windows 11', 'silver', 2024);
 
 
+INSERT INTO cables (id, type) VALUES
+(462, 'charging'),
+(463, 'charging'),
+(464, 'charging'),
+(465, 'charging'),
+(466, 'charging'),
+(467, 'charging'),
+(468, 'charging'),
+(469, 'charging'),
+(470, 'charging'),
+(471, 'charging'),
+(472, 'ethernet'),
+(473, 'HDMI');
+
+
+INSERT INTO chargers (id, adapter_type) VALUES
+(474, 'wireless chargers'),
+(475, 'wireless chargers'),
+(476, 'wireless chargers'),
+(477, 'wall chargers'),
+(478, 'wall chargers'),
+(479, 'wall chargers'),
+(480, 'wall chargers'),
+(481, 'wall chargers'),
+(482, 'wall chargers'),
+(483, 'wall chargers');

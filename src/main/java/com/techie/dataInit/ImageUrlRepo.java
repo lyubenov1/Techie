@@ -161,6 +161,30 @@ public class ImageUrlRepo {
         imageMap.put(LaptopData.hp_six,LaptopData.hp_six_urls);
         imageMap.put(LaptopData.hp_seven,LaptopData.hp_seven_urls);
 
+        imageMap.put(CablesData.cables_one,CablesData.cables_one_urls);
+        imageMap.put(CablesData.cables_two,CablesData.cables_two_urls);
+        imageMap.put(CablesData.cables_three,CablesData.cables_three_urls);
+        imageMap.put(CablesData.cables_four,CablesData.cables_four_urls);
+        imageMap.put(CablesData.cables_five,CablesData.cables_five_urls);
+        imageMap.put(CablesData.cables_six,CablesData.cables_six_urls);
+        imageMap.put(CablesData.cables_seven,CablesData.cables_seven_urls);
+        imageMap.put(CablesData.cables_eight,CablesData.cables_eight_urls);
+        imageMap.put(CablesData.cables_nine,CablesData.cables_nine_urls);
+        imageMap.put(CablesData.cables_ten,CablesData.cables_ten_urls);
+        imageMap.put(CablesData.cables_eleven,CablesData.cables_eleven_urls);
+        imageMap.put(CablesData.cables_twelve,CablesData.cables_twelve_urls);
+
+        imageMap.put(ChargersData.chargers_one,ChargersData.chargers_one_urls);
+        imageMap.put(ChargersData.chargers_two,ChargersData.chargers_two_urls);
+        imageMap.put(ChargersData.chargers_three,ChargersData.chargers_three_urls);
+        imageMap.put(ChargersData.chargers_four,ChargersData.chargers_four_urls);
+        imageMap.put(ChargersData.chargers_five,ChargersData.chargers_five_urls);
+        imageMap.put(ChargersData.chargers_six,ChargersData.chargers_six_urls);
+        imageMap.put(ChargersData.chargers_seven,ChargersData.chargers_seven_urls);
+        imageMap.put(ChargersData.chargers_eight,ChargersData.chargers_eight_urls);
+        imageMap.put(ChargersData.chargers_nine,ChargersData.chargers_nine_urls);
+        imageMap.put(ChargersData.chargers_ten,ChargersData.chargers_ten_urls);
+
     }
 
     public Map<List<String>, List<String>> getImageMap() {

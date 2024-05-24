@@ -14,7 +14,7 @@ public class LaptopData {
     );
 
     public static final List<String> macbook_air_midnight_urls = List.of(
-            "hhttps://res.cloudinary.com/dztiecgdt/image/upload/v1716303035/Products/Laptops/Apple/Macbook%20Air%20midnight/1_e8m0c3.jpg",
+            "https://res.cloudinary.com/dztiecgdt/image/upload/v1716303035/Products/Laptops/Apple/Macbook%20Air%20midnight/1_e8m0c3.jpg",
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716302559/Products/Laptops/Apple/Macbook%20Air%20midnight/2_gnhbkq.jpg",
             "https://res.cloudinary.com/dztiecgdt/image/upload/v1716302614/Products/Laptops/Apple/Macbook%20Air%20midnight/3_mbdgot.jpg"
     );

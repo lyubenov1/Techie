@@ -17,10 +17,10 @@ public class Brand {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String logoUrl;
 
 }
