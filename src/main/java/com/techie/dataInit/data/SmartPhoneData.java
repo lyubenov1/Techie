@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SmartPhoneData {
 
-    //  Iphone ---------------------------------------------------------------------
+    //  Iphone -----------------------------------------------------------------------
     public static final List<String> iphone15_black_models = List.of(
             "Apple - iPhone 15 128GB - Black",
             "Apple - iPhone 15 256GB - Black",
