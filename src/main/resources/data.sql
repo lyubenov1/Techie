@@ -17,6 +17,9 @@ INSERT INTO brands (name, description, logo_url) VALUES
 INSERT INTO brands (name) VALUES
 ('Native Union');
 
+INSERT INTO brands (name, description, logo_url) VALUES
+('Bose', 'dummy description', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716235715/Brands/Bose_e7j7il.jpg');
+
 
 INSERT INTO categories (name, image_url, parent_id) VALUES
 ('Laptops', 'https://res.cloudinary.com/dztiecgdt/image/upload/v1716233519/Categories/Laptops.jpg', NULL),
@@ -519,10 +522,270 @@ INSERT INTO products (name, original_price, category_id, brand_id, stock, descri
 ('Google - 30W USB-C Charger and Cable - Clearly White', 35.00, 6, 3, 50, 'Charge your Google products and other USB-C devices quickly with the 30W USB-C Charger. It’s compact enough to take wherever you go.'),
 ('Apple - 20W USB-C Power Adapter - White', 14.99, 6, 1, 50, 'The Apple 20W USB-C Power Adapter offers fast, efficient charging at home, in the office, or on the go. While the power adapter is compatible with any USB-C-enabled device, Apple recommends pairing it with the 11-inch iPad Pro and 12.9-inch iPad Pro (3rd generation) for optimal charging performance. The Apple 20W USB-C Power Adapter offers fast, efficient charging at home, in the office, or on the go. Pair it with iPhone 8 or later for fast charging–50 percent battery in around 35 minutes.* Or pair it with the iPad Pro and iPad Air for optimal charging performance. Compatible with any USB-C enabled device. *Charging cable sold separately.'),
 ('Insignia™ - 30W USB-C Foldable Compact Wall Charger Bundle with 6’ USB-C to C cable for Smartphones, Tablets and More - White', 24.99, 6, 12, 50, 'Don’t let the battery of your device die as you work throughout the day. The Insignia NS-MW3130C1W24B 30W USB-C Foldable Compact Wall Charger for Smartphones, Tablets and More has a 30-watt output to quickly charge all your USB-C devices. Its compact, durable body and a foldable plug easily fit into a purse or pocket, ready for when you need it. An included 6 ft. USB-C cable provides flexible placement options and is braided for an improved look and feel. All that and a simple white design pairs well with your other accessories. Keep your devices working as hard as you do with this easy-to-carry charger.'),
-('Anker - 735 65W 3 Port USB Foldable Fast Wall Charger with GaN for iPhone/Samsung/Tablets/Laptops - Black', 39.99, 6, 10, 50, 'Instead of filling up your house (and the planet) with an extra charger for each new device you buy, Anker 735 charger has the power you need to charge the majority of your personal devices with just a single charger.');
+('Anker - 735 65W 3 Port USB Foldable Fast Wall Charger with GaN for iPhone/Samsung/Tablets/Laptops - Black', 39.99, 6, 10, 50, 'Instead of filling up your house (and the planet) with an extra charger for each new device you buy, Anker 735 charger has the power you need to charge the majority of your personal devices with just a single charger.'),
+
+('Cellularline Power Bank Essence 20000 Portable Charger 20000 mAh - Input 1 x USB-C, 1 x Micro USB 10.5 W - Output 1 x USB 12 W - Black', 39.99, 8, 14, 50, 'ESSENCE is the Cellularline portable battery charger that ensures optimal performance when the smartphone needs to be charged in an emergency and provides up to 12W of power. It has two USB-C and Micro USB input ports for charging the battery charger and a USB output for charging the device. The design has been studied for best performance: the non-slip paint gives it a solid grip and the soft material coating feels comfortable.'),
+('Cellularline Power Bank Essence 5000 mAh Portable Charger - Input 1 x USB-C, 1 x Micro USB 10.5 W - Output 1 x USB 12 W (Blue)', 27.99, 8, 14, 50, 'Essence is the cellularline power bank that guarantees excellent performance for emergency charging of the smartphone and delivers up to 12W of power. It is equipped with two INPUT USB-C and MICRO-USB ports for charging the charger and an OUTPUT USB port for charging the device. The design is designed to provide the best performance: the non-slip coating and soft-touch coating give strength to the grip and feel comfortable.'),
+('Anker - Power Bank (10000mAh, 20W, 3-Port) - Black', 39.99, 8, 10, 50, 'Elevate your charging experience with the PowerCore III Sense (10000mAh, 20W, 3-Port). This power bank offers versatile charging options, featuring Triple Charging Modes including a 20W Power Delivery USB-C port, a PowerIQ-enabled USB-A port, and a trickle-charging mode for low-power devices. Charge two devices simultaneously through its dual USB ports. With exquisite craftsmanship, its sleek design and cool-blue LED light wheel showcase the battery level elegantly. Quality is paramount inside and out. Recharge swiftly in just 4.5 hours using a USB-C Power Delivery wall charger (charger not included), or approximately 10.2 hours with a USB-A charger and cable (not included). Elevate your charging game with PowerCore III Sense 10K.'),
+('Anker PowerCore III Sense 20K USB-C Portable Battery Charger - Black', 49.99, 8, 10, 50, 'Anker PoweCore III Sense 20K Portable Charger is one of the slimmest Power Delivery portable power banks around. It offers high-speed charging for virtually any mobile device on the market. With its large 20,000mAh cell capacity, you can keep all your devices charged for days, wherever you are. The power bank comes with two PowerIQ USB-A outputs for dual-device charging and one Power Delivery USB-C input for extremely quick recharging. The Anker MultiProtect safety system includes high-voltage protection, current regulation, temperature control, and more to keep you and your devices safe. On top of its charging power, you can keep a stylish and professional look with the fabric exterior. This is all you need in a charging companion. Compatible with iPhone 13/13 Pro/12/12 Pro/12 Pro Max/8/X/XR, Samsung, iPad Pro, and More.'),
+('Anker 737 Power Bank - Black', 189.99, 8, 10, 50, 'The Anker 737 Power Bank (Black) is a powerful portable charger with a massive 24,000mAh capacity, allowing you to charge your devices multiple times. It supports fast charging technology for various devices, including laptops, and features multiple ports for charging multiple devices at once. An integrated digital display provides information like charging power and estimated recharge time. This black colored power bank is a reliable option for keeping your devices powered up wherever you go.'),
+('Anker - Power Bank (24000mAh, 140W, 3-Port) - Black', 109.99, 8, 10, 50, 'Harness the power of Power Delivery 3.1, boasting a remarkable 140W output for lightning-fast recharges of laptops, tablets, and phones. Charge a MacBook Pro 14" up to 80% in just 51 minutes, or achieve the same with a 140W charger in a swift 40 minutes. Stay informed with real-time insights, showing power levels, estimated full charge times, and power bank temperature. With a generous 24,000 mAh capacity, charge a MacBook Air 1.3 times or multiple iPhones on the go. Designed for convenience and compliance, it adheres to boarding regulations while maintaining exceptional portability. Connect to any port for optimal charging efficiency. Our intelligent temperature monitoring system ensures safety with a consistent temperature 10% below international guidelines. Embrace the future of charging with unparalleled performance and safety.'),
+('Energizer - MAX 30,000mAh 15W USB-C 3-Port Universal Portable Battery Charger/Power Bank w/ LCD screen for Smartphones & Accessories - Black', 59.99, 8, 11, 50, 'Charge your mobile devices quickly and efficiently with this Energizer power bank.  This portable charger provides 30,000mAh capacity to charge smartphones, tablets, smartwatches, headphones, ear buds, and more.  The bright LCD screen displays the current battery level so you always know how much power is left. The 30,000mAh battery provides up to 108 hours of additional power to smartphones while the two USB 2.1 Type-A ports with Rapid Charge technology deliver power consistently and efficiently to up to two devices at once at 10.5W. The USB-C output provides up to 15W of charging power. Charge up to thee devices at once via two USB-A outputs and one USB-C output. The textured surface prevents slippage, scratches and fingerprints. Energizer PowerSafe Management protects against short circuit, overcurrent, overcharge and overdischarge for your power bank and devices. A USB-C Cable is included for recharging the power bank quickly and efficiently.'),
+('Energizer - Ultimate Lithium 30,000 mAh 30W PD USB-C Universal Portable Battery Charger/Power Bank with 6 Ports and LCD Display - Black', 69.99, 8, 11, 50, 'Charge your mobile devices including Smartphones, Compuiters, Tablets, earbuds and most USB devices with this Energizer power bank. The six outputs, including 4 Smart USB-A and 2 USB-C, can charge six devices at the same time. The 30W USB-C Power Delivery technology allows you to fast charge the new iPhones from 0 to 50% in only 30 minutes, and other USB-C devices. The two 30W USB-C Power Delivery outputs also support laptop charging. Four USB-A ports charge devices at 18W to charge Android devices from 0-50% in 30 minutes. The dual inputs allow you to recharge through USB-C or micro-USB based on your convenience. The LCD screen indicator shows the battery charging status at a quick glance. Energizer PowerSafe Management guarantees against short circuit, overcurrent, overcharge and overdischarge for your power bank and devices.'),
 
 
+('AirPods Pro (2nd generation) with MagSafe Charging Case (USB‑C)', 249.00, 7, 1, 50, 'The AirPods Pro (2nd generation) with MagSafe Charging Case (USB-C) are Apple''s premium wireless earbuds, designed to provide an exceptional audio experience with several advanced features. These earbuds come with enhanced Active Noise Cancellation (ANC) that effectively blocks out external noise, making them ideal for use in various environments. Additionally, they feature a Transparency Mode, allowing users to hear and interact with the surroundings without removing the earbuds.
 
+One of the standout features of the second-generation AirPods Pro is Personalized Spatial Audio, which creates an immersive sound experience by tailoring the audio output to the unique shape of the user''s ears. This results in a more engaging and enveloping listening experience.
+
+Battery life has been improved, offering up to six hours of listening time with ANC enabled. The MagSafe Charging Case extends the total battery life to up to 30 hours. This case supports MagSafe for convenient and secure wireless charging and includes a USB-C port for versatile wired charging options.
+
+The sound quality of the AirPods Pro (2nd generation) is enhanced with a new low-distortion audio driver and a custom amplifier, delivering rich and detailed sound across various music genres. Adaptive Transparency is another innovative feature that dynamically reduces the intensity of loud noises in the environment, providing a more comfortable listening experience without completely blocking out important sounds.
+
+Both the earbuds and the charging case are sweat and water-resistant (IPX4 rated), making them suitable for workouts and outdoor activities. Additionally, the case includes a built-in speaker that integrates with the Find My app, helping users locate it if misplaced.
+
+Overall, the AirPods Pro (2nd generation) with MagSafe Charging Case (USB-C) are designed to offer a premium and adaptable listening experience, with advanced features that cater to a wide range of user needs.'),
+('AirPods (2nd generation)', 129.00, 7, 1, 50, 'The AirPods (2nd generation) are Apple''s wireless earbuds, known for their ease of use, seamless integration with Apple devices, and solid performance. They maintain the iconic design of the original AirPods and come with several enhancements that improve the overall user experience.
+
+One of the key features of the AirPods (2nd generation) is the H1 chip, which enables faster and more stable wireless connections to your devices. This chip also allows for hands-free "Hey Siri" functionality, enabling users to control their music, make phone calls, adjust the volume, and get directions simply by using voice commands.
+
+The battery life of the AirPods (2nd generation) is impressive, offering up to 5 hours of listening time on a single charge. The included charging case extends this to more than 24 hours of total listening time. A quick 15-minute charge in the case provides up to 3 hours of listening time or up to 2 hours of talk time, making them convenient for users on the go.
+
+In terms of sound quality, the AirPods (2nd generation) deliver clear and balanced audio with rich bass and crisp highs. While they may not offer advanced features like Active Noise Cancellation, they provide a reliable and enjoyable listening experience for a wide range of audio content, from music and podcasts to phone calls.
+
+The AirPods (2nd generation) are designed for comfort and a secure fit, making them suitable for a variety of activities, including workouts and daily commutes. They automatically connect to your device as soon as you put them in your ears and pause when you take them out, ensuring a smooth and intuitive user experience.
+
+Overall, the AirPods (2nd generation) are a solid choice for anyone looking for a pair of wireless earbuds that offer convenience, reliable performance, and seamless integration with the Apple ecosystem.'),
+('AirPods (3rd generation)', 169.00, 7, 1, 50, 'The AirPods (3rd generation) are Apple''s mid-tier wireless earbuds that bring several enhancements over their predecessors while maintaining the user-friendly design and seamless integration with Apple devices that the brand is known for.
+
+One of the standout features of the AirPods (3rd generation) is the introduction of Spatial Audio with dynamic head tracking. This technology provides an immersive listening experience by adjusting the sound based on the position of your head, making it feel as though the audio is coming from all around you. This feature works particularly well with Dolby Atmos content available on Apple Music.
+
+The AirPods (3rd generation) also boast improved sound quality, thanks to a new custom driver and high dynamic range amplifier. These components work together to deliver rich bass, crisp highs, and detailed midrange frequencies, offering a more balanced and fuller sound compared to previous generations.
+
+Battery life has been significantly enhanced as well. The earbuds themselves offer up to 6 hours of listening time on a single charge, while the MagSafe Charging Case provides up to 30 hours of total listening time. The case supports both MagSafe and Qi wireless charging, in addition to standard Lightning cable charging, offering flexibility and convenience for users.
+
+In terms of design, the AirPods (3rd generation) have a shorter stem and a more contoured shape, providing a better fit for a wider range of ear sizes. They are also sweat and water-resistant (IPX4 rated), making them suitable for workouts and outdoor activities.
+
+The AirPods (3rd generation) feature the H1 chip, which enables quick and stable wireless connections to your Apple devices, seamless switching between devices, and hands-free "Hey Siri" functionality. This chip also helps reduce latency for a more responsive audio experience when watching videos or playing games.
+
+Overall, the AirPods (3rd generation) offer a significant upgrade in sound quality, battery life, and features like Spatial Audio, making them an excellent choice for users looking for a versatile and high-performing pair of wireless earbuds within the Apple ecosystem.'),
+
+('Anker Space A40 - Black', 59.00, 7, 10, 50, 'The Anker Soundcore Space A40 are wireless earbuds known for their impressive noise-canceling capabilities and high-quality sound. They feature advanced hybrid active noise cancellation, which effectively reduces ambient noise, making them ideal for use in noisy environments. The earbuds offer up to 10 hours of playtime on a single charge, with the charging case extending the total battery life to up to 50 hours. They support Bluetooth 5.2 for a stable and efficient connection. The Space A40 also includes customizable sound profiles through the Soundcore app, ensuring a personalized listening experience. Additionally, they are designed for comfort and secure fit, making them suitable for long listening sessions.'),
+('Anker Space A40 - Navy Blue', 59.00, 7, 10, 50, 'The Anker Soundcore Space A40 are wireless earbuds known for their impressive noise-canceling capabilities and high-quality sound. They feature advanced hybrid active noise cancellation, which effectively reduces ambient noise, making them ideal for use in noisy environments. The earbuds offer up to 10 hours of playtime on a single charge, with the charging case extending the total battery life to up to 50 hours. They support Bluetooth 5.2 for a stable and efficient connection. The Space A40 also includes customizable sound profiles through the Soundcore app, ensuring a personalized listening experience. Additionally, they are designed for comfort and secure fit, making them suitable for long listening sessions.'),
+('Anker Space A40 - White', 59.00, 7, 10, 50, 'The Anker Soundcore Space A40 are wireless earbuds known for their impressive noise-canceling capabilities and high-quality sound. They feature advanced hybrid active noise cancellation, which effectively reduces ambient noise, making them ideal for use in noisy environments. The earbuds offer up to 10 hours of playtime on a single charge, with the charging case extending the total battery life to up to 50 hours. They support Bluetooth 5.2 for a stable and efficient connection. The Space A40 also includes customizable sound profiles through the Soundcore app, ensuring a personalized listening experience. Additionally, they are designed for comfort and secure fit, making them suitable for long listening sessions.'),
+('Anker Liberty 4 NC - Black', 99.00, 7, 10, 50, 'The Anker Liberty 4 NC are wireless earbuds designed to offer a premium listening experience with advanced features, making them a competitive choice in the market for high-quality audio products.
+
+One of the standout features of the Liberty 4 NC is its advanced noise cancellation technology. Anker uses adaptive noise-canceling algorithms that effectively reduce ambient noise, providing an immersive listening experience even in noisy environments. This makes the Liberty 4 NC ideal for use during commutes, in busy offices, or while traveling.
+
+The sound quality of the Liberty 4 NC is enhanced by its custom-designed drivers, which deliver rich, detailed audio with a balanced sound profile. The earbuds support high-resolution audio, ensuring that users can enjoy their music with exceptional clarity and depth.
+
+Battery life is another strong point of the Liberty 4 NC. The earbuds offer up to 10 hours of playtime on a single charge, and the included charging case extends this to a total of up to 50 hours. This ensures that users can listen to music, make calls, or use the earbuds throughout the day without worrying about running out of power.
+
+Connectivity is robust with Bluetooth 5.2, providing a stable and efficient connection to devices. The earbuds also support multipoint connection, allowing users to connect to two devices simultaneously and switch between them seamlessly.
+
+Comfort and fit are carefully considered in the design of the Liberty 4 NC. The earbuds come with multiple sizes of ear tips to ensure a secure and comfortable fit for a variety of ear shapes and sizes. This makes them suitable for long listening sessions and active use.
+
+The Liberty 4 NC also includes a transparency mode, which allows users to hear their surroundings without removing the earbuds. This feature is particularly useful for staying aware of the environment when walking or when quick interactions are needed.
+
+Additionally, the earbuds are rated IPX5 for water resistance, making them suitable for workouts and outdoor activities where they might be exposed to sweat or light rain.'),
+('Anker Liberty 4 NC - Navy Blue', 99.00, 7, 10, 50, 'The Anker Liberty 4 NC are wireless earbuds designed to offer a premium listening experience with advanced features, making them a competitive choice in the market for high-quality audio products.
+
+One of the standout features of the Liberty 4 NC is its advanced noise cancellation technology. Anker uses adaptive noise-canceling algorithms that effectively reduce ambient noise, providing an immersive listening experience even in noisy environments. This makes the Liberty 4 NC ideal for use during commutes, in busy offices, or while traveling.
+
+The sound quality of the Liberty 4 NC is enhanced by its custom-designed drivers, which deliver rich, detailed audio with a balanced sound profile. The earbuds support high-resolution audio, ensuring that users can enjoy their music with exceptional clarity and depth.
+
+Battery life is another strong point of the Liberty 4 NC. The earbuds offer up to 10 hours of playtime on a single charge, and the included charging case extends this to a total of up to 50 hours. This ensures that users can listen to music, make calls, or use the earbuds throughout the day without worrying about running out of power.
+
+Connectivity is robust with Bluetooth 5.2, providing a stable and efficient connection to devices. The earbuds also support multipoint connection, allowing users to connect to two devices simultaneously and switch between them seamlessly.
+
+Comfort and fit are carefully considered in the design of the Liberty 4 NC. The earbuds come with multiple sizes of ear tips to ensure a secure and comfortable fit for a variety of ear shapes and sizes. This makes them suitable for long listening sessions and active use.
+
+The Liberty 4 NC also includes a transparency mode, which allows users to hear their surroundings without removing the earbuds. This feature is particularly useful for staying aware of the environment when walking or when quick interactions are needed.
+
+Additionally, the earbuds are rated IPX5 for water resistance, making them suitable for workouts and outdoor activities where they might be exposed to sweat or light rain.'),
+
+('Anker Liberty 4 NC - White', 99.00, 7, 10, 50, 'The Anker Liberty 4 NC are wireless earbuds designed to offer a premium listening experience with advanced features, making them a competitive choice in the market for high-quality audio products.
+
+One of the standout features of the Liberty 4 NC is its advanced noise cancellation technology. Anker uses adaptive noise-canceling algorithms that effectively reduce ambient noise, providing an immersive listening experience even in noisy environments. This makes the Liberty 4 NC ideal for use during commutes, in busy offices, or while traveling.
+
+The sound quality of the Liberty 4 NC is enhanced by its custom-designed drivers, which deliver rich, detailed audio with a balanced sound profile. The earbuds support high-resolution audio, ensuring that users can enjoy their music with exceptional clarity and depth.
+
+Battery life is another strong point of the Liberty 4 NC. The earbuds offer up to 10 hours of playtime on a single charge, and the included charging case extends this to a total of up to 50 hours. This ensures that users can listen to music, make calls, or use the earbuds throughout the day without worrying about running out of power.
+
+Connectivity is robust with Bluetooth 5.2, providing a stable and efficient connection to devices. The earbuds also support multipoint connection, allowing users to connect to two devices simultaneously and switch between them seamlessly.
+
+Comfort and fit are carefully considered in the design of the Liberty 4 NC. The earbuds come with multiple sizes of ear tips to ensure a secure and comfortable fit for a variety of ear shapes and sizes. This makes them suitable for long listening sessions and active use.
+
+The Liberty 4 NC also includes a transparency mode, which allows users to hear their surroundings without removing the earbuds. This feature is particularly useful for staying aware of the environment when walking or when quick interactions are needed.
+
+Additionally, the earbuds are rated IPX5 for water resistance, making them suitable for workouts and outdoor activities where they might be exposed to sweat or light rain.'),
+
+
+('Samsung - Galaxy Buds FE - Black', 99.00, 7, 2, 50, 'The Samsung Galaxy Buds FE (Fan Edition) are wireless earbuds designed to provide a premium audio experience with a focus on comfort, style, and seamless integration with Samsung devices.
+
+One of the key features of the Galaxy Buds FE is their sound quality. Equipped with two-way dynamic speakers and AKG-tuned sound, these earbuds deliver clear and balanced audio with rich bass and crisp highs, providing an immersive listening experience across various genres of music and media content.
+
+Active Noise Cancellation (ANC) is another highlight of the Galaxy Buds FE. By blocking out unwanted background noise, ANC allows users to enjoy their music or take calls without distractions, making the earbuds suitable for use in noisy environments such as crowded commutes or bustling cafes.
+
+The Galaxy Buds FE offer long-lasting battery life, with up to 6.5 hours of playtime on a single charge. The included charging case provides an additional 20 hours of battery life, ensuring that users can enjoy their favorite music or podcasts throughout the day without worrying about running out of power. The earbuds also support quick charging, allowing for an hour of playtime with just a 5-minute charge.
+
+Comfort and fit are prioritized in the design of the Galaxy Buds FE. The earbuds feature a sleek and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for extended wear. This makes them suitable for active use, including workouts and outdoor activities.
+
+The Galaxy Buds FE are compatible with both Android and iOS devices, but they offer seamless integration with Samsung Galaxy smartphones and tablets. Users can easily pair the earbuds with their Samsung devices and access additional features through the Galaxy Wearable app, such as customizable touch controls, equalizer settings, and Find My Earbuds functionality.'),
+('Samsung - Galaxy Buds FE - White', 99.00, 7, 2, 50, 'The Samsung Galaxy Buds FE (Fan Edition) are wireless earbuds designed to provide a premium audio experience with a focus on comfort, style, and seamless integration with Samsung devices.
+
+One of the key features of the Galaxy Buds FE is their sound quality. Equipped with two-way dynamic speakers and AKG-tuned sound, these earbuds deliver clear and balanced audio with rich bass and crisp highs, providing an immersive listening experience across various genres of music and media content.
+
+Active Noise Cancellation (ANC) is another highlight of the Galaxy Buds FE. By blocking out unwanted background noise, ANC allows users to enjoy their music or take calls without distractions, making the earbuds suitable for use in noisy environments such as crowded commutes or bustling cafes.
+
+The Galaxy Buds FE offer long-lasting battery life, with up to 6.5 hours of playtime on a single charge. The included charging case provides an additional 20 hours of battery life, ensuring that users can enjoy their favorite music or podcasts throughout the day without worrying about running out of power. The earbuds also support quick charging, allowing for an hour of playtime with just a 5-minute charge.
+
+Comfort and fit are prioritized in the design of the Galaxy Buds FE. The earbuds feature a sleek and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for extended wear. This makes them suitable for active use, including workouts and outdoor activities.
+
+The Galaxy Buds FE are compatible with both Android and iOS devices, but they offer seamless integration with Samsung Galaxy smartphones and tablets. Users can easily pair the earbuds with their Samsung devices and access additional features through the Galaxy Wearable app, such as customizable touch controls, equalizer settings, and Find My Earbuds functionality.'),
+('Samsung - Galaxy Buds2 Pro - Bora Purple', 229.00, 7, 2, 50, 'The Samsung Galaxy Buds2 Pro are premium wireless earbuds designed to provide an exceptional audio experience with advanced features and sleek design aesthetics. These earbuds build upon the success of Samsung''s previous models while introducing several enhancements to elevate the listening experience.
+
+One of the standout features of the Galaxy Buds2 Pro is their active noise cancellation (ANC) technology. This advanced ANC effectively reduces background noise, allowing users to immerse themselves in their music, podcasts, or calls without distractions. The earbuds also offer an adjustable ambient sound mode, which enables users to hear their surroundings when needed without removing the earbuds.
+
+Sound quality is a key focus of the Galaxy Buds2 Pro. Equipped with premium drivers and AKG-tuned sound, these earbuds deliver rich, balanced audio with crisp highs, deep bass, and clear midrange frequencies. Whether you''re listening to music, watching videos, or taking calls, the Galaxy Buds2 Pro ensure a premium audio experience.
+
+Battery life is impressive on the Galaxy Buds2 Pro, with up to 8 hours of continuous playback on a single charge. The included charging case provides an additional 20 hours of battery life, ensuring that users can enjoy extended listening sessions without interruption. Quick charging support allows for an hour of playback with just a 5-minute charge, providing convenience for users on the go.
+
+Comfort and fit are paramount in the design of the Galaxy Buds2 Pro. The earbuds feature a lightweight and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for all-day wear. This makes them suitable for various activities, including workouts and long commutes.
+
+The Galaxy Buds2 Pro are compatible with both Android and iOS devices, but they offer seamless integration with Samsung Galaxy smartphones and tablets. Users can easily pair the earbuds with their Samsung devices and access additional features through the Galaxy Wearable app, such as customizable touch controls, equalizer settings, and Find My Earbuds functionality.'),
+('Samsung - Galaxy Buds2 Pro - Graphite', 229.00, 7, 2, 50, 'The Samsung Galaxy Buds2 Pro are premium wireless earbuds designed to provide an exceptional audio experience with advanced features and sleek design aesthetics. These earbuds build upon the success of Samsung''s previous models while introducing several enhancements to elevate the listening experience.
+
+One of the standout features of the Galaxy Buds2 Pro is their active noise cancellation (ANC) technology. This advanced ANC effectively reduces background noise, allowing users to immerse themselves in their music, podcasts, or calls without distractions. The earbuds also offer an adjustable ambient sound mode, which enables users to hear their surroundings when needed without removing the earbuds.
+
+Sound quality is a key focus of the Galaxy Buds2 Pro. Equipped with premium drivers and AKG-tuned sound, these earbuds deliver rich, balanced audio with crisp highs, deep bass, and clear midrange frequencies. Whether you''re listening to music, watching videos, or taking calls, the Galaxy Buds2 Pro ensure a premium audio experience.
+
+Battery life is impressive on the Galaxy Buds2 Pro, with up to 8 hours of continuous playback on a single charge. The included charging case provides an additional 20 hours of battery life, ensuring that users can enjoy extended listening sessions without interruption. Quick charging support allows for an hour of playback with just a 5-minute charge, providing convenience for users on the go.
+
+Comfort and fit are paramount in the design of the Galaxy Buds2 Pro. The earbuds feature a lightweight and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for all-day wear. This makes them suitable for various activities, including workouts and long commutes.
+
+The Galaxy Buds2 Pro are compatible with both Android and iOS devices, but they offer seamless integration with Samsung Galaxy smartphones and tablets. Users can easily pair the earbuds with their Samsung devices and access additional features through the Galaxy Wearable app, such as customizable touch controls, equalizer settings, and Find My Earbuds functionality.'),
+('Samsung - Galaxy Buds2 Pro - White', 229.00, 7, 2, 50, 'The Samsung Galaxy Buds2 Pro are premium wireless earbuds designed to provide an exceptional audio experience with advanced features and sleek design aesthetics. These earbuds build upon the success of Samsung''s previous models while introducing several enhancements to elevate the listening experience.
+
+One of the standout features of the Galaxy Buds2 Pro is their active noise cancellation (ANC) technology. This advanced ANC effectively reduces background noise, allowing users to immerse themselves in their music, podcasts, or calls without distractions. The earbuds also offer an adjustable ambient sound mode, which enables users to hear their surroundings when needed without removing the earbuds.
+
+Sound quality is a key focus of the Galaxy Buds2 Pro. Equipped with premium drivers and AKG-tuned sound, these earbuds deliver rich, balanced audio with crisp highs, deep bass, and clear midrange frequencies. Whether you''re listening to music, watching videos, or taking calls, the Galaxy Buds2 Pro ensure a premium audio experience.
+
+Battery life is impressive on the Galaxy Buds2 Pro, with up to 8 hours of continuous playback on a single charge. The included charging case provides an additional 20 hours of battery life, ensuring that users can enjoy extended listening sessions without interruption. Quick charging support allows for an hour of playback with just a 5-minute charge, providing convenience for users on the go.
+
+Comfort and fit are paramount in the design of the Galaxy Buds2 Pro. The earbuds feature a lightweight and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for all-day wear. This makes them suitable for various activities, including workouts and long commutes.
+
+The Galaxy Buds2 Pro are compatible with both Android and iOS devices, but they offer seamless integration with Samsung Galaxy smartphones and tablets. Users can easily pair the earbuds with their Samsung devices and access additional features through the Galaxy Wearable app, such as customizable touch controls, equalizer settings, and Find My Earbuds functionality.'),
+('Nothing Ear 2', 159.00, 7, 9, 50, 'The Nothing Ear 2 are wireless earbuds crafted by Nothing, a technology company founded by Carl Pei, co-founder of OnePlus. These earbuds boast a distinctive transparent design, revealing the internal components and giving them a futuristic and unique appearance. Beyond their aesthetic appeal, the Ear 2 delivers high-quality sound through custom-designed 11.6mm drivers, ensuring a balanced and immersive audio experience with rich bass, clear mids, and detailed highs. Active Noise Cancellation (ANC) technology helps to block out external distractions, while a transparency mode allows users to stay aware of their surroundings when needed. With up to 34 hours of total playback time and quick charging support, the Ear 2 offers extended listening sessions without interruption. Comfortable and secure fit is ensured by customizable silicone ear tips, making them suitable for various activities and ear shapes.'),
+('Nothing Ear 2(a)', 99.00, 7, 9, 50, 'The Nothing Ear 2(a) are the latest iteration of wireless earbuds from Nothing, continuing the brand''s commitment to innovative design and premium sound quality. Building upon the success of the Ear 2, the Ear 2(a) features enhancements and refinements aimed at delivering an even better user experience. While specific details about the Ear 2(a) may vary depending on the updates introduced by Nothing, users can expect similar characteristics to the Ear 2, including the transparent design, high-quality sound, active noise cancellation, long battery life, and customizable fit. The Ear 2(a) may offer improvements or additional features based on user feedback and technological advancements, further solidifying Nothing''s position as a leader in the wireless earbuds market.'),
+('Bose - QuietComfort Earbuds II - Triple Black', 279.00, 7, 16, 50, 'The Bose QuietComfort Earbuds II are premium wireless earbuds designed to provide an exceptional listening experience with industry-leading noise cancellation technology, superior sound quality, and long-lasting comfort.
+
+At the heart of the QuietComfort Earbuds II is Bose''s renowned active noise cancellation (ANC) technology, which effectively blocks out external noise and distractions, allowing users to focus on their music, podcasts, or calls without interruption. The earbuds feature an array of microphones that continuously monitor and adapt to ambient sounds, ensuring that users can enjoy their audio content in any environment.
+
+Sound quality is a top priority for Bose, and the QuietComfort Earbuds II deliver immersive audio with clear highs, detailed mids, and deep, rich bass. The earbuds feature custom-designed drivers and Bose''s proprietary EQ technology, which optimizes the sound for a balanced and natural listening experience across various genres of music and media content.
+
+Battery life is impressive on the QuietComfort Earbuds II, with up to 6 hours of continuous playback on a single charge. The included charging case provides an additional two full charges, extending the total battery life to up to 18 hours. Quick charging support allows for up to 2 hours of playback with just a 15-minute charge, ensuring that users can always have their earbuds ready when needed.
+
+Comfort and fit are key considerations in the design of the QuietComfort Earbuds II. The earbuds feature a lightweight and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for extended wear. This makes them suitable for all-day use, whether you''re working, traveling, or relaxing at home.
+
+The QuietComfort Earbuds II also feature intuitive touch controls, allowing users to adjust volume, skip tracks, answer calls, and activate voice assistants with simple gestures. They are compatible with both Android and iOS devices and can be customized using the Bose Music app, which offers access to additional features such as personalized settings, firmware updates, and Find My Earbuds functionality.
+
+Overall, the Bose QuietComfort Earbuds II are a top choice for users seeking premium wireless earbuds with best-in-class noise cancellation, superior sound quality, long battery life, and comfortable design.'),
+('Bose - QuietComfort Earbuds II - Soapstone', 279.00, 7, 16, 50, 'The Bose QuietComfort Earbuds II are premium wireless earbuds designed to provide an exceptional listening experience with industry-leading noise cancellation technology, superior sound quality, and long-lasting comfort.
+
+At the heart of the QuietComfort Earbuds II is Bose''s renowned active noise cancellation (ANC) technology, which effectively blocks out external noise and distractions, allowing users to focus on their music, podcasts, or calls without interruption. The earbuds feature an array of microphones that continuously monitor and adapt to ambient sounds, ensuring that users can enjoy their audio content in any environment.
+
+Sound quality is a top priority for Bose, and the QuietComfort Earbuds II deliver immersive audio with clear highs, detailed mids, and deep, rich bass. The earbuds feature custom-designed drivers and Bose''s proprietary EQ technology, which optimizes the sound for a balanced and natural listening experience across various genres of music and media content.
+
+Battery life is impressive on the QuietComfort Earbuds II, with up to 6 hours of continuous playback on a single charge. The included charging case provides an additional two full charges, extending the total battery life to up to 18 hours. Quick charging support allows for up to 2 hours of playback with just a 15-minute charge, ensuring that users can always have their earbuds ready when needed.
+
+Comfort and fit are key considerations in the design of the QuietComfort Earbuds II. The earbuds feature a lightweight and ergonomic design with soft silicone ear tips in multiple sizes, ensuring a secure and comfortable fit for extended wear. This makes them suitable for all-day use, whether you''re working, traveling, or relaxing at home.
+
+The QuietComfort Earbuds II also feature intuitive touch controls, allowing users to adjust volume, skip tracks, answer calls, and activate voice assistants with simple gestures. They are compatible with both Android and iOS devices and can be customized using the Bose Music app, which offers access to additional features such as personalized settings, firmware updates, and Find My Earbuds functionality.
+
+Overall, the Bose QuietComfort Earbuds II are a top choice for users seeking premium wireless earbuds with best-in-class noise cancellation, superior sound quality, long battery life, and comfortable design.'),
+('Bose - QuietComfort Ultra - Black', 299.00, 7, 16, 50, 'Bose QuietComfort Ultra headphones are the top-of-the-line noise-canceling headphones from Bose. They boast improved noise cancellation compared to previous models, blocking out even more distractions. Additionally, they feature a new technology called Bose Immersive Audio, which creates a more spacious and realistic listening experience by making it seem like the sound is coming from all around you. The headphones also have a built-in CustomTune technology that analyzes the shape of your ears to personalize the sound reproduction for an optimal listening experience. With crystal-clear microphone calls and a lengthy battery life, the Bose QuietComfort Ultra headphones aim to deliver an unmatched combination of noise cancellation, immersive audio, and comfort.'),
+('Bose - QuietComfort Ultra - White Smoke', 299.00, 7, 16, 50, 'Bose QuietComfort Ultra headphones are the top-of-the-line noise-canceling headphones from Bose. They boast improved noise cancellation compared to previous models, blocking out even more distractions. Additionally, they feature a new technology called Bose Immersive Audio, which creates a more spacious and realistic listening experience by making it seem like the sound is coming from all around you. The headphones also have a built-in CustomTune technology that analyzes the shape of your ears to personalize the sound reproduction for an optimal listening experience. With crystal-clear microphone calls and a lengthy battery life, the Bose QuietComfort Ultra headphones aim to deliver an unmatched combination of noise cancellation, immersive audio, and comfort.'),
+('Bose - QuietComfort Ultra - Moonstone Blue', 299.00, 7, 16, 50, 'Bose QuietComfort Ultra headphones are the top-of-the-line noise-canceling headphones from Bose. They boast improved noise cancellation compared to previous models, blocking out even more distractions. Additionally, they feature a new technology called Bose Immersive Audio, which creates a more spacious and realistic listening experience by making it seem like the sound is coming from all around you. The headphones also have a built-in CustomTune technology that analyzes the shape of your ears to personalize the sound reproduction for an optimal listening experience. With crystal-clear microphone calls and a lengthy battery life, the Bose QuietComfort Ultra headphones aim to deliver an unmatched combination of noise cancellation, immersive audio, and comfort.'),
+('Bose - Ultra - White Smoke', 299.00, 7, 16, 50, 'The Bose Ultra Open-Ear True Wireless Open Earbuds are designed for those who want to stay aware of their surroundings while listening to music. They use Bose OpenAudio technology to deliver rich, private sound while keeping your ears completely open. The earbuds are also designed for comfort and all-day wear, and Bose advertises a 7.5-hour battery life with up to 19.5 hours of additional power from the charging case. Other features include water resistance, a built-in microphone, and adjustable EQ settings.'),
+('Bose - Ultra - Black', 299.00, 7, 16, 50, 'The Bose Ultra Open-Ear True Wireless Open Earbuds are designed for those who want to stay aware of their surroundings while listening to music. They use Bose OpenAudio technology to deliver rich, private sound while keeping your ears completely open. The earbuds are also designed for comfort and all-day wear, and Bose advertises a 7.5-hour battery life with up to 19.5 hours of additional power from the charging case. Other features include water resistance, a built-in microphone, and adjustable EQ settings.'),
+('JBL - Endurance Peak 3 - Black', 99.00, 7, 13, 50, 'The JBL Endurance Peak 3 are wireless sports earbuds designed to deliver high-quality sound and durability, making them ideal for workouts and outdoor activities.
+
+One of the key features of the Endurance Peak 3 is their rugged design, built to withstand sweat, water, and rough handling. They are rated IPX7 waterproof, meaning they can be submerged in water up to 1 meter deep for 30 minutes, making them suitable for intense workouts and outdoor adventures.
+
+The earbuds offer a secure and comfortable fit, thanks to their ergonomic design and TwistLock™ technology, which ensures they stay in place during vigorous movement. This makes them ideal for activities like running, cycling, or weightlifting.
+
+Sound quality is another highlight of the Endurance Peak 3. They feature JBL''s signature sound, delivering powerful bass, clear mids, and crisp highs, providing an immersive listening experience for music, podcasts, and calls.
+
+Battery life is impressive on the Endurance Peak 3, with up to 10 hours of continuous playback on a single charge. The included charging case provides an additional 30 hours of battery life, ensuring that users can enjoy extended listening sessions without interruption. Quick charging support allows for up to 1 hour of playback with just a 10-minute charge, providing convenience for users on the go.
+
+The Endurance Peak 3 also features convenient touch controls, allowing users to adjust volume, skip tracks, answer calls, and activate voice assistants with simple gestures. They are compatible with both Android and iOS devices and can be customized using the My JBL Headphones app, which offers access to additional features such as EQ settings and firmware updates.'),
+('JBL - Endurance Peak 3 - White', 99.00, 7, 13, 50, 'The JBL Endurance Peak 3 are wireless sports earbuds designed to deliver high-quality sound and durability, making them ideal for workouts and outdoor activities.
+
+One of the key features of the Endurance Peak 3 is their rugged design, built to withstand sweat, water, and rough handling. They are rated IPX7 waterproof, meaning they can be submerged in water up to 1 meter deep for 30 minutes, making them suitable for intense workouts and outdoor adventures.
+
+The earbuds offer a secure and comfortable fit, thanks to their ergonomic design and TwistLock™ technology, which ensures they stay in place during vigorous movement. This makes them ideal for activities like running, cycling, or weightlifting.
+
+Sound quality is another highlight of the Endurance Peak 3. They feature JBL''s signature sound, delivering powerful bass, clear mids, and crisp highs, providing an immersive listening experience for music, podcasts, and calls.
+
+Battery life is impressive on the Endurance Peak 3, with up to 10 hours of continuous playback on a single charge. The included charging case provides an additional 30 hours of battery life, ensuring that users can enjoy extended listening sessions without interruption. Quick charging support allows for up to 1 hour of playback with just a 10-minute charge, providing convenience for users on the go.
+
+The Endurance Peak 3 also features convenient touch controls, allowing users to adjust volume, skip tracks, answer calls, and activate voice assistants with simple gestures. They are compatible with both Android and iOS devices and can be customized using the My JBL Headphones app, which offers access to additional features such as EQ settings and firmware updates.'),
+('JBL - Tune Flex - Black', 99.00, 7, 13, 50, 'The JBL Tune Flex are wireless neckband earphones designed for convenience, comfort, and quality sound, offering a versatile listening experience suitable for various activities.
+
+Comfort and portability are emphasized in the design of the Tune Flex. The lightweight and flexible neckband design ensures a comfortable fit for extended wear, making them ideal for daily commutes, workouts, or long listening sessions.
+
+The earphones feature magnetic earbuds that can be clipped together when not in use, reducing tangling and making them easy to carry around. This magnetic feature also automatically pauses the music when the earbuds are clipped together, allowing users to quickly resume playback when they''re ready to listen again.
+
+Sound quality is a priority for JBL, and the Tune Flex deliver a balanced audio experience with clear highs, detailed mids, and punchy bass. Whether you''re listening to music, watching videos, or taking calls, the earphones provide immersive sound that enhances the overall listening experience.
+
+Battery life is impressive on the Tune Flex, offering up to 8 hours of continuous playback on a single charge. The earphones also feature quick charging support, allowing for up to 1 hour of playback with just a 10-minute charge, ensuring that users can always have their earphones ready when needed.
+
+The Tune Flex come with a built-in microphone for hands-free calls and voice assistant access, allowing users to easily make and receive calls or control their smartphone using voice commands. They are compatible with both Android and iOS devices, providing flexibility and convenience for users across different platforms.'),
+('JBL - Tune Flex - White', 99.00, 7, 13, 50, 'The JBL Tune Flex are wireless neckband earphones designed for convenience, comfort, and quality sound, offering a versatile listening experience suitable for various activities.
+
+Comfort and portability are emphasized in the design of the Tune Flex. The lightweight and flexible neckband design ensures a comfortable fit for extended wear, making them ideal for daily commutes, workouts, or long listening sessions.
+
+The earphones feature magnetic earbuds that can be clipped together when not in use, reducing tangling and making them easy to carry around. This magnetic feature also automatically pauses the music when the earbuds are clipped together, allowing users to quickly resume playback when they''re ready to listen again.
+
+Sound quality is a priority for JBL, and the Tune Flex deliver a balanced audio experience with clear highs, detailed mids, and punchy bass. Whether you''re listening to music, watching videos, or taking calls, the earphones provide immersive sound that enhances the overall listening experience.
+
+Battery life is impressive on the Tune Flex, offering up to 8 hours of continuous playback on a single charge. The earphones also feature quick charging support, allowing for up to 1 hour of playback with just a 10-minute charge, ensuring that users can always have their earphones ready when needed.
+
+The Tune Flex come with a built-in microphone for hands-free calls and voice assistant access, allowing users to easily make and receive calls or control their smartphone using voice commands. They are compatible with both Android and iOS devices, providing flexibility and convenience for users across different platforms.'),
+('JBL - Tune Flex - Blue', 99.00, 7, 13, 50, 'The JBL Tune Flex are wireless neckband earphones designed for convenience, comfort, and quality sound, offering a versatile listening experience suitable for various activities.
+
+Comfort and portability are emphasized in the design of the Tune Flex. The lightweight and flexible neckband design ensures a comfortable fit for extended wear, making them ideal for daily commutes, workouts, or long listening sessions.
+
+The earphones feature magnetic earbuds that can be clipped together when not in use, reducing tangling and making them easy to carry around. This magnetic feature also automatically pauses the music when the earbuds are clipped together, allowing users to quickly resume playback when they''re ready to listen again.
+
+Sound quality is a priority for JBL, and the Tune Flex deliver a balanced audio experience with clear highs, detailed mids, and punchy bass. Whether you''re listening to music, watching videos, or taking calls, the earphones provide immersive sound that enhances the overall listening experience.
+
+Battery life is impressive on the Tune Flex, offering up to 8 hours of continuous playback on a single charge. The earphones also feature quick charging support, allowing for up to 1 hour of playback with just a 10-minute charge, ensuring that users can always have their earphones ready when needed.
+
+The Tune Flex come with a built-in microphone for hands-free calls and voice assistant access, allowing users to easily make and receive calls or control their smartphone using voice commands. They are compatible with both Android and iOS devices, providing flexibility and convenience for users across different platforms.'),
+('JBL - Vibe Beam - Black', 49.00, 7, 13, 50, 'JBL Vibe Beam are true wireless earbuds aiming to be your everyday audio companion. They focus on three key features: impactful sound, comfortable fit, and practical functionality.
+
+JBL''s Deep Bass Sound ensures you experience rich audio with a strong bass presence. The ergonomic design with a closed back conforms to your ears for a secure and comfortable fit. This design also blocks some external noise, further enhancing the bass response.
+
+The Vibe Beam boasts a long battery life, offering up to 32 hours of total playtime. The earbuds themselves hold 8 hours, and the charging case provides an additional 24 hours. Even when caught off guard by a low battery, a quick 10-minute charge provides 2 hours of playback.
+
+JBL equips the Vibe Beam for your active lifestyle with water and dust resistance. This makes them suitable for workouts or even light rain without worry. The built-in microphone allows for clear calls, while a unique feature called VoiceAware lets you adjust how much of your own voice you hear during conversations.
+
+For those times you need to be aware of your surroundings, the Vibe Beam offers both Ambient Aware and TalkThru modes. Ambient Aware lets you hear background noise without removing the earbuds, while TalkThru allows for brief conversations without taking them out entirely.
+
+Finally, the JBL Vibe Beam is compatible with the JBL Headphones App, which unlocks additional controls and functionalities for your earbuds.'),
+('JBL - Vibe Beam - White', 49.00, 7, 13, 50, 'JBL Vibe Beam are true wireless earbuds aiming to be your everyday audio companion. They focus on three key features: impactful sound, comfortable fit, and practical functionality.
+
+JBL''s Deep Bass Sound ensures you experience rich audio with a strong bass presence. The ergonomic design with a closed back conforms to your ears for a secure and comfortable fit. This design also blocks some external noise, further enhancing the bass response.
+
+The Vibe Beam boasts a long battery life, offering up to 32 hours of total playtime. The earbuds themselves hold 8 hours, and the charging case provides an additional 24 hours. Even when caught off guard by a low battery, a quick 10-minute charge provides 2 hours of playback.
+
+JBL equips the Vibe Beam for your active lifestyle with water and dust resistance. This makes them suitable for workouts or even light rain without worry. The built-in microphone allows for clear calls, while a unique feature called VoiceAware lets you adjust how much of your own voice you hear during conversations.
+
+For those times you need to be aware of your surroundings, the Vibe Beam offers both Ambient Aware and TalkThru modes. Ambient Aware lets you hear background noise without removing the earbuds, while TalkThru allows for brief conversations without taking them out entirely.
+
+Finally, the JBL Vibe Beam is compatible with the JBL Headphones App, which unlocks additional controls and functionalities for your earbuds.');
 
 
 
@@ -1024,3 +1287,47 @@ INSERT INTO chargers (id, adapter_type) VALUES
 (481, 'wall chargers'),
 (482, 'wall chargers'),
 (483, 'wall chargers');
+
+
+INSERT INTO power_banks (id, battery_capacity, color) VALUES
+(484, '20 000 mAh', 'black'),
+(485, '5000 mAh', 'blue'),
+(486, '10 000 mAh', 'black'),
+(487, '20 000 mAh', 'black'),
+(488, '24 000 mAh', 'black'),
+(489, '24 000 mAh', 'black'),
+(490, '30 000 mAh', 'black'),
+(491, '30 000 mAh', 'black');
+
+
+INSERT INTO earbuds (id, connection_type, battery_life, battery_life_with_case, anc, bluetooth_version, fit, color, year_of_release) VALUES
+(492, 'wireless', '6 hours', '30 hours', true, '5.3', 'in-ear', 'white', 2022),
+(493, 'wireless', '5 hours', '24 hours', false, '5.0', 'in-ear', 'white', 2019),
+(494, 'wireless', '6 hours', '30 hours', false, '5.0', 'in-ear', 'white', 2021),
+(495, 'wireless', '10 hours', '50 hours', true, '5.2', 'in-ear', 'black', 2022),
+(496, 'wireless', '10 hours', '50 hours', true, '5.2', 'in-ear', 'blue', 2022),
+(497, 'wireless', '10 hours', '50 hours', true, '5.2', 'in-ear', 'white', 2022),
+(498, 'wireless', '10 hours', '50 hours', true, '5.3', 'in-ear', 'black', 2023),
+(499, 'wireless', '10 hours', '50 hours', true, '5.3', 'in-ear', 'blue', 2023),
+(500, 'wireless', '10 hours', '50 hours', true, '5.3', 'in-ear', 'white', 2023),
+(501, 'wireless', '6.5 hours', '26.5 hours', true, '5.2', 'in-ear', 'black', 2023),
+(502, 'wireless', '6.5 hours', '26.5 hours', true, '5.2', 'in-ear', 'white', 2023),
+(503, 'wireless', '8 hours', '30 hours', true, '5.3', 'in-ear', 'purple', 2022),
+(504, 'wireless', '8 hours', '30 hours', true, '5.3', 'in-ear', 'graphite', 2022),
+(505, 'wireless', '8 hours', '30 hours', true, '5.3', 'in-ear', 'white', 2022),
+(506, 'wireless', '5 hours', '36 hours', true, '5.3', 'in-ear', 'transparent', 2023),
+(507, 'wireless', '10 hours', '42.5 hours', true, '5.3', 'in-ear', 'transparent', 2024),
+(508, 'wireless', '6 hours', '18 hours', true, '5.3', 'in-ear', 'black', 2022),
+(509, 'wireless', '6 hours', '18 hours', true, '5.3', 'in-ear', 'white', 2022),
+(510, 'wireless', '6 hours', '18 hours', true, '5.3', 'in-ear', 'black', 2023),
+(511, 'wireless', '6 hours', '18 hours', true, '5.3', 'in-ear', 'white', 2023),
+(512, 'wireless', '6 hours', '18 hours', true, '5.3', 'in-ear', 'blue', 2023),
+(513, 'wireless', '7.5 hours', '19.5 hours', true, '5.3', 'open-ear', 'white', 2024),
+(514, 'wireless', '7.5 hours', '19.5 hours', true, '5.3', 'open-ear', 'black', 2024),
+(515, 'wireless', '10 hours', '40 hours', true, '5.2', 'in-ear, clip on', 'black', 2022),
+(516, 'wireless', '10 hours', '40 hours', true, '5.2', 'in-ear, clip on', 'white', 2022),
+(517, 'wireless', '8 hours', '24 hours', true, '5.2', 'in-ear', 'black', 2022),
+(518, 'wireless', '8 hours', '24 hours', true, '5.2', 'in-ear', 'white', 2022),
+(519, 'wireless', '8 hours', '24 hours', true, '5.2', 'in-ear', 'blue', 2022),
+(520, 'wireless', '8 hours', '32 hours', true, '5.2', 'in-ear', 'black', 2023),
+(521, 'wireless', '8 hours', '32 hours', true, '5.2', 'in-ear', 'white', 2023);

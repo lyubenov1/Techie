@@ -185,6 +185,45 @@ public class ImageUrlRepo {
         imageMap.put(ChargersData.chargers_nine,ChargersData.chargers_nine_urls);
         imageMap.put(ChargersData.chargers_ten,ChargersData.chargers_ten_urls);
 
+        imageMap.put(PowerBankData.bank_one,PowerBankData.bank_one_urls);
+        imageMap.put(PowerBankData.bank_two,PowerBankData.bank_two_urls);
+        imageMap.put(PowerBankData.bank_three,PowerBankData.bank_three_urls);
+        imageMap.put(PowerBankData.bank_four,PowerBankData.bank_four_urls);
+        imageMap.put(PowerBankData.bank_five,PowerBankData.bank_five_urls);
+        imageMap.put(PowerBankData.bank_six,PowerBankData.bank_six_urls);
+        imageMap.put(PowerBankData.bank_seven,PowerBankData.bank_seven_urls);
+        imageMap.put(PowerBankData.bank_eight,PowerBankData.bank_eight_urls);
+
+        imageMap.put(EarphonesData.earphones_one,EarphonesData.earphones_one_urls);
+        imageMap.put(EarphonesData.earphones_two,EarphonesData.earphones_two_urls);
+        imageMap.put(EarphonesData.earphones_three,EarphonesData.earphones_three_urls);
+        imageMap.put(EarphonesData.earphones_four,EarphonesData.earphones_four_urls);
+        imageMap.put(EarphonesData.earphones_five,EarphonesData.earphones_five_urls);
+        imageMap.put(EarphonesData.earphones_six,EarphonesData.earphones_six_urls);
+        imageMap.put(EarphonesData.earphones_seven,EarphonesData.earphones_seven_urls);
+        imageMap.put(EarphonesData.earphones_eight,EarphonesData.earphones_eight_urls);
+        imageMap.put(EarphonesData.earphones_eight_white,EarphonesData.earphones_eight_white_urls);
+        imageMap.put(EarphonesData.earphones_nine,EarphonesData.earphones_nine_urls);
+        imageMap.put(EarphonesData.earphones_ten,EarphonesData.earphones_ten_urls);
+        imageMap.put(EarphonesData.earphones_eleven,EarphonesData.earphones_eleven_urls);
+        imageMap.put(EarphonesData.earphones_twelve,EarphonesData.earphones_twelve_urls);
+        imageMap.put(EarphonesData.earphones_thirteen,EarphonesData.earphones_thirteen_urls);
+        imageMap.put(EarphonesData.earphones_fourteen,EarphonesData.earphones_fourteen_urls);
+        imageMap.put(EarphonesData.earphones_fifteen,EarphonesData.earphones_fifteen_urls);
+        imageMap.put(EarphonesData.earphones_sixteen,EarphonesData.earphones_sixteen_urls);
+        imageMap.put(EarphonesData.earphones_seventeen,EarphonesData.earphones_seventeen_urls);
+        imageMap.put(EarphonesData.earphones_eighteen,EarphonesData.earphones_eighteen_urls);
+        imageMap.put(EarphonesData.earphones_nineteen,EarphonesData.earphones_nineteen_urls);
+        imageMap.put(EarphonesData.earphones_twenty,EarphonesData.earphones_twenty_urls);
+        imageMap.put(EarphonesData.earphones_twentyOne,EarphonesData.earphones_twentyOne_urls);
+        imageMap.put(EarphonesData.earphones_twentyTwo,EarphonesData.earphones_twentyTwo_urls);
+        imageMap.put(EarphonesData.earphones_twentyThree,EarphonesData.earphones_twentyThree_urls);
+        imageMap.put(EarphonesData.earphones_twentyFour,EarphonesData.earphones_twentyFour_urls);
+        imageMap.put(EarphonesData.earphones_twentyFive,EarphonesData.earphones_twentyFive_urls);
+        imageMap.put(EarphonesData.earphones_twentySix,EarphonesData.earphones_twentySix_urls);
+        imageMap.put(EarphonesData.earphones_twentySeven,EarphonesData.earphones_twentySeven_urls);
+        imageMap.put(EarphonesData.earphones_twentyEight,EarphonesData.earphones_twentyEight_urls);
+        imageMap.put(EarphonesData.earphones_twentyNine,EarphonesData.earphones_twentyNine_urls);
     }
 
     public Map<List<String>, List<String>> getImageMap() {
