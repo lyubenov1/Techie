@@ -25,8 +25,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    // TODO: user roles
-
     @Column(name = "first_name", length = 50)
     private String firstName;
 
@@ -38,6 +36,15 @@ public class User {
 
     @Column(name = "profile_image_id")
     private String profileImageUrl;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+    private List<Role> roles;
+
 
 
     public void addAddress(Address address) {

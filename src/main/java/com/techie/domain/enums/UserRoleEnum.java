@@ -1,6 +1,6 @@
 package com.techie.domain.enums;
 
-public enum UserRole {
+public enum UserRoleEnum {
     USER,
     MODERATOR,
     ADMIN
