@@ -25,7 +25,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false, length = 600)   // TODO: implement character count
     private String content;
 
     @Column(nullable = false)

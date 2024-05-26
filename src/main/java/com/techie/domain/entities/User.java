@@ -3,6 +3,8 @@ package com.techie.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.*;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -14,26 +16,48 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(name = "email_address", nullable = false, unique = true)
+    @Column(name = "email_address", nullable = false, unique = true, length = 254)
     private String email;
 
-    @Column(name = "password", nullable = false)  // TODO: hashing and securing of passwords
-    private String password;                      // The password field should not use @Setter.
-                                                  // It's crucial to implement proper password hashing
-                                                  // and security measures before storing passwords in the database.
+    @Column(name = "password", nullable = false)
+    private String password;
 
     // TODO: user roles
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 50)
     private String lastName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
 
     @Column(name = "profile_image_id")
     private String profileImageUrl;
+
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setUser(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setUser(null);
+    }
+
+    public void setPassword(String rawPassword) {
+        this.password = hashPassword(rawPassword);
+    }
+
+    // Example of password hashing method
+    private String hashPassword(String rawPassword) {
+        // This is a simple example. In production, use a strong hashing algorithm like BCrypt.
+        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode(rawPassword);
+    }
 
 }
