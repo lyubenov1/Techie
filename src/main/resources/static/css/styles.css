@@ -1,0 +1,76 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo img {
+    height: 40px;
+}
+
+.navbar-categories button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333333;
+}
+
+.navbar-additional a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333333;
+}
+
+.navbar-search input[type="text"] {
+    padding: 8px;
+    border: 1px solid #cccccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.navbar-search button {
+    padding: 8px;
+    border: none;
+    background-color: #eeeeee;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.navbar-right .theme-toggle,
+.navbar-right a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333333;
+}
+
+.theme-toggle,
+.profile-icon,
+.favorites-icon,
+.cart-icon {
+    cursor: pointer;
+}
+
+/* Show class for dropdown menu */
+.show {
+    display: block;
+}
