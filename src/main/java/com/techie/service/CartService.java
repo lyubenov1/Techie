@@ -1,8 +1,8 @@
 package com.techie.service;
 
-import com.techie.repository.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import com.techie.repository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CartService {

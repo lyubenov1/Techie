@@ -1,9 +1,12 @@
 package com.techie.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -44,7 +47,6 @@ public class User {
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
     private List<Role> roles;
-
 
 
     public void addAddress(Address address) {

@@ -1,12 +1,13 @@
 package com.techie.service;
 
-import com.techie.domain.entities.*;
-import com.techie.exceptions.*;
-import com.techie.repository.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import com.techie.domain.entities.Product;
+import com.techie.exceptions.ProductNotFoundException;
+import com.techie.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -25,5 +26,9 @@ public class ProductService {
         } else {
             throw new ProductNotFoundException(phoneModel + " was not found!");
         }
+    }
+
+    public List<String> getBrandsByCategory(String category) {
+        return productRepository.findDistinctBrandsByCategory(category);
     }
 }
