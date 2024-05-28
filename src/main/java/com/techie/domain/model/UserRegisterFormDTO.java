@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
-public class UserRegisterModel {
+public class UserRegisterFormDTO {
 
     @NotBlank
     @Size(min = 4, max = 25)
