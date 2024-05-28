@@ -1,10 +1,12 @@
 package com.techie.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.proxy.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.proxy.HibernateProxy;
 
-import java.util.*;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -34,7 +36,7 @@ public class Address {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
 
     @Override
