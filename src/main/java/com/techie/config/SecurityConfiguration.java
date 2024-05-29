@@ -19,6 +19,8 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableMethodSecurity
@@ -71,12 +73,23 @@ public class SecurityConfiguration {
                 // Exception handling configuration
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(customAccessDeniedHandler())
+                )
+                // Configure CSRF protection
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(csrfTokenRepository())
                 );
 
 
         return http.build();
     }
 
+
+    @Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setSessionAttributeName("_csrf");
+        return repository;
+    }
 
     @Bean
     public CustomAccessDeniedHandler customAccessDeniedHandler() {
