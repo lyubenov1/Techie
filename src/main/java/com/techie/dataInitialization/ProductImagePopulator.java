@@ -1,7 +1,7 @@
 package com.techie.dataInitialization;
 
 import com.techie.repository.ProductImageRepository;
-import com.techie.service.ProductImageService;
+import com.techie.service.InitService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
  public class ProductImagePopulator {
 
-     private final ProductImageService productImageService;
+     private final InitService initService;
      private final ProductImageRepository productImageRepository;
 
      @Autowired
-     public ProductImagePopulator(ProductImageService productImageService,
+     public ProductImagePopulator(InitService initService,
                                   ProductImageRepository productImageRepository) {
-         this.productImageService = productImageService;
+         this.initService = initService;
          this.productImageRepository = productImageRepository;
      }
 
      @PostConstruct
      public void populateProductImageEntity() {
          if(productImageRepository.count() == 0) {
-             productImageService.saveProductImages();
+             initService.saveProductImages();
          }
      }
  }
