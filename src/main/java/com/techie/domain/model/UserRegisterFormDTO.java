@@ -1,6 +1,8 @@
 package com.techie.domain.model;
 
 import com.techie.validation.PasswordMatch;
+import com.techie.validation.UniqueEmail;
+import com.techie.validation.UniqueUsername;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +15,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
+@UniqueUsername
+@UniqueEmail
 public class UserRegisterFormDTO {
 
     @NotBlank
@@ -32,9 +36,11 @@ public class UserRegisterFormDTO {
     private String confirmPassword;
 
     @NotNull
+    @Size(max = 50)
     private String firstName;
 
     @NotNull
+    @Size(max = 50)
     private String lastName;
 
 }
