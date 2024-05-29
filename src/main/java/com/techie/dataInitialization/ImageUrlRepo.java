@@ -1,9 +1,11 @@
-package com.techie.dataInit;
+package com.techie.dataInitialization;
 
-import com.techie.dataInit.data.*;
-import org.springframework.stereotype.*;
+import com.techie.dataInitialization.data.*;
+import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class ImageUrlRepo {

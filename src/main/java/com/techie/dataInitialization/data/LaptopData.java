@@ -1,6 +1,6 @@
-package com.techie.dataInit.data;
+package com.techie.dataInitialization.data;
 
-import java.util.*;
+import java.util.List;
 
 public class LaptopData {
 
