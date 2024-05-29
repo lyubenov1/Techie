@@ -1,9 +1,7 @@
 package com.techie.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,9 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "users")
 public class UserEntity {
 
@@ -57,16 +57,6 @@ public class UserEntity {
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setUser(null);
-    }
-
-    public void setPassword(String rawPassword) {
-        this.password = hashPassword(rawPassword);
-    }
-
-    // Example of password hashing method
-    private String hashPassword(String rawPassword) {
-        // This is a simple example. In production, use a strong hashing algorithm like BCrypt.
-        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode(rawPassword);
     }
 
 }

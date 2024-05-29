@@ -2,14 +2,14 @@ package com.techie.domain.entities;
 
 import com.techie.domain.enums.UserRoleEnum;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "roles")
 public class RoleEntity {
 

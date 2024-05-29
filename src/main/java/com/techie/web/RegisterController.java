@@ -2,8 +2,14 @@ package com.techie.web;
 
 import com.techie.domain.model.UserRegisterFormDTO;
 import com.techie.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +24,12 @@ public class RegisterController {
 
     private static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
     private final UserService userService;
+    private final SecurityContextRepository securityContextRepository;
 
     @Autowired
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, SecurityContextRepository securityContextRepository) {
         this.userService = userService;
+        this.securityContextRepository = securityContextRepository;
     }
 
     @GetMapping("/register")
@@ -36,9 +44,11 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String postRegister(
-            @Valid UserRegisterFormDTO userRegisterForm,
+            @Valid @ModelAttribute("userRegisterForm") UserRegisterFormDTO userRegisterForm,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes
@@ -48,10 +58,17 @@ public class RegisterController {
             return "redirect:/users/register";
         }
 
-        userService.registerUser(userRegisterForm);
+        userService.registerUser(userRegisterForm, successfulAuth -> {
+            SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
-        return "redirect:/users/login";
+            SecurityContext context = strategy.createEmptyContext();
+            context.setAuthentication(successfulAuth);
+
+            strategy.setContext(context);
+
+            securityContextRepository.saveContext(context, request, response);
+        });
+
+        return "redirect:/";
     }
-
-
 }
