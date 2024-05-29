@@ -6,6 +6,7 @@ import com.techie.service.ApplicationUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,8 +34,9 @@ public class SecurityConfiguration {
                         // allow access to all static files (images, CSS, js)
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         // the URLs below are available for all users - logged in and anonymous
-                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/products/*").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/products/**").permitAll()
                         .requestMatchers("/admin/**").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/profile/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form
@@ -55,7 +57,9 @@ public class SecurityConfiguration {
                 )
                 .securityContext(securityContext -> securityContext
                         .securityContextRepository(securityContextRepository)
-                );
+
+                )
+                .csrf(withDefaults());
 
         return http.build();
     }
