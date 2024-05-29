@@ -3,10 +3,10 @@ package com.techie.config;
 import com.techie.domain.enums.UserRoleEnum;
 import com.techie.repository.UserRepository;
 import com.techie.service.ApplicationUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +24,9 @@ import org.springframework.security.web.context.SecurityContextRepository;
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    @Value("${rememberMeKey}")
+    private String rememberMeKey;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
@@ -59,7 +62,13 @@ public class SecurityConfiguration {
                         .securityContextRepository(securityContextRepository)
 
                 )
-                .csrf(withDefaults());
+                // configure "Remember Me" functionality
+                .rememberMe(rememberMe -> rememberMe
+                        .rememberMeParameter("remember-me")
+                        .key(rememberMeKey)
+                        .rememberMeCookieName("remember-me-cookie")
+                        .tokenValiditySeconds(100000)
+                );
 
         return http.build();
     }
