@@ -60,7 +60,6 @@ public class SecurityConfiguration {
                 )
                 .securityContext(securityContext -> securityContext
                         .securityContextRepository(securityContextRepository)
-
                 )
                 // configure "Remember Me" functionality
                 .rememberMe(rememberMe -> rememberMe
@@ -68,11 +67,21 @@ public class SecurityConfiguration {
                         .key(rememberMeKey)
                         .rememberMeCookieName("remember-me-cookie")
                         .tokenValiditySeconds(100000)
+                )
+                // Exception handling configuration
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(customAccessDeniedHandler())
                 );
+
 
         return http.build();
     }
 
+
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
