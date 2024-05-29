@@ -28,4 +28,4 @@ import org.springframework.stereotype.Component;
  }
 
 
-// Run this class only after dropping and reinitialising the database schema (through data.sql file)
+// database must first be populated through data.sql
