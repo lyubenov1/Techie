@@ -5,7 +5,7 @@ import com.techie.validation.UniqueEmail;
 import com.techie.validation.UniqueUsername;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,27 +19,30 @@ import lombok.Setter;
 @UniqueEmail
 public class UserRegisterFormDTO {
 
-    @NotBlank
+    @NotBlank(message = "Username is required.")
     @Size(min = 4, max = 25)
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Email is required.")
     @Email
     private String email;
 
-    @NotNull
-    @Size(min = 5, max = 20)
+    @NotBlank(message = "Password is required.")
+    @Pattern(
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.])(?=\\S+$).{8,}$",
+            message = "Password must be at least 8 characters long and contain at least one digit," +
+                    " one lowercase letter, one uppercase letter, and one special character."
+    )
     private String password;
 
-    @NotNull
-    @Size(min = 5, max = 20)
+    @NotBlank(message = "Confirm password is required.")
     private String confirmPassword;
 
-    @NotNull
+    @NotBlank(message = "First name is required.")
     @Size(max = 50)
     private String firstName;
 
-    @NotNull
+    @NotBlank(message = "Last name is required.")
     @Size(max = 50)
     private String lastName;
 

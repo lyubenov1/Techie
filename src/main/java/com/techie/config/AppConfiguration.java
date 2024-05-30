@@ -1,7 +1,13 @@
 package com.techie.config;
 
-import org.modelmapper.*;
-import org.springframework.context.annotation.*;
+import com.techie.repository.UserRepository;
+import com.techie.service.ApplicationUserDetailsService;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class AppConfiguration {
@@ -11,4 +17,13 @@ public class AppConfiguration {
         return new ModelMapper();
     }
 
+     @Bean
+     public UserDetailsService userDetailsService(UserRepository userRepository) {
+         return new ApplicationUserDetailsService(userRepository);
+     }
+
+     @Bean
+     public PasswordEncoder passwordEncoder() {
+         return new BCryptPasswordEncoder();
+     }
 }
