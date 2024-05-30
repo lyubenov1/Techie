@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,7 +34,10 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String getRegister() {
+    public String getRegister(Model model) {
+        if (!model.containsAttribute("userRegisterForm")) {
+            model.addAttribute("userRegisterForm", new UserRegisterFormDTO());
+        }
         return "register";
     }
 
@@ -69,6 +73,7 @@ public class RegisterController {
             securityContextRepository.saveContext(context, request, response);
         });
 
+        redirectAttributes.addFlashAttribute("successMessage", "Registration successful!");
         return "redirect:/";
     }
 }
