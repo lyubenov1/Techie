@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +18,7 @@
           integrity="sha512-Q85EALGOQ8vTpz2hrGtKQoi0x+kEHAMz9rgEJQ9HD9xgKkNDaxegQzskypEVNCOzYnQKFcyVlwPPHyJKqlF7jg=="
           crossorigin="anonymous" referrerpolicy="no-referrer">
 
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 </head>

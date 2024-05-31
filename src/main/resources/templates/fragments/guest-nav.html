@@ -1,74 +1,64 @@
-<nav class="navbar">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#082d77;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
 
-    <div class="navbar-logo">
-        <a href="/">
-            <img src="/static/images/logo.png" alt="Logo">
-        </a>
-    </div>
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="#">Brand</a>
 
-    <div class="navbar-categories" onmouseover="showDropdown('categories-menu')" onmouseout="hideDropdown('categories-menu')">
-        <button class="dropdown-toggle" id="categoriesDropdown" aria-haspopup="true" aria-expanded="false">
-            Categories <i class="fas fa-chevron-down"></i>
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
         </button>
-        <div class="dropdown-menu" id="categories-menu" aria-labelledby="categoriesDropdown">
 
-            <a class="dropdown-item" href="#" onmouseover="showSubcategories('smartphones')" onmouseout="hideSubcategories('smartphones')">Smartphones</a>
-            <a class="dropdown-item" href="#" onmouseover="showSubcategories('laptops')" onmouseout="hideSubcategories('laptops')">Laptops</a>
-            <a class="dropdown-item" href="#" onmouseover="showSubcategories('tablets')" onmouseout="hideSubcategories('tablets')">Tablets</a>
-            <a class="dropdown-item" href="#" onmouseover="showSubcategories('accessories')" onmouseout="hideSubcategories('accessories')">Accessories</a>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- Link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Action</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Another action</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <!-- Icons -->
+            <ul class="navbar-nav d-flex flex-row me-1">
+                <li class="nav-item me-3 me-lg-0">
+                    <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+                <li class="nav-item me-3 me-lg-0">
+                    <a class="nav-link" href="#"><i class="fab fa-twitter"></i></a>
+                </li>
+            </ul>
+
+            <!-- Search -->
+            <form class="w-auto">
+                <input type="search" class="form-control" placeholder="Type query" aria-label="Search">
+            </form>
 
         </div>
     </div>
-
-        <!-- Subcategory menus -->
-        <div class="subcategory-menu" id="smartphones-menu">
-            <!-- Placeholder for smartphone subcategories -->
-        </div>
-        <div class="subcategory-menu" id="laptops-menu">
-            <!-- Placeholder for laptop subcategories -->
-        </div>
-        <div class="subcategory-menu" id="tablets-menu">
-            <!-- Placeholder for tablet subcategories -->
-        </div>
-        <div class="subcategory-menu" id="accessories-menu">
-            <!-- Placeholder for accessory subcategories -->
-        </div>
-
-    <!-- Additional Fields -->
-    <div class="navbar-additional">
-        <a href="/special-offers">Special Offers</a>
-        <a href="/new-arrivals">About us</a>
-    </div>
-
-    <!-- Search Bar -->
-    <div class="navbar-search">
-        <label>
-            <input type="text" placeholder="Search...">
-        </label>
-        <button type="submit"><i class="fas fa-search"></i></button>
-    </div>
-
-    <div class="navbar-right">
-        <!-- White/Black Mode Button -->
-        <button class="theme-toggle"><i class="fas fa-adjust"></i></button>
-
-        <!-- Profile Dropdown -->
-        <div class="dropdown" onmouseover="showDropdown('profile-menu')" onmouseout="hideDropdown('profile-menu')">
-            <button class="profile-icon" onclick="window.location.href='/login'">
-                <i class="fas fa-user"></i>
-            </button>
-            <div class="dropdown-content" id="profile-menu">
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-            </div>
-        </div>
-
-        <!-- Favorites Icon -->
-        <a href="/favorites" class="favorites-icon"><i class="fas fa-heart"></i></a>
-
-        <!-- Shopping Cart Icon -->
-        <a href="/cart" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
-    </div>
+    <!-- Container wrapper -->
 </nav>
-
-<script src="/static/js/dropdown.js"></script>

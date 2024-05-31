@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<!--suppress HtmlRequiredTitleElement -->
+<head th:replace="fragments/head.html :: head('User Registration')"></head>
+
+<body>
+<div class="wrapper">
+
+    <header th:replace="fragments/header"></header>
+
+    <!-- Display success message if available -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <!-- Display form errors if present -->
+    <div th:if="${#fields.hasErrors('userRegisterForm')}" class="error-message">
+        <p>Please correct the following errors:</p>
+    </div>
+
+    <!-- Registration Form -->
+    <form th:action="@{/users/register}" th:object="${userRegisterForm}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}"/>
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="field-error"></div>
+        <br/>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}"/>
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></div>
+        <br/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}"/>
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></div>
+        <br/>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" th:field="*{confirmPassword}"/>
+        <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="field-error"></div>
+        <br/>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" th:field="*{firstName}"/>
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="field-error"></div>
+        <br/>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" th:field="*{lastName}"/>
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="field-error"></div>
+        <br/>
+
+        <button type="submit">Register</button>
+    </form>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+</html>

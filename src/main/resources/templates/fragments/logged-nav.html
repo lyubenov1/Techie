@@ -1,0 +1,74 @@
+<nav class="navbar">
+
+    <div class="navbar-logo">
+        <a href="/">
+            <img src="/static/images/logo.png" alt="Logo">
+        </a>
+    </div>
+
+    <div class="navbar-categories" onmouseover="showDropdown('categories-menu')" onmouseout="hideDropdown('categories-menu')">
+        <button class="dropdown-toggle" id="categoriesDropdown" aria-haspopup="true" aria-expanded="false">
+            Categories <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu" id="categories-menu" aria-labelledby="categoriesDropdown">
+
+            <a class="dropdown-item" href="#" onmouseover="showSubcategories('smartphones')" onmouseout="hideSubcategories('smartphones')">Smartphones</a>
+            <a class="dropdown-item" href="#" onmouseover="showSubcategories('laptops')" onmouseout="hideSubcategories('laptops')">Laptops</a>
+            <a class="dropdown-item" href="#" onmouseover="showSubcategories('tablets')" onmouseout="hideSubcategories('tablets')">Tablets</a>
+            <a class="dropdown-item" href="#" onmouseover="showSubcategories('accessories')" onmouseout="hideSubcategories('accessories')">Accessories</a>
+
+        </div>
+    </div>
+
+    <!-- Subcategory menus -->
+    <div class="subcategory-menu" id="smartphones-menu">
+        <!-- Placeholder for smartphone subcategories -->
+    </div>
+    <div class="subcategory-menu" id="laptops-menu">
+        <!-- Placeholder for laptop subcategories -->
+    </div>
+    <div class="subcategory-menu" id="tablets-menu">
+        <!-- Placeholder for tablet subcategories -->
+    </div>
+    <div class="subcategory-menu" id="accessories-menu">
+        <!-- Placeholder for accessory subcategories -->
+    </div>
+
+    <!-- Additional Fields -->
+    <div class="navbar-additional">
+        <a href="/special-offers">Special Offers</a>
+        <a href="/new-arrivals">About us</a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="navbar-search">
+        <label>
+            <input type="text" placeholder="Search...">
+        </label>
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="navbar-right">
+        <!-- White/Black Mode Button -->
+        <button class="theme-toggle"><i class="fas fa-adjust"></i></button>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown" onmouseover="showDropdown('profile-menu')" onmouseout="hideDropdown('profile-menu')">
+            <button class="profile-icon" onclick="window.location.href='/login'">
+                <i class="fas fa-user"></i>
+            </button>
+            <div class="dropdown-content" id="profile-menu">
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            </div>
+        </div>
+
+        <!-- Favorites Icon -->
+        <a href="/favorites" class="favorites-icon"><i class="fas fa-heart"></i></a>
+
+        <!-- Shopping Cart Icon -->
+        <a href="/cart" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+</nav>
+
+<script src="/js/script.js"></script>
