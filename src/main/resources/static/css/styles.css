@@ -1,76 +1,46 @@
-.search-form {
-    margin-top: 15px;
-    position: relative;
-    left: -150px;
-    width: 380px;
-}
-
-.logo-container {
-    max-height: 80px;
-    width: auto;
-    display: flex;
-    align-items: center; /
-}
-
-
-.navbar-brand {
-    padding: 0;
-}
-
-.navbar-nav .nav-link.categories {
-    font-size: 19px;
-}
-
-.navbar-nav .nav-link.link {
-    font-size: 19px;
-}
-
-.navbar-nav .nav-link.categories .icon-container {
-    margin-top: 1px;
-}
-
-.navbar-nav .nav-item {
-    position: relative;
-}
-.navbar-nav .nav-item .badge {
-    position: absolute;
-    top: -3px;
-    right: -3px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 0.25em 0.4em;
-    font-size: 0.6rem;
-}
-
-body.bg-dark-grey {
+.navbar-nav .categories-wrapper {
     background-color: #232323;
-}
-
-.icon-container {
-    width: 21px;
+    padding: 7px 5px;
+    border-radius: 40px;
 }
 
 .navbar-nav .dropdown-toggle::after {
     display: none;
 }
 
-.navbar-nav .nav-item {
-    margin-right: 10px;
+.icon-container {
+    width: 19px;
 }
 
-.navbar-nav .categories-wrapper {
-    display: inline-block;
-    background-color: #232323;
-    padding: 7px 10px;
-    border-radius: 40px;
+.navbar-nav .nav-link{
+    margin-top: -1px;
 }
 
-.navbar-nav .nav-link .fas,
-.navbar-nav .nav-link .fa-regular {
-    margin-right: 2px;
+
+/* Lower the search bar and its button */
+form[role="search"] {
+    margin-top: 16px;
 }
 
-.footer-form {
-    margin-left: -70px;
+/* Make the search input field longer */
+form[role="search"] input[type="search"] {
+    width: 300px;
+}
+
+.navbar-nav:last-child {
+    margin-left: auto;
+}
+
+.navbar-nav .nav-link {
+    position: relative;
+}
+
+.navbar-nav .nav-link .badge {
+    position: absolute;
+    top: -13px;
+    right: -13px;
+}
+
+.navbar-nav:last-child .nav-item {
+    margin-right: 8px;
 }
