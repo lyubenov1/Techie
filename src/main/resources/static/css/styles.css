@@ -61,24 +61,13 @@ form[role="search"] input[type="search"] {
         margin-right: 15px;
     }
 
-    .navbar-nav .nav-link .badge {
-        font-size: 9px;
-        padding: 2px 5px;
-        line-height: 1;
-        position: absolute;
-        top: -7px;
-        right: -7px;
-    }
 }
 
-/* Media query for tablet view */
 @media (min-width: 400px) and (max-width: 992px) {
-    /* Adjust the search bar and button's position */
     form[role="search"] {
         margin-top: -11px;
     }
 
-    /* Adjust spacing for the icons in the last ul */
     .navbar-nav:last-child .nav-item {
         margin-right: 15px;
     }
@@ -93,15 +82,13 @@ form[role="search"] input[type="search"] {
     }
 }
 
-/* Media query for between tablet and desktop view */
+
 @media (min-width: 993px) and (max-width: 1200px) {
-    /* Adjust the width of the search input */
     form[role="search"] input[type="search"] {
         width: 200px; /* Adjust as needed */
     }
 
-    /* Reduce spacing between elements in the first ul */
     .navbar-nav.me-auto .nav-item:not(:last-child) {
-        margin-right: -6px; /* Adjust as needed */
+        margin-right: -6px;
     }
 }
