@@ -41,8 +41,8 @@ form[role="search"] input[type="search"] {
     padding: 2px 5px;
     line-height: 1;
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -6px;
+    right: -2px;
 }
 
 .navbar-nav:last-child .nav-item {
@@ -60,10 +60,19 @@ form[role="search"] input[type="search"] {
     .navbar-nav:last-child .nav-item {
         margin-right: 15px;
     }
+
+    .navbar-nav .nav-link .badge {
+        font-size: 9px;
+        padding: 2px 5px;
+        line-height: 1;
+        position: absolute;
+        top: -7px;
+        right: -7px;
+    }
 }
 
 /* Media query for tablet view */
-@media (min-width: 577px) and (max-width: 992px) {
+@media (min-width: 400px) and (max-width: 992px) {
     /* Adjust the search bar and button's position */
     form[role="search"] {
         margin-top: -11px;
@@ -72,6 +81,15 @@ form[role="search"] input[type="search"] {
     /* Adjust spacing for the icons in the last ul */
     .navbar-nav:last-child .nav-item {
         margin-right: 15px;
+    }
+
+    .navbar-nav .nav-link .badge {
+        font-size: 9px;
+        padding: 2px 5px;
+        line-height: 1;
+        position: absolute;
+        top: -7px;
+        right: -9px;
     }
 }
 
