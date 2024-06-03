@@ -1,5 +1,5 @@
 .navbar-nav .categories-wrapper {
-    background-color: #232323;
+    background-color: #3c3c3c;
     padding: 7px 5px;
     border-radius: 40px;
 }
@@ -46,7 +46,7 @@ form[role="search"] input[type="search"] {
 }
 
 .navbar-nav:last-child .nav-item {
-    margin-right: 8px;
+    margin-right: 4px;
 }
 
 /* Media query for mobile view */
@@ -91,4 +91,8 @@ form[role="search"] input[type="search"] {
     .navbar-nav.me-auto .nav-item:not(:last-child) {
         margin-right: -6px;
     }
+}
+
+footer.bg-dark-shade {
+    background-color: #1a1c1d !important;
 }
