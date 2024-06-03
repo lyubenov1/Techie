@@ -16,7 +16,6 @@
     margin-top: -1px;
 }
 
-
 /* Lower the search bar and its button */
 form[role="search"] {
     margin-top: 16px;
@@ -122,6 +121,7 @@ footer.bg-dark-shade {
 .main-content {
     position: relative;
     z-index: 1;
+    padding-top: 105px;
     padding-left: 120px;
     padding-right: 120px;
     background-color: inherit;
@@ -133,7 +133,58 @@ footer.bg-dark-shade {
 
 .container-fluid.footer-wrapper {
     position: relative;
-    z-index: 9999; /* Set a higher z-index to ensure the footer appears above the banners */
+    z-index: 2;
     padding-left: 0;
     padding-right: 0;
+}
+
+.jumbotron {
+    position: relative;
+    background-size: cover;
+    background-position: center bottom;
+    background-position-y: 80%;
+    background-repeat: no-repeat;
+    color: white;
+    padding-top: 34%; /* Aspect ratio */
+}
+
+.jumbotron-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 20px;
+    text-align: left;
+}
+
+.jumbotron-content h1,
+.jumbotron-content p {
+    margin: 0;
+}
+
+.jumbotron-content h1 {
+    font-size: 2.5rem;
+}
+
+.jumbotron-content p {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .jumbotron-content h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .jumbotron-content p {
+        font-size: 0.875rem !important;
+    }
+
+    .jumbotron-content .btn-lg {
+        font-size: 0.75rem !important;
+        padding: 0.5rem 1rem !important;
+    }
 }
