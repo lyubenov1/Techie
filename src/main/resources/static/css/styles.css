@@ -202,3 +202,129 @@ footer.bg-dark-shade {
         display: none !important;
     }
 }
+
+
+.breadcrumb-icons {
+    font-size: 14px;
+    color: #333;
+}
+
+
+.services-info-box {
+    display: flex;
+    justify-content: center;
+    border: 0;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 33px;
+}
+
+.services-info-box .service-item {
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 20px;
+    margin: 24px 1% 0 1%;
+    position: relative;
+    text-align: center;
+    cursor: default;
+}
+
+.services-info-box .service-item:after {
+    content: "";
+    width: 1px;
+    margin-left: 31px;
+    height: 70px;
+    display: inline-block;
+    transform: rotate(23deg);
+    background: #515151;
+    position: absolute;
+    top: calc(50% - 45px);
+}
+
+.services-info-box .service-item:last-child:after {
+    display: none; /* Hides last separator */
+}
+
+.services-info-box .service-item i {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(50% - 17px);
+}
+
+.service-item h2 {
+    z-index: 0;
+    color: white;
+    float: none;
+    display: inline-block;
+    font-size: 11px;
+    line-height: 23px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    vertical-align: sub;
+    margin-top:25px;
+    padding-left: 8px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
+
+@media (min-width: 801px) and (max-width: 1200px) {
+    .services-info-box {
+        margin-bottom: 20px;
+    }
+
+    .services-info-box .service-item {
+        margin: 15px 1% 0 1%;
+        padding-right: 10px;
+    }
+
+    .services-info-box .service-item:after {
+        height: 60px;
+        margin-left: 20px;
+        margin-top: 8px;
+    }
+
+    .services-info-box .service-item i {
+        font-size: 22px;
+        top: calc(50% - 18px);
+    }
+
+    .service-item h2 {
+        font-size: 8px;
+        line-height: 15px;
+        margin-top: 18px;
+        padding-left: 3px;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .services-info-box {
+        margin-bottom: 16px;
+    }
+
+    .services-info-box .service-item {
+        margin: 15px 1% 0 1%;
+        padding-right: 10px;
+    }
+
+    .services-info-box .service-item:after {
+        height: 60px;
+        margin-left: 15px;
+        margin-top: 7px;
+    }
+
+    .services-info-box .service-item i {
+        font-size: 18px;
+        top: calc(50% - 18px);
+    }
+
+    .service-item h2 {
+        font-size: 7px;
+        line-height: 15px;
+        margin-top: 18px;
+        padding-left: 3px;
+    }
+}
