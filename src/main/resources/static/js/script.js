@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     };
 
-// Social media buttons (of footer) to pop up an alert onclick.
+    // Social media buttons (of footer) to pop up an alert onclick.
     const socialMediaButtons = document.querySelectorAll('.btn-floating');
 
     socialMediaButtons.forEach(button => {
@@ -111,5 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showAlert(socialMedia);
         });
     });
+
+
 
 });

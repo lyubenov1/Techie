@@ -138,53 +138,67 @@ footer.bg-dark-shade {
     padding-right: 0;
 }
 
-.jumbotron {
-    position: relative;
-    background-size: cover;
-    background-position: center bottom;
-    background-position-y: 80%;
-    background-repeat: no-repeat;
-    color: white;
-    padding-top: 34%; /* Aspect ratio */
+.custom-carousel {
+    margin: 0 10px 20px 10px; /* Adds margin to the left, bottom, and right, but not the top */
+    border-radius: 15px; /* Makes the corners rounded */
+    overflow: hidden; /* Ensures the rounded corners are visible */
 }
 
-.jumbotron-content {
+
+.carousel-control-prev {
+    margin-left: -30px;
+}
+
+.carousel-control-next {
+    margin-right: -30px;
+}
+.carousel-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 34%; /* 16:9 aspect ratio */
+    overflow: hidden;
+    border-radius: 15px; /* Ensures the images inside the carousel also have rounded corners */
+}
+
+.carousel-image-wrapper img {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align items to the left */
-    padding: 20px;
-    text-align: left;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the images cover the container without distortion */
+    border-radius: 15px; /* Matches the border radius of the wrapper */
 }
 
-.jumbotron-content h1,
-.jumbotron-content p {
-    margin: 0;
+.custom-button {
+    position: relative;
+    z-index: 2;
 }
 
-.jumbotron-content h1 {
-    font-size: 2.5rem;
+.custom-button::after {
+    content: "";
+    background-color: #2e2e2e;
+    border-radius: 50%;
+    padding: 15px;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
 }
 
-.jumbotron-content p {
-    font-size: 1rem;
+.custom-button i {
+    position: relative;
+    z-index: 1;
 }
 
-@media (max-width: 768px) {
-    .jumbotron-content h1 {
-        font-size: 1.5rem !important;
-    }
-
-    .jumbotron-content p {
-        font-size: 0.875rem !important;
-    }
-
-    .jumbotron-content .btn-lg {
-        font-size: 0.75rem !important;
-        padding: 0.5rem 1rem !important;
+/* Hide carousel controls under 992px */
+@media (max-width: 992px) {
+    .custom-carousel .carousel-control-prev,
+    .custom-carousel .carousel-control-next {
+        display: none !important;
     }
 }
