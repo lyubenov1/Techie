@@ -336,3 +336,41 @@ footer.bg-dark-shade {
         padding-left: 3px;
     }
 }
+
+.breadcrumb {
+    margin-top: 90px; /* Adjust the value as needed */
+    margin-left: 50px;
+}
+
+.breadcrumb::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+    margin-top: 5px;
+    margin-right: 50px;
+}
+
+
+.breadcrumb-separator {
+    margin-left: 6px;
+    color: #ffffff;
+}
+
+
+.breadcrumb-item a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+
+.breadcrumb-item a:hover {
+    color: #198754;
+}
+
+.breadcrumb-item span {
+    color: white;
+}
+

@@ -1,0 +1,16 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="breadcrumb" aria-label="breadcrumb" th:if="${#lists.size(breadcrumb)} > 1">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Techie.com</a></li>
+        <li th:each="item, status : ${breadcrumb}" th:if="${!status.first}">
+            <!-- Render separator and breadcrumb item -->
+            <span class="breadcrumb-separator"> &gt; </span>
+            <span th:text="${item.capitalized}" th:if="${!status.last}"></span>
+            <span th:text="${item.capitalized}" th:if="${status.last}"></span>
+        </li>
+    </ol>
+</nav>
+
+</html>
