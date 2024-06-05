@@ -139,9 +139,9 @@ footer.bg-dark-shade {
 }
 
 .custom-carousel {
-    margin: 0 10px 20px 10px; /* Adds margin to the left, bottom, and right, but not the top */
-    border-radius: 15px; /* Makes the corners rounded */
-    overflow: hidden; /* Ensures the rounded corners are visible */
+    margin: 0 10px 20px 10px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 
@@ -152,22 +152,30 @@ footer.bg-dark-shade {
 .carousel-control-next {
     margin-right: -30px;
 }
+
 .carousel-image-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 34%; /* 16:9 aspect ratio */
+    padding-bottom: 34%;
     overflow: hidden;
-    border-radius: 15px; /* Ensures the images inside the carousel also have rounded corners */
+    border-radius: 15px;
 }
 
 .carousel-image-wrapper img {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the images cover the container without distortion */
-    border-radius: 15px; /* Matches the border radius of the wrapper */
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.carousel-inner > .carousel-item:nth-child(1) .carousel-image-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 75%;
+    border-radius: 15px;
 }
 
 .custom-button {
@@ -216,7 +224,7 @@ footer.bg-dark-shade {
     border: 0;
     text-align: center;
     padding: 0;
-    margin-bottom: 33px;
+    margin-bottom: 25px;
 }
 
 .services-info-box .service-item {
