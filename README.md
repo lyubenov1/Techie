@@ -1,5 +1,11 @@
 # Techie - E-commerce website for tech products
 
+### Index page current state
+
+<img src="src/main/resources/static/images/index_page.png" alt="Database Diagram" width="1300" height="600">
+
+
+
 ### Database diagram (as of right now)
 The product entity (table) is inherited by various child entities (laptop, smartphone, etc.), which add their own fields (attributes) in addition to the attributes of the parent product entity. Pictures are shown below.
 
