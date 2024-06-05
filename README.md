@@ -2,7 +2,7 @@
 
 ### Index page current state
 
-<img src="src/main/resources/static/images/index_page.png" alt="Database Diagram" width="1300" height="600">
+<img src="src/main/resources/static/images/index_page.png" alt="Database Diagram" width="800" height="400">
 
 
 
