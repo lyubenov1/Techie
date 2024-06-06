@@ -445,3 +445,9 @@ body.register .form-check-label {
 .dropdown-submenu .dropdown-item:hover {
     background-color: #343a40;
 }
+
+.dropdown-menu > .dropdown-item > a {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+}

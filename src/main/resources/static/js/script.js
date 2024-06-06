@@ -113,61 +113,61 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-
-    fetchCategories();
-
-    // Dropdown categories menu on hover show subcategories
-    document.querySelector('.dropdown-menu').addEventListener('mouseover', function(event) {
-        const target = event.target;
-        if (target.classList.contains('dropdown-item') && target.nextElementSibling) {
-            target.nextElementSibling.style.display = 'block';
-        }
-    });
-
-    document.querySelector('.dropdown-menu').addEventListener('mouseout', function(event) {
-        const target = event.target;
-        if (target.classList.contains('dropdown-item') && target.nextElementSibling) {
-            target.nextElementSibling.style.display = 'none';
-        }
-    });
-
-
 });
 
 
 
-function fetchCategories() {
-    fetch('/api/categories')
-        .then(response => response.json())
-        .then(data => {
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            data.forEach(category => {
-                const categoryItem = document.createElement('li');
-                const categoryLink = document.createElement('a');
-                categoryLink.classList.add('dropdown-item');
-                categoryLink.href = category.url;
-                categoryLink.textContent = category.name;
-                categoryItem.appendChild(categoryLink);
+document.addEventListener('DOMContentLoaded', function() {
+    function fetchCategories() {
+        fetch('/api/categories')
+            .then(response => response.json())
+            .then(data => {
+                const dropdownMenu = document.querySelector('.dropdown-menu');
 
-                if (category.children && category.children.length > 0) {
-                    const submenu = document.createElement('ul');
-                    submenu.classList.add('dropdown-submenu');
-                    category.children.forEach(child => {
-                        const childItem = document.createElement('li');
-                        const childLink = document.createElement('a');
-                        childLink.classList.add('dropdown-item');
-                        childLink.href = child.url;
-                        childLink.textContent = child.name;
-                        childItem.appendChild(childLink);
-                        submenu.appendChild(childItem);
-                    });
-                    categoryItem.appendChild(submenu);
-                }
+                data.forEach(category => {
+                    const categoryItem = document.createElement('li');
+                    categoryItem.classList.add('dropdown-item');
 
-                dropdownMenu.appendChild(categoryItem);
-            });
-        })
-        .catch(error => console.error('Error fetching categories:', error));
+                    const categoryLink = document.createElement('a');
+                    categoryLink.href = category.url;
+                    categoryLink.textContent = category.name;
+                    categoryItem.appendChild(categoryLink);
 
+                    if (category.children && category.children.length > 0) {
+                        const submenu = document.createElement('ul');
+                        submenu.classList.add('dropdown-submenu');
+                        submenu.style.display = 'none'; // Initially hide submenu
 
-}
+                        category.children.forEach(child => {
+                            const childItem = document.createElement('li');
+                            const childLink = document.createElement('a');
+                            childLink.classList.add('dropdown-item');
+                            childLink.href = child.url;
+                            childLink.textContent = child.name;
+                            childItem.appendChild(childLink);
+                            submenu.appendChild(childItem);
+                        });
+
+                        categoryItem.appendChild(submenu);
+
+                        // Event listeners for each category item
+                        categoryItem.addEventListener('mouseover', () => {
+                            submenu.style.display = 'block';
+                        });
+
+                        categoryItem.addEventListener('mouseout', (event) => {
+                            // Only hide if the mouse isn't leaving for a child element
+                            if (!event.relatedTarget || !submenu.contains(event.relatedTarget)) {
+                                submenu.style.display = 'none';
+                            }
+                        });
+                    }
+
+                    dropdownMenu.appendChild(categoryItem);
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    fetchCategories();
+});
