@@ -25,13 +25,13 @@ public class UserEntity {
     @Column(name = "email_address", nullable = false, unique = true, length = 254)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
