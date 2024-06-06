@@ -402,3 +402,24 @@ img.img-fluid {
     font-size: 1rem;
     color: #495057; /* Adjust the color as needed */
 }
+
+.register-mask {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+body.register {
+    display: flex;
+    flex-direction: column;
+}
+
+body.register main {
+    flex: 1;
+}
+
+body.register .form-check-label {
+    color: #fff;
+}
+
+.btn-success {
+    margin-top: -15px; /* Adjust the margin as needed */
+}
