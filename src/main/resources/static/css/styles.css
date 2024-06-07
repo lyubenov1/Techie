@@ -8,6 +8,24 @@
     display: none;
 }
 
+@keyframes slideIn {
+    0% {
+        transform: translateY(1rem);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+}
+
+.slideIn {
+    -webkit-animation-name: slideIn;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+}
+
 .icon-container {
     width: 19px;
 }
@@ -431,8 +449,6 @@ body.register .form-check-label {
     margin-top: -15px; 
 }
 
-
-
 .dropdown-submenu {
     position: absolute;
     left: 100%;
@@ -440,14 +456,14 @@ body.register .form-check-label {
     top: 0;
     background-color: #212529;
     padding-left: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     list-style: none;
     display: none;
+    border-radius: 8px;
+    border: 1px solid #495057;
 }
 
-.dropdown-submenu .dropdown-item {
-    padding: 0.5rem 1rem;
-    color: #fff;
-}
 
 .dropdown-submenu .dropdown-item:hover {
     background-color: #343a40;
@@ -455,6 +471,21 @@ body.register .form-check-label {
 
 .dropdown-menu > .dropdown-item > a {
     text-decoration: none;
-    padding: 0.5rem 1rem;
     color: #fff;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 992px) {
+    .dropdown-submenu {
+        position: static;
+        margin-top: 10px;
+    }
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid #ccc; /* Add a bottom border to each list item */
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none; /* Remove bottom border from the last list item */
 }

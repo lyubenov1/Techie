@@ -148,17 +148,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         categoryItem.appendChild(submenu);
 
-                        // Event listeners for each category item
-                        categoryItem.addEventListener('mouseover', () => {
-                            submenu.style.display = 'block';
-                        });
+                        // Event listeners for different screen sizes
+                        function addEventListeners() {
+                            const screenWidth = window.innerWidth;
 
-                        categoryItem.addEventListener('mouseout', (event) => {
-                            // Only hide if the mouse isn't leaving for a child element
+                            if (screenWidth <= 992) {
+                                // Remove hover event listeners
+                                categoryItem.removeEventListener('mouseover', showSubmenu);
+                                categoryItem.removeEventListener('mouseout', hideSubmenu);
+                                // Add click event listener
+                                categoryItem.addEventListener('click', toggleSubmenu);
+                                // Prevent default link behavior for parent categories with subcategories
+                                categoryLink.removeAttribute('href');
+                            } else {
+                                // Remove click event listener
+                                categoryItem.removeEventListener('click', toggleSubmenu);
+                                // Add hover event listeners
+                                categoryItem.addEventListener('mouseover', showSubmenu);
+                                categoryItem.addEventListener('mouseout', hideSubmenu);
+                                // Re-add href attribute if it doesn't exist
+                                categoryLink.href = category.url;
+                            }
+                        }
+
+                        function showSubmenu() {
+                            submenu.style.display = 'block';
+                        }
+
+                        function hideSubmenu(event) {
                             if (!event.relatedTarget || !submenu.contains(event.relatedTarget)) {
                                 submenu.style.display = 'none';
                             }
-                        });
+                        }
+
+                        function toggleSubmenu(event) {
+                            event.stopPropagation();
+                            submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+                        }
+
+                        // Initial setup
+                        addEventListeners();
+
+                        // Update event listeners on window resize
+                        window.addEventListener('resize', addEventListeners);
                     }
 
                     dropdownMenu.appendChild(categoryItem);
@@ -166,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error fetching categories:', error));
     }
+
 
     fetchCategories();
 });
