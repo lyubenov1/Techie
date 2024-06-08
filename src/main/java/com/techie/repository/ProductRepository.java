@@ -1,5 +1,6 @@
 package com.techie.repository;
 
+import com.techie.domain.entities.Category;
 import com.techie.domain.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findByName(String phoneModel);
 
-    @Query("SELECT DISTINCT p.brand FROM Product p WHERE p.category = :category")
-    List<String> findDistinctBrandsByCategory(@Param("category") String category);
+    @Query("SELECT p FROM Product p WHERE p.category = :category")
+    List<Product> findByCategory(@Param("category") Category category);
 
 }

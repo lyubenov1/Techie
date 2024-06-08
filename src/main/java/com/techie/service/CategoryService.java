@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +41,9 @@ public class CategoryService {
 
     private List<Category> getChildren(Category category) {
         return categoryRepository.findChildrenByParentId(category.getId());
+    }
+
+    public Optional<Category> findByName(String categoryName) {
+        return categoryRepository.findByName(categoryName);
     }
 }

@@ -1,5 +1,6 @@
 package com.techie.service;
 
+import com.techie.domain.entities.Category;
 import com.techie.domain.entities.Product;
 import com.techie.exceptions.ProductNotFoundException;
 import com.techie.repository.ProductRepository;
@@ -28,7 +29,11 @@ public class ProductService {
         }
     }
 
-    public List<String> getBrandsByCategory(String category) {
-        return productRepository.findDistinctBrandsByCategory(category);
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public List<Product> findByCategory(Category category) {
+        return productRepository.findByCategory(category);
     }
 }
