@@ -491,3 +491,8 @@ body.register .form-check-label {
 .dropdown-menu li:last-child {
     border-bottom: none; /* Remove bottom border from the last list item */
 }
+
+.dropdown-menu > .dropdown-item > a {
+    display: inline-block; /* Or inline-block */
+    width: 100%;
+}

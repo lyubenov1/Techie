@@ -27,11 +27,12 @@
                     <ul class="dropdown-menu slideIn" aria-labelledby="navbarDropdown">
                         <li th:each="category : ${categories}">
                             <a class="dropdown-item" th:href="${category.url}" th:text="${category.name}"></a>
-                            <ul class="dropdown-submenu" th:if="${not #lists.isEmpty(category.children)}">
-                                <li th:each="child : ${category.children}">
-                                    <a class="dropdown-item" th:href="${child.url}" th:text="${child.name}"></a>
-                                </li>
-                            </ul>
+                            <span class="arrow" aria-hidden="true">&gt;</span> <ul class="dropdown-submenu" th:if="${not #lists.isEmpty(category.children)}">
+                            <li th:each="child : ${category.children}">
+                                <a class="dropdown-item" th:href="${child.url}" th:text="${child.name}"></a>
+                                <span class="arrow" aria-hidden="true">&gt;</span>
+                            </li>
+                        </ul>
                         </li>
                     </ul>
                 </li>
