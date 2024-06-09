@@ -41,7 +41,6 @@ public class HomeController {
 
 }
 
-// TODO:::    implement REDIS for caching of the
-//  getAllCategories() method, to fix the buttons of the categories dropdown
-//  and to implement correct mapping to the subcategories endpoints.
+// TODO:::  implement REDIS for caching of the
+//  getAllCategories() method and to implement correct mapping to the subcategories endpoints.
 
