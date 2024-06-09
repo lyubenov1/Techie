@@ -1,13 +1,11 @@
 package com.techie.web.rest;
 
-import com.techie.domain.model.CategoryDTO;
-import com.techie.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.techie.domain.model.*;
+import com.techie.service.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -22,7 +20,7 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryDTO> getCategories() {
-        return categoryService.getAllParentCategoriesWithChildren();
+        return categoryService.getAllCategories();
     }
 
 }

@@ -20,54 +20,48 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
+    
+    public List<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepository.findAllJoinChildren();
 
-    public List<CategoryDTO> getAllParentCategoriesWithChildren() {
-        List<Category> parentCategories = categoryRepository.findAllByParentIsNull();
-
-        return parentCategories.stream()
+        return categories.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    private CategoryDTO convertToDTO(Category category) {
+    public CategoryDTO convertToDTO(Category category) {
         CategoryDTO dto = new CategoryDTO(category.getId(), category.getName(), category.getImageUrl());
-        List<Category> children = getChildren(category);
+        List<Category> children = category.getChildren();
+        StringBuilder urlBuilder = new StringBuilder();
 
-        List<CategoryDTO> childrenDTO = children.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-        dto.setChildren(childrenDTO);
-        setCategoryUrl(dto);
+        if (category.getParent() != null) {
+            buildUrlRecursively(category.getParent(), urlBuilder);
+        }
+
+        String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
+        urlBuilder.append("/").append(encodedName);
+        dto.setUrl(urlBuilder.toString());
+
+        if (children != null) {
+            List<CategoryDTO> childrenDTO = children.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            dto.setChildren(childrenDTO);
+        }
+
         return dto;
     }
 
-    public void setCategoryUrl(CategoryDTO categoryDTO) {
-        Optional<Category> categoryOptional = categoryRepository.findByNameWithParent(categoryDTO.getName());
-        if (categoryOptional.isPresent()) {
-            Category category = categoryOptional.get();
-            // Build URL based on the category hierarchy
-            StringBuilder urlBuilder = new StringBuilder();
-
-            // Check if the category has a parent
-            while (category != null) {
-                String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
-                urlBuilder.insert(0, "/" + encodedName); // Insert the encoded segment
-                category = category.getParent(); // Move to the parent category
-            }
-
-            categoryDTO.setUrl(urlBuilder.toString());
+    private void buildUrlRecursively(Category category, StringBuilder urlBuilder) {
+        if (category.getParent() != null) {
+            buildUrlRecursively(category.getParent(), urlBuilder);
         }
-    }
-
-    private List<Category> getChildren(Category category) {
-        return categoryRepository.findChildrenByParentId(category.getId());
+        String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
+        urlBuilder.insert(0, "/" + encodedName);
     }
 
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
     }
 
-    public Optional<Category> findByNameWithParent(String categoryName) {
-        return categoryRepository.findByNameWithParent(categoryName);
-    }
 }

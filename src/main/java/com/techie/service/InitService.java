@@ -1,19 +1,15 @@
 package com.techie.service;
 
-import com.techie.dataInitialization.ImageUrlRepo;
-import com.techie.domain.entities.Product;
-import com.techie.domain.entities.ProductImage;
-import com.techie.domain.entities.RoleEntity;
-import com.techie.domain.enums.UserRoleEnum;
-import com.techie.repository.ProductImageRepository;
-import com.techie.repository.ProductRepository;
-import com.techie.repository.RoleRepository;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.techie.dataInitialization.*;
+import com.techie.domain.entities.*;
+import com.techie.domain.enums.*;
+import com.techie.repository.*;
+import jakarta.annotation.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class InitService {
@@ -23,16 +19,20 @@ public class InitService {
     private final ImageUrlRepo imageUrlRepo;
     private final ProductRepository productRepository;
     private final RoleRepository roleRepository;
+    private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
     public InitService(ProductImageRepository productImageRepository, ProductService productService,
                        ImageUrlRepo imageUrlRepo, ProductRepository productRepository,
-                       RoleRepository roleRepository) {
+                       RoleRepository roleRepository, CategoryService categoryService, CategoryRepository categoryRepository) {
         this.productImageRepository = productImageRepository;
         this.productService = productService;
         this.imageUrlRepo = imageUrlRepo;
         this.productRepository = productRepository;
         this.roleRepository = roleRepository;
+        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
 
     @PostConstruct
@@ -50,6 +50,17 @@ public class InitService {
             roleRepository.save(userRole);
             roleRepository.save(adminRole);
         }
+    }
+
+    @PostConstruct
+    private void initCategories() {
+        Map<Long, List<Category>> childrenByParentId = categoryRepository.findAll().stream()
+                .filter(category -> category.getParent() != null)
+                .collect(Collectors.groupingBy(category -> category.getParent().getId()));
+
+        categoryRepository.findAll().stream()
+                .filter(category -> childrenByParentId.containsKey(category.getId()))
+                .forEach(category -> category.setChildren(childrenByParentId.get(category.getId())));
     }
 
     public void saveProductImages() {
