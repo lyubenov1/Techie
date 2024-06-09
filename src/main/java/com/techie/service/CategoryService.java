@@ -20,11 +20,12 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    
+
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAllJoinChildren();
 
         return categories.stream()
+                .filter(category -> category.getParent() == null)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
