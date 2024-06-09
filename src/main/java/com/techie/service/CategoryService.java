@@ -1,14 +1,15 @@
 package com.techie.service;
 
-import com.techie.domain.entities.Category;
-import com.techie.domain.model.CategoryDTO;
-import com.techie.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.techie.domain.entities.*;
+import com.techie.domain.model.*;
+import com.techie.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.util.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.nio.charset.*;
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class CategoryService {
@@ -36,7 +37,26 @@ public class CategoryService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
         dto.setChildren(childrenDTO);
+        setCategoryUrl(dto);
         return dto;
+    }
+
+    public void setCategoryUrl(CategoryDTO categoryDTO) {
+        Optional<Category> categoryOptional = categoryRepository.findByNameWithParent(categoryDTO.getName());
+        if (categoryOptional.isPresent()) {
+            Category category = categoryOptional.get();
+            // Build URL based on the category hierarchy
+            StringBuilder urlBuilder = new StringBuilder();
+
+            // Check if the category has a parent
+            while (category != null) {
+                String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
+                urlBuilder.insert(0, "/" + encodedName); // Insert the encoded segment
+                category = category.getParent(); // Move to the parent category
+            }
+
+            categoryDTO.setUrl(urlBuilder.toString());
+        }
     }
 
     private List<Category> getChildren(Category category) {
@@ -45,5 +65,9 @@ public class CategoryService {
 
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
+    }
+
+    public Optional<Category> findByNameWithParent(String categoryName) {
+        return categoryRepository.findByNameWithParent(categoryName);
     }
 }

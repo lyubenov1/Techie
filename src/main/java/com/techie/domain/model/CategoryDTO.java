@@ -1,15 +1,14 @@
 package com.techie.domain.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class CategoryDTO {
+
     private Long id;
     private String name;
     private String imageUrl;
@@ -20,6 +19,7 @@ public class CategoryDTO {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
-        this.url = "/categories/" + name.substring(0, 1).toLowerCase() + name.substring(1);
+        this.url = "";
     }
+
 }

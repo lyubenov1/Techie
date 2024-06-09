@@ -1,14 +1,12 @@
 package com.techie.web;
 
-import com.techie.domain.entities.Category;
-import com.techie.service.CategoryService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.techie.domain.entities.*;
+import com.techie.service.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -25,7 +23,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/categories/{categoryName}")
+    @GetMapping("/{categoryName}")
     public String categoryPage(@PathVariable String categoryName, Model model) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
 

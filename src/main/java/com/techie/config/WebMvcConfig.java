@@ -1,9 +1,9 @@
 package com.techie.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.techie.interceptors.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     public WebMvcConfig(BreadcrumbInterceptor breadcrumbInterceptor) {
-        this.breadcrumbInterceptor = breadcrumbInterceptor;
+        this.breadcrumbInterceptor = breadcrumbInterceptor;;
     }
 
     @Override

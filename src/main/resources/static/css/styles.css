@@ -384,16 +384,18 @@ footer.bg-dark-shade {
 }
 
 
-.breadcrumb-item a {
+.breadcrumb-item a, .breadcrumb-item-other {
     color: inherit;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 
-.breadcrumb-item a:hover {
+.breadcrumb-item a:hover, .breadcrumb-item-other:hover {
     color: #198754;
 }
+
+
 
 .breadcrumb-item span {
     color: white;

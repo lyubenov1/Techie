@@ -1,18 +1,12 @@
 package com.techie.web.rest;
 
-import com.techie.domain.entities.Category;
-import com.techie.domain.entities.Product;
-import com.techie.service.CategoryService;
-import com.techie.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.techie.domain.entities.*;
+import com.techie.service.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/products")
@@ -33,7 +27,7 @@ public class ProductController {
         return productService.findAll();
     }
 
-    @GetMapping("/category/{categoryName}")
+    @GetMapping("/{categoryName}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String categoryName) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
 
