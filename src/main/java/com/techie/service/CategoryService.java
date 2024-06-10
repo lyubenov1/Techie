@@ -4,7 +4,6 @@ import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.util.*;
 
@@ -22,7 +21,6 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Cacheable("categories")
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAllJoinChildren();
 
