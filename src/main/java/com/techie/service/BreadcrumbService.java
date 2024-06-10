@@ -41,11 +41,6 @@ public class BreadcrumbService {
             currentUrl = "/";
         }
 
-        if (currentUrl == null || currentUrl.isEmpty() || "/".equals(currentUrl)) {
-            log.warn("Current URL is null, empty, or homepage");
-            return Collections.emptyList();
-        }
-
         // Remove query parameters if present
         String currentUrlWithoutParams = currentUrl.split("\\?")[0];
 
