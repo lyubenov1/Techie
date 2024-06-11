@@ -10,6 +10,9 @@ To get the application up and running, follow these steps:
 
 3.  **Start the Application:** Now that the tables are created and populated, you can launch the application. Additional data will be populated during startup using `@PostConstruct` methods.
 
+That's it!
+
+
 ### Index page current state
 
 <img src="src/main/resources/static/images/index_page.png" alt="Database Diagram" width="800" height="400">
