@@ -11,8 +11,9 @@ import java.util.concurrent.*;
 public class CacheConfig {
 
     @Bean
-    public CacheManager cacheManagerCategories() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("categories");
+    @Primary
+    public CacheManager cacheManager() {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager();
         cacheManager.setCaffeine(Caffeine.newBuilder()
                 .initialCapacity(100)
                 .maximumSize(500)
@@ -22,12 +23,12 @@ public class CacheConfig {
     }
 
     @Bean
-    public CacheManager cacheManagerProducts() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("products");
+    public CacheManager cacheManagerCart() {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("shoppingCart");
         cacheManager.setCaffeine(Caffeine.newBuilder()
-                .initialCapacity(100)
-                .maximumSize(500)
-                .expireAfterAccess(20, TimeUnit.MINUTES)
+                .initialCapacity(50)
+                .maximumSize(200)
+                .expireAfterWrite(3, TimeUnit.DAYS)
                 .recordStats());
         return cacheManager;
     }
