@@ -4,16 +4,11 @@
 
 To get the application up and running, follow these steps:
 
-1.  **Create Database Tables:**
+1.  **Create Database Tables:** The application is configured to automatically create the necessary database tables on startup using Hibernate. Simply launch the application, and it will handle this for you.
 
-    The application is configured to automatically create the necessary database tables on startup using Hibernate. Simply launch the application, and it will handle this for you.
-2.  **Populate Tables with Initial Data:**
+2.  **Populate Tables with Initial Data:** Execute the `data.sql` file located in the `src/main/resources` directory of the project. This will populate the tables with essential data.
 
-    Execute the `data.sql` file located in the `src/main/resources` directory of the project. This will populate the tables with essential data.
-3.  **Start the Application:**
-
-    Now that the tables are created and populated, you can launch the application. Additional data will be populated during startup using `@PostConstruct` methods.
-
+3.  **Start the Application:** Now that the tables are created and populated, you can launch the application. Additional data will be populated during startup using `@PostConstruct` methods.
 
 ### Index page current state
 
