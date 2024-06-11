@@ -33,11 +33,10 @@ public class HomeController {
             return "redirect:/";  // Redirect to the home page
         }
 
-       CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
+        CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
         model.addAttribute("category", categoryDTO);
 
         return "products";
     }
 
 }
-

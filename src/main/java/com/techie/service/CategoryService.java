@@ -4,6 +4,7 @@ import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.util.*;
 
@@ -21,8 +22,9 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Cacheable(cacheNames = "categories", key = "'allCategories'")
     public List<CategoryDTO> getAllCategories() {
-        List<Category> categories = categoryRepository.findAllJoinChildren();
+        List<Category> categories = categoryRepository.findAll();
 
         return categories.stream()
                 .filter(category -> category.getParent() == null)
@@ -31,20 +33,15 @@ public class CategoryService {
     }
 
     public CategoryDTO convertToDTO(Category category) {
-        CategoryDTO dto = new CategoryDTO(category.getId(), category.getName(), category.getImageUrl());
-        List<Category> children = category.getChildren();
-        StringBuilder urlBuilder = new StringBuilder();
-
-        if (category.getParent() != null) {
-            buildUrlRecursively(category.getParent(), urlBuilder);
-        }
+        CategoryDTO dto = new CategoryDTO();
+        dto.setId(category.getId());
+        dto.setName(category.getName());
 
         String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
-        urlBuilder.append("/").append(encodedName);
-        dto.setUrl(urlBuilder.toString());
+        dto.setUrl("/" + encodedName);
 
-        if (children != null) {
-            List<CategoryDTO> childrenDTO = children.stream()
+        if (category.getChildren() != null && !category.getChildren().isEmpty()) {
+            List<CategoryDTO> childrenDTO = category.getChildren().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
             dto.setChildren(childrenDTO);
@@ -53,14 +50,7 @@ public class CategoryService {
         return dto;
     }
 
-    private void buildUrlRecursively(Category category, StringBuilder urlBuilder) {
-        if (category.getParent() != null) {
-            buildUrlRecursively(category.getParent(), urlBuilder);
-        }
-        String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
-        urlBuilder.insert(0, "/" + encodedName);
-    }
-
+    @Cacheable(cacheNames = "categories", key = "#categoryName", condition = "#result.isPresent()")
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
     }
