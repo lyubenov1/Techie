@@ -36,6 +36,7 @@ public class CategoryService {
         CategoryDTO dto = new CategoryDTO();
         dto.setId(category.getId());
         dto.setName(category.getName());
+        dto.setImageUrl(category.getImageUrl());
 
         String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
         dto.setUrl("/" + encodedName);
@@ -50,7 +51,7 @@ public class CategoryService {
         return dto;
     }
 
-    @Cacheable(cacheNames = "categories", key = "#categoryName", condition = "#result.isPresent()")
+    @Cacheable(cacheNames = "categories", key = "#categoryName")
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
     }
