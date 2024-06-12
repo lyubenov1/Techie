@@ -44,29 +44,35 @@ public class BreadcrumbService {
     }
 
     public List<BreadcrumbItem> getBreadcrumbs(HttpServletRequest request) {
-        String currentUrl;
+        String currentUrl = extractCurrentUrl(request);
+        List<BreadcrumbItem> breadcrumbs = buildBreadcrumbs(currentUrl);
+        addParentCategoryBreadcrumb(breadcrumbs);
+        return breadcrumbs;
+    }
 
+    private String extractCurrentUrl(HttpServletRequest request) {
         try {
-            currentUrl = request.getRequestURI();
+            return request.getRequestURI().split("\\?")[0];
         } catch (Exception e) {
             log.error("Error getting current URL", e);
-            currentUrl = "/";
+            return "/";
         }
+    }
 
-        // Remove query parameters if present
-        String currentUrlWithoutParams = currentUrl.split("\\?")[0];
-
+    private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl) {
         List<BreadcrumbItem> breadcrumbs = new ArrayList<>();
         StringBuilder urlBuilder = new StringBuilder();
 
-        for (String part : currentUrlWithoutParams.split("/")) {
+        for (String part : currentUrl.split("/")) {
             if (!part.isEmpty()) {
-                urlBuilder.append("/").append(part); // Build the URL incrementally
+                urlBuilder.append("/").append(part);
                 breadcrumbs.add(new BreadcrumbItem(part, urlBuilder.toString()));
             }
         }
+        return breadcrumbs;
+    }
 
-        // Check if the last breadcrumb is a category and has a parent
+    private void addParentCategoryBreadcrumb(List<BreadcrumbItem> breadcrumbs) {
         Optional<BreadcrumbItem> lastBreadcrumb = Optional.ofNullable(breadcrumbs.isEmpty() ? null : breadcrumbs.getLast());
         if (lastBreadcrumb.isPresent()) {
             String lastBreadcrumbCapitalized = lastBreadcrumb.get().getCapitalized();
@@ -78,13 +84,10 @@ public class BreadcrumbService {
             if (categoryOptional.isPresent() && categoryOptional.get().getParent() != null) {
                 Category parentCategory = categoryOptional.get().getParent();
 
-                String parentUrl = urlBuilder.toString().replace(lastBreadcrumb.get().getOriginal(),
-                        parentCategory.getName().toLowerCase().replace(" ", "-"));
+                String parentUrl = breadcrumbs.get(breadcrumbs.size() - 2).getUrl();
 
                 breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
             }
         }
-
-        return breadcrumbs;
     }
 }
