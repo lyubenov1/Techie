@@ -1,14 +1,12 @@
 package com.techie.service;
 
-import com.techie.domain.entities.Category;
-import com.techie.domain.entities.Product;
-import com.techie.exceptions.ProductNotFoundException;
-import com.techie.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.techie.domain.entities.*;
+import com.techie.exceptions.*;
+import com.techie.repository.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -20,12 +18,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product findByName(String phoneModel) {
-        Optional<Product> optionalProduct = this.productRepository.findByName(phoneModel);
+    public Product findByName(String productModel) {
+        Optional<Product> optionalProduct = this.productRepository.findByName(productModel);
         if (optionalProduct.isPresent()) {
             return optionalProduct.get();
         } else {
-            throw new ProductNotFoundException(phoneModel + " was not found!");
+            throw new ProductNotFoundException(productModel + " was not found!");
         }
     }
 
