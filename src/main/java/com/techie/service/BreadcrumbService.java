@@ -3,9 +3,9 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import jakarta.servlet.http.*;
 import lombok.*;
-import org.modelmapper.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -15,12 +15,10 @@ public class BreadcrumbService {
 
     private static final Logger log = LoggerFactory.getLogger(BreadcrumbService.class);
     private final CategoryService categoryService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public BreadcrumbService(CategoryService categoryService, ModelMapper modelMapper) {
+    public BreadcrumbService(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.modelMapper = modelMapper;
     }
 
     @Getter
@@ -43,12 +41,13 @@ public class BreadcrumbService {
         }
     }
 
+    @Cacheable(cacheNames = "breadcrumbs", key = "#root.args[0].requestURI")
     public List<BreadcrumbItem> getBreadcrumbs(HttpServletRequest request) {
         String currentUrl = extractCurrentUrl(request);
-        List<BreadcrumbItem> breadcrumbs = buildBreadcrumbs(currentUrl);
-        addParentCategoryBreadcrumb(breadcrumbs);
-        return breadcrumbs;
+
+        return buildBreadcrumbs(currentUrl);
     }
+
 
     private String extractCurrentUrl(HttpServletRequest request) {
         try {
@@ -57,22 +56,28 @@ public class BreadcrumbService {
             log.error("Error getting current URL", e);
             return "/";
         }
+
     }
 
-    private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl) {
+    private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl){
         List<BreadcrumbItem> breadcrumbs = new ArrayList<>();
         StringBuilder urlBuilder = new StringBuilder();
 
         for (String part : currentUrl.split("/")) {
             if (!part.isEmpty()) {
+                String partWithoutHyphens = part.replace("-", " ");
+
                 urlBuilder.append("/").append(part);
-                breadcrumbs.add(new BreadcrumbItem(part, urlBuilder.toString()));
+                breadcrumbs.add(new BreadcrumbItem(partWithoutHyphens, urlBuilder.toString()));
             }
         }
+
+        addParentCategoryBreadcrumb(breadcrumbs, urlBuilder);
         return breadcrumbs;
+
     }
 
-    private void addParentCategoryBreadcrumb(List<BreadcrumbItem> breadcrumbs) {
+    private void addParentCategoryBreadcrumb(List<BreadcrumbItem> breadcrumbs, StringBuilder urlBuilder) {
         Optional<BreadcrumbItem> lastBreadcrumb = Optional.ofNullable(breadcrumbs.isEmpty() ? null : breadcrumbs.getLast());
         if (lastBreadcrumb.isPresent()) {
             String lastBreadcrumbCapitalized = lastBreadcrumb.get().getCapitalized();
@@ -84,10 +89,12 @@ public class BreadcrumbService {
             if (categoryOptional.isPresent() && categoryOptional.get().getParent() != null) {
                 Category parentCategory = categoryOptional.get().getParent();
 
-                String parentUrl = breadcrumbs.get(breadcrumbs.size() - 2).getUrl();
+                String parentUrl = urlBuilder.toString().replace(lastBreadcrumb.get().getOriginal(),
+                        parentCategory.getName().toLowerCase().replace(" ", "-"));
 
                 breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
             }
         }
     }
+
 }
