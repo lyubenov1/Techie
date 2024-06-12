@@ -22,14 +22,9 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Cacheable(cacheNames = "categories", key = "'allCategories'")
-    public List<CategoryDTO> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
 
-        return categories.stream()
-                .filter(category -> category.getParent() == null)
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 
     public CategoryDTO convertToDTO(Category category) {
@@ -39,7 +34,7 @@ public class CategoryService {
         dto.setImageUrl(category.getImageUrl());
 
         String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
-        dto.setUrl("/" + encodedName);
+        dto.setUrl("/products/" + encodedName);
 
         if (category.getChildren() != null && !category.getChildren().isEmpty()) {
             List<CategoryDTO> childrenDTO = category.getChildren().stream()
@@ -54,6 +49,14 @@ public class CategoryService {
     @Cacheable(cacheNames = "categories", key = "#categoryName")
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
+    }
+
+    @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
+    public List<CategoryDTO> getParentCategoryDTOs() {
+        return this.getAllCategories().stream()
+                .filter(category -> category.getParent() == null)
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
 }
