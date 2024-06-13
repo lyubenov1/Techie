@@ -16,10 +16,12 @@ import java.util.stream.*;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ProductService productService;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, ProductService productService) {
         this.categoryRepository = categoryRepository;
+        this.productService = productService;
     }
 
     public List<Category> getAllCategories() {
@@ -42,6 +44,11 @@ public class CategoryService {
                     .collect(Collectors.toList());
             dto.setChildren(childrenDTO);
         }
+
+        // Set products in the category
+        List<ProductDTO> productDTOs = productService.getProductsByCategory(category.getName());
+        dto.setProducts(productDTOs);
+
 
         return dto;
     }

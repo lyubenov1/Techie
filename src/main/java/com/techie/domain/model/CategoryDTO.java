@@ -13,6 +13,7 @@ public class CategoryDTO {
     private String name;
     private String imageUrl;
     private List<CategoryDTO> children;
+    private List<ProductDTO> products;
     private String url;
 
     public CategoryDTO(Long id, String name, String imageUrl) {

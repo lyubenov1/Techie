@@ -14,12 +14,10 @@ import java.util.*;
 @RequestMapping("/products")
 public class ProductViewController {
 
-    private final ProductService productService;
     private final CategoryService categoryService;
 
     @Autowired
-    public ProductViewController(ProductService productService, CategoryService categoryService) {
-        this.productService = productService;
+    public ProductViewController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -37,7 +35,7 @@ public class ProductViewController {
     public String categoryPage(@PathVariable String categoryName, Model model) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         if (categoryOptional.isEmpty()) {
-            return "redirect:/";  // Redirect to the home page
+            return "redirect:/";
         }
 
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());

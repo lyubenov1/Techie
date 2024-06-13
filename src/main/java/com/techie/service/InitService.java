@@ -15,23 +15,19 @@ import java.util.stream.*;
 public class InitService {
 
     private final ProductImageRepository productImageRepository;
-    private final ProductService productService;
     private final ImageUrlRepo imageUrlRepo;
     private final ProductRepository productRepository;
     private final RoleRepository roleRepository;
-    private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public InitService(ProductImageRepository productImageRepository, ProductService productService,
-                       ImageUrlRepo imageUrlRepo, ProductRepository productRepository,
-                       RoleRepository roleRepository, CategoryService categoryService, CategoryRepository categoryRepository) {
+    public InitService(ProductImageRepository productImageRepository, ImageUrlRepo imageUrlRepo,
+                       ProductRepository productRepository, RoleRepository roleRepository,
+                       CategoryRepository categoryRepository) {
         this.productImageRepository = productImageRepository;
-        this.productService = productService;
         this.imageUrlRepo = imageUrlRepo;
         this.productRepository = productRepository;
         this.roleRepository = roleRepository;
-        this.categoryService = categoryService;
         this.categoryRepository = categoryRepository;
     }
 
@@ -72,10 +68,12 @@ public class InitService {
                     for (String imageUrl : imageUrls) {
                         ProductImage productImage = new ProductImage();
 
-                        Product product = productService.findByName(productModel);
-                        productImage.setProduct(product);
-                        productImage.setImageUrl(imageUrl);
-                        productImageRepository.save(productImage);
+                        Optional<Product> product = productRepository.findByName(productModel);
+                        if (product.isPresent()) {
+                            productImage.setProduct(product.get());
+                            productImage.setImageUrl(imageUrl);
+                            productImageRepository.save(productImage);
+                        }
                     }
                 }
             });
