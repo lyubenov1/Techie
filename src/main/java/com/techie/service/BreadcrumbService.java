@@ -82,9 +82,7 @@ public class BreadcrumbService {
         if (lastBreadcrumb.isPresent()) {
             String lastBreadcrumbCapitalized = lastBreadcrumb.get().getCapitalized();
 
-            Optional<Category> categoryOptional = categoryService.getAllCategories().stream()
-                    .filter(c -> c.getName().equals(lastBreadcrumbCapitalized))
-                    .findFirst();
+            Optional<Category> categoryOptional = categoryService.findByName(lastBreadcrumbCapitalized);
 
             if (categoryOptional.isPresent() && categoryOptional.get().getParent() != null) {
                 Category parentCategory = categoryOptional.get().getParent();

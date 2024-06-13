@@ -22,11 +22,11 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Cacheable(cacheNames = "categories", key = "'allCategories'")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
+    @Cacheable(cacheNames = "categories", key = "#category.id")
     public CategoryDTO convertToDTO(Category category) {
         CategoryDTO dto = new CategoryDTO();
         dto.setId(category.getId());
@@ -51,6 +51,7 @@ public class CategoryService {
         return categoryRepository.findByName(categoryName);
     }
 
+    @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
     public List<CategoryDTO> getParentCategoryDTOs() {
         return this.getAllCategories().stream()
                 .filter(category -> category.getParent() == null)
