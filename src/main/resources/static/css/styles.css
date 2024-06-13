@@ -377,12 +377,10 @@ footer.bg-dark-shade {
     margin-right: 50px;
 }
 
-
 .breadcrumb-separator {
     margin-left: 6px;
-    color: #ffffff;
+    color: #198754;
 }
-
 
 .breadcrumb-item a, .breadcrumb-item-other {
     color: inherit;
@@ -390,12 +388,9 @@ footer.bg-dark-shade {
     transition: color 0.3s ease;
 }
 
-
 .breadcrumb-item a:hover, .breadcrumb-item-other:hover {
     color: #198754;
 }
-
-
 
 .breadcrumb-item span {
     color: white;

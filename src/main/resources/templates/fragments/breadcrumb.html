@@ -8,7 +8,7 @@
             <!-- Render separator and breadcrumb item -->
             <span class="breadcrumb-separator"> &gt; </span>
             <a class = "breadcrumb-item-other" th:if="${!status.last}" th:text="${item.capitalized}" th:href="@{${item.url}}"></a>
-            <span th:if="${status.last}" th:text="${item.capitalized}"></span>
+            <span th:if="${status.last}" th:text="${item.capitalized}" style="color: #999;"></span>
         </li>
     </ol>
 </nav>
