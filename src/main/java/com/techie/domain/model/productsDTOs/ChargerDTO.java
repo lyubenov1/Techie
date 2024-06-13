@@ -6,9 +6,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class ChargerDTO {
-    private ProductDTO product;
+public class ChargerDTO extends ProductDTO {
 
     private String adapterType;
+
 }

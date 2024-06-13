@@ -6,9 +6,9 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class EarbudsDTO {
-    private ProductDTO product;
+public class EarbudsDTO extends ProductDTO {
 
     private String connectionType;
     private String batteryLife;
@@ -18,4 +18,5 @@ public class EarbudsDTO {
     private String fit;
     private String color;
     private int yearOfRelease;
+
 }

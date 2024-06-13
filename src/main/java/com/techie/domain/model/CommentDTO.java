@@ -8,8 +8,10 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CommentDTO {
+
     private Long id;
     private String content;
     private LocalDateTime timestamp;
@@ -17,6 +19,6 @@ public class CommentDTO {
     private int downvoteCount;
     private List<String> imageUrls;
     private int rating;
+    private String user;
 
-    private UserEntityDTO user;
 }

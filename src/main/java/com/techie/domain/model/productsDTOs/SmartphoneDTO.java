@@ -6,9 +6,9 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class SmartphoneDTO {
-    private ProductDTO product;
+public class SmartphoneDTO extends ProductDTO {
 
     private String screenSize;
     private String screenResolution;
@@ -21,4 +21,5 @@ public class SmartphoneDTO {
     private String color;
     private String operatingSystem;
     private int yearOfRelease;
+
 }

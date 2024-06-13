@@ -19,10 +19,21 @@
     <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
 </div>
 
-
-
-
-
+<h1 th:text="${category.name}">Category Name</h1>
+<div th:each="product : ${category.products}">
+    <div>
+        <h2 th:text="${product.name}">Product Name</h2>
+        <p th:text="${product.description}">Product Description</p>
+        <p th:text="${product.originalPrice}">Product Price</p>
+        <p th:text="${product.averageRating}">Product Rating</p>
+        <div th:if="${product.screenSize}">
+            <p>Screen Size: <span th:text="${product.screenSize}"></span></p>
+            <p>Screen Resolution: <span th:text="${product.screenResolution}"></span></p>
+            <p>RAM: <span th:text="${product.ram}"></span></p>
+            <!-- Add other Smartphone specific fields here -->
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid footer-wrapper">
     <footer th:replace="~{/fragments/footer::footer}"></footer>
