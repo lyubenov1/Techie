@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "laptopBuilder")
 public class LaptopDTO extends ProductDTO {
 
     private String screenSize;

@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "cableBuilder")
 public class CableDTO extends ProductDTO {
 
     private String type;

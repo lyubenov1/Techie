@@ -27,7 +27,6 @@ public class ProductService {
         this.commentRepository = commentRepository;
     }
 
-
     public List<ProductDTO> getProductsByCategory(String categoryName) {
         List<Product> products = productRepository.findByCategoryName(categoryName);
         return products.stream()
@@ -96,7 +95,7 @@ public class ProductService {
 
     private ChargerDTO convertToChargerDTO(Charger charger) {
         try {
-            return ChargerDTO.builder()
+            return ChargerDTO.chargerBuilder()
                     .adapterType(charger.getAdapterType())
                     .build();
         } catch (Exception e) {
@@ -107,7 +106,7 @@ public class ProductService {
     private CableDTO convertToCableDTO(Cable cable) {
 
         try {
-            return CableDTO.builder()
+            return CableDTO.cableBuilder()
                     .type(cable.getType())
                     .build();
         } catch (Exception e) {
@@ -117,7 +116,7 @@ public class ProductService {
 
     private PowerBankDTO convertToPowerbankDTO(PowerBank powerbank) {
         try {
-            return PowerBankDTO.builder()
+            return PowerBankDTO.powerBankBuilder()
                     .batteryCapacity(powerbank.getBatteryCapacity())
                     .color(powerbank.getColor())
                     .build();
@@ -128,7 +127,7 @@ public class ProductService {
 
     private EarbudsDTO convertToEarbudsDTO(Earbuds earbuds) {
         try {
-            return EarbudsDTO.builder()
+            return EarbudsDTO.earbudsBuilder()
                     .connectionType(earbuds.getConnectionType())
                     .batteryLife(earbuds.getBatteryLife())
                     .batteryLifeWithCase(earbuds.getBatteryLifeWithCase())
@@ -145,7 +144,7 @@ public class ProductService {
 
     private LaptopDTO convertToLaptopDTO(Laptop laptop) {
         try {
-            return LaptopDTO.builder()
+            return LaptopDTO.laptopBuilder()
                     .screenSize(laptop.getScreenSize())
                     .screenResolution(laptop.getScreenResolution())
                     .processor(laptop.getProcessor())
@@ -164,7 +163,7 @@ public class ProductService {
 
     private TabletDTO convertToTabletDTO(Tablet tablet) {
         try {
-            return TabletDTO.builder()
+            return TabletDTO.tabletBuilder()
                     .screenSize(tablet.getScreenSize())
                     .screenResolution(tablet.getScreenResolution())
                     .ram(tablet.getRam())
@@ -184,7 +183,7 @@ public class ProductService {
 
     private SmartphoneDTO convertToSmartphoneDTO(Smartphone smartphone) {
         try {
-            return SmartphoneDTO.builder()
+            return SmartphoneDTO.smartphoneBuilder()
                     .screenSize(smartphone.getScreenSize())
                     .screenResolution(smartphone.getScreenResolution())
                     .ram(smartphone.getRam())

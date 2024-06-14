@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "earbudsBuilder")
 public class EarbudsDTO extends ProductDTO {
 
     private String connectionType;

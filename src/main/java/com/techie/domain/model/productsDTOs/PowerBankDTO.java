@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(builderMethodName = "powerBankBuilder")
 public class PowerBankDTO extends ProductDTO {
 
     private String batteryCapacity;
