@@ -491,3 +491,89 @@ body.register .form-check-label {
     display: inline-block; /* Or inline-block */
     width: 100%;
 }
+
+
+
+
+
+
+.product-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 82%; /* Set width to 90% */
+    margin: 0 auto; /* Center the container */
+}
+
+.product-grid-header {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: none;
+    margin-left: 210px; /* Optional: add some right margin */
+}
+
+.product-grid-header h1 {
+    margin: 0;
+    padding-left: 30px; /* Adjusted to move the title right */
+}
+
+.product-grid-sorting {
+    display: flex;
+    align-items: center;
+}
+
+.product-grid-main {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.product-grid-filters {
+    width: 20%;
+    padding: 20px 10px 20px 20px; /* Add padding to left */
+    background-color: transparent;
+    border-right: none; /* Remove border-right */
+    align-self: flex-start;
+}
+
+.product-grid-products {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px 10px 20px 0; /* Add padding to right */
+    background-color: transparent;
+}
+
+.product-grid-card {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33.333% - 40px);
+    box-shadow: none;
+    border: none; /* Remove border */
+    text-align: center;
+}
+
+.product-grid-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Product Grid Pagination */
+.product-grid-pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.product-grid-pagination button {
+    padding: 10px 20px;
+    margin: 0 10px;
+}

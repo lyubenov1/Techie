@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Products</title>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -20,20 +20,20 @@
 </div>
 
 <h1 th:text="${category.name}">Category Name</h1>
-<div th:each="product : ${category.products}">
-    <div>
-        <h2 th:text="${product.name}">Product Name</h2>
-        <p th:text="${product.description}">Product Description</p>
-        <p th:text="${product.originalPrice}">Product Price</p>
-        <p th:text="${product.averageRating}">Product Rating</p>
 
+<div th:if="${#lists.isEmpty(category.children)}">
+    <div th:each="product : ${category.products}">
+        <div>
+            <h2 th:text="${product.name}">Product Name</h2>
+            <p th:text="${product.description}">Product Description</p>
+            <p th:text="${product.originalPrice}">Product Price</p>
+            <p th:text="${product.averageRating}">Product Rating</p>
+        </div>
     </div>
 </div>
 
 <div th:if="${not #lists.isEmpty(category.children)}">
-    <h2 class="child-category-header">Products from Subcategories</h2>
     <div th:each="childCategory : ${category.children}">
-        <h3 th:text="${childCategory.name}">Child Category Name</h3>
         <div th:each="product : ${childCategory.products}">
             <div>
                 <h2 th:text="${product.name}">Product Name</h2>
@@ -44,7 +44,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="container-fluid footer-wrapper">
     <footer th:replace="~{/fragments/footer::footer}"></footer>
