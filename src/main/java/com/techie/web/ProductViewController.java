@@ -23,7 +23,7 @@ public class ProductViewController {
 
     @GetMapping
     public String productsPage() {
-        return "products";
+        return "weekly-deals";
     }
 
     @GetMapping("/weekly-deals")
