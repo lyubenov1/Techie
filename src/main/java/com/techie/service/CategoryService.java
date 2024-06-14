@@ -24,8 +24,8 @@ public class CategoryService {
         this.productService = productService;
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<Category> getRootCategories() {
+        return categoryRepository.findRootCategories();
     }
 
     @Cacheable(cacheNames = "categories", key = "#category.id")
@@ -45,10 +45,8 @@ public class CategoryService {
             dto.setChildren(childrenDTO);
         }
 
-        // Set products in the category
-        List<ProductDTO> productDTOs = productService.getProductsByCategory(category.getName());
+        List<ProductDTO> productDTOs = productService.getProductsByCategory(category.getId());
         dto.setProducts(productDTOs);
-
 
         return dto;
     }
@@ -60,8 +58,7 @@ public class CategoryService {
 
     @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
     public List<CategoryDTO> getParentCategoryDTOs() {
-        return this.getAllCategories().stream()
-                .filter(category -> category.getParent() == null)
+        return this.getRootCategories().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

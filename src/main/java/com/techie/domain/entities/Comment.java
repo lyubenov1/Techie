@@ -1,18 +1,18 @@
 package com.techie.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "comments")
+@Table(name = "comments", indexes = {
+        @Index(name = "idx_comments_product_id", columnList = "product_id")
+})
 public class Comment {
 
     @Id

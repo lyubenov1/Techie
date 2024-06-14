@@ -11,8 +11,11 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "products") // TODO: implementation of similar products
+@Inheritance(strategy = InheritanceType.JOINED)      // TODO: implementation of similar products
+@Table(name = "products", indexes = {
+        @Index(name = "idx_products_category_id", columnList = "category_id"),
+        @Index(name = "idx_products_name", columnList = "name")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

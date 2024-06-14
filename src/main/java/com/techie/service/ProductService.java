@@ -27,8 +27,8 @@ public class ProductService {
         this.commentRepository = commentRepository;
     }
 
-    public List<ProductDTO> getProductsByCategory(String categoryName) {
-        List<Product> products = productRepository.findByCategoryName(categoryName);
+    public List<ProductDTO> getProductsByCategory(Long categoryId) {
+        List<Product> products = productRepository.findByCategoryId(categoryId);
         return products.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
