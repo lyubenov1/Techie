@@ -645,6 +645,17 @@ body.register .form-check-label {
     }
 }
 
+@media (min-width: 461px) and (max-width: 576px) {
+    .col-main-products {
+        margin-bottom: 80px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 461px) {
+    .col-main-products {
+        margin-bottom: 30px;
+    }
+}
 
 
 .filter-section {
