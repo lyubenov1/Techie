@@ -20,47 +20,77 @@
 </div>
 
 <!-- Main Content -->
-<div class="product-grid-container">
-    <div class="product-grid-header">
-        <h1>Product Grid</h1>
-        <div class="product-grid-sorting">
-            <label for="sort">Sort by:</label>
-            <select id="sort">
-                <option value="newest">Newest</option>
-                <option value="price-low-high">Price: Low to High</option>
-                <option value="price-high-low">Price: High to Low</option>
-            </select>
+<div class="products-main container-md">
+    <div class="col-main-products col-main col-xs-12 col-sm-10 col-sm-push-2">
+        <div class="products-header">
+            <h1 class="category-h1">Category</h1>
+            <div>
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="newest">Newest</option>
+                    <option value="price-low-high">Price: Low to High</option>
+                    <option value="price-high-low">Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+        <div class="category-products">
+            <a class="card" href="#" style="width: 18rem;">
+                <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716291091/Products/Smartphones/Apple/14%20series/pro%20space%20black/1_lqk3av.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="card-body-wrapper">
+                        <div class="card-title">Card title</div>
+                        <div class="card-text">
+                            <span>999 $</span>
+                            <span class="wishlist-and-shopping-cart">
+                        <span class="add-to-wishlist">
+                            <i class="far fa-heart fa-md text-white"></i>
+                        </span>
+                        <span class="shopping-cart">
+                            <i class="fas fa-shopping-cart fa-md text-white"></i>
+                        </span>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="pagination-products-container">
+            <div class="pagination-products-wrapper">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
-    <main class="product-grid-main">
-        <aside class="product-grid-filters">
-            <h2>Filters</h2>
-            <div class="product-grid-filter-group">
-                <h3>Internal Memory</h3>
-                <label><input type="checkbox" value="1tb"> 1 TB</label>
-                <label><input type="checkbox" value="128gb"> 128 GB</label>
-            </div>
-            <div class="product-grid-filter-group">
-                <h3>Resolution</h3>
-                <label><input type="checkbox" value="1080x2340"> 1080 x 2340</label>
-                <label><input type="checkbox" value="1080x2400"> 1080 x 2400</label>
-            </div>
-        </aside>
-        <section class="product-grid-products">
-            <div class="product-grid-card">
-                <img src="product-image.jpg" alt="Product Name">
-                <h2>Product Name</h2>
-                <p>Product Description</p>
-                <p>Product Price</p>
-                <p>Product Rating</p>
-            </div>
-            <div class="product-grid-pagination">
-                <button class="prev">Previous</button>
-                <span>Page 1 of 10</span>
-                <button class="next">Next</button>
-            </div>
-        </section>
-    </main>
+    <aside class="sidebar-products sidebar col-left col-xs-12 col-sm-2 col-sm-pull-10">
+        <div class="filter-section">
+            <h4>Filter criteria</h4> <input type="text" placeholder="Търси">
+            <ul class="filter-list">
+                <li>
+                    <input type="checkbox" id="google-tensor-g2">
+                    <label for="google-tensor-g2">Google Tensor G2 (1)</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="google-tensor-g3">
+                    <label for="google-tensor-g3">Google Tensor G3 (7)</label>
+                </li>
+            </ul>
+        </div>
+    </aside>
 </div>
 
 
