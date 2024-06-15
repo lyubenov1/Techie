@@ -499,14 +499,16 @@ body.register .form-check-label {
 
 .col-main-products {
     order: 2;
-    flex: 1;
+    flex: 1 0 auto; /* Ensures flex-grow while allowing it to shrink */
     display: flex;
     flex-direction: column;
 }
 
 .sidebar-products {
     order: 1;
-    flex: 0 0 20%;
+    flex: 0 0 20%; /* Initial width */
+    max-width: 20%; /* Limits maximum width to maintain responsiveness */
+    overflow: hidden; /* Ensures content doesn't overflow */
 }
 
 .products-header {
@@ -538,7 +540,7 @@ body.register .form-check-label {
 }
 
 .category-products .card {
-    flex: 0 0 calc(25% - 1rem);
+    flex: 0 0 calc(25% - 1rem); /* Four cards per row */
     background-color: transparent;
     border: none !important;
     box-shadow: none !important;
@@ -585,11 +587,7 @@ body.register .form-check-label {
     .sidebar-products {
         order: 0;
         flex: 1 1 100%;
-    }
-
-    .sidebar-products {
-        order: 1;
-        margin-bottom: 20px;
+        max-width: 100%;
     }
 
     .col-main-products {
@@ -599,13 +597,55 @@ body.register .form-check-label {
     }
 
     .category-products .card {
-        flex: 0 0 calc(50% - 1rem);
+        flex: 0 0 calc(50% - 1rem); /* Two cards per row */
     }
 
     .pagination-products-container {
         justify-content: center;
     }
 }
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .sidebar-products {
+        flex: 0 0 30%; /* Adjust sidebar width */
+        max-width: 30%; /* Limit maximum width */
+    }
+
+    .col-main-products {
+        flex: 0 0 70%; /* Adjust main content width */
+        max-width: 70%; /* Limit maximum width */
+    }
+
+    .category-products .card {
+        flex: 0 0 calc(33.333% - 1rem); /* Three cards per row */
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1199px) {
+    .sidebar-products {
+        flex: 0 0 25%; /* Adjust sidebar width */
+        max-width: 25%; /* Limit maximum width */
+    }
+
+    .col-main-products {
+        flex: 0 0 75%; /* Adjust main content width */
+        max-width: 75%; /* Limit maximum width */
+    }
+}
+
+@media (min-width: 1200px) {
+    .sidebar-products {
+        flex: 0 0 20%; /* Default width on larger screens */
+        max-width: 20%; /* Limit maximum width */
+    }
+
+    .col-main-products {
+        flex: 0 0 80%; /* Default width on larger screens */
+        max-width: 80%; /* Limit maximum width */
+    }
+}
+
+
 
 .filter-section {
 
