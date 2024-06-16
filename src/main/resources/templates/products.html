@@ -33,57 +33,49 @@
             </div>
         </div>
         <div class="category-products">
-            <!-- If category has no children -->
-            <div th:if="${#lists.isEmpty(category.children)}">
-                <div th:each="product : ${category.products}">
-                    <a class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
-                        <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <div class="card-body-wrapper">
-                                <div class="card-title" th:text="${product.name}">Product Name</div>
-                                <div class="card-text">
-                                    <span th:text="${product.originalPrice}">Product Price</span>
-                                    <span class="wishlist-and-shopping-cart">
-                                        <span class="add-to-wishlist">
-                                            <i class="far fa-heart fa-md text-white"></i>
-                                        </span>
-                                        <span class="shopping-cart">
-                                            <i class="fas fa-shopping-cart fa-md text-white"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
+            <a th:if="${#lists.isEmpty(category.children)}" th:each="product : ${category.products}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
+                <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <div class="card-body-wrapper">
+                        <div class="card-title" th:text="${product.name}">Product Name</div>
+                        <div class="card-text">
+                            <span th:text="${product.originalPrice}">Product Price</span>
+                            <span class="wishlist-and-shopping-cart">
+                        <span class="add-to-wishlist">
+                            <i class="far fa-heart fa-md text-white"></i>
+                        </span>
+                        <span class="shopping-cart">
+                            <i class="fas fa-shopping-cart fa-md text-white"></i>
+                        </span>
+                    </span>
                         </div>
-                    </a>
-                </div>
-            </div>
-            <!-- If category has children -->
-            <div th:if="${not #lists.isEmpty(category.children)}">
-                <div th:each="childCategory : ${category.children}">
-                    <div th:each="product : ${childCategory.products}">
-                        <a class="card" href="#" style="width: 18rem;">
-                            <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <div class="card-body-wrapper">
-                                    <div class="card-title" th:text="${product.name}">Product Name</div>
-                                    <div class="card-text">
-                                        <span th:text="${product.originalPrice}">Product Price</span>
-                                        <span class="wishlist-and-shopping-cart">
-                                            <span class="add-to-wishlist">
-                                                <i class="far fa-heart fa-md text-white"></i>
-                                            </span>
-                                            <span class="shopping-cart">
-                                                <i class="fas fa-shopping-cart fa-md text-white"></i>
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
                     </div>
                 </div>
-            </div>
+            </a>
+            <!-- Iterate over child categories if any -->
+            <a th:if="${not #lists.isEmpty(category.children)}" th:each="childCategory : ${category.children}">
+                <a th:each="product : ${childCategory.products}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
+                    <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <div class="card-body-wrapper">
+                            <div class="card-title" th:text="${product.name}">Product Name</div>
+                            <div class="card-text">
+                                <span th:text="${product.originalPrice}">Product Price</span>
+                                <span class="wishlist-and-shopping-cart">
+                            <span class="add-to-wishlist">
+                                <i class="far fa-heart fa-md text-white"></i>
+                            </span>
+                            <span class="shopping-cart">
+                                <i class="fas fa-shopping-cart fa-md text-white"></i>
+                            </span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </a>
         </div>
+
         <div class="pagination-products-container">
             <div class="pagination-products-wrapper">
                 <nav aria-label="Page navigation example">
