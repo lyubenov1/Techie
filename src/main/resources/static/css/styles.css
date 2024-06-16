@@ -519,6 +519,33 @@ body.register .form-check-label {
     padding-bottom: 10px;
 }
 
+.products-header label {
+    margin-right: 5px; /* Space between label and dropdown */
+}
+.products-header select {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.products-header select option {
+    background-color: #3c3c3c;
+}
+
+.products-header select:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.products-header select:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+
 .pagination-products-container {
     display: flex;
     justify-content: flex-end;
@@ -561,8 +588,6 @@ body.register .form-check-label {
     background-color: transparent;
     border-color: rgba(255, 255, 255, 0.3);
 }
-
-
 
 .category-products {
     display: flex;
