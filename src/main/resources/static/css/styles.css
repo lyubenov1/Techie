@@ -506,9 +506,9 @@ body.register .form-check-label {
 
 .sidebar-products {
     order: 1;
-    flex: 0 0 20%; /* Initial width */
-    max-width: 20%; /* Limits maximum width to maintain responsiveness */
-    overflow: hidden; /* Ensures content doesn't overflow */
+    flex: 0 0 20%;
+    max-width: 20%;
+    overflow: hidden;
 }
 
 .products-header {
@@ -532,6 +532,38 @@ body.register .form-check-label {
     justify-content: flex-end;
 }
 
+
+.pagination .page-item .page-link {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 0 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #777;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
 .category-products {
     display: flex;
     flex-wrap: wrap;
@@ -540,7 +572,7 @@ body.register .form-check-label {
 }
 
 .category-products .card {
-    flex: 0 0 calc(25% - 1rem); /* Four cards per row */
+    flex: 0 0 calc(25% - 1rem);
     background-color: transparent;
     border: none !important;
     box-shadow: none !important;
@@ -597,7 +629,7 @@ body.register .form-check-label {
     }
 
     .category-products .card {
-        flex: 0 0 calc(50% - 1rem); /* Two cards per row */
+        flex: 0 0 calc(50% - 1rem);
     }
 
     .pagination-products-container {
@@ -607,41 +639,41 @@ body.register .form-check-label {
 
 @media (min-width: 768px) and (max-width: 992px) {
     .sidebar-products {
-        flex: 0 0 30%; /* Adjust sidebar width */
-        max-width: 30%; /* Limit maximum width */
+        flex: 0 0 30%;
+        max-width: 30%;
     }
 
     .col-main-products {
-        flex: 0 0 70%; /* Adjust main content width */
-        max-width: 70%; /* Limit maximum width */
+        flex: 0 0 70%;
+        max-width: 70%;
     }
 
     .category-products .card {
-        flex: 0 0 calc(33.333% - 1rem); /* Three cards per row */
+        flex: 0 0 calc(33.333% - 1rem);
     }
 }
 
 @media (min-width: 993px) and (max-width: 1199px) {
     .sidebar-products {
-        flex: 0 0 25%; /* Adjust sidebar width */
-        max-width: 25%; /* Limit maximum width */
+        flex: 0 0 25%;
+        max-width: 25%;
     }
 
     .col-main-products {
-        flex: 0 0 75%; /* Adjust main content width */
-        max-width: 75%; /* Limit maximum width */
+        flex: 0 0 75%;
+        max-width: 75%;
     }
 }
 
 @media (min-width: 1200px) {
     .sidebar-products {
-        flex: 0 0 20%; /* Default width on larger screens */
-        max-width: 20%; /* Limit maximum width */
+        flex: 0 0 20%;
+        max-width: 20%;
     }
 
     .col-main-products {
-        flex: 0 0 80%; /* Default width on larger screens */
-        max-width: 80%; /* Limit maximum width */
+        flex: 0 0 80%;
+        max-width: 80%;
     }
 }
 
