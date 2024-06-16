@@ -552,15 +552,16 @@ body.register .form-check-label {
     border-radius: 5px;
     transition: background-color 0.3s, border-color 0.3s;
     margin-bottom: 8px;
+    caret-color: white; /* Caret color */
 }
 
 .filter-section input[type="text"]::placeholder {
-    padding-left: 7px;
+    padding-left: 4px;
 }
 
 .filter-section input[type="text"]:focus {
-    outline: none; 
-    background-color: rgba(255, 255, 255, 0.1);
+    outline: none;
+    background-color: rgba(250, 235, 235, 0.1);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -779,29 +780,58 @@ body.register .form-check-label {
     padding: 0;
 }
 
-/* Additional styles for accordion behavior */
+
 .sidebar-products.accordion {
-    display: block; /* Ensure sidebar is displayed */
+    display: block;
 }
 
 .sidebar-products .accordion-button {
-    background-color: #f8f9fa; /* Example: Accordion button background */
-    color: #212529; /* Example: Accordion button text color */
-    border: none; /* Example: Accordion button border */
-    text-align: left; /* Example: Align text left */
-    padding: 0.75rem 1rem; /* Example: Adjust padding */
-    width: 100%; /* Example: Full width for button */
+    background-color: inherit;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-shadow: none;
+    outline: none;
 }
+
+.sidebar-products .accordion-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-products .accordion-button:not(.collapsed) {
+    background-color: inherit;
+    color: #ffffff;
+}
+
+.sidebar-products .accordion-button::after {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar-products .accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar-products .accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
 
 .sidebar-products .accordion-collapse {
-    background-color: #ffffff; /* Example: Accordion collapse background */
-    border: 1px solid rgba(0, 0, 0, 0.125); /* Example: Accordion collapse border */
-    border-top: none; /* Example: Remove top border */
-    margin-top: 10px; /* Example: Margin top */
-    max-height: 300px; /* Example: Max height for collapse */
-    overflow-y: auto; /* Example: Overflow-y auto */
+    background-color: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: none;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
 }
 
+
 .sidebar-products .accordion-body {
-    padding: 10px; /* Example: Padding inside accordion body */
+    padding: 10px;
+    color: inherit;
 }

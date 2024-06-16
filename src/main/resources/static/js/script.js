@@ -222,15 +222,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 accordionElement.innerHTML = '';
                 accordionElement.appendChild(heading);
                 accordionElement.appendChild(collapseDiv);
-                heading.innerHTML = '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="true" aria-controls="collapseFilters">Filter criteria</button>';
+                heading.innerHTML = '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">Filters</button>';
                 new bootstrap.Accordion(document.querySelector('.accordion'));
             }
         } else {
             // Remove accordion behavior on larger screens
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');
-                collapseDiv = document.querySelector('.accordion-collapse');
-                accordionElement.innerHTML = collapseDiv.querySelector('.accordion-body').innerHTML;
+                var collapseDiv = document.querySelector('.accordion-collapse');
+                if (collapseDiv) {
+                    accordionElement.innerHTML = collapseDiv.querySelector('.accordion-body').innerHTML;
+                }
             }
         }
     }
