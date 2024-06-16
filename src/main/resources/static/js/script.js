@@ -202,3 +202,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetchCategories();
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var accordionElement = document.querySelector('.sidebar-products');
+
+    function setupAccordion() {
+        var viewportWidth = window.innerWidth;
+
+        if (viewportWidth < 768) {
+            // Initialize Bootstrap accordion for sidebar on smaller screens
+            if (!accordionElement.classList.contains('accordion')) {
+                accordionElement.classList.add('accordion');
+                var heading = accordionElement.querySelector('h4');
+                var collapseDiv = document.createElement('div');
+                collapseDiv.className = 'accordion-collapse collapse';
+                collapseDiv.id = 'collapseFilters';
+                collapseDiv.innerHTML = '<div class="accordion-body">' + accordionElement.innerHTML + '</div>';
+                accordionElement.innerHTML = '';
+                accordionElement.appendChild(heading);
+                accordionElement.appendChild(collapseDiv);
+                heading.innerHTML = '<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="true" aria-controls="collapseFilters">Filter criteria</button>';
+                new bootstrap.Accordion(document.querySelector('.accordion'));
+            }
+        } else {
+            // Remove accordion behavior on larger screens
+            if (accordionElement.classList.contains('accordion')) {
+                accordionElement.classList.remove('accordion');
+                collapseDiv = document.querySelector('.accordion-collapse');
+                accordionElement.innerHTML = collapseDiv.querySelector('.accordion-body').innerHTML;
+            }
+        }
+    }
+
+    setupAccordion(); // Call setupAccordion initially
+
+    // Call setupAccordion on window resize to adjust behavior dynamically
+    window.addEventListener('resize', function () {
+        setupAccordion();
+    });
+});

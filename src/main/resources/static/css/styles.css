@@ -554,14 +554,17 @@ body.register .form-check-label {
     margin-bottom: 8px;
 }
 
+.filter-section input[type="text"]::placeholder {
+    padding-left: 7px;
+}
 
-.filter-section input[type="text"]:hover {
+.filter-section input[type="text"]:focus {
+    outline: none; 
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-.filter-section input[type="text"]:focus {
-    outline: none;
+.filter-section input[type="text"]:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.5);
 }
@@ -582,10 +585,6 @@ body.register .form-check-label {
     height: 18px;
     margin-right: 10px;
     transition: background-color 0.3s, border-color 0.3s;
-}
-
-.filter-section input[type="text"]::placeholder {
-    padding-left: 7px;
 }
 
 .filter-list input[type="checkbox"]:hover {
@@ -694,7 +693,7 @@ body.register .form-check-label {
     margin-right: 0.5rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .products-main.container-md {
         display: flex;
         flex-direction: column;
@@ -775,23 +774,34 @@ body.register .form-check-label {
 }
 
 
-.filter-section {
-
-}
-
 .filter-list {
     list-style: none;
     padding: 0;
 }
 
-.filter-list li {
-
+/* Additional styles for accordion behavior */
+.sidebar-products.accordion {
+    display: block; /* Ensure sidebar is displayed */
 }
 
-.filter-list input[type="checkbox"] {
-
+.sidebar-products .accordion-button {
+    background-color: #f8f9fa; /* Example: Accordion button background */
+    color: #212529; /* Example: Accordion button text color */
+    border: none; /* Example: Accordion button border */
+    text-align: left; /* Example: Align text left */
+    padding: 0.75rem 1rem; /* Example: Adjust padding */
+    width: 100%; /* Example: Full width for button */
 }
 
-.filter-list label {
+.sidebar-products .accordion-collapse {
+    background-color: #ffffff; /* Example: Accordion collapse background */
+    border: 1px solid rgba(0, 0, 0, 0.125); /* Example: Accordion collapse border */
+    border-top: none; /* Example: Remove top border */
+    margin-top: 10px; /* Example: Margin top */
+    max-height: 300px; /* Example: Max height for collapse */
+    overflow-y: auto; /* Example: Overflow-y auto */
+}
 
+.sidebar-products .accordion-body {
+    padding: 10px; /* Example: Padding inside accordion body */
 }
