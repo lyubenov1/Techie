@@ -21,5 +21,6 @@ public class ProductDTO {
     private String description;
     private Double averageRating;
     private List<CommentDTO> comments;
+    private String url;
 
 }

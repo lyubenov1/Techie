@@ -10,7 +10,9 @@ import com.techie.repository.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.web.util.*;
 
+import java.nio.charset.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -64,6 +66,7 @@ public class ProductService {
         }
 
         List<CommentDTO> commentDTOs = fetchAndConvertCommentsToDTOs(product);
+        String productUrl = UriUtils.encode(product.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
 
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
@@ -74,6 +77,7 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setAverageRating(product.getAverageRating());
         productDTO.setComments(commentDTOs);
+        productDTO.setUrl(productUrl);
     }
 
     private List<CommentDTO> fetchAndConvertCommentsToDTOs(Product product) {
