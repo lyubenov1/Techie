@@ -30,24 +30,9 @@ public class CategoryService {
 
     @Cacheable(cacheNames = "categories", key = "#category.id")
     public CategoryDTO convertToDTO(Category category) {
-        CategoryDTO dto = new CategoryDTO();
-        dto.setId(category.getId());
-        dto.setName(category.getName());
-        dto.setImageUrl(category.getImageUrl());
-
-        String encodedName = UriUtils.encode(category.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
-        dto.setUrl("/products/" + encodedName);
-
-        if (category.getChildren() != null && !category.getChildren().isEmpty()) {
-            List<CategoryDTO> childrenDTO = category.getChildren().stream()
-                    .map(this::convertToDTO)
-                    .collect(Collectors.toList());
-            dto.setChildren(childrenDTO);
-        }
-
-        List<ProductDTO> productDTOs = productService.getProductsByCategory(category.getId());
-        dto.setProducts(productDTOs);
-
+        CategoryDTO dto = mapCategoryToDTO(category);
+        dto.setProducts(fetchProductsForCategory(category));
+        dto.setChildren(fetchChildCategoryDTOs(category));
         return dto;
     }
 
@@ -63,4 +48,38 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
+    private CategoryDTO mapCategoryToDTO(Category category) {
+        CategoryDTO dto = new CategoryDTO();
+        dto.setId(category.getId());
+        dto.setName(category.getName());
+        dto.setImageUrl(category.getImageUrl());
+        dto.setUrl("/products/" + encodeCategoryName(category.getName()));
+        return dto;
+    }
+
+    private List<ProductDTO> fetchProductsForCategory(Category category) {
+        List<ProductDTO> products = new ArrayList<>();
+        if (category.getChildren() != null && !category.getChildren().isEmpty()) {
+            for (Category childCategory : category.getChildren()) {
+                products.addAll(productService.getProductsByCategory(childCategory.getId()));
+            }
+        } else {
+            products.addAll(productService.getProductsByCategory(category.getId()));
+        }
+        return products;
+    }
+
+    private List<CategoryDTO> fetchChildCategoryDTOs(Category category) {
+        List<CategoryDTO> childrenDTO = new ArrayList<>();
+        if (category.getChildren() != null && !category.getChildren().isEmpty()) {
+            for (Category childCategory : category.getChildren()) {
+                childrenDTO.add(convertToDTO(childCategory));
+            }
+            return childrenDTO;
+        }
+        return null;
+    }
+    private String encodeCategoryName(String categoryName) {
+        return UriUtils.encode(categoryName.toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
+    }
 }

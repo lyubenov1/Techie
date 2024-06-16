@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="category-products">
-            <a th:if="${#lists.isEmpty(category.children)}" th:each="product : ${category.products}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
+            <a th:each="product : ${productsPage.content}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
                 <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
                 <div class="card-body">
                     <div class="card-body-wrapper">
@@ -52,44 +52,23 @@
                     </div>
                 </div>
             </a>
-            <!-- Iterate over child categories if any -->
-            <a th:if="${not #lists.isEmpty(category.children)}" th:each="childCategory : ${category.children}">
-                <a th:each="product : ${childCategory.products}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
-                    <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
-                    <div class="card-body">
-                        <div class="card-body-wrapper">
-                            <div class="card-title" th:text="${product.name}">Product Name</div>
-                            <div class="card-text">
-                                <span th:text="${product.originalPrice}">Product Price</span>
-                                <span class="wishlist-and-shopping-cart">
-                            <span class="add-to-wishlist">
-                                <i class="far fa-heart fa-md text-white"></i>
-                            </span>
-                            <span class="shopping-cart">
-                                <i class="fas fa-shopping-cart fa-md text-white"></i>
-                            </span>
-                        </span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </a>
         </div>
-
+        <!-- Pagination -->
         <div class="pagination-products-container">
             <div class="pagination-products-wrapper">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                        <li th:class="${productsPage.first ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=0, size=${productsPage.size})}" aria-label="First">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li th:each="pageNumber : ${#numbers.sequence(0, productsPage.totalPages - 1)}"
+                            th:class="${productsPage.number == pageNumber ? 'page-item active' : 'page-item'}">
+                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=${pageNumber}, size=${productsPage.size})}" th:text="${pageNumber + 1}"></a>
+                        </li>
+                        <li th:class="${productsPage.last ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=${productsPage.totalPages - 1}, size=${productsPage.size})}" aria-label="Last">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -98,6 +77,7 @@
             </div>
         </div>
     </div>
+
     <aside class="sidebar-products sidebar col-left col-sm-12 col-sm-2 col-sm-pull-10">
         <div class="filter-section">
             <h4>Filter criteria</h4>
