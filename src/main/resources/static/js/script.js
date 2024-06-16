@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Remove accordion behavior on larger screens
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');
-                var collapseDiv = document.querySelector('.accordion-collapse');
+                collapseDiv = document.querySelector('.accordion-collapse');
                 if (collapseDiv) {
                     accordionElement.innerHTML = collapseDiv.querySelector('.accordion-body').innerHTML;
                 }
