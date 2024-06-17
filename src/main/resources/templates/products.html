@@ -73,9 +73,9 @@
     </div>
 
     <aside class="sidebar-products sidebar col-left col-sm-12 col-sm-2 col-sm-pull-10">
-        <div th:each="filterField : ${filterCriteriaFields}" class="filter-section">
-            <h4 th:text="${filterField}">Filter criteria</h4>
-            <input type="text" th:placeholder="${filterField}">
+        <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
+            <h4 th:text="${filterEntry.value}">Filter criteria</h4>
+            <input type="text" th:name="${filterEntry.key}" th:placeholder="${filterEntry.value}">
             <ul class="filter-list">
                 <li>
                     <input type="checkbox" id="google-tensor-g2">

@@ -857,3 +857,22 @@ body.register .form-check-label {
     padding: 10px;
     color: inherit;
 }
+
+.filter-section {
+    margin-bottom: 20px;
+    width: 77%
+}
+
+.filter-section::after {
+    content: '';
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    margin-top: -7px;
+}
+
+.filter-section input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}

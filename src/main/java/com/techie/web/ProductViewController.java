@@ -48,7 +48,7 @@ public class ProductViewController {
         model.addAttribute("category", categoryDTO);
 
         // Retrieve filter criteria fields
-        List<String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
+        Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
         model.addAttribute("filterCriteriaFields", filterCriteriaFields);
 
 
@@ -66,9 +66,9 @@ public class ProductViewController {
         return "products";
     }
 
-    private List<String> retrieveFilterCriteriaFields(CategoryDTO categoryDTO) {
-        List<String> filterCriteriaFields = new ArrayList<>();
-        filterCriteriaFields.add("brandName");
+    private Map<String, String> retrieveFilterCriteriaFields(CategoryDTO categoryDTO) {
+        Map<String, String> filterCriteriaFields = new LinkedHashMap<>();
+        filterCriteriaFields.put("brandName", "Brand");
 
         if (!categoryDTO.getProducts().isEmpty()) {
             ProductDTO sampleProduct = categoryDTO.getProducts().getFirst();
@@ -76,11 +76,37 @@ public class ProductViewController {
             Field[] fields = productClass.getDeclaredFields();
             for (Field field : fields) {
                 if (!field.getName().equals("brandName")) {
-                    filterCriteriaFields.add(field.getName());
+                    String styledName = camelCaseToWords(field.getName());
+
+                    if (field.getName().equals("batteryCapacity")) {
+                        styledName += " (mAh)";
+                    }
+                    filterCriteriaFields.put(field.getName(), styledName);
                 }
             }
         }
-
         return filterCriteriaFields;
     }
+
+    private String camelCaseToWords(String camelCase) {
+        String[] words = camelCase.split("(?=[A-Z])"); // Split on uppercase letters
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+
+            if (i == 0) {
+                result.append(word.substring(0, 1).toUpperCase()).append(word.substring(1));
+            } else {
+                result.append(word.substring(0, 1).toLowerCase()).append(word.substring(1));
+            }
+
+            if (i < words.length - 1) {
+                result.append(" ");
+            }
+        }
+
+        return result.toString();
+    }
+
 }
