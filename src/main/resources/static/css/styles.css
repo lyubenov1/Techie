@@ -666,6 +666,26 @@ body.register .form-check-label {
     display: flex;
     flex-direction: column;
     padding-bottom: 30px;
+    padding-top: 5px;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+}
+
+.category-products .card::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid transparent;
+    transition: border-color 0.5s ease;
+    pointer-events: none;
+    border-radius: 7px;
+}
+
+.category-products .card:hover::before {
+    border-color: rgb(255, 255, 255, 0.1);
 }
 
 
