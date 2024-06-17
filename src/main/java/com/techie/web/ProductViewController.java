@@ -9,6 +9,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.*;
 import java.util.*;
 
 @Controller
@@ -46,6 +47,11 @@ public class ProductViewController {
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
         model.addAttribute("category", categoryDTO);
 
+        // Retrieve filter criteria fields
+        List<String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
+        model.addAttribute("filterCriteriaFields", filterCriteriaFields);
+
+
         List<ProductDTO> products = categoryDTO.getProducts();
         int start = page * size;
         int end = Math.min(start + size, products.size());
@@ -58,5 +64,23 @@ public class ProductViewController {
         model.addAttribute("pageSize", size);
 
         return "products";
+    }
+
+    private List<String> retrieveFilterCriteriaFields(CategoryDTO categoryDTO) {
+        List<String> filterCriteriaFields = new ArrayList<>();
+        filterCriteriaFields.add("brandName");
+
+        if (!categoryDTO.getProducts().isEmpty()) {
+            ProductDTO sampleProduct = categoryDTO.getProducts().getFirst();
+            Class<? extends ProductDTO> productClass = sampleProduct.getClass();
+            Field[] fields = productClass.getDeclaredFields();
+            for (Field field : fields) {
+                if (!field.getName().equals("brandName")) {
+                    filterCriteriaFields.add(field.getName());
+                }
+            }
+        }
+
+        return filterCriteriaFields;
     }
 }
