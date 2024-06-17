@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     const category = document.getElementById('categoryName').value;
@@ -269,7 +269,18 @@ document.addEventListener('DOMContentLoaded', function() {
             paginationContainer.appendChild(li);
         }
 
-        createPageItem(0, '«', currentPage === 0);
+        function createEllipsisItem(targetPage) {
+            const li = document.createElement('li');
+            li.className = 'page-item';
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = `/products/${category}?page=${targetPage}&size=${pageSize}`;
+            a.textContent = '...';
+            li.appendChild(a);
+            paginationContainer.appendChild(li);
+        }
+
+        createPageItem(currentPage > 0 ? currentPage - 1 : 0, '«', currentPage === 0);
 
         if (totalPages <= 5) {
             for (let i = 0; i < totalPages; i++) {
@@ -280,24 +291,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let i = 0; i < 3; i++) {
                     createPageItem(i, i + 1, false, i === currentPage);
                 }
-                createPageItem(3, '...');
+                createEllipsisItem(totalPages - 2); // Link to second-to-last page
                 createPageItem(totalPages - 1, totalPages);
             } else if (currentPage >= totalPages - 3) {
                 createPageItem(0, 1);
-                createPageItem(totalPages - 4, '...');
+                createEllipsisItem(1); // Link to second page
                 for (let i = totalPages - 3; i < totalPages; i++) {
                     createPageItem(i, i + 1, false, i === currentPage);
                 }
             } else {
                 createPageItem(0, 1);
-                createPageItem(currentPage - 1, '...');
+                createEllipsisItem(1); // Link to second page
                 createPageItem(currentPage, currentPage + 1, false, true);
-                createPageItem(currentPage + 1, '...');
+                createEllipsisItem(totalPages - 2); // Link to second-to-last page
                 createPageItem(totalPages - 1, totalPages);
             }
         }
 
-        createPageItem(totalPages - 1, '»', currentPage === totalPages - 1);
+        createPageItem(currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1, '»', currentPage === totalPages - 1);
     }
 
     createPagination(currentPage, totalPages);
