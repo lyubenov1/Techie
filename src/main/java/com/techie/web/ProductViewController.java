@@ -53,6 +53,9 @@ public class ProductViewController {
 
         Page<ProductDTO> productsPage = new PageImpl<>(paginatedProducts, PageRequest.of(page, size), products.size());
         model.addAttribute("productsPage", productsPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsPage.getTotalPages());
+        model.addAttribute("pageSize", size);
 
         return "products";
     }

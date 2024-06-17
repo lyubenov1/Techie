@@ -54,24 +54,17 @@
             </a>
         </div>
         <!-- Pagination -->
+        <input type="hidden" id="currentPage" th:value="${currentPage}" />
+        <input type="hidden" id="totalPages" th:value="${totalPages}" />
+        <input type="hidden" id="categoryName" th:value="${category.name}" />
+        <input type="hidden" id="pageSize" th:value="${pageSize}" />
+
+
         <div class="pagination-products-container">
             <div class="pagination-products-wrapper">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li th:class="${productsPage.first ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=0, size=${productsPage.size})}" aria-label="First">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:each="pageNumber : ${#numbers.sequence(0, productsPage.totalPages - 1)}"
-                            th:class="${productsPage.number == pageNumber ? 'page-item active' : 'page-item'}">
-                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=${pageNumber}, size=${productsPage.size})}" th:text="${pageNumber + 1}"></a>
-                        </li>
-                        <li th:class="${productsPage.last ? 'page-item disabled' : 'page-item'}">
-                            <a class="page-link" th:href="@{${'/products/' + category.name}(page=${productsPage.totalPages - 1}, size=${productsPage.size})}" aria-label="Last">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                    <ul id="pagination" class="pagination">
+                        <!-- Pagination buttons will be appended here dynamically via js code -->
                     </ul>
                 </nav>
             </div>

@@ -244,3 +244,61 @@ document.addEventListener('DOMContentLoaded', function () {
         setupAccordion();
     });
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = parseInt(document.getElementById('currentPage').value);
+    const totalPages = parseInt(document.getElementById('totalPages').value);
+    const category = document.getElementById('categoryName').value;
+    const pageSize = parseInt(document.getElementById('pageSize').value);
+
+    function createPagination(currentPage, totalPages) {
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = ''; // Clear existing buttons
+
+        function createPageItem(page, text, disabled = false, active = false) {
+            const li = document.createElement('li');
+            li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = `/products/${category}?page=${page}&size=${pageSize}`;
+            a.textContent = text;
+            li.appendChild(a);
+            paginationContainer.appendChild(li);
+        }
+
+        createPageItem(0, '«', currentPage === 0);
+
+        if (totalPages <= 5) {
+            for (let i = 0; i < totalPages; i++) {
+                createPageItem(i, i + 1, false, i === currentPage);
+            }
+        } else {
+            if (currentPage <= 2) {
+                for (let i = 0; i < 3; i++) {
+                    createPageItem(i, i + 1, false, i === currentPage);
+                }
+                createPageItem(3, '...');
+                createPageItem(totalPages - 1, totalPages);
+            } else if (currentPage >= totalPages - 3) {
+                createPageItem(0, 1);
+                createPageItem(totalPages - 4, '...');
+                for (let i = totalPages - 3; i < totalPages; i++) {
+                    createPageItem(i, i + 1, false, i === currentPage);
+                }
+            } else {
+                createPageItem(0, 1);
+                createPageItem(currentPage - 1, '...');
+                createPageItem(currentPage, currentPage + 1, false, true);
+                createPageItem(currentPage + 1, '...');
+                createPageItem(totalPages - 1, totalPages);
+            }
+        }
+
+        createPageItem(totalPages - 1, '»', currentPage === totalPages - 1);
+    }
+
+    createPagination(currentPage, totalPages);
+});
