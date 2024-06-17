@@ -665,7 +665,9 @@ body.register .form-check-label {
     color: white;
     display: flex;
     flex-direction: column;
+    padding-bottom: 30px;
 }
+
 
 .category-products .card-body {
     flex: 1;
