@@ -886,3 +886,27 @@ body.register .form-check-label {
     padding: 3px;
     border: 1px solid #ccc;
 }
+
+.custom-scrollspy {
+    max-height: 190px;
+    overflow-y: auto;
+    position: relative;
+}
+
+
+.custom-scrollspy::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollspy::-webkit-scrollbar-track {
+    background: #2f2f2f;
+}
+
+.custom-scrollspy::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 10px;
+}
+
+.custom-scrollspy::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+}

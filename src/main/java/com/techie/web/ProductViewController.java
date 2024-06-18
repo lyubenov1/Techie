@@ -39,6 +39,7 @@ public class ProductViewController {
                                @RequestParam(name = "page", defaultValue = "0") int page,
                                @RequestParam(name = "size", defaultValue = "25") int size,
                                Model model) {
+
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         if (categoryOptional.isEmpty()) {
             return "redirect:/";
@@ -47,9 +48,10 @@ public class ProductViewController {
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
         model.addAttribute("category", categoryDTO);
 
-        // Retrieve filter criteria fields
         Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
+        Map<String, Map<String, Long>> filterOptions = retrieveFilterOptions(categoryDTO);
         model.addAttribute("filterCriteriaFields", filterCriteriaFields);
+        model.addAttribute("filterOptions", filterOptions);
 
 
         List<ProductDTO> products = categoryDTO.getProducts();
@@ -109,4 +111,44 @@ public class ProductViewController {
         return result.toString();
     }
 
+    private Map<String, Map<String, Long>> retrieveFilterOptions(CategoryDTO categoryDTO) {
+        Map<String, Map<String, Long>> filterOptions = new LinkedHashMap<>();
+
+        if (!categoryDTO.getProducts().isEmpty()) {
+            ProductDTO sampleProduct = categoryDTO.getProducts().get(0);
+            Class<? extends ProductDTO> productClass = sampleProduct.getClass();
+            Field[] fields = productClass.getDeclaredFields();
+
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Map<String, Long> fieldOptions = new HashMap<>();
+
+                for (ProductDTO product : categoryDTO.getProducts()) {
+                    try {
+                        Object value = field.get(product);
+                        if (value != null) {
+                            fieldOptions.put(value.toString(), fieldOptions.getOrDefault(value.toString(), 0L) + 1);
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                filterOptions.put(field.getName(), fieldOptions);
+            }
+        }
+
+        // Ensure brandName is always included
+        Map<String, Long> brandOptions = new LinkedHashMap<>();
+        for (ProductDTO product : categoryDTO.getProducts()) {
+            String brand = product.getBrandName();
+            if (brand != null) {
+                brandOptions.put(brand, brandOptions.getOrDefault(brand, 0L) + 1);
+            }
+        }
+        filterOptions.put("brandName", brandOptions);
+
+        return filterOptions;
+    }
 }
+
