@@ -879,7 +879,8 @@ body.register .form-check-label {
     display: block;
     width: 100%;
     border-bottom: 1px solid gray;
-    margin-top: -7px;
+    margin-top: -10px;
+    margin-bottom: 25px;
 }
 
 .filter-section input[type="text"] {

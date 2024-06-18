@@ -44,16 +44,16 @@ public class ProductViewController {
         if (categoryOptional.isEmpty()) {
             return "redirect:/";
         }
-
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
         model.addAttribute("category", categoryDTO);
 
-        Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
-        Map<String, Map<String, Long>> filterOptions = retrieveFilterOptions(categoryDTO);
-        model.addAttribute("filterCriteriaFields", filterCriteriaFields);
-        model.addAttribute("filterOptions", filterOptions);
+        addFacets(categoryDTO, model);
+        handlePagination(categoryDTO, model, page, size);
 
+        return "products";
+    }
 
+    private void handlePagination(CategoryDTO categoryDTO, Model model, int page, int size) {
         List<ProductDTO> products = categoryDTO.getProducts();
         int start = page * size;
         int end = Math.min(start + size, products.size());
@@ -64,9 +64,18 @@ public class ProductViewController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("pageSize", size);
-
-        return "products";
     }
+
+
+    private void addFacets(CategoryDTO categoryDTO, Model model) {
+        Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
+        Map<String, Map<String, Long>> filterOptions = retrieveFilterOptions(categoryDTO);
+
+        model.addAttribute("filterCriteriaFields", filterCriteriaFields);
+        model.addAttribute("filterOptions", filterOptions);
+
+    }
+
 
     private Map<String, String> retrieveFilterCriteriaFields(CategoryDTO categoryDTO) {
         Map<String, String> filterCriteriaFields = new LinkedHashMap<>();
@@ -75,7 +84,7 @@ public class ProductViewController {
         Set<String> processedFields = new HashSet<>(); // To avoid duplicate processing
 
         for (ProductDTO product : categoryDTO.getProducts()) {
-            Class<? extends ProductDTO> productClass = product.getClass();
+            Class<? extends ProductDTO> productClass = product.getClass();   // Get inheriting child class to access its specific fields
             Field[] fields = productClass.getDeclaredFields();
             for (Field field : fields) {
                 if (!field.getName().equals("brandName") && processedFields.add(field.getName())) {
@@ -116,7 +125,7 @@ public class ProductViewController {
         Map<String, Map<String, Long>> filterOptions = new LinkedHashMap<>();
 
         for (ProductDTO product : categoryDTO.getProducts()) {
-            Class<? extends ProductDTO> productClass = product.getClass();
+            Class<? extends ProductDTO> productClass = product.getClass();   // Get inheriting child class to access its specific fields
             Field[] fields = productClass.getDeclaredFields();
 
             for (Field field : fields) {
