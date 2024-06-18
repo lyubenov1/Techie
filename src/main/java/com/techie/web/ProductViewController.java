@@ -72,12 +72,13 @@ public class ProductViewController {
         Map<String, String> filterCriteriaFields = new LinkedHashMap<>();
         filterCriteriaFields.put("brandName", "Brand");
 
-        if (!categoryDTO.getProducts().isEmpty()) {
-            ProductDTO sampleProduct = categoryDTO.getProducts().getFirst();
-            Class<? extends ProductDTO> productClass = sampleProduct.getClass();
+        Set<String> processedFields = new HashSet<>(); // To avoid duplicate processing
+
+        for (ProductDTO product : categoryDTO.getProducts()) {
+            Class<? extends ProductDTO> productClass = product.getClass();
             Field[] fields = productClass.getDeclaredFields();
             for (Field field : fields) {
-                if (!field.getName().equals("brandName")) {
+                if (!field.getName().equals("brandName") && processedFields.add(field.getName())) {
                     String styledName = camelCaseToWords(field.getName());
 
                     if (field.getName().equals("batteryCapacity")) {
@@ -114,27 +115,22 @@ public class ProductViewController {
     private Map<String, Map<String, Long>> retrieveFilterOptions(CategoryDTO categoryDTO) {
         Map<String, Map<String, Long>> filterOptions = new LinkedHashMap<>();
 
-        if (!categoryDTO.getProducts().isEmpty()) {
-            ProductDTO sampleProduct = categoryDTO.getProducts().get(0);
-            Class<? extends ProductDTO> productClass = sampleProduct.getClass();
+        for (ProductDTO product : categoryDTO.getProducts()) {
+            Class<? extends ProductDTO> productClass = product.getClass();
             Field[] fields = productClass.getDeclaredFields();
 
             for (Field field : fields) {
                 field.setAccessible(true);
-                Map<String, Long> fieldOptions = new HashMap<>();
+                Map<String, Long> fieldOptions = filterOptions.computeIfAbsent(field.getName(), k -> new HashMap<>());
 
-                for (ProductDTO product : categoryDTO.getProducts()) {
-                    try {
-                        Object value = field.get(product);
-                        if (value != null) {
-                            fieldOptions.put(value.toString(), fieldOptions.getOrDefault(value.toString(), 0L) + 1);
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                try {
+                    Object value = field.get(product);
+                    if (value != null) {
+                        fieldOptions.put(value.toString(), fieldOptions.getOrDefault(value.toString(), 0L) + 1);
                     }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
-
-                filterOptions.put(field.getName(), fieldOptions);
             }
         }
 
