@@ -313,3 +313,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createPagination(currentPage, totalPages);
 });
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const scrollspy = document.querySelector('.custom-scrollspy');
+
+    function highlightActiveItem() {
+        const items = scrollspy.querySelectorAll('li');
+        const scrollTop = scrollspy.scrollTop;
+        const itemHeight = items[0].offsetHeight;
+
+        items.forEach((item, index) => {
+            if (scrollTop >= index * itemHeight && scrollTop < (index + 1) * itemHeight) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    scrollspy.addEventListener('scroll', highlightActiveItem);
+
+    highlightActiveItem();
+});
