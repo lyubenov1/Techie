@@ -511,19 +511,24 @@ body.register .form-check-label {
     overflow: hidden;
 }
 
+
 .products-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid gray;
     padding-bottom: 10px;
+
+}
+
+.products-header, .products-header *, .products-header select * {
+    color: rgb(232, 230, 227);
 }
 
 .products-header label {
     margin-right: 5px; /* Space between label and dropdown */
 }
 .products-header select {
-    color: #fff;
     background-color: transparent;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -860,8 +865,14 @@ body.register .form-check-label {
 
 .filter-section {
     margin-bottom: 20px;
-    width: 77%
+    width: 73%;
+
 }
+
+.filter-section, .filter-section * {
+    color: rgb(232, 230, 227);
+}
+
 
 .filter-section::after {
     content: '';
@@ -872,7 +883,6 @@ body.register .form-check-label {
 }
 
 .filter-section input[type="text"] {
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 3px;
     border: 1px solid #ccc;
 }
