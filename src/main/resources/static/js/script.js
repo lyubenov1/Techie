@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function () {
     var accordionElement = document.querySelector('.sidebar-products');
+    var filterContainer = document.querySelector('#filterContainer');
 
     function setupAccordion() {
         var viewportWidth = window.innerWidth;
@@ -214,24 +215,24 @@ document.addEventListener('DOMContentLoaded', function () {
             // Initialize Bootstrap accordion for sidebar on smaller screens
             if (!accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.add('accordion');
-                var heading = accordionElement.querySelector('h4');
-                var collapseDiv = document.createElement('div');
-                collapseDiv.className = 'accordion-collapse collapse';
-                collapseDiv.id = 'collapseFilters';
-                collapseDiv.innerHTML = '<div class="accordion-body">' + accordionElement.innerHTML + '</div>';
-                accordionElement.innerHTML = '';
-                accordionElement.appendChild(heading);
-                accordionElement.appendChild(collapseDiv);
-                heading.innerHTML = '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">Filters</button>';
-                new bootstrap.Accordion(document.querySelector('.accordion'));
+                var headingHtml = '<h2 class="accordion-header" id="headingFilters">';
+                headingHtml += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">';
+                headingHtml += 'Filters</button></h2>';
+
+                var bodyHtml = '<div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent=".accordion">';
+                bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
+
+                accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
+                new bootstrap.Accordion(accordionElement);
             }
         } else {
             // Remove accordion behavior on larger screens
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');
-                collapseDiv = document.querySelector('.accordion-collapse');
-                if (collapseDiv) {
-                    accordionElement.innerHTML = collapseDiv.querySelector('.accordion-body').innerHTML;
+                var accordionBody = document.querySelector('.accordion-body');
+                if (accordionBody) {
+                    filterContainer.innerHTML = accordionBody.innerHTML;
+                    accordionElement.innerHTML = filterContainer.outerHTML;
                 }
             }
         }
@@ -244,6 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setupAccordion();
     });
 });
+
 
 
 

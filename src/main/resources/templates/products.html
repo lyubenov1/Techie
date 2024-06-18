@@ -73,17 +73,21 @@
     </div>
 
     <aside class="sidebar-products sidebar col-left col-sm-12 col-sm-2 col-sm-pull-10">
-        <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
-            <h5 th:text="${filterEntry.value}">Filter criteria</h5>
-            <input type="text" th:name="${filterEntry.key}" th:placeholder="Search">
-            <ul class="filter-list custom-scrollspy">
-                <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
-                    <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">
-                    <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}">Option (count)</label>
-                </li>
-            </ul>
+        <div id="filterContainer">
+            <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
+                <h5 th:text="${filterEntry.value}">Filter criteria</h5>
+                <input type="text" th:name="${filterEntry.key}" th:placeholder="Search">
+                <ul class="filter-list custom-scrollspy">
+                    <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
+                        <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">
+                        <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}">Option (count)</label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </aside>
+
+
 </div>
 
 <div class="container-fluid footer-wrapper">

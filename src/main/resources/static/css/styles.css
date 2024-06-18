@@ -846,7 +846,6 @@ body.register .form-check-label {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-
 .sidebar-products .accordion-collapse {
     background-color: inherit;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -857,17 +856,11 @@ body.register .form-check-label {
     border-radius: 5px;
 }
 
-
 .sidebar-products .accordion-body {
     padding: 10px;
     color: inherit;
 }
 
-.filter-section {
-    margin-bottom: 20px;
-    width: 73%;
-
-}
 
 .filter-section, .filter-section * {
     color: rgb(232, 230, 227);
@@ -883,7 +876,15 @@ body.register .form-check-label {
     margin-bottom: 25px;
 }
 
+.filter-section {
+    margin-bottom: 20px;
+    width: 73%;
+    box-sizing: border-box;
+}
+
 .filter-section input[type="text"] {
+    width: 100%; /* Take up full width */
+    box-sizing: border-box;
     padding: 3px;
     border: 1px solid #ccc;
 }
