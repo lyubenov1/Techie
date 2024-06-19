@@ -338,3 +338,53 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     highlightActiveItem();
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('filterContainer').addEventListener('change', function(event) {
+        if (event.target && event.target.type === 'checkbox') {
+            fetchFilteredProducts();
+        }
+    });
+
+    function fetchFilteredProducts() {
+        const filters = {};
+        const checkboxes = document.querySelectorAll('#filterContainer input[type="checkbox"]:checked');
+
+        checkboxes.forEach(function(checkbox) {
+            const key = checkbox.getAttribute('name');
+            const value = checkbox.value;
+            if (!filters[key]) {
+                filters[key] = [];
+            }
+            filters[key].push(value);
+        });
+
+        const categoryName = document.getElementById('categoryName').value;
+
+        const queryString = Object.keys(filters).map(key => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
+        }).join('&');
+
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    const products = JSON.parse(xhr.responseText);
+                    updateProductList(products);
+                } else {
+                    console.error('Error fetching products:', xhr.status);
+                }
+            }
+        };
+
+        xhr.open('GET', `/api/categories/${categoryName}/products?${queryString}`);
+        xhr.send();
+    }
+
+    function updateProductList(products) {
+        // Replace this part with your logic to update the product list in the DOM based on the filtered products received from the server
+        console.log('Updated product list:', products);
+    }
+});
