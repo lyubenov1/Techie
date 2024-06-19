@@ -135,8 +135,10 @@ public class ProductViewController {
                 try {
                     Object value = field.get(product);
                     if (value != null) {
-                        fieldOptions.put(value.toString(), fieldOptions.getOrDefault(value.toString(), 0L) + 1);
-                    }
+                        String strValue = value.toString();
+                        // Capitalize only the first character
+                        String capitalizedValue = strValue.isEmpty() ? strValue : strValue.substring(0, 1).toUpperCase() + strValue.substring(1);
+                        fieldOptions.put(capitalizedValue, fieldOptions.getOrDefault(capitalizedValue, 0L) + 1);                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
