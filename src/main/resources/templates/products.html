@@ -20,7 +20,7 @@
 </div>
 
 <div class="products-main container-md">
-    <div class="col-main-products col-main col-sm-12 col-sm-10 col-sm-push-2">
+    <div class="col-main-products col-main col-sm-12">
         <div class="products-header">
             <h1 class="category-h1" th:text="${category.name}">Category</h1>
             <div>
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <aside class="sidebar-products sidebar col-left col-sm-12 col-sm-2 col-sm-pull-10">
+    <aside class="sidebar-products sidebar col-sm-12">
         <div id="filterContainer">
             <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
                 <h5 th:text="${filterEntry.value}">Filter criteria</h5>
