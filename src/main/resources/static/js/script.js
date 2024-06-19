@@ -384,7 +384,70 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateProductList(products) {
-        // Replace this part with your logic to update the product list in the DOM based on the filtered products received from the server
+        const productsContainer = document.querySelector('.category-products');
+
+        // Clear the existing products
+        productsContainer.innerHTML = '';
+
+        // Generate and insert new product cards
+        products.forEach(function(product) {
+            const productCard = document.createElement('a');
+            productCard.classList.add('card');
+            productCard.style.width = '18rem';
+            productCard.href = `${product.url}`;  // Update this to match the correct URL structure
+
+            const productImage = document.createElement('img');
+            productImage.classList.add('card-img-top');
+            productImage.src = product.imageUrls[0];
+            productImage.alt = 'Product Image';
+
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('card-body');
+
+            const cardBodyWrapper = document.createElement('div');
+            cardBodyWrapper.classList.add('card-body-wrapper');
+
+            const cardTitle = document.createElement('div');
+            cardTitle.classList.add('card-title');
+            cardTitle.textContent = product.name;
+
+            const cardText = document.createElement('div');
+            cardText.classList.add('card-text');
+
+            const productPrice = document.createElement('span');
+            productPrice.textContent = `${product.originalPrice} $`;
+
+            const wishlistAndCart = document.createElement('span');
+            wishlistAndCart.classList.add('wishlist-and-shopping-cart');
+
+            const addToWishlist = document.createElement('span');
+            addToWishlist.classList.add('add-to-wishlist');
+            const wishlistIcon = document.createElement('i');
+            wishlistIcon.classList.add('far', 'fa-heart', 'fa-md', 'text-white');
+            addToWishlist.appendChild(wishlistIcon);
+
+            const shoppingCart = document.createElement('span');
+            shoppingCart.classList.add('shopping-cart');
+            const cartIcon = document.createElement('i');
+            cartIcon.classList.add('fas', 'fa-shopping-cart', 'fa-md', 'text-white');
+            shoppingCart.appendChild(cartIcon);
+
+            wishlistAndCart.appendChild(addToWishlist);
+            wishlistAndCart.appendChild(shoppingCart);
+
+            cardText.appendChild(productPrice);
+            cardText.appendChild(wishlistAndCart);
+
+            cardBodyWrapper.appendChild(cardTitle);
+            cardBodyWrapper.appendChild(cardText);
+
+            cardBody.appendChild(cardBodyWrapper);
+            productCard.appendChild(productImage);
+            productCard.appendChild(cardBody);
+
+            productsContainer.appendChild(productCard);
+        });
+
         console.log('Updated product list:', products);
     }
 });
