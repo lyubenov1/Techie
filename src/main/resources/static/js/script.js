@@ -340,7 +340,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('filterContainer').addEventListener('change', function(event) {
         if (event.target && event.target.type === 'checkbox') {
@@ -451,3 +450,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Updated product list:', products);
     }
 });
+

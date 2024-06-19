@@ -581,32 +581,45 @@ body.register .form-check-label {
 
 
 .filter-list input[type="checkbox"] {
-    appearance: none;
-    background-color: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.filter-list label {
+    display: inline-block;
+    position: relative;
+    padding-left: 28px;
+}
+
+.filter-list label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 18px;
     height: 18px;
-    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    background-color: transparent;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.filter-list input[type="checkbox"]:hover {
+.filter-list input[type="checkbox"]:checked + label::after {
+    content: '✓';
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+.filter-list label:hover::before {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.5);
 }
-
-.filter-list input[type="checkbox"]:checked {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.filter-list input[type="checkbox"]:focus {
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
 
 
 .pagination-products-container {

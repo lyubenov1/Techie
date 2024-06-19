@@ -80,7 +80,7 @@
                 <ul class="filter-list custom-scrollspy">
                     <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
                         <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">
-                        <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}">Option (count)</label>
+                        <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}"></label>
                     </li>
                 </ul>
             </div>
