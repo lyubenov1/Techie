@@ -611,7 +611,7 @@ body.register .form-check-label {
     content: '✓';
     position: absolute;
     left: 3px;
-    top: 50%;
+    top: 49%;
     transform: translateY(-50%);
     font-size: 16px;
 }

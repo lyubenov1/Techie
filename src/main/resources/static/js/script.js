@@ -204,51 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    var accordionElement = document.querySelector('.sidebar-products');
-    var filterContainer = document.querySelector('#filterContainer');
-
-    function setupAccordion() {
-        var viewportWidth = window.innerWidth;
-
-        if (viewportWidth < 768) {
-            // Initialize Bootstrap accordion for sidebar on smaller screens
-            if (!accordionElement.classList.contains('accordion')) {
-                accordionElement.classList.add('accordion');
-                var headingHtml = '<h2 class="accordion-header" id="headingFilters">';
-                headingHtml += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">';
-                headingHtml += 'Filters</button></h2>';
-
-                var bodyHtml = '<div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent=".accordion">';
-                bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
-
-                accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
-                new bootstrap.Accordion(accordionElement);
-            }
-        } else {
-            // Remove accordion behavior on larger screens
-            if (accordionElement.classList.contains('accordion')) {
-                accordionElement.classList.remove('accordion');
-                var accordionBody = document.querySelector('.accordion-body');
-                if (accordionBody) {
-                    filterContainer.innerHTML = accordionBody.innerHTML;
-                    accordionElement.innerHTML = filterContainer.outerHTML;
-                }
-            }
-        }
-    }
-
-    setupAccordion(); // Call setupAccordion initially
-
-    // Call setupAccordion on window resize to adjust behavior dynamically
-    window.addEventListener('resize', function () {
-        setupAccordion();
-    });
-});
-
-
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
@@ -340,16 +295,69 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('filterContainer').addEventListener('change', function(event) {
-        if (event.target && event.target.type === 'checkbox') {
-            fetchFilteredProducts();
+    var accordionElement = document.querySelector('.sidebar-products');
+    var filterContainer = document.querySelector('#filterContainer');
+
+    function setupAccordion() {
+        var viewportWidth = window.innerWidth;
+
+        if (viewportWidth < 768) {
+            // Initialize Bootstrap accordion for sidebar on smaller screens
+            if (!accordionElement.classList.contains('accordion')) {
+                accordionElement.classList.add('accordion');
+                var headingHtml = '<h2 class="accordion-header" id="headingFilters">';
+                headingHtml += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">';
+                headingHtml += 'Filters</button></h2>';
+
+                var bodyHtml = '<div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent=".accordion">';
+                bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
+
+                accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
+                new bootstrap.Accordion(accordionElement);
+            }
+        } else {
+            // Remove accordion behavior on larger screens
+            if (accordionElement.classList.contains('accordion')) {
+                accordionElement.classList.remove('accordion');
+                var accordionBody = document.querySelector('.accordion-body');
+                if (accordionBody) {
+                    filterContainer.innerHTML = accordionBody.innerHTML;
+                    accordionElement.innerHTML = filterContainer.outerHTML;
+                }
+            }
         }
+
+        // Update event listener for checkbox changes
+        document.addEventListener('change', function(event) {
+            if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
+                debounceFetchFilteredProducts();
+            }
+        });
+    }
+
+    setupAccordion(); // Call setupAccordion initially
+
+    // Call setupAccordion on window resize to adjust behavior dynamically
+    window.addEventListener('resize', function() {
+        setupAccordion();
     });
+
+    // Debounce function to limit the rate of fetchFilteredProducts calls
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
+        };
+    }
+
+    const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
 
     function fetchFilteredProducts() {
         const filters = {};
-        const checkboxes = document.querySelectorAll('#filterContainer input[type="checkbox"]:checked');
+        const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
 
         checkboxes.forEach(function(checkbox) {
             const key = checkbox.getAttribute('name');
@@ -450,4 +458,3 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Updated product list:', products);
     }
 });
-
