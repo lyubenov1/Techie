@@ -748,11 +748,11 @@ body.register .form-check-label {
 
 @media (min-width: 768px) and (max-width: 992px) {
     .sidebar-products {
-        max-width: 30%;
+        max-width: 23%;
     }
 
     .col-main-products {
-        max-width: 70%;
+        max-width: 77%;
     }
 
     .category-products .card {
@@ -762,11 +762,11 @@ body.register .form-check-label {
 
 @media (min-width: 993px) and (max-width: 1199px) {
     .sidebar-products {
-        max-width: 25%;
+        max-width: 20%;
     }
 
     .col-main-products {
-        max-width: 75%;
+        max-width: 80%;
     }
 }
 
@@ -801,6 +801,8 @@ body.register .form-check-label {
 
 .sidebar-products.accordion {
     display: block;
+    --bs-accordion-bg: inherit;
+    margin-bottom: 10px;
 }
 
 .sidebar-products .accordion-button {
