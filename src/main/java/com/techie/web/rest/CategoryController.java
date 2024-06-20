@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -28,22 +27,9 @@ public class CategoryController {
     public List<ProductDTO> getFilteredProducts(@PathVariable String categoryName,
                                                 @RequestParam(required = false) Map<String, String> filters) {
 
-        Map<String, List<String>> convertedFilters = convertFilters(filters);
-        return categoryService.getFilteredProducts(categoryName, convertedFilters);
+        return categoryService.getFilteredProducts(categoryName, filters);
     }
 
-    private Map<String, List<String>> convertFilters(Map<String, String> filters) {
-        Map<String, List<String>> convertedFilters = new LinkedHashMap<>();
 
-        for (Map.Entry<String, String> entry : filters.entrySet()) {
-            String key = entry.getKey();
-            List<String> values = Arrays.stream(entry.getValue().split(","))
-                    .collect(Collectors.toList());
-
-            convertedFilters.put(key, values);
-        }
-
-        return convertedFilters;
-    }
 
 }

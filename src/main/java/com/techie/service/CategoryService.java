@@ -50,13 +50,14 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, List<String>> filters) {
+    public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters) {
         Optional<Category> categoryOptional = categoryRepository.findByName(categoryName);
+        Map<String, List<String>> convertedFilters = convertFilters(filters);
 
         if (categoryOptional.isPresent()) {
             Category category = categoryOptional.get();
             List<ProductDTO> products = fetchProductsForCategory(category);
-            applyFilters(products, filters);
+            applyFilters(products, convertedFilters);
             return products;
         } else {
             throw new CategoryNotFoundException("Category with name " + categoryName + " not found");
@@ -156,4 +157,17 @@ public class CategoryService {
         return UriUtils.encode(categoryName.toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
     }
 
+    private Map<String, List<String>> convertFilters(Map<String, String> filters) {
+        Map<String, List<String>> convertedFilters = new LinkedHashMap<>();
+
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = Arrays.stream(entry.getValue().split(","))
+                    .collect(Collectors.toList());
+
+            convertedFilters.put(key, values);
+        }
+
+        return convertedFilters;
+    }
 }

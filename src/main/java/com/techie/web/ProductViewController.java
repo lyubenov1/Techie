@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.stream.*;
 
 @Controller
 @RequestMapping("/products")
@@ -48,30 +47,16 @@ public class ProductViewController {
         }
 
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
-        Map<String, List<String>> convertedFilters = convertFilters(filters);
-        List<ProductDTO> filteredProducts = categoryService.getFilteredProducts(categoryName, convertedFilters);
+
+        List<ProductDTO> filteredProducts = categoryService.getFilteredProducts(categoryName, filters);
         categoryDTO.setProducts(filteredProducts);
 
         model.addAttribute("category", categoryDTO);
 
         addFacets(categoryDTO, model);
-        handlePagination(filteredProducts, model, page, size); // Pass filteredProducts instead of categoryDTO
+        handlePagination(filteredProducts, model, page, size);
 
         return "products";
-    }
-
-    private Map<String, List<String>> convertFilters(Map<String, String> filters) {
-        Map<String, List<String>> convertedFilters = new LinkedHashMap<>();
-
-        for (Map.Entry<String, String> entry : filters.entrySet()) {
-            String key = entry.getKey();
-            List<String> values = Arrays.stream(entry.getValue().split(","))
-                    .collect(Collectors.toList());
-
-            convertedFilters.put(key, values);
-        }
-
-        return convertedFilters;
     }
 
     private void handlePagination(List<ProductDTO> products, Model model, int page, int size) {
