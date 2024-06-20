@@ -40,7 +40,7 @@
                     <div class="card-body-wrapper">
                         <div class="card-title" th:text="${product.name}">Product Name</div>
                         <div class="card-text">
-                            <span th:text="${product.originalPrice} + ' $'">Product Price</span>
+                            <span th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
                             <span class="wishlist-and-shopping-cart">
                         <span class="add-to-wishlist">
                             <i class="far fa-heart fa-md text-white"></i>

@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cardText.classList.add('card-text');
 
             const productPrice = document.createElement('span');
-            productPrice.textContent = `${product.originalPrice} $`;
+            productPrice.textContent = `${Number(product.originalPrice).toFixed(2)} $`;
 
             const wishlistAndCart = document.createElement('span');
             wishlistAndCart.classList.add('wishlist-and-shopping-cart');
