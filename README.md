@@ -17,7 +17,7 @@ That's it!
 
 ### Products page sample
 
-<img src="src/main/resources/static/images/smartphones_page.png" alt="Products page">
+<img src="src/main/resources/static/images/smartphones_page.png" alt="Smartphones page">
 
 ### Index page current state
 
