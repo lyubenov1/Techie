@@ -349,10 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
 
                 accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
-                new bootstrap.Accordion(accordionElement);
             }
         } else {
-            // Remove accordion behavior on larger screens
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');
                 var accordionBody = document.querySelector('.accordion-body');
