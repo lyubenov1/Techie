@@ -24,9 +24,9 @@ public class CategoryController {
         return categoryService.getParentCategoryDTOs();
     }
 
-    @GetMapping("/{categoryName}/products")
+    @GetMapping("/products/{categoryName}")
     public List<ProductDTO> getFilteredProducts(@PathVariable String categoryName,
-                                                @RequestParam Map<String, String> filters) {
+                                                @RequestParam(required = false) Map<String, String> filters) {
 
         Map<String, List<String>> convertedFilters = convertFilters(filters);
         return categoryService.getFilteredProducts(categoryName, convertedFilters);

@@ -328,13 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-
-        // Update event listener for checkbox changes
-        document.addEventListener('change', function(event) {
-            if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
-                debounceFetchFilteredProducts();
-            }
-        });
     }
 
     setupAccordion(); // Call setupAccordion initially
@@ -355,6 +348,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
 
+    document.addEventListener('change', function(event) {
+        if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
+            debounceFetchFilteredProducts();
+        }
+    });
+
     function fetchFilteredProducts() {
         const filters = {};
         const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
@@ -374,21 +373,67 @@ document.addEventListener('DOMContentLoaded', function() {
             return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
         }).join('&');
 
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    const products = JSON.parse(xhr.responseText);
-                    updateProductList(products);
-                } else {
-                    console.error('Error fetching products:', xhr.status);
-                }
-            }
-        };
+        // Store filters in sessionStorage
+        sessionStorage.setItem('filters', JSON.stringify(filters));
 
-        xhr.open('GET', `/api/categories/${categoryName}/products?${queryString}`);
-        xhr.send();
+        const userUrl = `/products/${categoryName.toLowerCase()}?${queryString}`;
+
+        // Use pushState to update the URL without reloading
+        history.pushState({ filters }, null, userUrl);
+
+        // Refresh the page to reload with updated filters
+        window.location.reload();
     }
+
+    function fetchProducts(url) {
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(products => {
+                updateProductList(products);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+    }
+
+    function checkAndClearFilters() {
+        const currentUrl = window.location.pathname;
+        const storedFilters = sessionStorage.getItem('filters');
+
+        if (currentUrl.startsWith('/products/') && !window.location.search && storedFilters) {
+            // Clear filters from sessionStorage
+            sessionStorage.removeItem('filters');
+
+            // Clear checkboxes
+            const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+
+            // Update the URL to remove query parameters
+            history.replaceState(null, '', currentUrl);
+
+            console.log('Filters cleared');
+
+            const categoryName = document.getElementById('categoryName').value;
+            fetchProducts(`/api/categories/products/${categoryName}`);
+        }
+    }
+
+    // Call this function when the page loads
+    window.addEventListener('load', checkAndClearFilters);
+
+    // Add event listener for popstate to handle back/forward navigation
+    window.addEventListener('popstate', function(event) {
+        checkAndClearFilters();
+        if (event.state && event.state.filters) {
+            // Restore filters from state if available
+            sessionStorage.setItem('filters', JSON.stringify(event.state.filters));
+        }
+    });
 
     function updateProductList(products) {
         const productsContainer = document.querySelector('.category-products');
@@ -456,5 +501,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log('Updated product list:', products);
+    }
+
+    // Restore filters from sessionStorage
+    const storedFilters = sessionStorage.getItem('filters');
+    if (storedFilters && window.location.search) {
+        const filters = JSON.parse(storedFilters);
+        // Restore checkbox states based on filters
+        Object.keys(filters).forEach(key => {
+            filters[key].forEach(value => {
+                const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        });
+
+        // Construct the backend API URL
+        const categoryName = document.getElementById('categoryName').value;
+        const queryString = Object.keys(filters).map(key => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
+        }).join('&');
+        const backendUrl = `/api/categories/products/${categoryName}?${queryString}`;
+
+        // Fetch products based on restored filters
+        fetchProducts(backendUrl);
+    } else {
+        // If no filters or no query string, fetch all products for the category
+        const categoryName = document.getElementById('categoryName').value;
+        fetchProducts(`/api/categories/products/${categoryName}`);
     }
 });

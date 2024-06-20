@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Controller
 @RequestMapping("/products")
@@ -38,34 +39,66 @@ public class ProductViewController {
     public String categoryPage(@PathVariable String categoryName,
                                @RequestParam(name = "page", defaultValue = "0") int page,
                                @RequestParam(name = "size", defaultValue = "25") int size,
+                               @RequestParam(required = false) Map<String, String> filters,
                                Model model) {
 
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         if (categoryOptional.isEmpty()) {
             return "redirect:/";
         }
+
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
+        Map<String, List<String>> convertedFilters = convertFilters(filters);
+        List<ProductDTO> filteredProducts = categoryService.getFilteredProducts(categoryName, convertedFilters);
+        categoryDTO.setProducts(filteredProducts);
+
         model.addAttribute("category", categoryDTO);
 
         addFacets(categoryDTO, model);
-        handlePagination(categoryDTO, model, page, size);
+        handlePagination(filteredProducts, model, page, size); // Pass filteredProducts instead of categoryDTO
 
         return "products";
     }
 
-    private void handlePagination(CategoryDTO categoryDTO, Model model, int page, int size) {
-        List<ProductDTO> products = categoryDTO.getProducts();
+    private Map<String, List<String>> convertFilters(Map<String, String> filters) {
+        Map<String, List<String>> convertedFilters = new LinkedHashMap<>();
+
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = Arrays.stream(entry.getValue().split(","))
+                    .collect(Collectors.toList());
+
+            convertedFilters.put(key, values);
+        }
+
+        return convertedFilters;
+    }
+
+    private void handlePagination(List<ProductDTO> products, Model model, int page, int size) {
+        int totalProducts = products.size();
         int start = page * size;
-        int end = Math.min(start + size, products.size());
+        int end = Math.min(start + size, totalProducts);
+
+        // Ensure start index is not out of bounds
+        if (start >= totalProducts) {
+            start = Math.max(0, totalProducts - size);
+            end = totalProducts;
+        }
+
+        // Ensure end index is not out of bounds
+        if (start < 0 || end > totalProducts) {
+            start = 0;
+            end = Math.min(size, totalProducts);
+        }
+
         List<ProductDTO> paginatedProducts = products.subList(start, end);
 
-        Page<ProductDTO> productsPage = new PageImpl<>(paginatedProducts, PageRequest.of(page, size), products.size());
+        Page<ProductDTO> productsPage = new PageImpl<>(paginatedProducts, PageRequest.of(page, size), totalProducts);
         model.addAttribute("productsPage", productsPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
         model.addAttribute("pageSize", size);
     }
-
 
     private void addFacets(CategoryDTO categoryDTO, Model model) {
         Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
@@ -73,9 +106,7 @@ public class ProductViewController {
 
         model.addAttribute("filterCriteriaFields", filterCriteriaFields);
         model.addAttribute("filterOptions", filterOptions);
-
     }
-
 
     private Map<String, String> retrieveFilterCriteriaFields(CategoryDTO categoryDTO) {
         Map<String, String> filterCriteriaFields = new LinkedHashMap<>();
@@ -158,4 +189,3 @@ public class ProductViewController {
         return filterOptions;
     }
 }
-
