@@ -76,7 +76,9 @@
         <div id="filterContainer">
             <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
                 <h5 th:text="${filterEntry.value}">Filter criteria</h5>
-                <input type="text" th:name="${filterEntry.key}" th:placeholder="Search">
+                <div class="search-container" style="display: none;">
+                    <input type="text" th:name="${filterEntry.key}" th:placeholder="Search" class="filter-search">
+                </div>
                 <ul class="filter-list custom-scrollspy">
                     <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
                         <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">

@@ -273,25 +273,59 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const scrollspy = document.querySelector('.custom-scrollspy');
+    const filterSections = document.querySelectorAll('.filter-section');
 
-    function highlightActiveItem() {
-        const items = scrollspy.querySelectorAll('li');
-        const scrollTop = scrollspy.scrollTop;
-        const itemHeight = items[0].offsetHeight;
+    filterSections.forEach(section => {
+        const scrollspy = section.querySelector('.custom-scrollspy');
+        const searchContainer = section.querySelector('.search-container');
 
-        items.forEach((item, index) => {
-            if (scrollTop >= index * itemHeight && scrollTop < (index + 1) * itemHeight) {
-                item.classList.add('active');
+        function checkScrollable() {
+            if (scrollspy.scrollHeight > scrollspy.clientHeight) {
+                searchContainer.style.display = 'block';
             } else {
-                item.classList.remove('active');
+                searchContainer.style.display = 'none';
             }
+        }
+
+        function highlightActiveItem() {
+            const items = scrollspy.querySelectorAll('li');
+            const scrollTop = scrollspy.scrollTop;
+            const itemHeight = items[0].offsetHeight;
+
+            items.forEach((item, index) => {
+                if (scrollTop >= index * itemHeight && scrollTop < (index + 1) * itemHeight) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Check if scrollable on load
+        checkScrollable();
+
+        // Recheck on window resize
+        window.addEventListener('resize', checkScrollable);
+
+        scrollspy.addEventListener('scroll', highlightActiveItem);
+        highlightActiveItem();
+
+        // Implement search functionality
+        const searchInput = searchContainer.querySelector('input');
+        searchInput.addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const items = scrollspy.querySelectorAll('li');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
-    }
-
-    scrollspy.addEventListener('scroll', highlightActiveItem);
-
-    highlightActiveItem();
+    });
 });
 
 
