@@ -42,7 +42,6 @@ public class ProductViewController {
     @GetMapping("/{categoryName}")
     public String categoryPage(@PathVariable String categoryName,
                                @RequestParam(name = "page", defaultValue = "0") int page,
-                               @RequestParam(name = "size", defaultValue = "25") int size,
                                @RequestParam(required = false) Map<String, String> filters,
                                Model model) {
 
@@ -59,7 +58,7 @@ public class ProductViewController {
         model.addAttribute("category", categoryDTO);
 
         facetService.addFacets(categoryDTO, model);
-        paginationService.handlePagination(filteredProducts, model, page, size);
+        paginationService.handlePagination(filteredProducts, model, page, PaginationService.DEFAULT_PAGE_SIZE);
 
         return "products";
     }

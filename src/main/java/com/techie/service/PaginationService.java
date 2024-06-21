@@ -10,11 +10,12 @@ import java.util.*;
 @Service
 public class PaginationService {
 
+    public static final int DEFAULT_PAGE_SIZE = 25;
+
     public Page<ProductDTO> paginate(List<ProductDTO> products, int page, int size) {
         int totalProducts = products.size();
         int start = Math.min(page * size, totalProducts);
         int end = Math.min(start + size, totalProducts);
-
 
         List<ProductDTO> paginatedProducts = products.subList(start, end);
         return new PageImpl<>(paginatedProducts, PageRequest.of(page, size), totalProducts);

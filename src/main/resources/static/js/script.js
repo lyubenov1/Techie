@@ -365,8 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                updateProductList(data.content);
-                createPagination(data.pageable.pageNumber, data.totalPages);
+                updateProductList(data);
                 // Set up the accordion and filters after fetching new products
                 setupAccordion();
                 setupFilters();
