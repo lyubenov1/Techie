@@ -226,6 +226,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
 
                 accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
+
+                // Restore filters from sessionStorage for the accordion view
+                const storedFilters = sessionStorage.getItem('filters');
+                if (storedFilters && window.location.search) {
+                    const filters = JSON.parse(storedFilters);
+                    // Restore checkbox states based on filters
+                    Object.keys(filters).forEach(key => {
+                        filters[key].forEach(value => {
+                            const checkbox = document.querySelector(`.accordion-body input[type="checkbox"][name="${key}"][value="${value}"]`);
+                            if (checkbox) {
+                                checkbox.checked = true;
+                            }
+                        });
+                    });
+                }
             }
         } else {
             if (accordionElement.classList.contains('accordion')) {
@@ -385,9 +400,13 @@ document.addEventListener('DOMContentLoaded', function () {
             // Clear filters from sessionStorage
             sessionStorage.removeItem('filters');
 
-            // Clear checkboxes
-            const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
-            checkboxes.forEach(checkbox => checkbox.checked = false);
+            // Clear checkboxes in the default view
+            const defaultCheckboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+            defaultCheckboxes.forEach(checkbox => checkbox.checked = false);
+
+            // Clear checkboxes in the accordion view
+            const accordionCheckboxes = document.querySelectorAll('.accordion-body input[type="checkbox"]:checked');
+            accordionCheckboxes.forEach(checkbox => checkbox.checked = false);
 
             // Update the URL to remove query parameters
             history.replaceState(null, '', currentUrl);
