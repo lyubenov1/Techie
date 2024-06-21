@@ -360,8 +360,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 return response.json();
             })
-            .then(products => {
-                updateProductList(products);
+            .then(data => {
+                updateProductList(data.content);
+                createPagination(data.page, data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);

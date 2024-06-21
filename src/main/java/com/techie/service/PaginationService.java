@@ -12,8 +12,9 @@ public class PaginationService {
 
     public Page<ProductDTO> paginate(List<ProductDTO> products, int page, int size) {
         int totalProducts = products.size();
-        int start = page * size;
+        int start = Math.min(page * size, totalProducts);
         int end = Math.min(start + size, totalProducts);
+
 
         List<ProductDTO> paginatedProducts = products.subList(start, end);
         return new PageImpl<>(paginatedProducts, PageRequest.of(page, size), totalProducts);
