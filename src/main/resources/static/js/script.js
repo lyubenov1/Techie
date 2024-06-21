@@ -206,64 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const filterSections = document.querySelectorAll('.filter-section');
-
-    filterSections.forEach(section => {
-        const scrollspy = section.querySelector('.custom-scrollspy');
-        const searchContainer = section.querySelector('.search-container');
-
-        function checkScrollable() {
-            if (scrollspy.scrollHeight > scrollspy.clientHeight) {
-                searchContainer.style.display = 'block';
-            } else {
-                searchContainer.style.display = 'none';
-            }
-        }
-
-        function highlightActiveItem() {
-            const items = scrollspy.querySelectorAll('li');
-            const scrollTop = scrollspy.scrollTop;
-            const itemHeight = items[0].offsetHeight;
-
-            items.forEach((item, index) => {
-                if (scrollTop >= index * itemHeight && scrollTop < (index + 1) * itemHeight) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        }
-
-        // Check if scrollable on load
-        checkScrollable();
-
-        // Recheck on window resize
-        window.addEventListener('resize', checkScrollable);
-
-        scrollspy.addEventListener('scroll', highlightActiveItem);
-        highlightActiveItem();
-
-        // Implement search functionality
-        const searchInput = searchContainer.querySelector('input');
-        searchInput.addEventListener('input', function() {
-            const filter = this.value.toLowerCase();
-            const items = scrollspy.querySelectorAll('li');
-
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(filter)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    });
-});
-
-
-
 
 document.addEventListener('DOMContentLoaded', function () {
     var accordionElement = document.querySelector('.sidebar-products');
@@ -297,8 +239,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    setupAccordion(); // Call setupAccordion initially
-
     // Call setupAccordion on window resize to adjust behavior dynamically
     window.addEventListener('resize', function () {
         setupAccordion();
@@ -320,6 +260,70 @@ document.addEventListener('DOMContentLoaded', function () {
             debounceFetchFilteredProducts();
         }
     });
+
+    function setupFilters() {
+        const filterSections = document.querySelectorAll('.filter-section');
+
+        filterSections.forEach(section => {
+            const scrollspy = section.querySelector('.custom-scrollspy');
+            const searchContainer = section.querySelector('.search-container');
+
+            function checkScrollable() {
+                if (scrollspy && scrollspy.scrollHeight > scrollspy.clientHeight) {
+                    searchContainer.style.display = 'block';
+                } else {
+                    searchContainer.style.display = 'none';
+                }
+            }
+
+            function highlightActiveItem() {
+                if (!scrollspy) return;
+                const items = scrollspy.querySelectorAll('li');
+                if (items.length === 0) return;
+
+                const scrollTop = scrollspy.scrollTop;
+                const itemHeight = items[0].offsetHeight;
+
+                items.forEach((item, index) => {
+                    if (scrollTop >= index * itemHeight && scrollTop < (index + 1) * itemHeight) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            // Check if scrollable on load
+            checkScrollable();
+
+            // Recheck on window resize
+            window.addEventListener('resize', checkScrollable);
+
+            if (scrollspy) {
+                scrollspy.addEventListener('scroll', highlightActiveItem);
+                highlightActiveItem();
+            }
+
+            // Implement search functionality
+            const searchInput = searchContainer.querySelector('input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    const filter = this.value.toLowerCase();
+                    const items = scrollspy.querySelectorAll('li');
+
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        if (text.includes(filter)) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    }
+
 
     function fetchFilteredProducts() {
         const filters = {};
@@ -363,6 +367,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 updateProductList(data.content);
                 createPagination(data.pageable.pageNumber, data.totalPages);
+                // Set up the accordion and filters after fetching new products
+                setupAccordion();
+                setupFilters();
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
@@ -470,6 +477,8 @@ document.addEventListener('DOMContentLoaded', function () {
             productsContainer.appendChild(productCard);
         });
 
+        setupAccordion()
+        setupFilters();
         console.log('Updated product list:', products);
     }
 
@@ -506,7 +515,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     const category = document.getElementById('categoryName').value;
-    const pageSize = parseInt(document.getElementById('pageSize').value);
 
     function createPagination(currentPage, totalPages) {
         const paginationContainer = document.getElementById('pagination');
@@ -517,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = `/products/${category}?page=${page}&size=${pageSize}`;
+            a.href = `/products/${category.toLowerCase()}?=${page}`;
             a.textContent = text;
             li.appendChild(a);
             paginationContainer.appendChild(li);
@@ -528,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.className = 'page-item';
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = `/products/${category}?page=${targetPage}&size=${pageSize}`;
+            a.href = `/products/${category.toLowerCase()}?p=${targetPage}`;
             a.textContent = '...';
             li.appendChild(a);
             paginationContainer.appendChild(li);
@@ -565,6 +573,8 @@ document.addEventListener('DOMContentLoaded', function () {
         createPageItem(currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1, '»', currentPage === totalPages - 1);
     }
 
+    setupAccordion();
+    setupFilters();
     // Initial call to create pagination on page load
     createPagination(currentPage, totalPages);
 });
