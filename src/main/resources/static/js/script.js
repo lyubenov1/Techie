@@ -205,72 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const currentPage = parseInt(document.getElementById('currentPage').value);
-    const totalPages = parseInt(document.getElementById('totalPages').value);
-    const category = document.getElementById('categoryName').value;
-    const pageSize = parseInt(document.getElementById('pageSize').value);
-
-    function createPagination(currentPage, totalPages) {
-        const paginationContainer = document.getElementById('pagination');
-        paginationContainer.innerHTML = ''; // Clear existing buttons
-
-        function createPageItem(page, text, disabled = false, active = false) {
-            const li = document.createElement('li');
-            li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
-            const a = document.createElement('a');
-            a.className = 'page-link';
-            a.href = `/products/${category}?page=${page}&size=${pageSize}`;
-            a.textContent = text;
-            li.appendChild(a);
-            paginationContainer.appendChild(li);
-        }
-
-        function createEllipsisItem(targetPage) {
-            const li = document.createElement('li');
-            li.className = 'page-item';
-            const a = document.createElement('a');
-            a.className = 'page-link';
-            a.href = `/products/${category}?page=${targetPage}&size=${pageSize}`;
-            a.textContent = '...';
-            li.appendChild(a);
-            paginationContainer.appendChild(li);
-        }
-
-        createPageItem(currentPage > 0 ? currentPage - 1 : 0, '«', currentPage === 0);
-
-        if (totalPages <= 5) {
-            for (let i = 0; i < totalPages; i++) {
-                createPageItem(i, i + 1, false, i === currentPage);
-            }
-        } else {
-            if (currentPage <= 2) {
-                for (let i = 0; i < 3; i++) {
-                    createPageItem(i, i + 1, false, i === currentPage);
-                }
-                createEllipsisItem(totalPages - 2); // Link to second-to-last page
-                createPageItem(totalPages - 1, totalPages);
-            } else if (currentPage >= totalPages - 3) {
-                createPageItem(0, 1);
-                createEllipsisItem(1); // Link to second page
-                for (let i = totalPages - 3; i < totalPages; i++) {
-                    createPageItem(i, i + 1, false, i === currentPage);
-                }
-            } else {
-                createPageItem(0, 1);
-                createEllipsisItem(1); // Link to second page
-                createPageItem(currentPage, currentPage + 1, false, true);
-                createEllipsisItem(totalPages - 2); // Link to second-to-last page
-                createPageItem(totalPages - 1, totalPages);
-            }
-        }
-
-        createPageItem(currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1, '»', currentPage === totalPages - 1);
-    }
-
-    createPagination(currentPage, totalPages);
-});
-
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const filterSections = document.querySelectorAll('.filter-section');
@@ -330,7 +264,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
     var accordionElement = document.querySelector('.sidebar-products');
     var filterContainer = document.querySelector('#filterContainer');
 
@@ -365,14 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAccordion(); // Call setupAccordion initially
 
     // Call setupAccordion on window resize to adjust behavior dynamically
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         setupAccordion();
     });
 
     // Debounce function to limit the rate of fetchFilteredProducts calls
     function debounce(func, delay) {
         let debounceTimer;
-        return function() {
+        return function () {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
         };
@@ -380,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
 
-    document.addEventListener('change', function(event) {
+    document.addEventListener('change', function (event) {
         if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
             debounceFetchFilteredProducts();
         }
@@ -433,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+
     function checkAndClearFilters() {
         const currentUrl = window.location.pathname;
         const storedFilters = sessionStorage.getItem('filters');
@@ -459,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', checkAndClearFilters);
 
     // Add event listener for popstate to handle back/forward navigation
-    window.addEventListener('popstate', function(event) {
+    window.addEventListener('popstate', function (event) {
         checkAndClearFilters();
         if (event.state && event.state.filters) {
             // Restore filters from state if available
@@ -474,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
         productsContainer.innerHTML = '';
 
         // Generate and insert new product cards
-        products.forEach(function(product) {
+        products.forEach(function (product) {
             const productCard = document.createElement('a');
             productCard.classList.add('card');
             productCard.style.width = '18rem';
@@ -563,4 +499,70 @@ document.addEventListener('DOMContentLoaded', function() {
         const categoryName = document.getElementById('categoryName').value;
         fetchProducts(`/api/categories/products/${categoryName}`);
     }
+
+    // Pagination logic integration
+    const currentPage = parseInt(document.getElementById('currentPage').value);
+    const totalPages = parseInt(document.getElementById('totalPages').value);
+    const category = document.getElementById('categoryName').value;
+    const pageSize = parseInt(document.getElementById('pageSize').value);
+
+    function createPagination(currentPage, totalPages) {
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = ''; // Clear existing buttons
+
+        function createPageItem(page, text, disabled = false, active = false) {
+            const li = document.createElement('li');
+            li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = `/products/${category}?page=${page}&size=${pageSize}`;
+            a.textContent = text;
+            li.appendChild(a);
+            paginationContainer.appendChild(li);
+        }
+
+        function createEllipsisItem(targetPage) {
+            const li = document.createElement('li');
+            li.className = 'page-item';
+            const a = document.createElement('a');
+            a.className = 'page-link';
+            a.href = `/products/${category}?page=${targetPage}&size=${pageSize}`;
+            a.textContent = '...';
+            li.appendChild(a);
+            paginationContainer.appendChild(li);
+        }
+
+        createPageItem(currentPage > 0 ? currentPage - 1 : 0, '«', currentPage === 0);
+
+        if (totalPages <= 5) {
+            for (let i = 0; i < totalPages; i++) {
+                createPageItem(i, i + 1, false, i === currentPage);
+            }
+        } else {
+            if (currentPage <= 2) {
+                for (let i = 0; i < 3; i++) {
+                    createPageItem(i, i + 1, false, i === currentPage);
+                }
+                createEllipsisItem(totalPages - 2); // Link to second-to-last page
+                createPageItem(totalPages - 1, totalPages);
+            } else if (currentPage >= totalPages - 3) {
+                createPageItem(0, 1);
+                createEllipsisItem(1); // Link to second page
+                for (let i = totalPages - 3; i < totalPages; i++) {
+                    createPageItem(i, i + 1, false, i === currentPage);
+                }
+            } else {
+                createPageItem(0, 1);
+                createEllipsisItem(1); // Link to second page
+                createPageItem(currentPage, currentPage + 1, false, true);
+                createEllipsisItem(totalPages - 2); // Link to second-to-last page
+                createPageItem(totalPages - 1, totalPages);
+            }
+        }
+
+        createPageItem(currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1, '»', currentPage === totalPages - 1);
+    }
+
+    // Initial call to create pagination on page load
+    createPagination(currentPage, totalPages);
 });

@@ -29,7 +29,4 @@ public class CategoryController {
 
         return categoryService.getFilteredProducts(categoryName, filters);
     }
-
-
-
 }

@@ -85,6 +85,7 @@ public class ProductViewController {
         model.addAttribute("pageSize", size);
     }
 
+
     private void addFacets(CategoryDTO categoryDTO, Model model) {
         Map<String, String> filterCriteriaFields = retrieveFilterCriteriaFields(categoryDTO);
         Map<String, Map<String, Long>> filterOptions = retrieveFilterOptions(categoryDTO);
