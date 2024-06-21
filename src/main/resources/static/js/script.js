@@ -362,12 +362,13 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 updateProductList(data.content);
-                createPagination(data.page, data.totalPages);
+                createPagination(data.pageable.pageNumber, data.totalPages);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
     }
+
 
 
     function checkAndClearFilters() {
