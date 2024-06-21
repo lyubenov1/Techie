@@ -12,10 +12,12 @@ import java.util.*;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final ProductFilterService productFilterService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, ProductFilterService productFilterService) {
         this.categoryService = categoryService;
+        this.productFilterService = productFilterService;
     }
 
     @GetMapping
@@ -27,6 +29,6 @@ public class CategoryController {
     public List<ProductDTO> getFilteredProducts(@PathVariable String categoryName,
                                                 @RequestParam(required = false) Map<String, String> filters) {
 
-        return categoryService.getFilteredProducts(categoryName, filters);
+        return productFilterService.getFilteredProducts(categoryName, filters);
     }
 }

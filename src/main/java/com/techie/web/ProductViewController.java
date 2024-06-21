@@ -17,10 +17,12 @@ import java.util.*;
 public class ProductViewController {
 
     private final CategoryService categoryService;
+    private final ProductFilterService productFilterService;
 
     @Autowired
-    public ProductViewController(CategoryService categoryService) {
+    public ProductViewController(CategoryService categoryService, ProductFilterService productFilterService) {
         this.categoryService = categoryService;
+        this.productFilterService = productFilterService;
     }
 
     @GetMapping
@@ -48,7 +50,7 @@ public class ProductViewController {
 
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
 
-        List<ProductDTO> filteredProducts = categoryService.getFilteredProducts(categoryName, filters);
+        List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters);
         categoryDTO.setProducts(filteredProducts);
 
         model.addAttribute("category", categoryDTO);

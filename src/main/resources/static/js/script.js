@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchProducts(`/api/categories/products/${categoryName}`);
     }
 
-    // Pagination logic integration
+    // Pagination logic
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     const category = document.getElementById('categoryName').value;
