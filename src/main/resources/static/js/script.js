@@ -380,7 +380,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                updateProductList(data);
+                const productsPage = {
+                    content: data.content,
+                    totalPages: data.totalPages,
+                    currentPage: data.number,
+                    pageSize: data.size
+                };
+                updateProductList(productsPage);
                 // Set up the accordion and filters after fetching new products
                 setupAccordion();
                 setupFilters();
@@ -430,14 +436,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function updateProductList(products) {
+    function updateProductList(productsPage) {
         const productsContainer = document.querySelector('.category-products');
 
         // Clear the existing products
         productsContainer.innerHTML = '';
 
         // Generate and insert new product cards
-        products.forEach(function (product) {
+        productsPage.content.forEach(function (product) {
             const productCard = document.createElement('a');
             productCard.classList.add('card');
             productCard.style.width = '18rem';
@@ -497,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setupAccordion()
         setupFilters();
-        console.log('Updated product list:', products);
+        console.log('Updated product list:', productsPage);
     }
 
     // Restore filters from sessionStorage
@@ -533,6 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     const category = document.getElementById('categoryName').value;
+    const productsPage = document.getElementById('productsPage').value;
 
     function createPagination(currentPage, totalPages) {
         const paginationContainer = document.getElementById('pagination');
@@ -596,3 +603,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial call to create pagination on page load
     createPagination(currentPage, totalPages);
 });
+
