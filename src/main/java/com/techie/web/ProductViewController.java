@@ -41,8 +41,8 @@ public class ProductViewController {
 
     @GetMapping("/{categoryName}")
     public String categoryPage(@PathVariable String categoryName,
-                               @RequestParam(name = "page", defaultValue = "0") int page,
                                @RequestParam(required = false) Map<String, String> filters,
+                               @RequestParam(name = "p", defaultValue = "0") int page,
                                Model model) {
 
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);

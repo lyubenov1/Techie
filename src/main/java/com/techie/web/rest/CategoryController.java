@@ -3,7 +3,6 @@ package com.techie.web.rest;
 import com.techie.domain.model.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -30,12 +29,9 @@ public class CategoryController {
     }
 
     @GetMapping("/products/{categoryName}")
-    public Page<ProductDTO> getFilteredProducts(@PathVariable String categoryName,
-                                                @RequestParam(required = false) Map<String, String> filters,
-                                                @RequestParam(name = "page", defaultValue = "0") int page,
-                                                @RequestParam(name = "size", defaultValue = "25") int size) {
+    public List<ProductDTO> getFilteredProducts(@PathVariable String categoryName,
+                                                @RequestParam(required = false) Map<String, String> filters) {
 
-        List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters);
-        return paginationService.paginate(filteredProducts, page, size);
+        return productFilterService.getFilteredProducts(categoryName, filters);
     }
 }
