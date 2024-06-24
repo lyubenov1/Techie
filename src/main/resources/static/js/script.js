@@ -322,22 +322,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Debounce function to limit the rate of fetchFilteredProducts calls
-    function debounce(func, delay) {
-        let debounceTimer;
-        return function () {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
-        };
-    }
+    setupFilters()
 
-    const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
-
-    document.addEventListener('change', function (event) {
-        if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
-            debounceFetchFilteredProducts();
-        }
-    });
 
     function checkAndClearFilters() {
         console.log('checkAndClearFilters called');
@@ -354,6 +340,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Set scroll restoration to manual
+    if ('history' in window && 'scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+
 // Call this function when the page loads
     window.addEventListener('load', () => {
         console.log('Page loaded');
@@ -368,29 +360,37 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Restoring filters from state', event.state.filters);
             sessionStorage.setItem('filters', JSON.stringify(event.state.filters));
         }
+        window.location.reload();
     });
 
+    // Restore filters from sessionStorage on page load
+    function restoreFilters() {
+        const storedFilters = sessionStorage.getItem('filters');
+        if (storedFilters && window.location.search) {
+            const filters = JSON.parse(storedFilters);
+            // Restore checkbox states based on filters
+            Object.keys(filters).forEach(key => {
+                filters[key].forEach(value => {
+                    const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+            });
+        }
+    }
+    restoreFilters()
 
+
+    document.addEventListener('change', function (event) {
+        if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
+            fetchFilteredProducts();
+        }
+    });
 
     function fetchFilteredProducts() {
         console.log('fetchFilteredProducts called');
-        const filters = {};
-        const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
-
-        checkboxes.forEach(function (checkbox) {
-            const key = checkbox.getAttribute('name');
-            const value = checkbox.value;
-            if (!filters[key]) {
-                filters[key] = [];
-            }
-            filters[key].push(value);
-        });
-
-        const categoryName = document.getElementById('categoryName').value;
-
-        const queryString = Object.keys(filters).map(key => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
-        }).join('&');
+        const filters = getCurrentFilters();
 
         console.log('Storing filters in sessionStorage:', filters);
         sessionStorage.setItem('filters', JSON.stringify(filters));
@@ -400,154 +400,71 @@ document.addEventListener('DOMContentLoaded', function () {
         history.pushState({ filters }, null, userUrl);
 
         console.log('Reloading page to apply filters');
-        window.location.reload();
-    }
-
-    function fetchProducts(url) {
-        console.log('fetchProducts called with URL:', url);
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched products data:', data);
-                updateProductList(data.content);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
+        window.location.reload(); // Reload the page to apply filters
     }
 
 
-    // Restore filters and pagination from sessionStorage and URL
-    const storedFilters = sessionStorage.getItem('filters');
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('p') || 1;
-
-    if (storedFilters || window.location.search) {
-        const filters = storedFilters ? JSON.parse(storedFilters) : {};
-        console.log('Restoring filters from sessionStorage or URL:', filters);
-
-        Object.keys(filters).forEach(key => {
-            filters[key].forEach(value => {
-                const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                }
-            });
+    // Helper function to get current filters from checkboxes
+    function getCurrentFilters() {
+        const filters = {};
+        const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+        checkboxes.forEach(function (checkbox) {
+            const key = checkbox.getAttribute('name');
+            const value = checkbox.value;
+            if (!filters[key]) {
+                filters[key] = [];
+            }
+            filters[key].push(value);
         });
-
-        const backendUrl = constructUrl(page, filters);
-        console.log('Fetching products based on restored filters and pagination:', backendUrl);
-        fetchProducts(backendUrl);
-    } else {
-        const categoryName = document.getElementById('categoryName').value;
-        const backendUrl = constructUrl(page);
-        console.log('Fetching all products for category with pagination:', backendUrl);
-        fetchProducts(backendUrl);
+        return filters;
     }
+
 
 
     function constructUrl(page, filters = {}) {
         const categoryName = document.getElementById('categoryName').value;
         const baseUrl = `/products/${categoryName.toLowerCase()}`;
 
-        const filterParams = Object.keys(filters)
-            .filter(key => filters[key].length > 0) // Filter out empty filter arrays
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key].join(','))}`)
-            .join('&');
+        // Initialize URLSearchParams with existing URL parameters
+        const urlParams = new URLSearchParams();
 
-        const pageParam = page ? `p=${page}` : ''; // Add page parameter if provided
+        // Retrieve filters from sessionStorage
+        const storedFilters = sessionStorage.getItem('filters');
+        const filtersToUse = storedFilters ? JSON.parse(storedFilters) : {};
 
-        const queryString = filterParams ? `${filterParams}&${pageParam}` : pageParam;
+        // Add filters to URLSearchParams
+        Object.keys(filtersToUse).forEach(key => {
+            filtersToUse[key].forEach(value => {
+                urlParams.append(key, value);
+            });
+        });
 
+        // Add or update the page parameter
+        if (page) {
+            urlParams.set('p', page);
+        } else {
+            urlParams.delete('p');
+        }
+
+        const queryString = urlParams.toString();
         const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
         console.log('Constructed URL:', url);
         return url;
     }
 
 
-    function updateProductList(products) {
-        const productsContainer = document.querySelector('.category-products');
-
-        // Clear the existing products
-        productsContainer.innerHTML = '';
-
-        // Generate and insert new product cards
-        products.forEach(function (product) {
-            const productCard = document.createElement('a');
-            productCard.classList.add('card');
-            productCard.style.width = '18rem';
-            productCard.href = `${product.url}`;  // Update this to match the correct URL structure
-
-            const productImage = document.createElement('img');
-            productImage.classList.add('card-img-top');
-            productImage.src = product.imageUrls[0];
-            productImage.alt = 'Product Image';
-
-            const cardBody = document.createElement('div');
-            cardBody.classList.add('card-body');
-
-            const cardBodyWrapper = document.createElement('div');
-            cardBodyWrapper.classList.add('card-body-wrapper');
-
-            const cardTitle = document.createElement('div');
-            cardTitle.classList.add('card-title');
-            cardTitle.textContent = product.name;
-
-            const cardText = document.createElement('div');
-            cardText.classList.add('card-text');
-
-            const productPrice = document.createElement('span');
-            productPrice.textContent = `${Number(product.originalPrice).toFixed(2)} $`;
-
-            const wishlistAndCart = document.createElement('span');
-            wishlistAndCart.classList.add('wishlist-and-shopping-cart');
-
-            const addToWishlist = document.createElement('span');
-            addToWishlist.classList.add('add-to-wishlist');
-            const wishlistIcon = document.createElement('i');
-            wishlistIcon.classList.add('far', 'fa-heart', 'fa-md', 'text-white');
-            addToWishlist.appendChild(wishlistIcon);
-
-            const shoppingCart = document.createElement('span');
-            shoppingCart.classList.add('shopping-cart');
-            const cartIcon = document.createElement('i');
-            cartIcon.classList.add('fas', 'fa-shopping-cart', 'fa-md', 'text-white');
-            shoppingCart.appendChild(cartIcon);
-
-            wishlistAndCart.appendChild(addToWishlist);
-            wishlistAndCart.appendChild(shoppingCart);
-
-            cardText.appendChild(productPrice);
-            cardText.appendChild(wishlistAndCart);
-
-            cardBodyWrapper.appendChild(cardTitle);
-            cardBodyWrapper.appendChild(cardText);
-
-            cardBody.appendChild(cardBodyWrapper);
-            productCard.appendChild(productImage);
-            productCard.appendChild(cardBody);
-
-            productsContainer.appendChild(productCard);
-        });
-
-        console.log('Updated product list:', products);
-    }
-
     function createPagination(currentPage, totalPages) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = ''; // Clear existing buttons
+
+        const currentFilters = getCurrentFilters();
 
         function createPageItem(page, text, disabled = false, active = false) {
             const li = document.createElement('li');
             li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = constructUrl(page);
+            a.href = constructUrl(page, currentFilters);
             a.textContent = text;
             li.appendChild(a);
             paginationContainer.appendChild(li);
@@ -558,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.className = 'page-item';
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = constructUrl(targetPage);
+            a.href = constructUrl(targetPage, currentFilters);
             a.textContent = '...';
             li.appendChild(a);
             paginationContainer.appendChild(li);
@@ -598,5 +515,5 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     createPagination(currentPage, totalPages)
-    setupFilters()
-});
+})
+
