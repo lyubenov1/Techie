@@ -322,16 +322,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    setupFilters()
-
-
     function checkAndClearFilters() {
-        console.log('checkAndClearFilters called');
         const currentUrl = window.location.pathname;
         const storedFilters = sessionStorage.getItem('filters');
 
         if (currentUrl.startsWith('/products/') && !window.location.search && storedFilters) {
-            console.log('Clearing filters');
             sessionStorage.removeItem('filters');
             const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
             checkboxes.forEach(checkbox => checkbox.checked = false);
@@ -345,25 +340,19 @@ document.addEventListener('DOMContentLoaded', function () {
         history.scrollRestoration = 'manual';
     }
 
-
-// Call this function when the page loads
     window.addEventListener('load', () => {
-        console.log('Page loaded');
         checkAndClearFilters();
     });
 
-// Add event listener for popstate to handle back/forward navigation
+    // Add event listener for popstate to handle back/forward navigation
     window.addEventListener('popstate', function (event) {
-        console.log('popstate event triggered');
         checkAndClearFilters();
         if (event.state && event.state.filters) {
-            console.log('Restoring filters from state', event.state.filters);
             sessionStorage.setItem('filters', JSON.stringify(event.state.filters));
         }
         window.location.reload();
     });
 
-    // Restore filters from sessionStorage on page load
     function restoreFilters() {
         const storedFilters = sessionStorage.getItem('filters');
         if (storedFilters && window.location.search) {
@@ -379,7 +368,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
-    restoreFilters()
 
 
     document.addEventListener('change', function (event) {
@@ -388,19 +376,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
     function fetchFilteredProducts() {
-        console.log('fetchFilteredProducts called');
         const filters = getCurrentFilters();
-
-        console.log('Storing filters in sessionStorage:', filters);
         sessionStorage.setItem('filters', JSON.stringify(filters));
-
         const userUrl = constructUrl(null, filters);
-        console.log('Updating URL with pushState:', userUrl);
         history.pushState({ filters }, null, userUrl);
-
-        console.log('Reloading page to apply filters');
-        window.location.reload(); // Reload the page to apply filters
+        window.location.reload();
     }
 
 
@@ -447,9 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const queryString = urlParams.toString();
-        const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
-        console.log('Constructed URL:', url);
-        return url;
+        return queryString ? `${baseUrl}?${queryString}` : baseUrl;
     }
 
 
@@ -515,5 +495,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPage = parseInt(document.getElementById('currentPage').value);
     const totalPages = parseInt(document.getElementById('totalPages').value);
     createPagination(currentPage, totalPages)
+    setupAccordion()
+    setupFilters()
+    restoreFilters()
 })
 
