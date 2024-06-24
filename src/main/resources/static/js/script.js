@@ -208,8 +208,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    var accordionElement = document.querySelector('.sidebar-products');
-    var filterContainer = document.querySelector('#filterContainer');
+    const accordionElement = document.querySelector('.sidebar-products');
+    const filterContainer = document.querySelector('#filterContainer');
 
     function setupAccordion() {
         var viewportWidth = window.innerWidth;
@@ -257,23 +257,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Call setupAccordion on window resize to adjust behavior dynamically
     window.addEventListener('resize', function () {
         setupAccordion();
-    });
-
-    // Debounce function to limit the rate of fetchFilteredProducts calls
-    function debounce(func, delay) {
-        let debounceTimer;
-        return function () {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
-        };
-    }
-
-    const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
-
-    document.addEventListener('change', function (event) {
-        if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
-            debounceFetchFilteredProducts();
-        }
     });
 
     function setupFilters() {
@@ -339,50 +322,62 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Debounce function to limit the rate of fetchFilteredProducts calls
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function () {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, arguments), delay);
+        };
+    }
+
+    const debounceFetchFilteredProducts = debounce(fetchFilteredProducts, 300);
+
+    document.addEventListener('change', function (event) {
+        if (event.target && event.target.matches('.sidebar-products input[type="checkbox"]')) {
+            debounceFetchFilteredProducts();
+        }
+    });
+
     function checkAndClearFilters() {
+        console.log('checkAndClearFilters called');
         const currentUrl = window.location.pathname;
         const storedFilters = sessionStorage.getItem('filters');
 
         if (currentUrl.startsWith('/products/') && !window.location.search && storedFilters) {
-            // Clear filters from sessionStorage
+            console.log('Clearing filters');
             sessionStorage.removeItem('filters');
-
-            // Clear checkboxes in the default view
-            const defaultCheckboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
-            defaultCheckboxes.forEach(checkbox => checkbox.checked = false);
-
-            // Clear checkboxes in the accordion view
-            const accordionCheckboxes = document.querySelectorAll('.accordion-body input[type="checkbox"]:checked');
-            accordionCheckboxes.forEach(checkbox => checkbox.checked = false);
-
-            // Update the URL to remove query parameters
+            const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
             history.replaceState(null, '', currentUrl);
-
             console.log('Filters cleared');
-
-            const categoryName = document.getElementById('categoryName').value;
-            fetchProducts(`/api/categories/products/${categoryName}`);
         }
     }
 
-    // Call this function when the page loads
-    window.addEventListener('load', checkAndClearFilters);
+// Call this function when the page loads
+    window.addEventListener('load', () => {
+        console.log('Page loaded');
+        checkAndClearFilters();
+    });
 
-    // Add event listener for popstate to handle back/forward navigation
+// Add event listener for popstate to handle back/forward navigation
     window.addEventListener('popstate', function (event) {
+        console.log('popstate event triggered');
         checkAndClearFilters();
         if (event.state && event.state.filters) {
-            // Restore filters from state if available
+            console.log('Restoring filters from state', event.state.filters);
             sessionStorage.setItem('filters', JSON.stringify(event.state.filters));
         }
     });
 
 
+
     function fetchFilteredProducts() {
+        console.log('fetchFilteredProducts called');
         const filters = {};
         const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
 
-        checkboxes.forEach(function(checkbox) {
+        checkboxes.forEach(function (checkbox) {
             const key = checkbox.getAttribute('name');
             const value = checkbox.value;
             if (!filters[key]) {
@@ -397,19 +392,19 @@ document.addEventListener('DOMContentLoaded', function () {
             return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
         }).join('&');
 
-        // Store filters in sessionStorage
+        console.log('Storing filters in sessionStorage:', filters);
         sessionStorage.setItem('filters', JSON.stringify(filters));
 
-        const userUrl = `/products/${categoryName.toLowerCase()}?${queryString}`;
-
-        // Use pushState to update the URL without reloading
+        const userUrl = constructUrl(null, filters);
+        console.log('Updating URL with pushState:', userUrl);
         history.pushState({ filters }, null, userUrl);
 
-        // Refresh the page to reload with updated filters
+        console.log('Reloading page to apply filters');
         window.location.reload();
     }
 
     function fetchProducts(url) {
+        console.log('fetchProducts called with URL:', url);
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -418,27 +413,71 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-
-                updateProductList(productsPage);
-                createPagination(productsPage.currentPage, productsPage.totalPages);
-
-                // Set up the accordion and filters after fetching new products
-                setupAccordion();
-                setupFilters();
+                console.log('Fetched products data:', data);
+                updateProductList(data.content);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
     }
 
-    function updateProductList(productsPage) {
+
+    // Restore filters and pagination from sessionStorage and URL
+    const storedFilters = sessionStorage.getItem('filters');
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('p') || 1;
+
+    if (storedFilters || window.location.search) {
+        const filters = storedFilters ? JSON.parse(storedFilters) : {};
+        console.log('Restoring filters from sessionStorage or URL:', filters);
+
+        Object.keys(filters).forEach(key => {
+            filters[key].forEach(value => {
+                const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        });
+
+        const backendUrl = constructUrl(page, filters);
+        console.log('Fetching products based on restored filters and pagination:', backendUrl);
+        fetchProducts(backendUrl);
+    } else {
+        const categoryName = document.getElementById('categoryName').value;
+        const backendUrl = constructUrl(page);
+        console.log('Fetching all products for category with pagination:', backendUrl);
+        fetchProducts(backendUrl);
+    }
+
+
+    function constructUrl(page, filters = {}) {
+        const categoryName = document.getElementById('categoryName').value;
+        const baseUrl = `/products/${categoryName.toLowerCase()}`;
+
+        const filterParams = Object.keys(filters)
+            .filter(key => filters[key].length > 0) // Filter out empty filter arrays
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key].join(','))}`)
+            .join('&');
+
+        const pageParam = page ? `p=${page}` : ''; // Add page parameter if provided
+
+        const queryString = filterParams ? `${filterParams}&${pageParam}` : pageParam;
+
+        const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        console.log('Constructed URL:', url);
+        return url;
+    }
+
+
+    function updateProductList(products) {
         const productsContainer = document.querySelector('.category-products');
 
         // Clear the existing products
         productsContainer.innerHTML = '';
 
         // Generate and insert new product cards
-        productsPage.content.forEach(function (product) {
+        products.forEach(function (product) {
             const productCard = document.createElement('a');
             productCard.classList.add('card');
             productCard.style.width = '18rem';
@@ -496,61 +535,8 @@ document.addEventListener('DOMContentLoaded', function () {
             productsContainer.appendChild(productCard);
         });
 
-        setupAccordion()
-        setupFilters();
-        console.log('Updated product list:', productsPage);
+        console.log('Updated product list:', products);
     }
-
-    // Restore filters from sessionStorage
-    const storedFilters = sessionStorage.getItem('filters');
-    if (storedFilters && window.location.search) {
-        const filters = JSON.parse(storedFilters);
-        // Restore checkbox states based on filters
-        Object.keys(filters).forEach(key => {
-            filters[key].forEach(value => {
-                const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                }
-            });
-        });
-
-        // Construct the backend API URL
-        const categoryName = document.getElementById('categoryName').value;
-        const queryString = Object.keys(filters).map(key => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(filters[key].join(','));
-        }).join('&');
-        const backendUrl = `/api/categories/products/${categoryName}?${queryString}`;
-
-        // Fetch products based on restored filters
-        fetchProducts(backendUrl);
-    } else {
-        // If no filters or no query string, fetch all products for the category
-        const categoryName = document.getElementById('categoryName').value;
-        fetchProducts(`/api/categories/products/${categoryName}`);
-    }
-
-    // Pagination logic
-    const category = document.getElementById('categoryName').value;
-
-    // Function to construct URLs based on filters
-    function constructUrl(page, filters = {}) {
-        const categoryName = document.getElementById('categoryName').value;
-        const baseUrl = `/products/${categoryName.toLowerCase()}`;
-
-        const filterParams = Object.keys(filters)
-            .filter(key => filters[key].length > 0) // Filter out empty filter arrays
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key].join(','))}`)
-            .join('&');
-
-        const pageParam = page ? `p=${page}` : ''; // Add page parameter if provided
-
-        const queryString = filterParams ? `${filterParams}&${pageParam}` : pageParam;
-
-        return queryString ? `${baseUrl}?${queryString}` : baseUrl;
-    }
-
-
 
     function createPagination(currentPage, totalPages) {
         const paginationContainer = document.getElementById('pagination');
@@ -609,6 +595,8 @@ document.addEventListener('DOMContentLoaded', function () {
         createPageItem(currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1, '»', currentPage === totalPages - 1);
     }
 
-
+    const currentPage = parseInt(document.getElementById('currentPage').value);
+    const totalPages = parseInt(document.getElementById('totalPages').value);
+    createPagination(currentPage, totalPages)
+    setupFilters()
 });
-

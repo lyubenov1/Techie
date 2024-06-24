@@ -3,6 +3,7 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.exceptions.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -13,6 +14,7 @@ import java.util.stream.*;
 @Service
 public class ProductFilterService {
     private final CategoryService categoryService;
+    private final Logger logger = LoggerFactory.getLogger(ProductFilterService.class);
 
     @Autowired
     public ProductFilterService(CategoryService categoryService) {
@@ -27,11 +29,14 @@ public class ProductFilterService {
             Category category = categoryOptional.get();
             List<ProductDTO> products = categoryService.fetchProductsForCategory(category);
             applyFilters(products, convertedFilters);
+
+            //logger.info("Filtered products size after applying filters: {}", filteredProducts.size());
             return products;
         } else {
             throw new CategoryNotFoundException("Category with name " + categoryName + " not found");
         }
     }
+
 
     private void applyFilters(List<ProductDTO> products, Map<String, List<String>> filters) {
         for (String key : filters.keySet()) {
@@ -43,11 +48,7 @@ public class ProductFilterService {
         Class<? extends ProductDTO> productClass = product.getClass();
         if (keyExistsInDTO(productClass, key)) {
             String productValue = getValueFromDTO(product, key);
-            for (String filterValue : values) {
-                if (filterValue.equalsIgnoreCase(productValue)) {
-                    return true;
-                }
-            }
+            return values.stream().anyMatch(filterValue -> filterValue.equalsIgnoreCase(productValue));
         }
         return false;
     }

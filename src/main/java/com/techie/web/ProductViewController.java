@@ -3,6 +3,7 @@ package com.techie.web;
 import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.service.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -18,6 +19,7 @@ public class ProductViewController {
     private final ProductFilterService productFilterService;
     private final PaginationService paginationService;
     private final FacetService facetService;
+    private final Logger logger = LoggerFactory.getLogger(ProductViewController.class);
 
     @Autowired
     public ProductViewController(CategoryService categoryService, ProductFilterService productFilterService,
@@ -42,8 +44,10 @@ public class ProductViewController {
     @GetMapping("/{categoryName}")
     public String categoryPage(@PathVariable String categoryName,
                                @RequestParam(required = false) Map<String, String> filters,
-                               @RequestParam(name = "p", defaultValue = "0") int page,
+                               @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                Model model) {
+        logger.info("Category: {}, Filters: {}, Page: {}", categoryName, filters, page);
+        filters.remove("p");
 
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         if (categoryOptional.isEmpty()) {
@@ -53,6 +57,7 @@ public class ProductViewController {
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
 
         List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters);
+        logger.info("Filtered products size: {}", filteredProducts.size());
         categoryDTO.setProducts(filteredProducts);
 
         model.addAttribute("category", categoryDTO);
