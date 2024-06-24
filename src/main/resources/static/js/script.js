@@ -322,20 +322,72 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function camelCaseToWords(camelCase) {
+        // Split on uppercase letters (except at the beginning)
+        let words = camelCase.split(/(?=[A-Z])/);
+
+        if (words.length > 1 && words[0].toLowerCase() === 'brand' && words[1].toLowerCase() === 'name') {
+            words = [words[0]];        // Specific case, if the filter key is "brandName", only "Brand" shall be displayed
+        }
+
+        let result = '';
+        words.forEach((word, index) => {
+            if (index === 0) {
+                result += word.charAt(0).toUpperCase() + word.slice(1);
+            } else {
+                result += word.charAt(0).toLowerCase() + word.slice(1);
+            }
+
+            if (index < words.length - 1) {
+                result += ' ';
+            }
+        });
+
+        return result;
+    }
+
     function updateAppliedFilters(filters) {
+        const appliedFiltersList = document.getElementById('appliedFiltersList');
+        const appliedFiltersContainer = document.getElementById('appliedFiltersContainer');
+
         appliedFiltersList.innerHTML = '';  // Clear existing applied filters
         let hasFilters = false;
 
         Object.keys(filters).forEach(key => {
+            let displayKey = camelCaseToWords(key); // Convert camelCase key to words
+
             filters[key].forEach(value => {
                 const li = document.createElement('li');
-                li.textContent = `${key}: ${value}`;
+                li.innerHTML = `• ${displayKey}: ${value} <i class="fa-solid fa-xmark fa-sm filter-remove-icon"></i>`;
                 appliedFiltersList.appendChild(li);
                 hasFilters = true;
             });
         });
 
+
+        if (hasFilters) {
+            const clearAllDiv = document.createElement('div');
+            clearAllDiv.textContent = 'Clear all';
+            clearAllDiv.classList.add('clear-all-text');
+            clearAllDiv.onclick = clearAllFilters;
+            appliedFiltersContainer.appendChild(clearAllDiv);
+        }
+
+
         appliedFiltersContainer.style.display = hasFilters ? 'block' : 'none';
+    }
+
+    function clearAllFilters() {
+        sessionStorage.removeItem('filters');
+
+        const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+        checkboxes.forEach(checkbox => checkbox.checked = false);
+
+        // Clear the URL
+        const currentUrl = window.location.pathname;
+        history.pushState(null, '', currentUrl);
+
+        window.location.reload();
     }
 
     function checkAndClearFilters() {
@@ -358,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('load', () => {
         checkAndClearFilters();
-        
+
         const storedFilters = sessionStorage.getItem('filters');
         if (storedFilters) {
             updateAppliedFilters(JSON.parse(storedFilters));

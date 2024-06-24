@@ -545,7 +545,8 @@ body.register .form-check-label {
 }
 
 
-.sidebar-products .filter-section {
+.sidebar-products .filter-section,
+.sidebar-products .applied-filters-section {
     width: 87%;
 }
 
@@ -873,7 +874,8 @@ body.register .form-check-label {
 }
 
 
-.filter-section::after {
+.filter-section::after,
+.applied-filters-section::after {
     content: '';
     display: block;
     width: 100%;
@@ -882,7 +884,8 @@ body.register .form-check-label {
     margin-bottom: 25px;
 }
 
-.filter-section {
+.filter-section,
+.applied-filters-section {
     margin-bottom: 20px;
     width: 73%;
     box-sizing: border-box;
@@ -894,6 +897,54 @@ body.register .form-check-label {
     padding: 3px;
     border: 1px solid #ccc;
 }
+
+
+.applied-filters-section {
+    background-color: #26292a; /* Background color for the applied filters section */
+}
+
+.applied-filters-section h5 {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.filter-remove-icon {
+    transform: translate(2px, 1.5px);
+    display: inline-block;
+    margin-left: 3px;
+}
+
+
+.applied-filters-section h5 i {
+    margin-right: 5px;
+}
+
+.applied-filters {
+    padding: 5px;
+    list-style-type: none;
+}
+
+.applied-filters li {
+    font-size: 16px;
+    margin-bottom: 7px;
+    margin-left: 5px
+}
+
+.clear-all-text {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    margin-top: 10px;
+}
+
+.clear-all-text:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
 
 .custom-scrollspy {
     max-height: 190px;
