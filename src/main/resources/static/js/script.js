@@ -322,6 +322,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function updateAppliedFilters(filters) {
+        appliedFiltersList.innerHTML = '';  // Clear existing applied filters
+        let hasFilters = false;
+
+        Object.keys(filters).forEach(key => {
+            filters[key].forEach(value => {
+                const li = document.createElement('li');
+                li.textContent = `${key}: ${value}`;
+                appliedFiltersList.appendChild(li);
+                hasFilters = true;
+            });
+        });
+
+        appliedFiltersContainer.style.display = hasFilters ? 'block' : 'none';
+    }
+
     function checkAndClearFilters() {
         const currentUrl = window.location.pathname;
         const storedFilters = sessionStorage.getItem('filters');
@@ -342,6 +358,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('load', () => {
         checkAndClearFilters();
+        
+        const storedFilters = sessionStorage.getItem('filters');
+        if (storedFilters) {
+            updateAppliedFilters(JSON.parse(storedFilters));
+        }
     });
 
     // Add event listener for popstate to handle back/forward navigation
@@ -366,6 +387,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             });
+            updateAppliedFilters(filters);
         }
     }
 

@@ -76,6 +76,10 @@
 
     <aside class="sidebar-products sidebar col-sm-12">
         <div id="filterContainer">
+            <div id="appliedFiltersContainer" class="applied-filters-section" style="display: none;">
+                <h5>Applied Filters</h5>
+                <ul id="appliedFiltersList" class="applied-filters"></ul>
+            </div>
             <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
                 <h5 th:text="${filterEntry.value}">Filter criteria</h5>
                 <div class="search-container" style="display: none;">
