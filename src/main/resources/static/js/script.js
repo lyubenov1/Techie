@@ -215,33 +215,56 @@ document.addEventListener('DOMContentLoaded', function () {
         var viewportWidth = window.innerWidth;
 
         if (viewportWidth < 768) {
-            // Initialize Bootstrap accordion for sidebar on smaller screens
             if (!accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.add('accordion');
-                var headingHtml = '<h2 class="accordion-header" id="headingFilters">';
-                headingHtml += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">';
-                headingHtml += 'Filters</button></h2>';
 
-                var bodyHtml = '<div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent=".accordion">';
-                bodyHtml += '<div class="accordion-body">' + filterContainer.innerHTML + '</div></div>';
+                let mainAccordionHtml = '<div class="accordion-item">';
+                mainAccordionHtml += '<h2 class="accordion-header" id="headingFilters">';
+                mainAccordionHtml += '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">';
+                mainAccordionHtml += 'Filters</button></h2>';
+                mainAccordionHtml += '<div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent=".accordion">';
+                mainAccordionHtml += '<div class="accordion-body">';
 
-                accordionElement.innerHTML = '<div class="accordion-item">' + headingHtml + bodyHtml + '</div>';
+                // Add applied filters section
+                const appliedFiltersContainer = filterContainer.querySelector('#appliedFiltersContainer');
+                if (appliedFiltersContainer) {
+                    mainAccordionHtml += appliedFiltersContainer.outerHTML;
+                }
+
+                // Create nested accordions for each filter
+                const filterSections = filterContainer.querySelectorAll('.filter-section');
+                filterSections.forEach((section, index) => {
+                    const filterCriteria = section.querySelector('h5').textContent;
+                    const filterId = `filter-${index}`;
+
+                    mainAccordionHtml += `<div class="accordion-item">`;
+                    mainAccordionHtml += `<h2 class="accordion-header" id="heading-${filterId}">`;
+                    mainAccordionHtml += `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${filterId}" aria-expanded="false" aria-controls="collapse-${filterId}">`;
+                    mainAccordionHtml += `${filterCriteria}</button></h2>`;
+                    mainAccordionHtml += `<div id="collapse-${filterId}" class="accordion-collapse collapse" aria-labelledby="heading-${filterId}" data-bs-parent="#collapseFilters">`;
+                    mainAccordionHtml += `<div class="accordion-body">`;
+
+                    // Add search container and filter list, excluding the h5 title
+                    const searchContainer = section.querySelector('.search-container');
+                    const filterList = section.querySelector('.filter-list');
+                    if (searchContainer) mainAccordionHtml += searchContainer.outerHTML;
+                    if (filterList) mainAccordionHtml += filterList.outerHTML;
+
+                    mainAccordionHtml += `</div></div></div>`;
+                });
+
+                mainAccordionHtml += '</div></div></div>';
+                accordionElement.innerHTML = mainAccordionHtml;
 
                 // Restore filters from sessionStorage for the accordion view
-                const storedFilters = sessionStorage.getItem('filters');
-                if (storedFilters && window.location.search) {
-                    const filters = JSON.parse(storedFilters);
-                    // Restore checkbox states based on filters
-                    Object.keys(filters).forEach(key => {
-                        filters[key].forEach(value => {
-                            const checkbox = document.querySelector(`.accordion-body input[type="checkbox"][name="${key}"][value="${value}"]`);
-                            if (checkbox) {
-                                checkbox.checked = true;
-                            }
-                        });
-                    });
-                }
+                restoreFilters();
             }
+            var nestedAccordions = document.querySelectorAll('.accordion-collapse');
+            nestedAccordions.forEach(accordion => {
+                new bootstrap.Collapse(accordion, {
+                    toggle: false
+                });
+            });
         } else {
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');

@@ -828,6 +828,10 @@ body.register .form-check-label {
     padding: 0;
 }
 
+.sidebar-products .accordion-item {
+    border: none;
+    background-color: transparent;
+}
 
 .sidebar-products.accordion {
     display: block;
@@ -844,6 +848,14 @@ body.register .form-check-label {
     transition: background-color 0.3s, border-color 0.3s;
     box-shadow: none;
     outline: none;
+}
+
+.sidebar-products .accordion-item .accordion-item .accordion-button {
+    background-color: inherit;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-shadow: none;
 }
 
 .sidebar-products .accordion-button:hover {
@@ -881,8 +893,9 @@ body.register .form-check-label {
 
 .sidebar-products .accordion-body {
     padding: 10px;
-    color: inherit;
+    color: white;
 }
+
 
 
 .filter-section, .filter-section *,
