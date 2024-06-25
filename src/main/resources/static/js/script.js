@@ -244,10 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     mainAccordionHtml += `<div id="collapse-${filterId}" class="accordion-collapse collapse" aria-labelledby="heading-${filterId}" data-bs-parent="#collapseFilters">`;
                     mainAccordionHtml += `<div class="accordion-body">`;
 
-                    // Add search container and filter list, excluding the h5 title
-                    const searchContainer = section.querySelector('.search-container');
                     const filterList = section.querySelector('.filter-list');
-                    if (searchContainer) mainAccordionHtml += searchContainer.outerHTML;
                     if (filterList) mainAccordionHtml += filterList.outerHTML;
 
                     mainAccordionHtml += `</div></div></div>`;
@@ -256,15 +253,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 mainAccordionHtml += '</div></div></div>';
                 accordionElement.innerHTML = mainAccordionHtml;
 
-                // Restore filters from sessionStorage for the accordion view
+
                 restoreFilters();
             }
-            var nestedAccordions = document.querySelectorAll('.accordion-collapse');
-            nestedAccordions.forEach(accordion => {
-                new bootstrap.Collapse(accordion, {
-                    toggle: false
-                });
-            });
+
         } else {
             if (accordionElement.classList.contains('accordion')) {
                 accordionElement.classList.remove('accordion');
