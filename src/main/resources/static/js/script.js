@@ -504,8 +504,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function fetchFilteredProducts() {
         const filters = getCurrentFilters();
         sessionStorage.setItem('filters', JSON.stringify(filters));
-        const userUrl = constructUrl(null, filters);
-        history.pushState({ filters }, null, userUrl);
+        const sortSelect = document.getElementById('sort');
+        const sort = sortSelect ? sortSelect.value : 'newest';
+        const userUrl = constructUrl(null, filters, sort);
+        history.pushState({ filters, sort }, null, userUrl);
         window.location.reload();
     }
 
@@ -530,15 +532,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function constructUrl(page, filters = {}) {
         const categoryName = document.getElementById('categoryName').value;
         const baseUrl = `/products/${categoryName.toLowerCase()}`;
-
-        // Initialize URLSearchParams with existing URL parameters
         const urlParams = new URLSearchParams();
 
-        // Retrieve filters from sessionStorage
+        // Add existing filters
         const storedFilters = sessionStorage.getItem('filters');
         const filtersToUse = storedFilters ? JSON.parse(storedFilters) : {};
-
-        // Add filters to URLSearchParams
         Object.keys(filtersToUse).forEach(key => {
             filtersToUse[key].forEach(value => {
                 urlParams.append(key, value);
@@ -552,9 +550,20 @@ document.addEventListener('DOMContentLoaded', function () {
             urlParams.delete('p');
         }
 
+        // Add sort parameter
+        const sortSelect = document.getElementById('sort');
+        if (sortSelect) {
+            urlParams.set('sort', sortSelect.value);
+        }
+
         const queryString = urlParams.toString();
         return queryString ? `${baseUrl}?${queryString}` : baseUrl;
     }
+
+    // Add event listener for sort change
+    document.getElementById('sort').addEventListener('change', function() {
+        window.location.href = constructUrl(null);
+    });
 
 
     function createPagination(currentPage, totalPages) {

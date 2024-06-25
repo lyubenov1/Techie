@@ -17,11 +17,11 @@ public class ProductFilterService {
     private final Logger logger = LoggerFactory.getLogger(ProductFilterService.class);
 
     @Autowired
-    public ProductFilterService(CategoryService categoryService) {
+    public ProductFilterService(CategoryService categoryService) {                 // TODO: implement sorting by rating
         this.categoryService = categoryService;
     }
 
-    public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters) {
+    public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters, String sort) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         Map<String, List<String>> convertedFilters = convertFilters(filters);
 
@@ -29,11 +29,29 @@ public class ProductFilterService {
             Category category = categoryOptional.get();
             List<ProductDTO> products = categoryService.fetchProductsForCategory(category);
             applyFilters(products, convertedFilters);
+            applySorting(products, sort);
 
-            //logger.info("Filtered products size after applying filters: {}", filteredProducts.size());
             return products;
         } else {
             throw new CategoryNotFoundException("Category with name " + categoryName + " not found");
+        }
+    }
+
+    private void applySorting(List<ProductDTO> products, String sort) {
+        switch (sort) {
+            case "price-low-high":
+                products.sort(Comparator.comparing(ProductDTO::getOriginalPrice));
+                break;
+            case "price-high-low":
+                products.sort(Comparator.comparing(ProductDTO::getOriginalPrice).reversed());
+                break;
+            case "rating":
+                products.sort(Comparator.comparing(ProductDTO::getAverageRating).reversed());
+                break;
+            case "newest":
+            default:
+                sortByNewest(products);
+                break;
         }
     }
 
@@ -102,5 +120,49 @@ public class ProductFilterService {
         }
 
         return convertedFilters;
+    }
+
+    private void sortByNewest(List<ProductDTO> products) {
+        products.sort((p1, p2) -> {
+            Class<?> class1 = p1.getClass();
+            Class<?> class2 = p2.getClass();
+
+            boolean hasYearOfRelease1 = hasYearOfReleaseField(class1);
+            boolean hasYearOfRelease2 = hasYearOfReleaseField(class2);
+
+            if (hasYearOfRelease1 && hasYearOfRelease2) {
+                return compareByYearOfRelease(p1, p2);
+            } else if (hasYearOfRelease1) {
+                return -1; // p1 comes first
+            } else if (hasYearOfRelease2) {
+                return 1;  // p2 comes first
+            } else {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+    }
+
+    private boolean hasYearOfReleaseField(Class<?> clazz) {
+        try {
+            clazz.getDeclaredField("yearOfRelease");
+            return true;
+        } catch (NoSuchFieldException e) {
+            return false;
+        }
+    }
+
+    private int compareByYearOfRelease(ProductDTO p1, ProductDTO p2) {
+        try {
+            Field field1 = p1.getClass().getDeclaredField("yearOfRelease");
+            Field field2 = p2.getClass().getDeclaredField("yearOfRelease");
+            field1.setAccessible(true);
+            field2.setAccessible(true);
+            int year1 = (int) field1.get(p1);
+            int year2 = (int) field2.get(p2);
+            return Integer.compare(year2, year1); // Newest first
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            // This shouldn't happen as we've already checked for the field's existence
+            return 0;
+        }
     }
 }

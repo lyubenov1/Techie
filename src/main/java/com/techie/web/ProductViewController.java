@@ -45,9 +45,11 @@ public class ProductViewController {
     public String categoryPage(@PathVariable String categoryName,
                                @RequestParam(required = false) Map<String, String> filters,
                                @RequestParam(name = "p", defaultValue = "0", required = false) int page,
+                               @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
                                Model model) {
         logger.info("Category: {}, Filters: {}, Page: {}", categoryName, filters, page);
         filters.remove("p");
+        filters.remove("sort");
 
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
         if (categoryOptional.isEmpty()) {
@@ -56,7 +58,7 @@ public class ProductViewController {
 
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
 
-        List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters);
+        List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters, sort);
         logger.info("Filtered products size: {}", filteredProducts.size());
         categoryDTO.setProducts(filteredProducts);
 
