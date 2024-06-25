@@ -35,7 +35,9 @@
         </div>
         <div class="category-products">
             <a th:each="product : ${productsPage.content}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
-                <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                <div class="image-container">
+                    <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                </div>
                 <div class="card-body">
                     <div class="card-body-wrapper">
                         <div class="card-title" th:text="${product.name}">Product Name</div>
