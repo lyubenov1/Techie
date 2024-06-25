@@ -15,9 +15,14 @@ To get the application up and running, follow these steps:
 That's it!
 
 
-### Products page sample
+### Products page sample № 1
+Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting and pagination.
 
-<img src="src/main/resources/static/images/smartphones_page.png" alt="Smartphones page">
+<img src="src/main/resources/static/images/products_sample_1.png" alt="Smartphones page">
+
+### Products page sample № 2
+
+<img src="src/main/resources/static/images/products_sample_2.png" alt="Smartphones page">
 
 ### Index page current state
 
