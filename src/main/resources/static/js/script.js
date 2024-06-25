@@ -350,31 +350,66 @@ document.addEventListener('DOMContentLoaded', function () {
         const appliedFiltersList = document.getElementById('appliedFiltersList');
         const appliedFiltersContainer = document.getElementById('appliedFiltersContainer');
 
-        appliedFiltersList.innerHTML = '';  // Clear existing applied filters
+        appliedFiltersList.innerHTML = '';
         let hasFilters = false;
 
+        const existingClearAllWrapper = appliedFiltersContainer.querySelector('.clear-all-wrapper');
+        if (existingClearAllWrapper) {
+            existingClearAllWrapper.remove();
+        }
+
         Object.keys(filters).forEach(key => {
-            let displayKey = camelCaseToWords(key); // Convert camelCase key to words
+            let displayKey = camelCaseToWords(key);
 
             filters[key].forEach(value => {
                 const li = document.createElement('li');
-                li.innerHTML = `• ${displayKey}: ${value} <i class="fa-solid fa-xmark fa-sm filter-remove-icon"></i>`;
+                li.innerHTML = `• ${displayKey}: <span class="filter-value">${value}</span> <i class="fa-solid fa-xmark fa-sm filter-remove-icon"></i>`;
+                const removeIcon = li.querySelector('.filter-remove-icon');
+                removeIcon.addEventListener('click', () => clearFilter(key, value));
                 appliedFiltersList.appendChild(li);
                 hasFilters = true;
             });
         });
 
-
         if (hasFilters) {
+            const clearAllWrapper = document.createElement('div');
+            clearAllWrapper.classList.add('clear-all-wrapper');
+
             const clearAllDiv = document.createElement('div');
             clearAllDiv.textContent = 'Clear all';
             clearAllDiv.classList.add('clear-all-text');
             clearAllDiv.onclick = clearAllFilters;
-            appliedFiltersContainer.appendChild(clearAllDiv);
+
+            clearAllWrapper.appendChild(clearAllDiv);
+            appliedFiltersContainer.appendChild(clearAllWrapper);
         }
 
-
         appliedFiltersContainer.style.display = hasFilters ? 'block' : 'none';
+    }
+
+    function clearFilter(key, value) {
+        let filters = JSON.parse(sessionStorage.getItem('filters')) || {};
+
+        if (filters[key]) {
+            filters[key] = filters[key].filter(v => v !== value);
+            if (filters[key].length === 0) {
+                delete filters[key];
+            }
+        }
+
+        sessionStorage.setItem('filters', JSON.stringify(filters));
+
+        const checkbox = document.querySelector(`.sidebar-products input[type="checkbox"][name="${key}"][value="${value}"]`);
+        if (checkbox) {
+            checkbox.checked = false;
+        }
+
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+        searchParams.delete(key, value);
+        history.pushState(null, '', currentUrl);
+
+        window.location.reload();
     }
 
     function clearAllFilters() {

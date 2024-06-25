@@ -869,7 +869,8 @@ body.register .form-check-label {
 }
 
 
-.filter-section, .filter-section * {
+.filter-section, .filter-section *,
+.applied-filters-section, .applied-filters-section * {
     color: rgb(232, 230, 227);
 }
 
@@ -899,10 +900,6 @@ body.register .form-check-label {
 }
 
 
-.applied-filters-section {
-    background-color: #26292a; /* Background color for the applied filters section */
-}
-
 .applied-filters-section h5 {
     padding: 5px;
     display: flex;
@@ -911,19 +908,29 @@ body.register .form-check-label {
 }
 
 .filter-remove-icon {
-    transform: translate(2px, 1.5px);
+    transform: translate(2px, 1.7px);
     display: inline-block;
     margin-left: 3px;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
+.filter-remove-icon:hover {
+    color: #198754;
+    transform: translate(2px, 1.7px) scale(1.4); /* Increase size by 20% */
+}
 
 .applied-filters-section h5 i {
-    margin-right: 5px;
+    margin-right: 10px;
+}
+
+.applied-filters-section h5 {
+    margin-bottom: 2px;
 }
 
 .applied-filters {
     padding: 5px;
     list-style-type: none;
+    margin-bottom: 0;
 }
 
 .applied-filters li {
@@ -932,18 +939,27 @@ body.register .form-check-label {
     margin-left: 5px
 }
 
-.clear-all-text {
+.clear-all-wrapper {
     text-align: center;
-    padding: 10px;
+    margin-bottom: 14px;
+    margin-top: -8px;
+}
+
+.clear-all-text {
     cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    margin-top: 10px;
+    transition: box-shadow 0.3s ease, color 0.3s ease;
+    display: inline-block;
+    padding: 5px 10px;
 }
 
 .clear-all-text:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    color: #198754;
 }
 
+.applied-filters li .filter-value {
+    color: #198754;
+}
 
 
 .custom-scrollspy {
