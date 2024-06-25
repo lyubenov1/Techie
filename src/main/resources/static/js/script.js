@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.setItem('filters', JSON.stringify(filters));
         const sortSelect = document.getElementById('sort');
         const sort = sortSelect ? sortSelect.value : 'newest';
-        const userUrl = constructUrl(null, filters, sort);
+        const userUrl = constructUrl(null);
         history.pushState({ filters, sort }, null, userUrl);
         window.location.reload();
     }
@@ -570,14 +570,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = ''; // Clear existing buttons
 
-        const currentFilters = getCurrentFilters();
-
         function createPageItem(page, text, disabled = false, active = false) {
             const li = document.createElement('li');
             li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = constructUrl(page, currentFilters);
+            a.href = constructUrl(page);
             a.textContent = text;
             li.appendChild(a);
             paginationContainer.appendChild(li);
@@ -588,7 +586,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.className = 'page-item';
             const a = document.createElement('a');
             a.className = 'page-link';
-            a.href = constructUrl(targetPage, currentFilters);
+            a.href = constructUrl(targetPage);
             a.textContent = '...';
             li.appendChild(a);
             paginationContainer.appendChild(li);

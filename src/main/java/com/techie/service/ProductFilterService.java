@@ -3,7 +3,6 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.exceptions.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -14,10 +13,9 @@ import java.util.stream.*;
 @Service
 public class ProductFilterService {
     private final CategoryService categoryService;
-    private final Logger logger = LoggerFactory.getLogger(ProductFilterService.class);
 
     @Autowired
-    public ProductFilterService(CategoryService categoryService) {                 // TODO: implement sorting by rating
+    public ProductFilterService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -131,7 +129,9 @@ public class ProductFilterService {
             boolean hasYearOfRelease2 = hasYearOfReleaseField(class2);
 
             if (hasYearOfRelease1 && hasYearOfRelease2) {
-                return compareByYearOfRelease(p1, p2);
+                return compareByYearOfRelease(p1, p2);        // If both products have yearOfRelease field, sort them by newest first.
+                                                              // If only one has it, make the ones with such field a priority.
+                                                              // If both products don't have it, sort them by name alphabetically.
             } else if (hasYearOfRelease1) {
                 return -1; // p1 comes first
             } else if (hasYearOfRelease2) {
