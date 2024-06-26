@@ -59,31 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
         profileDropdownMenu.style.display = 'none';
     });
 
-    // Social media buttons (of footer) to pop up an alert onclick.
-    const showAlert = (socialMedia) => {
-        const alertPlaceholder = document.getElementById('alertPlaceholder');
-        let message = '';
 
-        switch (socialMedia) {
-            case 'Facebook':
-                message = "We don't have Facebook yet. Check out our LinkedIn and GitHub!";
-                break;
-            case 'Twitter':
-                message = "We don't have Twitter yet. Check out our LinkedIn and GitHub!";
-                break;
-            case 'Google':
-                message = "We haven't registered on Google yet. Check out our LinkedIn and GitHub!";
-                break;
-            case 'Instagram':
-                message = "We don't have an Instagram yet. Check out our LinkedIn and GitHub!";
-                break;
-            default:
-                message = "We don't have information about this social media platform yet. Check out our LinkedIn and GitHub!";
-        }
+    const showAlert = (message) => {
+        const alertPlaceholder = document.getElementById('alertPlaceholder');
 
         const existingAlert = alertPlaceholder.querySelector('.alert');
 
-        // Remove the existing alert if it exists
         if (existingAlert) {
             existingAlert.remove();
         }
@@ -106,11 +87,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const socialMediaButtons = document.querySelectorAll('.btn-floating');
 
     socialMediaButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
             const socialMedia = this.dataset.socialMedia;
-            showAlert(socialMedia);
+            if (!this.hasAttribute('href')) {
+                switch (socialMedia) {
+                    case 'Facebook':
+                        showAlert("We don't have Facebook yet. Check out our LinkedIn and GitHub!");
+                        break;
+                    case 'Twitter':
+                        showAlert("We don't have Twitter yet. Check out our LinkedIn and GitHub!");
+                        break;
+                    case 'Google':
+                        showAlert("We haven't registered on Google yet. Check out our LinkedIn and GitHub!");
+                        break;
+                    case 'Instagram':
+                        showAlert("We don't have an Instagram yet. Check out our LinkedIn and GitHub!");
+                        break;
+                }
+            } else {
+                window.location.href = this.getAttribute('href');
+            }
         });
     });
+
 });
 
 
