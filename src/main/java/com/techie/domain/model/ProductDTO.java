@@ -18,6 +18,7 @@ public class ProductDTO {
     private String categoryName;
     private String brandName;
     private List<String> imageUrls;
+    private int stock;
     private String description;
     private Double averageRating;
     private List<CommentDTO> comments;

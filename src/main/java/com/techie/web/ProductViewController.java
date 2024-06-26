@@ -19,15 +19,18 @@ public class ProductViewController {
     private final ProductFilterService productFilterService;
     private final PaginationService paginationService;
     private final FacetService facetService;
+    private final ProductService productService;
     private final Logger logger = LoggerFactory.getLogger(ProductViewController.class);
 
     @Autowired
     public ProductViewController(CategoryService categoryService, ProductFilterService productFilterService,
-                                 PaginationService paginationService, FacetService facetService) {
+                                 PaginationService paginationService, FacetService facetService,
+                                 ProductService productService) {
         this.categoryService = categoryService;
         this.productFilterService = productFilterService;
         this.paginationService = paginationService;
         this.facetService = facetService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -59,7 +62,6 @@ public class ProductViewController {
         CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
 
         List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters, sort);
-        logger.info("Filtered products size: {}", filteredProducts.size());
         categoryDTO.setProducts(filteredProducts);
 
         model.addAttribute("category", categoryDTO);
@@ -69,5 +71,20 @@ public class ProductViewController {
 
         return "products";
     }
+
+    @GetMapping("/{categoryName}/{productName}")
+    public String productPage(@PathVariable String productName, Model model) {
+        Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
+
+        if (productOptional.isEmpty()) {
+            return "redirect:/products";
+        }
+
+        ProductDTO productDTO = productService.convertToDTO(productOptional.get());
+
+        model.addAttribute("product", productDTO);
+        return "productPage";
+    }
+
 
 }

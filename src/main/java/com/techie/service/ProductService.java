@@ -10,8 +10,8 @@ import com.techie.repository.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.util.*;
 
+import java.net.*;
 import java.nio.charset.*;
 import java.util.*;
 import java.util.stream.*;
@@ -27,6 +27,12 @@ public class ProductService {
     public ProductService(ProductRepository productRepository, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.commentRepository = commentRepository;
+    }
+
+    public Optional<Product> findByNameIgnoreCase(String urlProductName) {
+        String decodedName = URLDecoder.decode(urlProductName, StandardCharsets.UTF_8);
+
+        return productRepository.findByNameIgnoreCase(decodedName);
     }
 
     public List<ProductDTO> getProductsByCategory(Long categoryId) {
@@ -66,7 +72,7 @@ public class ProductService {
         }
 
         List<CommentDTO> commentDTOs = fetchAndConvertCommentsToDTOs(product);
-        String productUrl = UriUtils.encode(product.getName().toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
+        String productUrl = URLEncoder.encode(product.getName().toLowerCase(), StandardCharsets.UTF_8);
 
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
@@ -74,6 +80,7 @@ public class ProductService {
         productDTO.setCategoryName(product.getCategory().getName());
         productDTO.setBrandName(product.getBrand().getName());
         productDTO.setImageUrls(product.getProductImages().stream().map(ProductImage::getImageUrl).collect(Collectors.toList()));
+        productDTO.setStock(product.getStock());
         productDTO.setDescription(product.getDescription());
         productDTO.setAverageRating(product.getAverageRating());
         productDTO.setComments(commentDTOs);

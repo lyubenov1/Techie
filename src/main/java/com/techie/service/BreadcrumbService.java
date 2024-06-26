@@ -68,11 +68,11 @@ public class BreadcrumbService {
                 urlBuilder.append("/").append(part);
 
                 // Check if the part is a product
-                Optional<ProductDTO> productOpt = productService.findByNameIgnoreCase(part);
+                Optional<Product> productOpt = productService.findByNameIgnoreCase(part);
 
                 if (productOpt.isPresent()) {
                     // If it's a product, use the product name
-                    ProductDTO product = productOpt.get();
+                    ProductDTO product = productService.convertToDTO(productOpt.get());
                     breadcrumbs.add(new BreadcrumbItem(product.getName(), urlBuilder.toString()));
                 } else {
                     breadcrumbs.add(new BreadcrumbItem(part, urlBuilder.toString()));

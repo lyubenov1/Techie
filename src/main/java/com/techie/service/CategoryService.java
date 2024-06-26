@@ -48,9 +48,6 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-
-
-
     private CategoryDTO mapCategoryToDTO(Category category) {
         CategoryDTO dto = new CategoryDTO();
         dto.setId(category.getId());
