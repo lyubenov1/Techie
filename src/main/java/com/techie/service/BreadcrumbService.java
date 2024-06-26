@@ -1,9 +1,9 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
+import com.techie.domain.model.*;
 import jakarta.servlet.http.*;
 import lombok.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
@@ -13,12 +13,13 @@ import java.util.*;
 @Service
 public class BreadcrumbService {
 
-    private static final Logger log = LoggerFactory.getLogger(BreadcrumbService.class);
     private final CategoryService categoryService;
+    private final ProductService productService;
 
     @Autowired
-    public BreadcrumbService(CategoryService categoryService) {
+    public BreadcrumbService(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
+        this.productService = productService;
     }
 
     @Getter
@@ -53,7 +54,6 @@ public class BreadcrumbService {
         try {
             return request.getRequestURI().split("\\?")[0];
         } catch (Exception e) {
-            log.error("Error getting current URL", e);
             return "/";
         }
 
@@ -65,10 +65,18 @@ public class BreadcrumbService {
 
         for (String part : currentUrl.split("/")) {
             if (!part.isEmpty()) {
-                String partWithoutHyphens = part.replace("-", " ");
-
                 urlBuilder.append("/").append(part);
-                breadcrumbs.add(new BreadcrumbItem(partWithoutHyphens, urlBuilder.toString()));
+
+                // Check if the part is a product
+                Optional<ProductDTO> productOpt = productService.findByNameIgnoreCase(part);
+
+                if (productOpt.isPresent()) {
+                    // If it's a product, use the product name
+                    ProductDTO product = productOpt.get();
+                    breadcrumbs.add(new BreadcrumbItem(product.getName(), urlBuilder.toString()));
+                } else {
+                    breadcrumbs.add(new BreadcrumbItem(part, urlBuilder.toString()));
+                }
             }
         }
 
@@ -88,7 +96,7 @@ public class BreadcrumbService {
                 Category parentCategory = categoryOptional.get().getParent();
 
                 String parentUrl = urlBuilder.toString().replace(lastBreadcrumb.get().getOriginal(),
-                        parentCategory.getName().toLowerCase().replace(" ", "-"));
+                        parentCategory.getName().toLowerCase());
 
                 breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
             }
