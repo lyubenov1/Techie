@@ -1,7 +1,11 @@
 package com.techie.domain.entities;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.*;
 import org.hibernate.proxy.*;
 
 import java.math.*;
@@ -11,7 +15,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)      // TODO: implementation of similar products
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "products", indexes = {
         @Index(name = "idx_products_category_id", columnList = "category_id"),
         @Index(name = "idx_products_name", columnList = "name")
@@ -45,7 +49,8 @@ public class Product {
     private String description;
 
     @Column(name = "average_rating")
-    private Double averageRating; // TODO: implement average rating logic
+    @ColumnDefault("0.0")
+    private Double averageRating;
 
     public void addImage(ProductImage image) {
         productImages.add(image);
