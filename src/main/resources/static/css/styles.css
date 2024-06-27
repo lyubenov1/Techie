@@ -506,8 +506,9 @@ body.register .form-check-label {
 
 
 
-.products-main.container-md {
+.products-main {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .col-main-products {
@@ -750,8 +751,7 @@ body.register .form-check-label {
 }
 
 @media (max-width: 768px) {
-    .products-main.container-md {
-        display: flex;
+    .products-main {
         flex-direction: column;
     }
 

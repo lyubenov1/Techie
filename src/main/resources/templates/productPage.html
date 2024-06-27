@@ -19,9 +19,47 @@
     <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
 </div>
 
-<div class="products-main container-md">
-
+<div class="container-md">
+    <div class="products-main row">
+        <div class="product-photos col-md-5 col-xs-12">
+            <div class="main-product-photo">
+                <!-- Main product photo goes here -->
+            </div>
+            <div class="other-product-photos">
+                <!-- Other product photos go here -->
+            </div>
+        </div>
+        <div class="product-info col-md-7 col-xs-12">
+            <h1 itemprop="name">Product Name</h1>
+            <div class="rating-box-wrapper">
+                <span class="rating-box">4.5</span>
+                <a href="#" class="rating-info">50 reviews</a>
+            </div>
+            <div class="price-box">
+                <span class="original-price">$100</span>
+                <span class="discounted-price">$80</span>
+            </div>
+            <div class="cart-and-favourites">
+                <a href="#" class="add-to-cart btn btn-primary">Add to Cart</a>
+                <a href="#" class="add-to-favourites btn btn-secondary">Add to Favourites</a>
+            </div>
+            <a href="#" class="give-a-review">Give a Review</a>
+            <div class="compare">
+                <a href="#">Compare</a>
+            </div>
+        </div>
+    </div>
+    <div class="product-description">
+        <!-- Product description goes here -->
+    </div>
+    <div class="product-specs">
+        <!-- Product specifications go here -->
+    </div>
+    <div class="product-customer-reviews">
+        <!-- Customer reviews go here -->
+    </div>
 </div>
+
 
 <div class="container-fluid footer-wrapper">
     <footer th:replace="~{/fragments/footer::footer}"></footer>
