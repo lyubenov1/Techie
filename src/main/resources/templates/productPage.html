@@ -21,23 +21,27 @@
 
 <div class="container-md">
     <div class="products-main row">
-        <div class="product-photos col-md-5 col-xs-12">
-            <div class="main-product-photo">
-                <!-- Main product photo goes here -->
+        <div class="product-photos col-md-7 col-xs-12">
+            <div class="thumbnail-photos">
+                <div th:each="imageUrl, iterStat : ${product.imageUrls}"
+                     class="thumbnail">
+                    <img th:src="${imageUrl}" th:alt="'Product image ' + ${iterStat.count}">
+                </div>
             </div>
-            <div class="other-product-photos">
-                <!-- Other product photos go here -->
+            <div class="main-product-photo">
+                <img th:if="${not #lists.isEmpty(product.imageUrls)}"
+                     th:src="${product.imageUrls[0]}"
+                     alt="Main product image">
             </div>
         </div>
-        <div class="product-info col-md-7 col-xs-12">
-            <h1 itemprop="name">Product Name</h1>
+        <div class="product-info col-md-5 col-xs-12">
+            <h1 th:text="${product.name}">Product Name</h1>
             <div class="rating-box-wrapper">
-                <span class="rating-box">4.5</span>
-                <a href="#" class="rating-info">50 reviews</a>
+                <span class="rating-box" th:text="${product.averageRating}">4.5</span>
+                <a href="#" class="rating-info" th:text="${#lists.size(product.comments)} + ' reviews'"></a>
             </div>
             <div class="price-box">
-                <span class="original-price">$100</span>
-                <span class="discounted-price">$80</span>
+                <span class="original-price" th:text="'$' + ${product.originalPrice}">100</span>
             </div>
             <div class="cart-and-favourites">
                 <a href="#" class="add-to-cart btn btn-primary">Add to Cart</a>
@@ -49,11 +53,11 @@
             </div>
         </div>
     </div>
-    <div class="product-description">
-        <!-- Product description goes here -->
-    </div>
     <div class="product-specs">
         <!-- Product specifications go here -->
+    </div>
+    <div class="product-description">
+        <p th:text="${product.description}">Product description</p>
     </div>
     <div class="product-customer-reviews">
         <!-- Customer reviews go here -->
