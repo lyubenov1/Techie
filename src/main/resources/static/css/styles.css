@@ -1224,16 +1224,10 @@ a.rating-info span:first-child {
     }
 }
 
-@media (max-width: 453px) {
-    .add-to-cart, .add-to-favourites {
-        margin: 5px auto;
-    }
-}
-
 .product-info-icons {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .icon-text {
@@ -1246,4 +1240,50 @@ a.rating-info span:first-child {
 
 .icon-text i {
     margin-right: 8px;
+}
+
+.review-compare-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.review-compare-buttons button {
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-family: 'Roboto Condensed', serif;
+    color: rgb(225, 222, 218);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    max-width: 250px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.review-button {
+    background-color: #198754;
+    border: 1px solid #198754;
+}
+
+.compare-button {
+    background-color: transparent;
+    border: 1px solid lightgray;
+}
+
+.review-button:hover {
+    background-color: #1eaa69;
+}
+
+.compare-button:hover {
+    background-color: #444;
+}
+
+@media (max-width: 992px) {
+    .rating-box-wrapper, .product-info-icons, .price-box, .cart-and-favourites {
+        margin-bottom: 10px;
+    }
+
+    .review-compare-buttons {
+        margin-bottom: 30px;
+    }
 }
