@@ -1,6 +1,6 @@
 package com.techie.dataInitialization.data;
 
-import java.util.List;
+import java.util.*;
 
 public class PowerBankData {
 
@@ -64,7 +64,7 @@ public class PowerBankData {
     );
 
     public static final List<String> bank_seven = List.of(
-            "Energizer - MAX 30,000mAh 15W USB-C 3-Port Universal Portable Battery Charger/Power Bank w/ LCD screen for Smartphones & Accessories - Black"
+            "Energizer - MAX 30,000mAh 15W USB-C 3-Port Universal Portable Power Bank with LCD screen for Smartphones & Accessories - Black"
     );
 
     public static final List<String> bank_seven_urls = List.of(
@@ -73,7 +73,7 @@ public class PowerBankData {
     );
 
     public static final List<String> bank_eight = List.of(
-            "Energizer - Ultimate Lithium 30,000 mAh 30W PD USB-C Universal Portable Battery Charger/Power Bank with 6 Ports and LCD Display - Black"
+            "Energizer - Ultimate Lithium 30,000 mAh 30W PD USB-C Universal Portable Power Bank with 6 Ports and LCD Display - Black"
     );
 
     public static final List<String> bank_eight_urls = List.of(

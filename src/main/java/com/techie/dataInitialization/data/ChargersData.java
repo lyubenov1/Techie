@@ -1,6 +1,6 @@
 package com.techie.dataInitialization.data;
 
-import java.util.List;
+import java.util.*;
 
 public class ChargersData {
 
@@ -44,7 +44,7 @@ public class ChargersData {
     );
 
     public static final List<String> chargers_five = List.of(
-            "Insignia™ - 72.5W 2-Port USB-C/USB Foldable Wall Charger for Laptops, Smartphone, and Tablet - White"
+            "Insignia - 72.5W 2-Port USB-C, USB Foldable Wall Charger for Laptops, Smartphone, and Tablet - White"
     );
 
     public static final List<String> chargers_five_urls = List.of(
@@ -81,7 +81,7 @@ public class ChargersData {
     );
 
     public static final List<String> chargers_nine = List.of(
-            "Insignia™ - 30W USB-C Foldable Compact Wall Charger Bundle with 6’ USB-C to C cable for Smartphones, Tablets and More - White"
+            "Insignia - 30W USB-C Foldable Compact Wall Charger Bundle with 6’ USB-C to C cable for Smartphones, Tablets and More - White"
     );
 
     public static final List<String> chargers_nine_urls = List.of(
@@ -92,7 +92,7 @@ public class ChargersData {
 
 
     public static final List<String> chargers_ten = List.of(
-            "Anker - 735 65W 3 Port USB Foldable Fast Wall Charger with GaN for iPhone/Samsung/Tablets/Laptops - Black"
+            "Anker - 735 65W 3 Port USB Foldable Fast Wall Charger with GaN for iPhone, Samsung, Tablets, Laptops - Black"
     );
 
     public static final List<String> chargers_ten_urls = List.of(

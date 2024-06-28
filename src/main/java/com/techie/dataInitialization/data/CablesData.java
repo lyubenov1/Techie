@@ -1,6 +1,6 @@
 package com.techie.dataInitialization.data;
 
-import java.util.List;
+import java.util.*;
 
 public class CablesData {
 
@@ -101,7 +101,7 @@ public class CablesData {
     );
 
     public static final List<String> cables_twelve = List.of(
-            "Insignia™ - 25\" 4K Ultra HD HDMI Cable - Black"
+            "Insignia - 25\" 4K Ultra HD HDMI Cable - Black"
             );
 
     public static final List<String> cables_twelve_urls = List.of(
