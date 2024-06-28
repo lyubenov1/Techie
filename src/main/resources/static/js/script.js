@@ -634,3 +634,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const thumbnails = document.querySelectorAll('.thumbnail img');
+    const mainPhoto = document.getElementById('main-photo');
+    let currentIndex = 0;
+
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('mouseenter', () => {
+            if (index !== currentIndex) {
+                let direction = index > currentIndex ? 'left' : 'right';
+                mainPhoto.style.transition = 'none'; // Disable transition for immediate position change
+                mainPhoto.style.transform = direction === 'left' ? 'translateX(100%)' : 'translateX(-100%)';
+                mainPhoto.style.opacity = 0; // Hide the image initially
+                setTimeout(() => {
+                    mainPhoto.src = thumbnail.src;
+                    mainPhoto.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
+                    mainPhoto.style.transform = 'translateX(0)';
+                    mainPhoto.style.opacity = 1; // Fade the image in
+                }, 50);
+                currentIndex = index;
+            }
+        });
+    });
+});

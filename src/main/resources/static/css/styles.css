@@ -75,7 +75,7 @@ form[role="search"] input[type="search"] {
 
 }
 
-@media (min-width: 400px) and (max-width: 992px) {
+@media (min-width: 400px) and (max-width: 991px) {
     form[role="search"] {
         margin-top: -11px;
     }
@@ -94,7 +94,7 @@ form[role="search"] input[type="search"] {
     }
 }
 
-@media (min-width: 993px) and (max-width: 1200px) {
+@media (min-width: 992px) and (max-width: 1200px) {
     form[role="search"] input[type="search"] {
         width: 200px; /* Adjust as needed */
     }
@@ -104,7 +104,7 @@ form[role="search"] input[type="search"] {
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
     .navbar-nav.ul.first {
         flex-direction: column;
         align-items: flex-start;
@@ -1017,10 +1017,12 @@ body.register .form-check-label {
 
 
 
-
-.product-photos {
+.photo-container {
     display: flex;
+    height: 580px;
     gap: 30px;
+    margin-bottom: 30px;
+    width: auto;
 }
 
 .thumbnail-photos {
@@ -1029,9 +1031,18 @@ body.register .form-check-label {
     gap: 15px;
 }
 
+.main-product-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
 .main-product-photo img {
-    max-width: 95%;
-    height: auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .thumbnail {
@@ -1054,4 +1065,22 @@ body.register .form-check-label {
 
 .thumbnail:hover {
     border-color: #ffffff;
+}
+
+@media (max-width: 992px) {
+    .product-main {
+        flex-direction: column;
+    }
+
+    .photo-container {
+        height: 500px;
+        gap: 15px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1400px) {
+    .photo-container {
+        height: 500px;
+        gap: 25px;
+    }
 }

@@ -20,21 +20,21 @@
 </div>
 
 <div class="container-md">
-    <div class="products-main row">
-        <div class="product-photos col-md-7 col-xs-12">
-            <div class="thumbnail-photos">
-                <div th:each="imageUrl, iterStat : ${product.imageUrls}"
-                     class="thumbnail">
-                    <img th:src="${imageUrl}" th:alt="'Product image ' + ${iterStat.count}">
+    <div class="product-main row">
+        <div class="product-photos col-lg-8 col-xl-7 col-md-12">
+            <div class="photo-container">
+                <div class="thumbnail-photos">
+                    <div th:each="imageUrl, iterStat : ${product.imageUrls}"
+                         class="thumbnail">
+                        <img th:src="${imageUrl}" th:alt="'Product image ' + ${iterStat.count}">
+                    </div>
+                </div>
+                <div class="main-product-photo">
+                    <img id="main-photo" th:if="${not #lists.isEmpty(product.imageUrls)}" th:src="${product.imageUrls[0]}" alt="Main product image">
                 </div>
             </div>
-            <div class="main-product-photo">
-                <img th:if="${not #lists.isEmpty(product.imageUrls)}"
-                     th:src="${product.imageUrls[0]}"
-                     alt="Main product image">
-            </div>
         </div>
-        <div class="product-info col-md-5 col-xs-12">
+        <div class="product-info col-lg-4 col-xl-5 col-md-12">
             <h1 th:text="${product.name}">Product Name</h1>
             <div class="rating-box-wrapper">
                 <span class="rating-box" th:text="${product.averageRating}">4.5</span>
