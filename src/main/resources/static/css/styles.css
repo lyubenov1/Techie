@@ -1170,7 +1170,7 @@ a.rating-info span:first-child {
 
 .cart-and-favourites {
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .product-info .add-to-cart, .add-to-favourites {
@@ -1228,4 +1228,22 @@ a.rating-info span:first-child {
     .add-to-cart, .add-to-favourites {
         margin: 5px auto;
     }
+}
+
+.product-info-icons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-family: 'Roboto Condensed', serif;
+    color: rgb(225, 222, 218);
+}
+
+.icon-text i {
+    margin-right: 8px;
 }
