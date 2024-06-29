@@ -81,6 +81,7 @@ public class ProductViewController {
         }
 
         ProductDTO productDTO = productService.convertToDTO(productOptional.get());
+        productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);
         return "productPage";

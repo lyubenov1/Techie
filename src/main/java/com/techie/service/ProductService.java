@@ -7,10 +7,13 @@ import com.techie.domain.model.*;
 import com.techie.domain.model.productsDTOs.*;
 import com.techie.exceptions.*;
 import com.techie.repository.*;
+import com.techie.utils.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.*;
 
+import java.lang.reflect.*;
 import java.net.*;
 import java.nio.charset.*;
 import java.util.*;
@@ -209,6 +212,34 @@ public class ProductService {
                     .build();
         } catch (Exception e) {
             throw new DTOConversionException("Error converting Smartphone to DTO", e);
+        }
+    }
+
+    public void addSpecifications(ProductDTO productDTO, Model model) {
+        model.addAttribute("specifications", retrieveSpecifications(productDTO));
+    }
+
+    private Map<String, String> retrieveSpecifications(ProductDTO product) {
+        Map<String, String> specifications = new LinkedHashMap<>();
+
+        for (Field field : FieldUtil.getFields(product)) {
+            processMapEntry(field, product, specifications);
+        }
+        return specifications;      // Method to retrieve the specs of each product in a user-friendly format.
+    }
+
+    private void processMapEntry(Field field, ProductDTO product, Map<String, String> specifications) {
+        try {
+            field.setAccessible(true);
+            Object value = field.get(product);
+
+            if (value != null) {
+                String styledKey = CaseStyleUtil.styleFieldName(field.getName());
+                String capitalizedValue = CaseStyleUtil.capitalizeFirstLetter(value.toString());
+                specifications.put(styledKey, capitalizedValue);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

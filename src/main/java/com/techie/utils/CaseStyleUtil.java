@@ -5,6 +5,17 @@ import java.util.stream.*;
 
 public class CaseStyleUtil {
 
+    public static String styleFieldName(String fieldName) {
+        String styledName = camelCaseToWords(fieldName);
+        if ("batteryCapacity".equals(fieldName)) {
+            styledName += " (mAh)";
+        }
+        if ("anc".equals(fieldName)) {
+            styledName = "Noise Cancelling (Active)";
+        }
+        return styledName;
+    }
+
     public static String camelCaseToWords(String camelCase) {
         return Arrays.stream(camelCase.split("(?=[A-Z])"))
                 .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
