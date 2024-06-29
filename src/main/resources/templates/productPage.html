@@ -85,7 +85,11 @@
         </div>
     </div>
     <div class="product-specs">
-        <!-- Product specifications go here -->
+        <h2>Specifications</h2>
+        <div th:each="specEntry : ${specifications}" class="spec-item">
+            <span class="spec-label" th:text="${specEntry.key}">Label</span>
+            <span class="spec-value" th:text="${specEntry.value}">Value</span>
+        </div>
     </div>
     <div class="product-description">
         <p th:text="${product.description}">Product description</p>

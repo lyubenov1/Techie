@@ -1222,6 +1222,13 @@ a.rating-info span:first-child {
     .add-to-favourites {
         width: 102px;
     }
+
+    .product-specs {
+        max-width: 500px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
 }
 
 .product-info-icons {
@@ -1285,5 +1292,50 @@ a.rating-info span:first-child {
 
     .review-compare-buttons {
         margin-bottom: 30px;
+    }
+}
+
+.product-specs {
+    max-width: 750px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.product-specs h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgb(225, 222, 218);
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+}
+
+.spec-item:nth-child(odd) {
+    background-color: inherit;
+}
+
+.spec-item:nth-child(even) {
+    background-color: #333;
+}
+
+.spec-label {
+    font-weight: 600;
+    color: rgb(225, 222, 218);
+}
+
+.spec-value {
+    font-weight: 600;
+    color: rgb(225, 222, 218);
+}
+
+@media (min-width: 992px) and (max-width: 1400px) {
+    .product-specs {
+        max-width: 620px;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 }
