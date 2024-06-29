@@ -92,7 +92,16 @@
         </div>
     </div>
     <div class="product-description">
-        <p th:text="${product.description}">Product description</p>
+        <button id="toggleDescriptionBtn" class="toggle-button" type="button" aria-expanded="false" aria-controls="productDescription">
+            Product Description
+        </button>
+        <div id="productDescription" class="description-content">
+            <p th:text="${product.description}">Product description</p>
+        </div>
+    </div>
+
+    <div class="compare-products">
+
     </div>
     <div class="product-customer-reviews">
         <!-- Customer reviews go here -->

@@ -1274,7 +1274,7 @@ a.rating-info span:first-child {
 
 .compare-button {
     background-color: transparent;
-    border: 1px solid lightgray;
+    border: 1px solid #888
 }
 
 .review-button:hover {
@@ -1288,10 +1288,16 @@ a.rating-info span:first-child {
 @media (max-width: 992px) {
     .rating-box-wrapper, .product-info-icons, .price-box, .cart-and-favourites {
         margin-bottom: 10px;
+        padding-left: 20px;
     }
 
     .review-compare-buttons {
         margin-bottom: 30px;
+        padding-left: 20px;
+    }
+
+    .product-info h1 {
+        padding-left: 20px;
     }
 }
 
@@ -1338,4 +1344,42 @@ a.rating-info span:first-child {
         padding: 20px;
         margin-bottom: 20px;
     }
+}
+
+
+.product-description {
+    margin-bottom: 50px;
+    padding: 20px;
+    font-family: 'Roboto Condensed', serif;
+    color: rgb(225, 222, 218);
+}
+
+.toggle-button {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    padding: 10px 20px;
+    border: 1px solid #888;
+    width: 220px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Roboto Condensed', serif;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.description-content {
+    font-family: 'Roboto Condensed', serif;
+    color: rgb(225, 222, 218);
+    margin-top: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.expand {
+    max-height: 500px;
 }

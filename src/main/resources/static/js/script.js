@@ -657,3 +657,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('toggleDescriptionBtn');
+    var descriptionDiv = document.getElementById('productDescription');
+
+    toggleBtn.addEventListener('click', function() {
+        descriptionDiv.classList.toggle('expand');
+        var expanded = descriptionDiv.classList.contains('expand');
+        toggleBtn.setAttribute('aria-expanded', String(expanded));
+    });
+});
+
+
