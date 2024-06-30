@@ -12,10 +12,10 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
+import org.springframework.web.util.*;
 
 import java.lang.reflect.*;
 import java.math.*;
-import java.net.*;
 import java.nio.charset.*;
 import java.util.*;
 import java.util.stream.*;
@@ -34,7 +34,7 @@ public class ProductService {
     }
 
     public Optional<Product> findByNameIgnoreCase(String urlProductName) {
-        String decodedName = URLDecoder.decode(urlProductName, StandardCharsets.UTF_8);
+        String decodedName = UriUtils.decode(urlProductName, StandardCharsets.UTF_8);
 
         return productRepository.findByNameIgnoreCase(decodedName);
     }
@@ -76,7 +76,7 @@ public class ProductService {
         }
 
         List<CommentDTO> commentDTOs = fetchAndConvertCommentsToDTOs(product);
-        String productUrl = URLEncoder.encode(product.getName().toLowerCase(), StandardCharsets.UTF_8);
+        String encodedUrl = UriUtils.encodeFragment(product.getName().toLowerCase(), StandardCharsets.UTF_8);
 
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
@@ -88,7 +88,7 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setAverageRating(product.getAverageRating());
         productDTO.setComments(commentDTOs);
-        productDTO.setUrl(productUrl);
+        productDTO.setUrl(encodedUrl);
     }
 
     private List<CommentDTO> fetchAndConvertCommentsToDTOs(Product product) {
