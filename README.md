@@ -16,13 +16,18 @@ That's it!
 
 
 ### Products page sample № 1
-Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting and pagination.
+Smooth transition change of main picture when hovering over one of the thumbnail images. Comparing option with other products of the same category. Rating and reviewing. Similar products auto sliding nav.
 
-<img src="src/main/resources/static/images/products_sample_1.png" alt="Smartphones page">
+<img src="src/main/resources/static/images/products_sample_1.png" alt="Product page">
 
 ### Products page sample № 2
+Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting and pagination.
 
 <img src="src/main/resources/static/images/products_sample_2.png" alt="Smartphones page">
+
+### Products page sample № 3
+
+<img src="src/main/resources/static/images/products_sample_3.png" alt="Smartphones page">
 
 ### Index page current state
 
