@@ -23,7 +23,7 @@
     <div class="col-main-products col-main col-sm-12">
         <div class="products-header">
             <h1 class="category-h1" th:text="${category.name}">Category</h1>
-            <div>
+            <div class="product-header-sort">
                 <form id="sortForm">
                     <label for="sort">Sort by:</label>
                     <select id="sort" name="sort" onchange="this.form.submit()">
@@ -42,17 +42,31 @@
                 </div>
                 <div class="card-body">
                     <div class="card-body-wrapper">
+                        <div class="card-icon-box">
+                            <div class="rate">
+                                <input type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                            <div class="wishlist-and-shopping-cart">
+                                <span class="add-to-wishlist">
+                                    <i class="far fa-heart fa-md text-white"></i>
+                                </span>
+                                <span class="shopping-cart">
+                                    <i class="fas fa-shopping-cart fa-md text-white"></i>
+                                </span>
+                            </div>
+                        </div>
                         <div class="card-title" th:text="${product.name}">Product Name</div>
                         <div class="card-text">
                             <span th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
-                            <span class="wishlist-and-shopping-cart">
-                        <span class="add-to-wishlist">
-                            <i class="far fa-heart fa-md text-white"></i>
-                        </span>
-                        <span class="shopping-cart">
-                            <i class="fas fa-shopping-cart fa-md text-white"></i>
-                        </span>
-                    </span>
                         </div>
                     </div>
                 </div>
