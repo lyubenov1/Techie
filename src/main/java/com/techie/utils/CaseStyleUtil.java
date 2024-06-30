@@ -13,6 +13,12 @@ public class CaseStyleUtil {
         if ("anc".equals(fieldName)) {
             styledName = "Noise Cancelling (Active)";
         }
+        if("gpu".equals(fieldName)) {
+            styledName = "GPU";
+        }
+        if("ram".equals(fieldName)) {
+            styledName = "RAM";
+        }
         return styledName;
     }
 
