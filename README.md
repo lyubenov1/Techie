@@ -16,7 +16,7 @@ That's it!
 
 
 ### Products page sample № 1
-Smooth transition change of main picture when hovering over one of the thumbnail images. Comparing option with other products of the same category. Rating and reviewing. Similar products auto sliding nav.
+Smooth transition change of main picture when hovering over one of the thumbnail images. Comparing option with other products of the same category. Rating and reviewing. Similar products.
 
 <img src="src/main/resources/static/images/products_sample_1.png" alt="Product page">
 

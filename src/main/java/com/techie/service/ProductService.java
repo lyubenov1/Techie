@@ -14,6 +14,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 
 import java.lang.reflect.*;
+import java.math.*;
 import java.net.*;
 import java.nio.charset.*;
 import java.util.*;
@@ -241,6 +242,60 @@ public class ProductService {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<ProductDTO> findSimilarProducts(Product product) {
+        BigDecimal minPrice = product.getOriginalPrice().subtract(new BigDecimal("200"));
+        BigDecimal maxPrice = product.getOriginalPrice().add(new BigDecimal("200"));
+
+        List<Product> allSimilarProducts = productRepository.findByCategoryAndOriginalPriceBetweenAndIdNot(
+                product.getCategory(),
+                minPrice,
+                maxPrice,
+                product.getId()
+        );
+
+        // If we have less than 5 products, expand the price range to include more products
+        if (allSimilarProducts.size() < 5) {
+            minPrice = product.getOriginalPrice().subtract(new BigDecimal("600"));
+            maxPrice = product.getOriginalPrice().add(new BigDecimal("600"));
+
+            allSimilarProducts = productRepository.findByCategoryAndOriginalPriceBetweenAndIdNot(
+                    product.getCategory(),
+                    minPrice,
+                    maxPrice,
+                    product.getId()
+            );
+        }
+
+        Map<Brand, List<Product>> productsByBrand = allSimilarProducts.stream()
+                .collect(Collectors.groupingBy(Product::getBrand));
+
+        List<Product> selectedProducts = new ArrayList<>();
+
+        for (List<Product> brandProducts : productsByBrand.values()) {
+            selectedProducts.addAll(brandProducts.stream().limit(2).toList());
+            if (selectedProducts.size() >= 5) {
+                break;
+            }
+        }
+
+        // If we have less than 5 products, add more from any brand
+        if (selectedProducts.size() < 5) {
+            Set<Product> additionalProducts = new HashSet<>(allSimilarProducts);
+            selectedProducts.forEach(additionalProducts::remove);
+            selectedProducts.addAll(additionalProducts.stream()
+                    .limit(5 - selectedProducts.size())
+                    .toList());
+        }
+
+        // Shuffle the list to randomize the order
+        Collections.shuffle(selectedProducts);
+
+        return selectedProducts.stream()
+                .limit(5)
+                .map(this::convertToDTO)
+                .toList();
     }
 }
 

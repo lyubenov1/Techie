@@ -672,3 +672,58 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    function loadSimilarProducts() {
+        const productName = document.querySelector('h1').textContent;
+
+        fetch(`/api/products/${encodeURIComponent(productName)}/similar`)
+            .then(response => response.json())
+            .then(products => {
+                const similarProductsDiv = document.querySelector('.similar-products');
+                similarProductsDiv.innerHTML = products.map(product => `
+                    <a href="${product.url}" class="card" style="width: 18rem;">
+                        <div class="image-container">
+                            <img src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body-wrapper">
+                                <div class="card-icon-box">
+                                    <div class="rate">
+                                        <input type="radio" id="star5_${product.id}" name="rate_${product.id}" value="5" />
+                                        <label for="star5_${product.id}" title="text">5 stars</label>
+                                        <input type="radio" id="star4_${product.id}" name="rate_${product.id}" value="4" />
+                                        <label for="star4_${product.id}" title="text">4 stars</label>
+                                        <input type="radio" id="star3_${product.id}" name="rate_${product.id}" value="3" />
+                                        <label for="star3_${product.id}" title="text">3 stars</label>
+                                        <input type="radio" id="star2_${product.id}" name="rate_${product.id}" value="2" />
+                                        <label for="star2_${product.id}" title="text">2 stars</label>
+                                        <input type="radio" id="star1_${product.id}" name="rate_${product.id}" value="1" />
+                                        <label for="star1_${product.id}" title="text">1 star</label>
+                                    </div>
+                                    <div class="wishlist-and-shopping-cart">
+                                        <span class="add-to-wishlist">
+                                            <i class="far fa-heart fa-md text-white"></i>
+                                        </span>
+                                        <span class="shopping-cart">
+                                            <i class="fas fa-shopping-cart fa-md text-white"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-title">${product.name}</div>
+                                <div class="card-text">
+                                    <span>${product.originalPrice.toFixed(2)} $</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Call the function to load similar products
+    loadSimilarProducts();
+});

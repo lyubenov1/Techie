@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
 
+import java.math.*;
 import java.util.*;
 
 @Repository
@@ -21,4 +22,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findByName(String name);
 
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.brand " +
+            "JOIN FETCH p.productImages " +
+            "WHERE p.category = :category " +
+            "AND p.originalPrice BETWEEN :minPrice AND :maxPrice " +
+            "AND p.id <> :id")
+    List<Product> findByCategoryAndOriginalPriceBetweenAndIdNot(@Param("category") Category category, @Param("minPrice") BigDecimal minPrice,
+                                                                @Param("maxPrice") BigDecimal maxPrice, @Param("id") Long id);
 }
