@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function constructUrl(page, filters = {}) {
         const categoryName = document.getElementById('categoryName').value;
-        const baseUrl = `/products/${categoryName.toLowerCase()}`;
+        const baseUrl = categoryName === 'All' ? '/products' : `/products/${categoryName.toLowerCase()}`;
         const urlParams = new URLSearchParams();
 
         // Add existing filters
@@ -727,3 +727,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call the function to load similar products
     loadSimilarProducts();
 });
+

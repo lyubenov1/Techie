@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${category.name}">Products</title>
+    <title th:text="${category != null ? category.name : 'All Products'}">Products</title>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -22,7 +22,7 @@
 <div class="products-main container-md">
     <div class="col-main-products col-main col-sm-12">
         <div class="products-header">
-            <h1 class="category-h1" th:text="${category.name}">Category</h1>
+            <h1 class="category-h1" th:text="${category != null ? category.name : 'All Products'}">Category</h1>
             <div class="product-header-sort">
                 <form id="sortForm">
                     <label for="sort">Sort by:</label>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="category-products">
-            <a th:each="product : ${productsPage.content}" class="card" th:href="${category.url} + '/' + ${product.url}" style="width: 18rem;">
+            <a th:each="product : ${productsPage.content}" class="card" th:href="${'/products/'+ product.categoryName.toLowerCase() + '/' + product.url}" style="width: 18rem;">
                 <div class="image-container">
                     <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
                 </div>
@@ -75,7 +75,7 @@
         <!-- Pagination -->
         <input type="hidden" id="currentPage" th:value="${currentPage}" />
         <input type="hidden" id="totalPages" th:value="${totalPages}" />
-        <input type="hidden" id="categoryName" th:value="${category.name}" />
+        <input type="hidden" id="categoryName" th:value="${category != null ? category.name : 'All'}" />
         <input type="hidden" id="pageSize" th:value="${pageSize}" />
         <input type="hidden" id="productsPage" th:value="${productsPage}" />
 

@@ -16,11 +16,4 @@ public class CategoryDTO {
     private List<ProductDTO> products;
     private String url;
 
-    public CategoryDTO(Long id, String name, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.url = "";
-    }
-
 }

@@ -19,9 +19,19 @@ public class ProductFilterService {
         this.categoryService = categoryService;
     }
 
+    public List<ProductDTO> getFilteredProductsAll(List<CategoryDTO> categories, Map<String, String> filters, String sort) {
+        List<ProductDTO> filteredProducts = new ArrayList<>();
+
+        for (CategoryDTO category : categories) {
+            filteredProducts.addAll(getFilteredProducts(category.getName(), filters, sort));
+        }
+
+        return filteredProducts;
+    }
+
     public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters, String sort) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
-        Map<String, List<String>> convertedFilters = convertFilters(filters);
+        Map<String, List<String>> convertedFilters = convertFilters(filters);     // Convert the checked filter options to an easier format to work with
 
         if (categoryOptional.isPresent()) {
             Category category = categoryOptional.get();

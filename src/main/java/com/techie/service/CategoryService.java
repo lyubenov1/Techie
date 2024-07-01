@@ -24,8 +24,11 @@ public class CategoryService {
         this.productService = productService;
     }
 
-    public List<Category> getRootCategories() {
-        return categoryRepository.findRootCategories();
+    @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
+    public List<CategoryDTO> getParentCategoryDTOs() {
+        return getRootCategories().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Cacheable(cacheNames = "categories", key = "#category.id")
@@ -36,16 +39,8 @@ public class CategoryService {
         return dto;
     }
 
-    @Cacheable(cacheNames = "categories", key = "#categoryName")
-    public Optional<Category> findByName(String categoryName) {
-        return categoryRepository.findByName(categoryName);
-    }
-
-    @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
-    public List<CategoryDTO> getParentCategoryDTOs() {
-        return this.getRootCategories().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public List<Category> getRootCategories() {
+        return categoryRepository.findRootCategories();
     }
 
     private CategoryDTO mapCategoryToDTO(Category category) {
@@ -57,12 +52,18 @@ public class CategoryService {
         return dto;
     }
 
+    @Cacheable(cacheNames = "categories", key = "#categoryName")
+    public Optional<Category> findByName(String categoryName) {
+        return categoryRepository.findByName(categoryName);
+    }
+
     protected List<ProductDTO> fetchProductsForCategory(Category category) {
         List<ProductDTO> products = new ArrayList<>();
-        if (category.getChildren() != null && !category.getChildren().isEmpty()) {
-            for (Category childCategory : category.getChildren()) {
+        if (category.getChildren() != null && !category.getChildren().isEmpty()) {              // If the category has subcategories (e.g. Accessories),
+            for (Category childCategory : category.getChildren()) {                             // fetch the subcategories' products as well
                 products.addAll(productService.getProductsByCategory(childCategory.getId()));
             }
+
         } else {
             products.addAll(productService.getProductsByCategory(category.getId()));
         }

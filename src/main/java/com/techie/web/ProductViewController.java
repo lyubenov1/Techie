@@ -34,8 +34,22 @@ public class ProductViewController {
     }
 
     @GetMapping
-    public String productsPage() {
-        return "weekly-deals";
+    public String productsPage(@RequestParam(required = false) Map<String, String> filters,
+                               @RequestParam(name = "p", defaultValue = "0", required = false) int page,
+                               @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
+                               Model model) {
+        filters.remove("p");
+        filters.remove("sort");
+
+        List<CategoryDTO> parentCategories = categoryService.getParentCategoryDTOs();
+        List<ProductDTO> filteredProducts = productFilterService.getFilteredProductsAll(parentCategories, filters, sort);
+
+        model.addAttribute("products", filteredProducts);
+
+        facetService.addFacets(filteredProducts, model);
+        paginationService.handlePagination(filteredProducts, model, page, PaginationService.DEFAULT_PAGE_SIZE);
+
+        return "products";
     }
 
     @GetMapping("/weekly-deals")
@@ -50,7 +64,6 @@ public class ProductViewController {
                                @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
                                Model model) {
-        logger.info("Category: {}, Filters: {}, Page: {}", categoryName, filters, page);
         filters.remove("p");
         filters.remove("sort");
 
@@ -66,7 +79,7 @@ public class ProductViewController {
 
         model.addAttribute("category", categoryDTO);
 
-        facetService.addFacets(categoryDTO, model);
+        facetService.addFacets(filteredProducts, model);
         paginationService.handlePagination(filteredProducts, model, page, PaginationService.DEFAULT_PAGE_SIZE);
 
         return "products";

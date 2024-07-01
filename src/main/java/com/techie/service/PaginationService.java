@@ -11,6 +11,7 @@ import java.util.*;
 public class PaginationService {
 
     public static final int DEFAULT_PAGE_SIZE = 25;
+    public static final int MAX_PAGE_SIZE = 45;
 
     public Page<ProductDTO> paginate(List<ProductDTO> products, int page, int size) {
         int totalProducts = products.size();
@@ -22,6 +23,9 @@ public class PaginationService {
     }
 
     public void handlePagination(List<ProductDTO> products, Model model, int page, int size) {
+        if (products.size() > 400) {
+            size = MAX_PAGE_SIZE;
+        }
         Page<ProductDTO> productsPage = paginate(products, page, size);
 
         model.addAttribute("productsPage", productsPage);
