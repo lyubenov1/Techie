@@ -1,6 +1,7 @@
 package com.techie.repository;
 
 import com.techie.domain.entities.*;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
@@ -29,4 +30,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND p.id <> :id")
     List<Product> findByCategoryAndOriginalPriceBetweenAndIdNot(@Param("category") Category category, @Param("minPrice") BigDecimal minPrice,
                                                                 @Param("maxPrice") BigDecimal maxPrice, @Param("id") Long id);
+    
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:query%")
+    List<Product> findByNameContaining(@Param("query") String query);
+
+    List<Product> findByNameContainingAndRating(String query, PageRequest of);
 }

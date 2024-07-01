@@ -10,6 +10,7 @@ import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.util.*;
@@ -31,6 +32,20 @@ public class ProductService {
     public ProductService(ProductRepository productRepository, CommentRepository commentRepository) {
         this.productRepository = productRepository;
         this.commentRepository = commentRepository;
+    }
+
+    public List<ProductDTO> searchProducts(String query, int limit) {
+        List<Product> products = productRepository.findByNameContainingAndRating(query, PageRequest.of(0, limit));
+        return products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductDTO> fullSearchProducts(String query) {
+        List<Product> productPage = productRepository.findByNameContaining(query);
+        return productPage.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public Optional<Product> findByNameIgnoreCase(String urlProductName) {

@@ -3,7 +3,6 @@ package com.techie.web;
 import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
 import com.techie.service.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -20,7 +19,6 @@ public class ProductViewController {
     private final PaginationService paginationService;
     private final FacetService facetService;
     private final ProductService productService;
-    private final Logger logger = LoggerFactory.getLogger(ProductViewController.class);
 
     @Autowired
     public ProductViewController(CategoryService categoryService, ProductFilterService productFilterService,
@@ -31,6 +29,27 @@ public class ProductViewController {
         this.paginationService = paginationService;
         this.facetService = facetService;
         this.productService = productService;
+    }
+
+    @GetMapping("/search")
+    public String searchProducts(@RequestParam String query,
+                                 @RequestParam(required = false) Map<String, String> filters,
+                                 @RequestParam(name = "p", defaultValue = "0", required = false) int page,
+                                 @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
+                                 Model model) {
+        filters.remove("p");
+        filters.remove("sort");
+        filters.remove("query");
+
+        List<ProductDTO> searchResults = productService.fullSearchProducts(query);
+
+        model.addAttribute("products", searchResults);
+        model.addAttribute("searchQuery", query);
+
+        facetService.addFacets(searchResults, model);
+        paginationService.handlePagination(searchResults, model, page, PaginationService.DEFAULT_PAGE_SIZE);
+
+        return "products";
     }
 
     @GetMapping

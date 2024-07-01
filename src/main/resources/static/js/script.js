@@ -728,3 +728,49 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSimilarProducts();
 });
 
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const searchBar = document.getElementById('searchBar');
+    const searchResults = document.querySelector('.search-results');
+    const suggestions = document.querySelector('.suggestions');
+
+    searchBar.addEventListener('input', function () {
+        let query = this.value;
+        if (query.length > 2) {
+            fetch(`/api/search?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let matchedProducts = data.matchedProducts;
+                    let searchSuggestions = data.searchSuggestions;
+                    searchResults.innerHTML = '';
+                    suggestions.innerHTML = '';
+                    matchedProducts.forEach(function (product) {
+                        searchResults.innerHTML += `<div>${product.name}</div>`;
+                    });
+                    searchSuggestions.forEach(function (suggestion) {
+                        suggestions.innerHTML += `<div>${suggestion}</div>`;
+                    });
+                });
+        } else {
+            searchResults.innerHTML = '';
+            suggestions.innerHTML = '';
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (e.target.matches('.suggestions div')) {
+            searchBar.value = e.target.textContent;
+            searchResults.innerHTML = '';
+            suggestions.innerHTML = '';
+        }
+    });
+
+    searchBar.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();  // Prevent form submission on Enter
+            window.location.href = "/products?query=" + encodeURIComponent(this.value);
+        }
+    });
+});
