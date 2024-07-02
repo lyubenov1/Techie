@@ -34,5 +34,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:query%")
     List<Product> findByNameContaining(@Param("query") String query);
 
-    List<Product> findByNameContainingAndRating(String query, PageRequest of);
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "JOIN FETCH p.brand JOIN FETCH p.productImages " +
+            "WHERE p.name LIKE %:query% ORDER BY p.averageRating DESC")
+    List<Product> findByNameContainingAndRating(@Param("query") String query, Pageable pageable);
+
 }

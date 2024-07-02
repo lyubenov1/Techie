@@ -13,20 +13,19 @@ import java.util.*;
 public class SearchRestController {
 
     private final ProductService productService;
-    private final SearchSuggestionService searchSuggestionService;
 
     @Autowired
-    public SearchRestController(ProductService productService, SearchSuggestionService searchSuggestionService) {
+    public SearchRestController(ProductService productService) {
         this.productService = productService;
-        this.searchSuggestionService = searchSuggestionService;
     }
 
     @GetMapping
     public ResponseEntity<SearchResponse> quickSearch(@RequestParam String query) {
-        List<ProductDTO> matchedProducts = productService.searchProducts(query, 3);
-        List<String> searchSuggestions = searchSuggestionService.getSuggestions(query, 3);
+        List<ProductDTO> matchedProducts = productService.searchProducts(query, 5);
 
-        SearchResponse response = new SearchResponse(matchedProducts, searchSuggestions);
+        SearchResponse response = SearchResponse.builder()
+                .matchedProducts(matchedProducts)
+                .build();
         return ResponseEntity.ok(response);
     }
 }

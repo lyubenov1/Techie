@@ -1447,19 +1447,57 @@ a.rating-info span:first-child {
 
 
 
-.search-results, .suggestions {
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
+#searchResults {
     position: absolute;
-    background: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #212529;
+    max-height: 300px;
+    overflow-y: auto;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
     z-index: 1000;
-    width: 300px;
+    display: none;
 }
-.search-results div, .suggestions div {
-    padding: 5px;
-    cursor: pointer;
+
+#searchResults .product {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid gray;
+    transition: background-color 0.3s;
 }
-.search-results div:hover, .suggestions div:hover {
-    background-color: #eee;
+
+#searchResults .product:last-child {
+    border-bottom: none;
+}
+
+#searchResults .product:hover {
+    background-color: #444;
+}
+
+#searchResults .product img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+#searchResults .product .details {
+    display: flex;
+    flex-direction: column;
+}
+
+#searchResults .product .details .name {
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+    font-size: 14px;
+}
+
+#searchResults .product .details .price {
+    font-weight: 600;
+    color: rgb(225, 222, 218);
 }

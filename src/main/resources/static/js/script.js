@@ -659,7 +659,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
     var toggleBtn = document.getElementById('toggleDescriptionBtn');
     var descriptionDiv = document.getElementById('productDescription');
@@ -670,8 +669,6 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleBtn.setAttribute('aria-expanded', String(expanded));
     });
 });
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -729,33 +726,55 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const searchBar = document.getElementById('searchBar');
-    const searchResults = document.querySelector('.search-results');
-    const suggestions = document.querySelector('.suggestions');
+    const searchResults = document.getElementById('searchResults');
 
     searchBar.addEventListener('input', function () {
         let query = this.value;
         if (query.length > 2) {
             fetch(`/api/search?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error('Network response was not ok: ' + response.status + ' - ' + text);
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    if (!data.matchedProducts) {
+                        throw new Error('Invalid response format');
+                    }
                     let matchedProducts = data.matchedProducts;
-                    let searchSuggestions = data.searchSuggestions;
                     searchResults.innerHTML = '';
-                    suggestions.innerHTML = '';
+                    searchResults.style.display = 'block';
                     matchedProducts.forEach(function (product) {
-                        searchResults.innerHTML += `<div>${product.name}</div>`;
+                        searchResults.innerHTML += `
+                            <a href="${'/products/'+ product.categoryName.toLowerCase() + '/' + product.url}" class="product">
+                                <img src="${product.imageUrls[0]}" alt="Product Image">
+                                <div class="details">
+                                    <div class="name">${product.name}</div>
+                                    <div class="price">${product.originalPrice.toFixed(2)} $</div>
+                                </div>
+                            </a>`;
                     });
-                    searchSuggestions.forEach(function (suggestion) {
-                        suggestions.innerHTML += `<div>${suggestion}</div>`;
-                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    searchResults.innerHTML = '<div class="error">An error occurred while fetching results</div>';
                 });
         } else {
             searchResults.innerHTML = '';
-            suggestions.innerHTML = '';
+            searchResults.style.display = 'none';
+
+        }
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.innerHTML = '';
+            searchResults.style.display = 'none';
         }
     });
 
@@ -763,14 +782,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.matches('.suggestions div')) {
             searchBar.value = e.target.textContent;
             searchResults.innerHTML = '';
-            suggestions.innerHTML = '';
-        }
-    });
-
-    searchBar.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();  // Prevent form submission on Enter
-            window.location.href = "/products?query=" + encodeURIComponent(this.value);
         }
     });
 });

@@ -11,5 +11,4 @@ import java.util.*;
 @Builder
 public class SearchResponse {
     private List<ProductDTO> matchedProducts;
-    private List<String> searchSuggestions;
 }
