@@ -47,7 +47,7 @@ public class ProductViewController {
         filters.remove("sort");
         filters.remove("q");
 
-        List<ProductDTO> filteredProducts = productFilterService.getFilteredProductsSearch(filters, sort, query);
+        List<ProductDTO> filteredProducts = productFilterService.getFilteredSearchProducts(filters, sort, query);
 
         model.addAttribute("products", filteredProducts);
         model.addAttribute("searchQuery", query);

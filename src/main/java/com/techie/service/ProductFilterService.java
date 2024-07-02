@@ -21,7 +21,7 @@ public class ProductFilterService {
         this.productService = productService;
     }
 
-    public List<ProductDTO> getFilteredProductsSearch(Map<String, String> filters, String sort, String searchQuery) {
+    public List<ProductDTO> getFilteredSearchProducts(Map<String, String> filters, String sort, String searchQuery) {
         if (searchQuery == null || searchQuery.length() < 3) {
             return Collections.emptyList(); // Return empty list if query length is less than 3
         }
