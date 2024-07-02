@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${category != null ? category.name : 'All Products'}">Products</title>
+    <title th:text="${category != null ? category.name : (searchQuery != null ? 'Search: ' + searchQuery : 'All Products')}">Products</title>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -22,7 +22,7 @@
 <div class="products-main container-md">
     <div class="col-main-products col-main col-sm-12">
         <div class="products-header">
-            <h1 class="category-h1" th:text="${category != null ? category.name : 'All Products'}">Category</h1>
+            <h1 class="category-h1" th:text="${category != null ? category.name : (searchQuery != null ? 'Search results for ' + searchQuery : 'All Products')}">Category</h1>
             <div class="product-header-sort">
                 <form id="sortForm">
                     <label for="sort">Sort by:</label>
@@ -75,9 +75,10 @@
         <!-- Pagination -->
         <input type="hidden" id="currentPage" th:value="${currentPage}" />
         <input type="hidden" id="totalPages" th:value="${totalPages}" />
-        <input type="hidden" id="categoryName" th:value="${category != null ? category.name : 'All'}" />
+        <input type="hidden" id="categoryName" th:value="${category != null ? category.name : (searchQuery != null ? 'Search' : 'All')}" />
         <input type="hidden" id="pageSize" th:value="${pageSize}" />
         <input type="hidden" id="productsPage" th:value="${productsPage}" />
+        <input type="hidden" id="searchQueryParam" th:if="${searchQuery != null}" th:value="${searchQuery}" />
 
         <div class="pagination-products-container">
             <div class="pagination-products-wrapper">

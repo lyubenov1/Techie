@@ -434,48 +434,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
         checkboxes.forEach(checkbox => checkbox.checked = false);
 
-        // Clear the URL
-        const currentUrl = window.location.pathname;
-        history.pushState(null, '', currentUrl);
+        // Preserve the 'q'(querySearch) parameter if it exists
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryParam = urlParams.get('q');
 
-        window.location.reload();
-    }
-
-    function checkAndClearFilters() {
-        const currentUrl = window.location.pathname;
-        const storedFilters = sessionStorage.getItem('filters');
-
-        if (currentUrl.startsWith('/products/') && !window.location.search && storedFilters) {
-            sessionStorage.removeItem('filters');
-            const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
-            checkboxes.forEach(checkbox => checkbox.checked = false);
-            history.replaceState(null, '', currentUrl);
-            console.log('Filters cleared');
+        let newUrl = window.location.pathname;
+        if (queryParam) {
+            newUrl += `?q=${encodeURIComponent(queryParam)}`;
         }
+
+        history.pushState(null, '', newUrl);
+        window.location.reload();
     }
 
     // Set scroll restoration to manual
     if ('history' in window && 'scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
-
-    window.addEventListener('load', () => {
-        checkAndClearFilters();
-
-        const storedFilters = sessionStorage.getItem('filters');
-        if (storedFilters) {
-            updateAppliedFilters(JSON.parse(storedFilters));
-        }
-    });
-
-    // Add event listener for popstate to handle back/forward navigation
-    window.addEventListener('popstate', function (event) {
-        checkAndClearFilters();
-        if (event.state && event.state.filters) {
-            sessionStorage.setItem('filters', JSON.stringify(event.state.filters));
-        }
-        window.location.reload();
-    });
 
     function restoreFilters() {
         const storedFilters = sessionStorage.getItem('filters');
@@ -501,6 +476,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    function checkAndClearFilters() {
+        const currentUrl = new URL(window.location.href);
+        const hasSearchQuery = currentUrl.searchParams.has('q');
+        const storedFilters = sessionStorage.getItem('filters');
+        const hasFiltersInUrl = Array.from(currentUrl.searchParams.keys()).some(key => key !== 'q' && key !== 'p' && key !== 'sort');
+
+        if (currentUrl.pathname.startsWith('/products') && !hasFiltersInUrl && (hasSearchQuery || !currentUrl.search) && storedFilters) {
+            sessionStorage.removeItem('filters');
+            const checkboxes = document.querySelectorAll('.sidebar-products input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            console.log('Filters cleared');
+        }
+    }
 
     function fetchFilteredProducts() {
         const filters = getCurrentFilters();
@@ -532,7 +520,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function constructUrl(page, filters = {}) {
         const categoryName = document.getElementById('categoryName').value;
-        const baseUrl = categoryName === 'All' ? '/products' : `/products/${categoryName.toLowerCase()}`;
+        let baseUrl;
+
+        if (categoryName === 'All') {
+            baseUrl = '/products';
+        }
+        else if (categoryName === 'Search') {
+            baseUrl = '/products/search'
+        }
+        else {
+            baseUrl = `/products/${categoryName.toLowerCase()}`;
+        }
+
         const urlParams = new URLSearchParams();
 
         // Add existing filters
@@ -555,6 +554,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const sortSelect = document.getElementById('sort');
         if (sortSelect) {
             urlParams.set('sort', sortSelect.value);
+        }
+
+        // Add search query parameter
+        const searchQueryParam = document.getElementById('searchQueryParam');
+        if (searchQueryParam && searchQueryParam.value.trim().length > 2) {
+            urlParams.set('q', searchQueryParam.value.trim());
         }
 
         const queryString = urlParams.toString();
@@ -628,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalPages = parseInt(document.getElementById('totalPages').value);
     createPagination(currentPage, totalPages)
     setupAccordion()
+    checkAndClearFilters()
     setupFilters()
     restoreFilters()
 })
@@ -734,14 +740,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let query = this.value;
         if (query.length > 2) {
             fetch(`/api/search?query=${encodeURIComponent(query)}`)
-                .then(response => {
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            throw new Error('Network response was not ok: ' + response.status + ' - ' + text);
-                        });
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (!data.matchedProducts) {
                         throw new Error('Invalid response format');
@@ -775,13 +774,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
             searchResults.innerHTML = '';
             searchResults.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('click', function (e) {
-        if (e.target.matches('.suggestions div')) {
-            searchBar.value = e.target.textContent;
-            searchResults.innerHTML = '';
         }
     });
 });

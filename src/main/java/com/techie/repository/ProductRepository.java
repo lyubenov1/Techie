@@ -30,8 +30,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND p.id <> :id")
     List<Product> findByCategoryAndOriginalPriceBetweenAndIdNot(@Param("category") Category category, @Param("minPrice") BigDecimal minPrice,
                                                                 @Param("maxPrice") BigDecimal maxPrice, @Param("id") Long id);
-    
-    @Query("SELECT p FROM Product p WHERE p.name LIKE %:query%")
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "JOIN FETCH p.brand JOIN FETCH p.productImages " +
+            "WHERE p.name LIKE %:query%")
     List<Product> findByNameContaining(@Param("query") String query);
 
     @Query("SELECT p FROM Product p JOIN FETCH p.category " +

@@ -42,7 +42,11 @@ public class ProductService {
     }
 
     public List<ProductDTO> fullSearchProducts(String query) {
+        log.info("Fetching products for query: {}", query);
+
         List<Product> productPage = productRepository.findByNameContaining(query);
+
+        log.info("Fetched {} products", productPage.size());
         return productPage.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

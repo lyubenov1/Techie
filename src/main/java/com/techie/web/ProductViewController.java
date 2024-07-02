@@ -31,23 +31,29 @@ public class ProductViewController {
         this.productService = productService;
     }
 
+    @GetMapping("/weekly-deals")
+    public String weeklyDealsPage() {
+        return "weekly-deals";
+    }
+
+
     @GetMapping("/search")
-    public String searchProducts(@RequestParam String query,
+    public String searchProducts(@RequestParam(name = "q", required = false) String query,
                                  @RequestParam(required = false) Map<String, String> filters,
                                  @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                  @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
                                  Model model) {
         filters.remove("p");
         filters.remove("sort");
-        filters.remove("query");
+        filters.remove("q");
 
-        List<ProductDTO> searchResults = productService.fullSearchProducts(query);
+        List<ProductDTO> filteredProducts = productFilterService.getFilteredProductsSearch(filters, sort, query);
 
-        model.addAttribute("products", searchResults);
+        model.addAttribute("products", filteredProducts);
         model.addAttribute("searchQuery", query);
 
-        facetService.addFacets(searchResults, model);
-        paginationService.handlePagination(searchResults, model, page, PaginationService.DEFAULT_PAGE_SIZE);
+        facetService.addFacets(filteredProducts, model);
+        paginationService.handlePagination(filteredProducts, model, page, PaginationService.DEFAULT_PAGE_SIZE);
 
         return "products";
     }
@@ -70,12 +76,6 @@ public class ProductViewController {
 
         return "products";
     }
-
-    @GetMapping("/weekly-deals")
-    public String weeklyDealsPage() {
-        return "weekly-deals";
-    }
-
 
     @GetMapping("/{categoryName}")
     public String categoryPage(@PathVariable String categoryName,
@@ -118,6 +118,5 @@ public class ProductViewController {
         model.addAttribute("product", productDTO);
         return "productPage";
     }
-
 
 }

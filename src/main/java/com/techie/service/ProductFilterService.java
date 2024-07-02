@@ -13,10 +13,26 @@ import java.util.stream.*;
 @Service
 public class ProductFilterService {
     private final CategoryService categoryService;
+    private final ProductService productService;
 
     @Autowired
-    public ProductFilterService(CategoryService categoryService) {
+    public ProductFilterService(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
+        this.productService = productService;
+    }
+
+    public List<ProductDTO> getFilteredProductsSearch(Map<String, String> filters, String sort, String searchQuery) {
+        if (searchQuery == null || searchQuery.length() < 3) {
+            return Collections.emptyList(); // Return empty list if query length is less than 3
+        }
+
+        List<ProductDTO> products = productService.fullSearchProducts(searchQuery);
+
+        Map<String, List<String>> convertedFilters = convertFilters(filters);    // Convert the checked filter options to an easier format to work with
+        applyFilters(products, convertedFilters);
+        applySorting(products, sort);
+
+        return products;
     }
 
     public List<ProductDTO> getFilteredProductsAll(List<CategoryDTO> categories, Map<String, String> filters, String sort) {
@@ -28,29 +44,6 @@ public class ProductFilterService {
 
         return filteredProducts;
     }
-
-    //public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters, String sort, String searchQuery) {
-    //    List<ProductDTO> products;
-    //    if (searchQuery != null && !searchQuery.isEmpty()) {
-    //        products = productService.fullSearchProducts(searchQuery, 0, Integer.MAX_VALUE, sort);
-    //    } else if (categoryName != null) {
-    //        Optional<Category> categoryOptional = categoryService.findByName(categoryName);
-    //        if (categoryOptional.isPresent()) {
-    //            Category category = categoryOptional.get();
-    //            products = categoryService.fetchProductsForCategory(category);
-    //        } else {
-    //            throw new CategoryNotFoundException("Category with name " + categoryName + " not found");
-    //        }
-    //    } else {
-    //        products = productService.getAllProducts();
-    //    }
-//
-    //    Map<String, List<String>> convertedFilters = convertFilters(filters);
-    //    applyFilters(products, convertedFilters);
-    //    applySorting(products, sort);
-//
-    //    return products;
-    //}
 
     public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters, String sort) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
