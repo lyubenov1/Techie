@@ -780,5 +780,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.getElementById('compareButton').addEventListener('click', function() {
-    window.location.href = '/products/compare-products';
+    const productName = this.getAttribute('data-product-name');
+    window.location.href = `/products/compare-products/${encodeURIComponent(productName)}`;
 });
+

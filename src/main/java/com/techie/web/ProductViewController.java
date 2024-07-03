@@ -36,11 +36,6 @@ public class ProductViewController {
         return "weekly-deals";
     }
 
-    @GetMapping("/compare-products")
-    public String compareProductsPage() {
-        return "compare-products";
-    }
-
     @GetMapping("/search")
     public String searchProducts(@RequestParam(name = "q", required = false) String query,
                                  @RequestParam(required = false) Map<String, String> filters,
@@ -114,7 +109,21 @@ public class ProductViewController {
     }
 
     @GetMapping("/{categoryName}/{productName}")
-    public String productPage(@PathVariable String productName, Model model) {
+    public String productPage(@PathVariable String productName, @PathVariable String categoryName, Model model) {
+        return handleProductRequest(productName, model, "product-page");
+    }
+
+    @GetMapping("/compare-products")
+    public String compareProductsPage() {
+        return "compare-products";
+    }
+
+    @GetMapping("/compare-products/{productName}")
+    public String compareProduct(@PathVariable String productName, Model model) {
+        return handleProductRequest(productName, model, "compare-products");
+    }
+
+    private String handleProductRequest(String productName, Model model, String viewName) {
         Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
 
         if (productOptional.isEmpty()) {
@@ -125,7 +134,7 @@ public class ProductViewController {
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);
-        return "product-page";
+        return viewName;
     }
 
 }

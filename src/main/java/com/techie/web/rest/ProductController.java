@@ -33,4 +33,16 @@ public class ProductController {
 
         return ResponseEntity.ok(similarProducts);
     }
+
+    @GetMapping("/{productName}")
+    public ResponseEntity<ProductDTO> getProductByName(@PathVariable String productName) {
+        Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
+
+        if (productOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ProductDTO productDTO = productService.convertToDTO(productOptional.get());
+        return ResponseEntity.ok(productDTO);
+    }
 }
