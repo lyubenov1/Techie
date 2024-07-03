@@ -1501,3 +1501,44 @@ a.rating-info span:first-child {
     font-weight: 600;
     color: rgb(225, 222, 218);
 }
+
+.search-error {
+    text-align: center;
+    padding: 50px 0;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.search-error h1 {
+    margin-bottom: 20px;
+}
+
+.search-error h2 {
+    font-size: 27px;
+}
+
+.suggestions {
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.suggestions ul {
+    list-style: none;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.suggestions li {
+    margin-bottom: 6px;
+    font-size: 20px;
+}
+
+.suggestions a {
+    color: #198754;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.suggestions a:hover {
+    color: #1eaa69;
+}

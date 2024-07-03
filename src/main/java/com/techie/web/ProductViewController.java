@@ -49,8 +49,13 @@ public class ProductViewController {
 
         List<ProductDTO> filteredProducts = productFilterService.getFilteredSearchProducts(filters, sort, query);
 
-        model.addAttribute("products", filteredProducts);
         model.addAttribute("searchQuery", query);
+
+        if (filteredProducts.isEmpty()) {
+            return "error-pages/search-not-found";
+        }
+
+        model.addAttribute("products", filteredProducts);
 
         facetService.addFacets(filteredProducts, model);
         paginationService.handlePagination(filteredProducts, model, page, PaginationService.DEFAULT_PAGE_SIZE);
@@ -116,7 +121,7 @@ public class ProductViewController {
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);
-        return "productPage";
+        return "product-page";
     }
 
 }

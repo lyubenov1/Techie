@@ -5,7 +5,6 @@ import com.techie.domain.model.*;
 import jakarta.servlet.http.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -42,7 +41,6 @@ public class BreadcrumbService {
         }
     }
 
-    @Cacheable(cacheNames = "breadcrumbs", key = "#root.args[0].requestURI")
     public List<BreadcrumbItem> getBreadcrumbs(HttpServletRequest request) {
         String currentUrl = extractCurrentUrl(request);
 
