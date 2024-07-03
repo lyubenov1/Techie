@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class BreadcrumbService {
@@ -57,61 +58,102 @@ public class BreadcrumbService {
 
     }
 
-    private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl, HttpServletRequest request){
+    private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl, HttpServletRequest request) {
         List<BreadcrumbItem> breadcrumbs = new ArrayList<>();
+        String[] urlParts = currentUrl.split("/");
         StringBuilder urlBuilder = new StringBuilder();
 
-        String[] parts = currentUrl.split("/");
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (!part.isEmpty()) {
-                urlBuilder.append("/").append(part);
+        for (int i = 0; i < urlParts.length; i++) {
+            String part = urlParts[i];
+            if (part.isEmpty()) continue;
 
-                if (part.equals("search") && i == parts.length - 1) {
-                    // If it's the last part, and it's "Search"
-                    String query = request.getParameter("q");
-                    if (query != null && !query.isEmpty()) {
-                        String searchText = "Search results for \"" + query + "\"";
-                        breadcrumbs.add(new BreadcrumbItem(searchText, urlBuilder.toString()));
-                    } else {
-                        breadcrumbs.add(new BreadcrumbItem("Search", urlBuilder.toString()));
-                    }
-                } else {
-                    // Check if the part is a product
-                    Optional<Product> productOpt = productService.findByNameIgnoreCase(part);
+            urlBuilder.append("/").append(part);
+            String fullUrl = urlBuilder.toString();
 
-                    if (productOpt.isPresent()) {
-                        // If it's a product, use the product name
-                        ProductDTO product = productService.convertToDTO(productOpt.get());
-                        breadcrumbs.add(new BreadcrumbItem(product.getName(), urlBuilder.toString()));
-                    } else {
-                        breadcrumbs.add(new BreadcrumbItem(part, urlBuilder.toString()));
-                    }
-                }
+            if (isSearchPart(part, i, urlParts)) {
+                addSearchBreadcrumb(breadcrumbs, fullUrl, request);
+            } else {
+                addRegularBreadcrumb(breadcrumbs, fullUrl, part);
             }
         }
 
         addParentCategoryBreadcrumb(breadcrumbs, urlBuilder);
         return breadcrumbs;
-
     }
 
-    private void addParentCategoryBreadcrumb(List<BreadcrumbService.BreadcrumbItem> breadcrumbs, StringBuilder urlBuilder) {
-        Optional<BreadcrumbItem> lastBreadcrumb = Optional.ofNullable(breadcrumbs.isEmpty() ? null : breadcrumbs.getLast());
-        if (lastBreadcrumb.isPresent()) {
-            String lastBreadcrumbCapitalized = lastBreadcrumb.get().getCapitalized();
+    private boolean isSearchPart(String part, int index, String[] parts) {
+        return part.equals("search") && index == parts.length - 1;
+    }
 
-            Optional<Category> categoryOptional = categoryService.findByName(lastBreadcrumbCapitalized);
+    // Add a breadcrumb for the search page
+    private void addSearchBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, HttpServletRequest request) {
+        String query = request.getParameter("q");
+        String text = (query != null && !query.isEmpty()) ?
+                "Search results for \"" + query + "\"" : "Search";
+        breadcrumbs.add(new BreadcrumbItem(text, url));
+    }
 
-            if (categoryOptional.isPresent() && categoryOptional.get().getParent() != null) {
-                Category parentCategory = categoryOptional.get().getParent();
+    // Add a regular breadcrumb (product or formatted string)
+    private void addRegularBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, String part) {
+        Optional<Product> productOpt = productService.findByNameIgnoreCase(part);
 
-                String parentUrl = urlBuilder.toString().replace(lastBreadcrumb.get().getOriginal(),
-                        parentCategory.getName().toLowerCase());
-
-                breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
-            }
+        if (productOpt.isPresent()) {
+            ProductDTO product = productService.convertToDTO(productOpt.get());
+            breadcrumbs.add(new BreadcrumbItem(product.getName(), url));
+        } else {
+            String formattedPart = formatUrlPart(part);
+            breadcrumbs.add(new BreadcrumbItem(formattedPart, url));
         }
+    }
+
+    // Format URL part: capitalize words and replace hyphens with spaces
+    private String formatUrlPart(String part) {
+        if (!part.contains("-")) return part;
+
+        String[] subParts = part.split("-");
+        return Arrays.stream(subParts)
+                .filter(subPart -> !subPart.isEmpty())
+                .map(this::capitalizeWord)
+                .collect(Collectors.joining(" "));
+    }
+
+    // Capitalize the first letter of a word
+    private String capitalizeWord(String word) {
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+    }
+
+    // Adds a breadcrumb for the parent category if applicable
+    private void addParentCategoryBreadcrumb(List<BreadcrumbItem> breadcrumbs, StringBuilder urlBuilder) {
+        getLastBreadcrumb(breadcrumbs).ifPresent(lastBreadcrumb -> {
+            findParentCategory(lastBreadcrumb.getCapitalized())
+                    .ifPresent(parentCategory -> {
+                        String parentUrl = buildParentUrl(urlBuilder, lastBreadcrumb, parentCategory);
+                        insertParentBreadcrumb(breadcrumbs, parentCategory, parentUrl);
+                    });
+        });
+    }
+
+    private Optional<BreadcrumbItem> getLastBreadcrumb(List<BreadcrumbItem> breadcrumbs) {
+        return Optional.ofNullable(breadcrumbs.isEmpty() ? null : breadcrumbs.getLast());
+    }
+
+    // Finds the parent category for a given category name
+    private Optional<Category> findParentCategory(String categoryName) {
+        return categoryService.findByName(categoryName)
+                .map(Category::getParent);
+    }
+
+    // Builds the URL for the parent category
+    private String buildParentUrl(StringBuilder urlBuilder, BreadcrumbItem lastBreadcrumb, Category parentCategory) {
+        return urlBuilder.toString().replace(
+                lastBreadcrumb.getOriginal(),
+                parentCategory.getName().toLowerCase()
+        );
+    }
+
+    // Inserts a new breadcrumb for the parent category
+    private void insertParentBreadcrumb(List<BreadcrumbItem> breadcrumbs, Category parentCategory, String parentUrl) {
+        breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
     }
 
 }
