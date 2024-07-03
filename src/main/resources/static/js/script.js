@@ -733,50 +733,80 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const searchBar = document.getElementById('searchBar');
-    const searchResults = document.getElementById('searchResults');
-
-    searchBar.addEventListener('input', function () {
-        let query = this.value;
-        if (query.length > 2) {
-            fetch(`/api/search?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.matchedProducts) {
-                        throw new Error('Invalid response format');
-                    }
-                    let matchedProducts = data.matchedProducts;
-                    searchResults.innerHTML = '';
-                    searchResults.style.display = 'block';
-                    matchedProducts.forEach(function (product) {
-                        searchResults.innerHTML += `
-                            <a href="${'/products/'+ product.categoryName.toLowerCase() + '/' + product.url}" class="product">
-                                <img src="${product.imageUrls[0]}" alt="Product Image">
-                                <div class="details">
-                                    <div class="name">${product.name}</div>
-                                    <div class="price">${product.originalPrice.toFixed(2)} $</div>
-                                </div>
-                            </a>`;
+    function setupSearchBar(searchBar, searchResults, updateUrlFunction) {
+        searchBar.addEventListener('input', function () {
+            let query = this.value;
+            if (query.length > 2) {
+                fetch(`/api/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.matchedProducts) {
+                            throw new Error('Invalid response format');
+                        }
+                        let matchedProducts = data.matchedProducts;
+                        searchResults.innerHTML = '';
+                        searchResults.style.display = 'block';
+                        matchedProducts.forEach(function (product) {
+                            searchResults.innerHTML += `
+                                <a href="${updateUrlFunction(product)}" class="product">
+                                    <img src="${product.imageUrls[0]}" alt="Product Image">
+                                    <div class="details">
+                                        <div class="name">${product.name}</div>
+                                        <div class="price">${product.originalPrice.toFixed(2)} $</div>
+                                    </div>
+                                </a>`;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        searchResults.innerHTML = '<div class="error">An error occurred while fetching results</div>';
                     });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    searchResults.innerHTML = '<div class="error">An error occurred while fetching results</div>';
-                });
-        } else {
-            searchResults.innerHTML = '';
-            searchResults.style.display = 'none';
+            } else {
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+            }
+        });
 
-        }
-    });
+        document.addEventListener('click', function(event) {
+            if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+            }
+        });
+    }
 
-    document.addEventListener('click', function(event) {
-        if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
-            searchResults.innerHTML = '';
-            searchResults.style.display = 'none';
+    function headerSearchUrl(product) {
+        return `/products/${product.categoryName.toLowerCase()}/${product.url}`;
+    }
+
+    function compareSearchUrl(product) {
+        // Modify the URL for the compare search functionality
+        const url = new URL(window.location);
+        const searchParams = new URLSearchParams(url.search);
+        if (searchBar.id === 'searchBar1') {
+            searchParams.set('idProduct1', product.id);
+        } else if (searchBar.id === 'searchBar2') {
+            searchParams.set('idProduct2', product.id);
+        } else if (searchBar.id === 'searchBar3') {
+            searchParams.set('idProduct3', product.id);
         }
+        return `${url.pathname}?${searchParams.toString()}`;
+    }
+
+    // Setup header search bar
+    const headerSearchBar = document.getElementById('searchBar');
+    const headerSearchResults = document.getElementById('searchResults');
+    setupSearchBar(headerSearchBar, headerSearchResults, headerSearchUrl);
+
+    // Setup compare product search bars
+    const compareSearchBars = ['searchBar1', 'searchBar2', 'searchBar3'];
+    compareSearchBars.forEach(id => {
+        const compareSearchBar = document.getElementById(id);
+        const compareSearchResults = document.getElementById(`searchResults${id.charAt(id.length - 1)}`);
+        setupSearchBar(compareSearchBar, compareSearchResults, compareSearchUrl);
     });
 });
+
 
 
 document.getElementById('compareButton').addEventListener('click', function() {
