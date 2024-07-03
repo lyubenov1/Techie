@@ -1542,3 +1542,19 @@ a.rating-info span:first-child {
 .suggestions a:hover {
     color: #1eaa69;
 }
+
+.compare-products {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.product-column {
+    flex: 1;
+    margin: 0 10px;
+    background-color: #343a40;
+    padding: 20px;
+    border-radius: 5px;
+}
+.product-column .input-group {
+    margin-bottom: 20px;
+}

@@ -777,3 +777,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+document.getElementById('compareButton').addEventListener('click', function() {
+    window.location.href = '/products/compare-products';
+});

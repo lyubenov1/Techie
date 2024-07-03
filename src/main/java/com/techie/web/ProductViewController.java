@@ -36,6 +36,10 @@ public class ProductViewController {
         return "weekly-deals";
     }
 
+    @GetMapping("/compare-products")
+    public String compareProductsPage() {
+        return "compare-products";
+    }
 
     @GetMapping("/search")
     public String searchProducts(@RequestParam(name = "q", required = false) String query,
