@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         searchResults.style.display = 'block';
                         matchedProducts.forEach(function (product) {
                             searchResults.innerHTML += `
-                                <a href="${updateUrlFunction(product)}" class="product">
+                                <a href="${updateUrlFunction(product, searchBar.id)}" class="product">
                                     <img src="${product.imageUrls[0]}" alt="Product Image">
                                     <div class="details">
                                         <div class="name">${product.name}</div>
@@ -779,17 +779,18 @@ document.addEventListener('DOMContentLoaded', function () {
         return `/products/${product.categoryName.toLowerCase()}/${product.url}`;
     }
 
-    function compareSearchUrl(product) {
-        // Modify the URL for the compare search functionality
+    function compareSearchUrl(product, searchBarId) {
         const url = new URL(window.location);
         const searchParams = new URLSearchParams(url.search);
-        if (searchBar.id === 'searchBar1') {
+
+        if (searchBarId === 'searchBar1') {
             searchParams.set('idProduct1', product.id);
-        } else if (searchBar.id === 'searchBar2') {
+        } else if (searchBarId === 'searchBar2') {
             searchParams.set('idProduct2', product.id);
-        } else if (searchBar.id === 'searchBar3') {
+        } else if (searchBarId === 'searchBar3') {
             searchParams.set('idProduct3', product.id);
         }
+
         return `${url.pathname}?${searchParams.toString()}`;
     }
 
@@ -810,7 +811,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.getElementById('compareButton').addEventListener('click', function() {
-    const productName = this.getAttribute('data-product-name');
-    window.location.href = `/products/compare-products/${encodeURIComponent(productName)}`;
+    const productId = this.getAttribute('data-product-id');
+    window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
 });
 

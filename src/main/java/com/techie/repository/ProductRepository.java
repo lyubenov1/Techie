@@ -4,6 +4,7 @@ import com.techie.domain.entities.*;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
+import org.springframework.lang.*;
 import org.springframework.stereotype.*;
 
 import java.math.*;
@@ -41,4 +42,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE p.name LIKE %:query% ORDER BY p.averageRating DESC")
     List<Product> findByNameContainingAndRating(@Param("query") String query, Pageable pageable);
 
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "JOIN FETCH p.brand JOIN FETCH p.productImages " +
+            "WHERE p.id = :id")
+    @NonNull
+    Optional<Product> findById(@Param("id") @NonNull Long id);
 }

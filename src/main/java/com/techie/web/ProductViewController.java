@@ -110,20 +110,6 @@ public class ProductViewController {
 
     @GetMapping("/{categoryName}/{productName}")
     public String productPage(@PathVariable String productName, @PathVariable String categoryName, Model model) {
-        return handleProductRequest(productName, model, "product-page");
-    }
-
-    @GetMapping("/compare-products")
-    public String compareProductsPage() {
-        return "compare-products";
-    }
-
-    @GetMapping("/compare-products/{productName}")
-    public String compareProduct(@PathVariable String productName, Model model) {
-        return handleProductRequest(productName, model, "compare-products");
-    }
-
-    private String handleProductRequest(String productName, Model model, String viewName) {
         Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
 
         if (productOptional.isEmpty()) {
@@ -134,7 +120,31 @@ public class ProductViewController {
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);
-        return viewName;
+        return "product-page";
     }
 
+    @GetMapping("/compare-products")
+    public String compareProductsPage(
+            @RequestParam(required = false) Long idProduct1,
+            @RequestParam(required = false) Long idProduct2,
+            @RequestParam(required = false) Long idProduct3,
+            Model model) {
+
+        addProductToModel(idProduct1, model, "product1");
+        addProductToModel(idProduct2, model, "product2");
+        addProductToModel(idProduct3, model, "product3");
+
+        return "compare-products";
+    }
+
+    private void addProductToModel(Long productId, Model model, String attributeName) {
+        if (productId != null) {
+            Optional<Product> productOptional = productService.findById(productId);
+            productOptional.ifPresent(product -> {
+                ProductDTO productDTO = productService.convertToDTO(product);
+                productService.addSpecifications(productDTO, model);
+                model.addAttribute(attributeName, productDTO);
+            });
+        }
+    }
 }

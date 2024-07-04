@@ -34,6 +34,10 @@ public class ProductService {
         this.commentRepository = commentRepository;
     }
 
+    public Optional<Product> findById(Long productId) {
+        return productRepository.findById(productId);
+    }
+
     public List<ProductDTO> searchProducts(String query, int limit) {
         List<Product> products = productRepository.findByNameContainingAndRating(query, PageRequest.of(0, limit));
         return products.stream()
