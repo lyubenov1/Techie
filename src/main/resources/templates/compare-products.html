@@ -31,13 +31,21 @@
         </div>
         <div>
             <div class="product-details" id="product1-details" th:if="${product1 != null}">
-                <h3 id="product1-name" th:text="${product1.name}">Product Name</h3>
-                <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
-                <p id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</p>
+                <div class="text-container-compare">
+                    <h4 id="product1-name" th:text="${product1.name}">Product Name</h4>
+                </div>
+                <div class="image-container-compare">
+                    <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
+                </div>
+                <div class="price-container-compare">
+                    <h4 id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</h4>
+                </div>
             </div>
             <div class="product-details" id="product1-details-placeholder" th:unless="${product1 != null}">
-                <h5>Select a product to compare</h5>
-                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                <h4>Select a product to compare</h4>
+                <div class="image-container">
+                    <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                </div>
             </div>
         </div>
     </div>
@@ -49,13 +57,21 @@
         </div>
         <div>
             <div class="product-details" id="product2-details" th:if="${product2 != null}">
-                <h3 id="product2-name" th:text="${product2.name}">Product Name</h3>
-                <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
-                <p id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</p>
+                <div class="text-container-compare">
+                    <h4 id="product2-name" th:text="${product2.name}">Product Name</h4>
+                </div>
+                <div class="image-container-compare">
+                    <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
+                </div>
+                <div class="price-container-compare">
+                    <h4 id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</h4>
+                </div>
             </div>
             <div class="product-details" id="product2-details-placeholder" th:unless="${product2 != null}">
-                <h5>Select a product to compare</h5>
-                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                <h4>Select a product to compare</h4>
+                <div class="image-container">
+                    <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                </div>
             </div>
         </div>
     </div>
@@ -67,13 +83,21 @@
         </div>
         <div>
             <div class="product-details" id="product3-details" th:if="${product3 != null}">
-                <h3 id="product3-name" th:text="${product3.name}">Product Name</h3>
-                <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">
-                <p id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</p>
+                <div class="text-container-compare">
+                    <h4 id="product3-name" th:text="${product3.name}">Product Name</h4>
+                </div>
+                <div class="image-container-compare">
+                    <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">
+                </div>
+                <div class="price-container-compare">
+                    <h4 id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</h4>
+                </div>
             </div>
             <div class="product-details" id="product3-details-placeholder" th:unless="${product3 != null}">
-                <h5>Select a product to compare</h5>
-                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                <h4>Select a product to compare</h4>
+                <div class="image-container">
+                    <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+                </div>
             </div>
         </div>
     </div>
