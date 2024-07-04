@@ -29,10 +29,16 @@
             <input type="search" class="form-control rounded searchBar" placeholder="Search" aria-label="Search" aria-describedby="search-addon-1" id="searchBar1"/>
             <div class="search-results" id="searchResults1"></div>
         </div>
-        <div class="product-details" id="product1-details" th:if="${product1 != null}">
-            <h3 id="product1-name" th:text="${product1.name}">Product Name</h3>
-            <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
-            <p id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</p>
+        <div>
+            <div class="product-details" id="product1-details" th:if="${product1 != null}">
+                <h3 id="product1-name" th:text="${product1.name}">Product Name</h3>
+                <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
+                <p id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</p>
+            </div>
+            <div class="product-details" id="product1-details-placeholder" th:unless="${product1 != null}">
+                <h5>Select a product to compare</h5>
+                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+            </div>
         </div>
     </div>
     <div class="product-column">
@@ -41,10 +47,16 @@
             <input type="search" class="form-control rounded searchBar" placeholder="Search" aria-label="Search" aria-describedby="search-addon-2" id="searchBar2"/>
             <div class="search-results" id="searchResults2"></div>
         </div>
-        <div class="product-details" id="product2-details" th:if="${product2 != null}">
-            <h3 id="product2-name" th:text="${product2.name}">Product Name</h3>
-            <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
-            <p id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</p>
+        <div>
+            <div class="product-details" id="product2-details" th:if="${product2 != null}">
+                <h3 id="product2-name" th:text="${product2.name}">Product Name</h3>
+                <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
+                <p id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</p>
+            </div>
+            <div class="product-details" id="product2-details-placeholder" th:unless="${product2 != null}">
+                <h5>Select a product to compare</h5>
+                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+            </div>
         </div>
     </div>
     <div class="product-column">
@@ -53,13 +65,20 @@
             <input type="search" class="form-control rounded searchBar" placeholder="Search" aria-label="Search" aria-describedby="search-addon-3" id="searchBar3"/>
             <div class="search-results" id="searchResults3"></div>
         </div>
-        <div class="product-details" id="product3-details" th:if="${product3 != null}">
-            <h3 id="product3-name" th:text="${product3.name}">Product Name</h3>
-            <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">
-            <p id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</p>
+        <div>
+            <div class="product-details" id="product3-details" th:if="${product3 != null}">
+                <h3 id="product3-name" th:text="${product3.name}">Product Name</h3>
+                <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">
+                <p id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</p>
+            </div>
+            <div class="product-details" id="product3-details-placeholder" th:unless="${product3 != null}">
+                <h5>Select a product to compare</h5>
+                <img src="/images/product_transparent.png" alt="Dummy Icon" width="300px" height="300px">
+            </div>
         </div>
     </div>
 </div>
+
 
 
 <div class="container-fluid footer-wrapper">

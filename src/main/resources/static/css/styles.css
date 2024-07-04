@@ -1735,6 +1735,8 @@ a.rating-info span:first-child {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
 }
 
 .product-details img {

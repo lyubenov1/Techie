@@ -732,6 +732,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     function setupSearchBar(searchBar, searchResults, updateUrlFunction) {
         searchBar.addEventListener('input', function () {
@@ -814,4 +819,3 @@ document.getElementById('compareButton').addEventListener('click', function() {
     const productId = this.getAttribute('data-product-id');
     window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
 });
-
