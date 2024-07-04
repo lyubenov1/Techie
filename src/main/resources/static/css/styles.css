@@ -1602,9 +1602,11 @@ a.rating-info span:first-child {
     flex: 0 1 auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     width: 200px;
     border-right: 1px solid gray;
+    border-left: 1px solid gray;
+    background-color: #333;
 }
 
 .product-column {
@@ -1623,12 +1625,12 @@ a.rating-info span:first-child {
     width: 95%;
     position: relative;
     padding: 35px 15px 15px;
-    background-color: #2c2c2c;
+    background-color: #333;
 }
 
 .searchBar {
     background-color: inherit !important;
-    border: 1px solid grey;
+    border: 1px solid grey !important;
     padding: 10px 40px 10px 20px;
     width: calc(100% - 50px);
     color: rgb(225, 222, 218) !important;
@@ -1636,9 +1638,28 @@ a.rating-info span:first-child {
     height: 30px;
 }
 
-@media (min-width: 400px) and (max-width: 991px) {
+@media (max-width: 991px) {
     .sidebar-column {
         width: 70px;
+    }
+
+    .product-column .input-group .input-group-label{
+        font-size: 13px;
+    }
+
+    .searchBar{
+        padding: 80px 32px 8px 8px;
+        width: calc(90% - 50px);
+        height: 20px;
+    }
+
+    .product-column .input-group {
+        width: 90%;
+        padding: 27px 11px 11px;
+    }
+
+    .sidebar-column h6{
+        font-size: 9px;
     }
 }
 
@@ -1646,11 +1667,23 @@ a.rating-info span:first-child {
     .sidebar-column {
         width: 100px;
     }
+
+    .sidebar-column h6{
+        font-size: 11px;
+    }
+
+    .product-column .input-group .input-group-label {
+        font-size: 15px;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1400px) {
     .sidebar-column {
         width: 150px;
+    }
+
+    .sidebar-column h6{
+        font-size: 15px;
     }
 }
 
