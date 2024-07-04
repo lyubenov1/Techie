@@ -15,13 +15,13 @@
 
 <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container">
+<div class = "container-xl">
     <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
 </div>
 
-<div class="container-md">
+<div class="container-xl">
     <div class="product-main row">
-        <div class="product-photos col-lg-8 col-xl-7 col-md-12">
+        <div class="product-photos col-lg-7 col-md-12">
             <div class="photo-container">
                 <div class="thumbnail-photos">
                     <div th:each="imageUrl, iterStat : ${product.imageUrls}"
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="product-info col-lg-4 col-xl-5 col-md-12">
+        <div class="product-info col-lg-5 col-md-12">
             <h1 th:text="${product.name}">Product Name</h1>
             <div class="rating-box-wrapper">
                 <div class="rate">
