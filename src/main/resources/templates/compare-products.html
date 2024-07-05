@@ -105,20 +105,15 @@
 
 <div class="specifications-table container-xl">
     <div class="specification-row" th:each="key : ${specificationKeys}">
-        <!-- Sidebar column with specification key -->
         <div class="sidebar-column">
             <span th:text="${key}">Specification Key</span>
         </div>
-
-        <!-- Product columns -->
         <div class="product-column">
             <span th:text="${specifications1 != null ? specifications1.get(key) : ''}"></span>
         </div>
-
         <div class="product-column">
             <span th:text="${specifications2 != null ? specifications2.get(key) : ''}"></span>
         </div>
-
         <div class="product-column">
             <span th:text="${specifications3 != null ? specifications3.get(key) : ''}"></span>
         </div>

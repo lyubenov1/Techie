@@ -734,9 +734,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
     function setupSearchBar(searchBar, searchResults, updateUrlFunction) {
         searchBar.addEventListener('input', function () {
@@ -784,6 +781,56 @@ document.addEventListener('DOMContentLoaded', function () {
         return `/products/${product.categoryName.toLowerCase()}/${product.url}`;
     }
 
+    // Setup header search bar
+    const headerSearchBar = document.getElementById('searchBar');
+    const headerSearchResults = document.getElementById('searchResults');
+    setupSearchBar(headerSearchBar, headerSearchResults, headerSearchUrl);
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    function setupSearchBar(searchBar, searchResults, updateUrlFunction) {
+        searchBar.addEventListener('input', function () {
+            let query = this.value;
+            if (query.length > 2) {
+                fetch(`/api/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.matchedProducts) {
+                            throw new Error('Invalid response format');
+                        }
+                        let matchedProducts = data.matchedProducts;
+                        searchResults.innerHTML = '';
+                        searchResults.style.display = 'block';
+                        matchedProducts.forEach(function (product) {
+                            searchResults.innerHTML += `
+                                <a href="${updateUrlFunction(product, searchBar.id)}" class="product">
+                                    <img src="${product.imageUrls[0]}" alt="Product Image">
+                                    <div class="details">
+                                        <div class="name">${product.name}</div>
+                                        <div class="price">${product.originalPrice.toFixed(2)} $</div>
+                                    </div>
+                                </a>`;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        searchResults.innerHTML = '<div class="error">An error occurred while fetching results</div>';
+                    });
+            } else {
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+            }
+        });
+    }
+
     function compareSearchUrl(product, searchBarId) {
         const url = new URL(window.location);
         const searchParams = new URLSearchParams(url.search);
@@ -799,11 +846,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${url.pathname}?${searchParams.toString()}`;
     }
 
-    // Setup header search bar
-    const headerSearchBar = document.getElementById('searchBar');
-    const headerSearchResults = document.getElementById('searchResults');
-    setupSearchBar(headerSearchBar, headerSearchResults, headerSearchUrl);
-
     // Setup compare product search bars
     const compareSearchBars = ['searchBar1', 'searchBar2', 'searchBar3'];
     compareSearchBars.forEach(id => {
@@ -812,7 +854,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setupSearchBar(compareSearchBar, compareSearchResults, compareSearchUrl);
     });
 });
-
 
 
 document.getElementById('compareButton').addEventListener('click', function() {
