@@ -243,7 +243,7 @@ public class ProductService {
         model.addAttribute("specifications", retrieveSpecifications(productDTO));
     }
 
-    private Map<String, String> retrieveSpecifications(ProductDTO product) {
+    public Map<String, String> retrieveSpecifications(ProductDTO product) {
         Map<String, String> specifications = new LinkedHashMap<>();
 
         for (Field field : FieldUtil.getFields(product)) {
@@ -319,6 +319,29 @@ public class ProductService {
                 .limit(5)
                 .map(this::convertToDTO)
                 .toList();
+    }
+
+    public Set<String> retrieveSpecificationKeys(Long idProduct1, Long idProduct2, Long idProduct3) {
+        Set<String> specificationKeys = new LinkedHashSet<>();
+
+        if (idProduct1 != null) {
+            specificationKeys.addAll(retrieveSpecificationsKeysForProduct(idProduct1));
+        } else if (idProduct2 != null) {
+            specificationKeys.addAll(retrieveSpecificationsKeysForProduct(idProduct2));
+        } else if (idProduct3 != null) {
+            specificationKeys.addAll(retrieveSpecificationsKeysForProduct(idProduct3));
+        }
+
+        return specificationKeys;
+    }
+
+    private Set<String> retrieveSpecificationsKeysForProduct(Long productId) {
+        Optional<Product> productOptional = findById(productId);
+        if (productOptional.isPresent()) {
+            ProductDTO productDTO = convertToDTO(productOptional.get());
+            return retrieveSpecifications(productDTO).keySet();
+        }
+        return Collections.emptySet();
     }
 }
 

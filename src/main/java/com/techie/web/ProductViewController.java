@@ -130,21 +130,26 @@ public class ProductViewController {
             @RequestParam(required = false) Long idProduct3,
             Model model) {
 
-        addProductToModel(idProduct1, model, "product1");
-        addProductToModel(idProduct2, model, "product2");
-        addProductToModel(idProduct3, model, "product3");
+        addProductToModel(idProduct1, model, "product1", "specifications1");
+        addProductToModel(idProduct2, model, "product2", "specifications2");
+        addProductToModel(idProduct3, model, "product3", "specifications3");
+
+        Set<String> specificationKeys = productService.retrieveSpecificationKeys(idProduct1, idProduct2, idProduct3);
+        model.addAttribute("specificationKeys", specificationKeys);
 
         return "compare-products";
     }
 
-    private void addProductToModel(Long productId, Model model, String attributeName) {
+    private void addProductToModel(Long productId, Model model, String attributeName, String specsAttributeName) {
         if (productId != null) {
             Optional<Product> productOptional = productService.findById(productId);
             productOptional.ifPresent(product -> {
                 ProductDTO productDTO = productService.convertToDTO(product);
-                productService.addSpecifications(productDTO, model);
+                Map<String, String> specifications = productService.retrieveSpecifications(productDTO);
                 model.addAttribute(attributeName, productDTO);
+                model.addAttribute(specsAttributeName, specifications);
             });
         }
     }
+
 }
