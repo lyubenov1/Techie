@@ -1560,6 +1560,7 @@ a.rating-info span:first-child {
     padding-top: 20px;
 }
 
+
 .sidebar-column {
     flex: 0 1 auto;
     display: flex;
@@ -1568,6 +1569,11 @@ a.rating-info span:first-child {
     width: 200px;
     border: 1px solid gray;
     background-color: inherit;
+}
+
+.sidebar-column h5 {
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
 }
 
 .product-column {
@@ -1624,16 +1630,17 @@ a.rating-info span:first-child {
         padding: 27px 11px 11px;
     }
 
-    .sidebar-column h6{
+    .sidebar-column h5{
         font-size: 9px;
     }
 
     .product-details h4 {
-        font-size: 15px;
+        font-size: 9px;
     }
 
-    .product-details p {
-        font-size: 15px;
+    .specifications-table .sidebar-column,
+    .specifications-table .product-column {
+        font-size: 9px;
     }
 }
 
@@ -1657,16 +1664,17 @@ a.rating-info span:first-child {
         padding: 27px 11px 11px;
     }
 
-    .sidebar-column h6{
-        font-size: 9px;
+    .sidebar-column h5{
+        font-size: 12px;
     }
 
     .product-details h4 {
-        font-size: 15px;
+        font-size: 12px;
     }
 
-    .product-details p {
-        font-size: 15px;
+    .specifications-table .sidebar-column,
+    .specifications-table .product-column {
+        font-size: 12px;
     }
 }
 
@@ -1676,8 +1684,8 @@ a.rating-info span:first-child {
         width: 100px;
     }
 
-    .sidebar-column h6{
-        font-size: 11px;
+    .sidebar-column h5{
+        font-size: 15px;
     }
 
     .product-column .input-group .input-group-label {
@@ -1685,26 +1693,22 @@ a.rating-info span:first-child {
     }
 
     .product-details h4 {
-        font-size: 17px;
+        font-size: 15px;
     }
 
-    .product-details p {
-        font-size: 17px;
+    .specifications-table .sidebar-column,
+    .specifications-table .product-column {
+        font-size: 15px;
     }
 }
-
 
 @media (min-width: 1200px) and (max-width: 1400px) {
     .sidebar-column {
         width: 150px;
     }
 
-    .sidebar-column h6{
-        font-size: 15px;
-    }
-
-    .product-details p {
-        font-size: 20px;
+    .sidebar-column h5{
+        font-size: 18px;
     }
 }
 
@@ -1883,25 +1887,4 @@ a.rating-info span:first-child {
     padding: 8px;
     box-sizing: border-box;
     text-align: right;
-}
-
-.sidebar-column {
-    flex: 0 1 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    border: 1px solid gray;
-    background-color: inherit;
-}
-
-.product-column {
-    border: 1px solid gray;
-    border-top: none;
-    position: relative;
-    padding: 0;
-    flex: 1 1 0;
-    max-width: 33.33%;
-    height: auto;
-    min-height: 0;
 }
