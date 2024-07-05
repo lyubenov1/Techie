@@ -32,7 +32,7 @@
         <div>
             <div class="product-details" id="product1-details" th:if="${product1 != null}">
                 <div class="text-container-compare">
-                    <h4 id="product1-name" th:text="${product1.name}">Product Name</h4>
+                    <h4 id="product1-name" th:text="${product1.name}" th:attr="data-category=${product1.categoryName}">Product Name</h4>
                 </div>
                 <div class="image-container-compare">
                     <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
@@ -58,7 +58,7 @@
         <div>
             <div class="product-details" id="product2-details" th:if="${product2 != null}">
                 <div class="text-container-compare">
-                    <h4 id="product2-name" th:text="${product2.name}">Product Name</h4>
+                    <h4 id="product2-name" th:text="${product2.name}" th:attr="data-category=${product2.categoryName}">Product Name</h4>
                 </div>
                 <div class="image-container-compare">
                     <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
@@ -84,7 +84,7 @@
         <div>
             <div class="product-details" id="product3-details" th:if="${product3 != null}">
                 <div class="text-container-compare">
-                    <h4 id="product3-name" th:text="${product3.name}">Product Name</h4>
+                    <h4 id="product3-name" th:text="${product3.name}" th:attr="data-category=${product3.categoryName}">Product Name</h4>
                 </div>
                 <div class="image-container-compare">
                     <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">

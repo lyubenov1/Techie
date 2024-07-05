@@ -44,6 +44,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN FETCH p.category " +
             "JOIN FETCH p.brand JOIN FETCH p.productImages " +
+            "WHERE p.name LIKE %:query% " +
+            "AND (:categoryName IS NULL OR p.category.name = :categoryName) " +
+            "ORDER BY p.averageRating DESC")
+    List<Product> findByNameContainingAndCategory(@Param("query") String query,
+                                                  @Param("categoryName") String categoryName,
+                                                  Pageable pageable);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "JOIN FETCH p.brand JOIN FETCH p.productImages " +
             "WHERE p.id = :id")
     @NonNull
     Optional<Product> findById(@Param("id") @NonNull Long id);

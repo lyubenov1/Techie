@@ -20,8 +20,9 @@ public class SearchRestController {
     }
 
     @GetMapping
-    public ResponseEntity<SearchResponse> quickSearch(@RequestParam String query) {
-        List<ProductDTO> matchedProducts = productService.searchProducts(query, 5);
+    public ResponseEntity<SearchResponse> quickSearch(@RequestParam String query,
+                                                      @RequestParam(required = false) String category) {
+        List<ProductDTO> matchedProducts = productService.searchProducts(query, category, 5);
 
         SearchResponse response = SearchResponse.builder()
                 .matchedProducts(matchedProducts)

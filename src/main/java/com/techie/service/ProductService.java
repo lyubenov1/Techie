@@ -38,8 +38,15 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public List<ProductDTO> searchProducts(String query, int limit) {
-        List<Product> products = productRepository.findByNameContainingAndRating(query, PageRequest.of(0, limit));
+    public List<ProductDTO> searchProducts(String query, String categoryName, int limit) {
+        List<Product> products;
+
+        if (categoryName == null || categoryName.isEmpty()) {
+            products = productRepository.findByNameContainingAndRating(query, PageRequest.of(0, limit));
+        } else {
+            products = productRepository.findByNameContainingAndCategory(query, categoryName, PageRequest.of(0, limit));
+        }
+
         return products.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
