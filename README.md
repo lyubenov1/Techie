@@ -15,33 +15,37 @@ To get the application up and running, follow these steps:
 That's it!
 
 
-### Products page sample № 1
-Smooth transition change of main picture when hovering over one of the thumbnail images. Comparing option with other products of the same category. Rating and reviewing. Similar products.
+### Product page sample
+Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Comparing option with other products of the same category. Rating and reviewing. Similar products.
 
 <img src="src/main/resources/static/images/products_sample_1.png" alt="Product page">
 
-### Products page sample № 2
+### Compare products page sample
+If the user navigates from the 'compare' button on a product page, the corresponding product is shown as the first option. Only products from the same category as an already displayed product are suggested.
+
+<img src="src/main/resources/static/images/compare-products-sample.png" alt="Compare products page">
+
+### Products page sample № 1
 Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting and pagination.
 
 <img src="src/main/resources/static/images/products_sample_2.png" alt="Smartphones page">
 
-### Products page sample № 3
+### Products page sample № 2
 
 <img src="src/main/resources/static/images/products_sample_3.png" alt="Smartphones page">
 
 ### Index page current state
+Header hides when scrolling down and reappears when scrolling up. Search bar shows product suggestions on queries of at least 3 characters. Suggestions are sorted by highest rating.
 
 <img src="src/main/resources/static/images/index_page.png" alt="Index page">
 
-
-
 ### Database diagram (as of right now)
-The product entity (table) is inherited by various child entities (laptop, smartphone, etc.), which add their own fields (attributes) in addition to the attributes of the parent product entity. Pictures are shown below.
+The database is populated with 521 products of different kinds. The product entity is inherited by various child entities (laptop, smartphone, etc.), which add their own fields in addition to the attributes of the parent product entity.
 
 <img src="src/main/resources/static/images/diagram.png" alt="Database Diagram">
 
-
 ### The products:
+
 <img src="src/main/resources/static/images/products_diagram.png" alt="Database Diagram">
 
 
