@@ -1,20 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+    // Last scroll position
     var lastScrollTop = 0;
+
     var header = document.getElementById('mainHeader');
     var headerHeight = header.offsetHeight;
 
     window.addEventListener("scroll", function() {
+        // Get the current scroll position
         var st = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Scroll down
+        // Check if the user is scrolling down
         if (st > lastScrollTop && st > headerHeight) {
-            // Scroll down and hide header
+            // If scrolling down and beyond the header height, hide the header
             header.classList.remove('underline');
             header.classList.add('hidden');
         } else {
-            // Scroll up
+            // If the user is scrolling up
             if (st + window.innerHeight < document.documentElement.scrollHeight) {
-                // Show header and add underline
+                // Show the header and add an underline
                 header.classList.remove('hidden');
                 header.classList.add('underline');
             }
@@ -25,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
             header.classList.remove('underline');
         }
 
-        lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+        // Update the last scroll position
+        lastScrollTop = st <= 0 ? 0 : st; // Handle mobile and negative scrolling scenarios
     });
 });
 
