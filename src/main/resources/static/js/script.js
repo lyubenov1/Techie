@@ -735,20 +735,15 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function () {
 
     function setupSearchBar(searchBar, searchResults, updateUrlFunction, categoryName = null) {
+        // Handle input event for header search bar
         searchBar.addEventListener('input', function () {
-            const query = this.value.trim();
-            if (query.length > 2) {   // Proceed if the query is longer than 2 characters
-                let apiUrl = `/api/search?query=${encodeURIComponent(query)}`;
-                if (categoryName) {
-                    apiUrl += `&category=${encodeURIComponent(categoryName)}`;
-                }
+            handleSearchEvent(searchBar, searchResults, updateUrlFunction, categoryName);
+        });
 
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => handleSearchResults(data, searchResults, searchBar.id, updateUrlFunction))
-                    .catch(error => handleError(error, searchResults));
-            } else {
-                clearSearchResults(searchResults);
+        // Handle focus event for compare search bars. Relevant products will be fetched even with no query
+        searchBar.addEventListener('focus', function () {
+            if (['searchBar1', 'searchBar2', 'searchBar3'].includes(searchBar.id)) {
+                handleSearchEvent(searchBar, searchResults, updateUrlFunction, categoryName, true);
             }
         });
 
@@ -758,6 +753,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 clearSearchResults(searchResults);
             }
         });
+    }
+
+    function handleSearchEvent(searchBar, searchResults, updateUrlFunction, categoryName, forceSearch = false) {
+        const query = searchBar.value.trim();
+        const isCompareSearchBar = ['searchBar1', 'searchBar2', 'searchBar3'].includes(searchBar.id);
+
+        // Check if the query length is appropriate for fetching or if forced
+        if ((isCompareSearchBar && (query.length >= 0 || forceSearch)) || (!isCompareSearchBar && query.length > 2)) {
+            let apiUrl = `/api/search?query=${encodeURIComponent(query)}`;
+            if (categoryName) {
+                apiUrl += `&category=${encodeURIComponent(categoryName)}`;
+            }
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => handleSearchResults(data, searchResults, searchBar.id, updateUrlFunction))
+                .catch(error => handleError(error, searchResults));
+        } else {
+            clearSearchResults(searchResults);
+        }
     }
 
     function handleSearchResults(data, searchResults, searchBarId, updateUrlFunction) {
