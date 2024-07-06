@@ -339,7 +339,7 @@ public class ProductService {
             specificationKeys.addAll(retrieveSpecificationsKeysForProduct(idProduct3));
         }
 
-        return specificationKeys;
+        return specificationKeys;   // Only fields for the category of the first non-null product will be displayed
     }
 
     private Set<String> retrieveSpecificationsKeysForProduct(Long productId) {

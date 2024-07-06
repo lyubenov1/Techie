@@ -737,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function setupSearchBar(searchBar, searchResults, updateUrlFunction, categoryName = null) {
         searchBar.addEventListener('input', function () {
             const query = this.value.trim();
-            if (query.length > 2) {
+            if (query.length > 2) {   // Proceed if the query is longer than 2 characters
                 let apiUrl = `/api/search?query=${encodeURIComponent(query)}`;
                 if (categoryName) {
                     apiUrl += `&category=${encodeURIComponent(categoryName)}`;
@@ -752,6 +752,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Add a click event listener to the document to clear search results when clicking outside
         document.addEventListener('click', function (event) {
             if (!searchBar.contains(event.target) && !searchResults.contains(event.target)) {
                 clearSearchResults(searchResults);
@@ -764,8 +765,8 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error('Invalid response format');
         }
         const matchedProducts = data.matchedProducts;
-        searchResults.innerHTML = '';
-        searchResults.style.display = 'block';
+        searchResults.innerHTML = '';  // Clear previous search results
+        searchResults.style.display = 'block';  // Show the search results container
         matchedProducts.forEach(product => {
             searchResults.innerHTML += createProductHTML(product, searchBarId, updateUrlFunction);
         });
@@ -778,9 +779,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function clearSearchResults(searchResults) {
         searchResults.innerHTML = '';
-        searchResults.style.display = 'none';
+        searchResults.style.display = 'none';  // Hide the search results container
     }
 
+    // Function to create HTML for a single product
     function createProductHTML(product, searchBarId, updateUrlFunction) {
         return `
             <a href="${updateUrlFunction(product, searchBarId)}" class="product">
@@ -792,10 +794,12 @@ document.addEventListener('DOMContentLoaded', function () {
             </a>`;
     }
 
+    // Function to generate URL for header search results
     function headerSearchUrl(product) {
         return `/products/${product.categoryName.toLowerCase()}/${product.url}`;
     }
 
+    // Function to generate URL for compare search results
     function compareSearchUrl(product, searchBarId) {
         const url = new URL(window.location);
         const searchParams = new URLSearchParams(url.search);
@@ -805,6 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${url.pathname}?${searchParams.toString()}`;
     }
 
+    // Function to get the selected category from compare search bars
     function getSelectedCategory() {
         const compareSearchBars = ['searchBar1', 'searchBar2', 'searchBar3'];
         for (const id of compareSearchBars) {
