@@ -1669,7 +1669,7 @@ a.rating-info span:first-child {
     }
 
     .product-details h4 {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .specifications-table .sidebar-column,
@@ -1693,7 +1693,7 @@ a.rating-info span:first-child {
     }
 
     .product-details h4 {
-        font-size: 15px;
+        font-size: 18px;
     }
 
     .specifications-table .sidebar-column,
@@ -1856,14 +1856,34 @@ a.rating-info span:first-child {
     -webkit-box-orient: vertical;
 }
 
-.product-details p {
-    font-size: 23px;
+.items-compare {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    position: relative;
 }
 
+.external-link-compare {
+    position: relative;
+    top: -2px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
 
+.external-link-compare:hover {
+    transform: scale(1.1);
+}
 
+@media (max-width: 1200px) {
+    .items-compare {
+        justify-content: center;
+    }
 
-
+    .external-link-compare {
+        display: none;
+    }
+}
 
 .specifications-table {
     border-collapse: collapse;

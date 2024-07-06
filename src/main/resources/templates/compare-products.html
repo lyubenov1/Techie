@@ -37,8 +37,13 @@
                 <div class="image-container-compare">
                     <img id="product1-image" th:src="${product1.imageUrls[0]}" alt="Product Image">
                 </div>
-                <div class="price-container-compare">
-                    <h4 id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</h4>
+                <div class="items-compare">
+                    <div class="price-container-compare">
+                        <h4 id="product1-price" th:text="${'$' + product1.originalPrice}">Product Price</h4>
+                    </div>
+                    <a class="external-link-compare" th:href="${'/products/'+ product1.categoryName.toLowerCase() + '/' + product1.url}">
+                        <i class="fa-solid fa-arrow-up-right-from-square fa-lg" style="color: #e1deda;"></i>
+                    </a>
                 </div>
             </div>
             <div class="product-details" id="product1-details-placeholder" th:unless="${product1 != null}">
@@ -63,8 +68,13 @@
                 <div class="image-container-compare">
                     <img id="product2-image" th:src="${product2.imageUrls[0]}" alt="Product Image">
                 </div>
-                <div class="price-container-compare">
-                    <h4 id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</h4>
+                <div class="items-compare">
+                    <div class="price-container-compare">
+                        <h4 id="product2-price" th:text="${'$' + product2.originalPrice}">Product Price</h4>
+                    </div>
+                    <a class="external-link-compare" th:href="${'/products/'+ product2.categoryName.toLowerCase() + '/' + product2.url}">
+                        <i class="fa-solid fa-arrow-up-right-from-square fa-lg" style="color: #e1deda;"></i>
+                    </a>
                 </div>
             </div>
             <div class="product-details" id="product2-details-placeholder" th:unless="${product2 != null}">
@@ -89,8 +99,13 @@
                 <div class="image-container-compare">
                     <img id="product3-image" th:src="${product3.imageUrls[0]}" alt="Product Image">
                 </div>
-                <div class="price-container-compare">
-                    <h4 id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</h4>
+                <div class="items-compare">
+                    <div class="price-container-compare">
+                        <h4 id="product3-price" th:text="${'$' + product3.originalPrice}">Product Price</h4>
+                    </div>
+                    <a class="external-link-compare" th:href="${'/products/'+ product3.categoryName.toLowerCase() + '/' + product3.url}">
+                        <i class="fa-solid fa-arrow-up-right-from-square fa-lg" style="color: #e1deda;"></i>
+                    </a>
                 </div>
             </div>
             <div class="product-details" id="product3-details-placeholder" th:unless="${product3 != null}">
