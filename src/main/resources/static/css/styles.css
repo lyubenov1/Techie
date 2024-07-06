@@ -1,3 +1,16 @@
+#mainHeader {
+    transition: top 0.3s ease;
+    top: 0; /* Initially visible */
+}
+
+#mainHeader.hidden {
+    top: -100px; /* Moves header out of view */
+}
+
+#mainHeader.underline {
+    border-bottom: 2px solid white;
+}
+
 .navbar-nav .categories-wrapper {
     background-color: #3c3c3c;
     padding: 7px 5px;

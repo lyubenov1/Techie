@@ -1,3 +1,36 @@
+document.addEventListener("DOMContentLoaded", function() {
+    var lastScrollTop = 0;
+    var header = document.getElementById('mainHeader');
+    var headerHeight = header.offsetHeight;
+
+    window.addEventListener("scroll", function() {
+        var st = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Scroll down
+        if (st > lastScrollTop && st > headerHeight) {
+            // Scroll down and hide header
+            header.classList.remove('underline');
+            header.classList.add('hidden');
+        } else {
+            // Scroll up
+            if (st + window.innerHeight < document.documentElement.scrollHeight) {
+                // Show header and add underline
+                header.classList.remove('hidden');
+                header.classList.add('underline');
+            }
+        }
+
+        // Remove underline when scrolled to the top
+        if (st <= headerHeight) {
+            header.classList.remove('underline');
+        }
+
+        lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+    });
+});
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var dropdownToggle = document.getElementById('navbarDropdown');
     var barsIcon = document.querySelector('.bars-icon');
