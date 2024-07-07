@@ -20,7 +20,7 @@ public class BreadcrumbInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(@Nullable HttpServletRequest request,
                            @Nullable HttpServletResponse response,
-                           @Nullable Object handler, ModelAndView modelAndView) throws Exception {
+                           @Nullable Object handler, ModelAndView modelAndView) {
         if (modelAndView != null) {
             modelAndView.addObject("breadcrumb", breadcrumbService.getBreadcrumbs(request));
         }
