@@ -1,3 +1,88 @@
 <!DOCTYPE html>
 <html lang="en"
->
+      xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="header" class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" id="mainHeader">
+    <div class="container-xl">
+
+        <a class="navbar-brand" href="/">
+            <img src="/images/logo_white_cropped.png" alt="Techie" width="79px" height="60px">Techie®</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ul first me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link categories active categories-wrapper dropdown-toggle d-flex align-items-center"
+                       href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="icon-container">
+                            <i class="fa-solid fa-bars me-2 bars-icon"></i>
+                            <i class="fa-solid fa-xmark me-2 close-icon d-none"></i>
+                        </div>Categories</a>
+
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu slideIn" aria-labelledby="navbarDropdown">
+                        <li th:each="category : ${categories}">
+                            <a class="dropdown-item" th:href="${category.url}" th:text="${category.name}"></a>
+                            <span class="arrow" aria-hidden="true">&gt;</span>
+                            <ul class="dropdown-submenu" th:if="${not #lists.isEmpty(category.children)}">
+                                <li th:each="child : ${category.children}">
+                                    <a class="dropdown-item" th:href="${child.url}" th:text="${child.name}"></a>
+                                    <span class="arrow" aria-hidden="true">&gt;</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/products/weekly-deals">Weekly deals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/about-us">About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin">Admin</a>
+                </li>
+            </ul>
+
+            <!-- Search bar -->
+            <form class="d-flex" style="font-family: 'Roboto Condensed', serif; position: relative;" role="search" action="/products/search" method="GET">
+                <input class="form-control me-2" id="searchBar" type="search" name="q" placeholder="What are you searching for?" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                <div class="search-results" id="searchResults"></div>
+            </form>
+
+            <!-- Icons -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-heart fa-lg text-white"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger">0</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-shopping-cart fa-lg text-white"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger">0</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" id="profile-dropdown">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-user fa-lg text-white"></i>
+                    </a>
+                    <!-- Dropdown menu for profile -->
+                    <div class="dropdown-menu slideIn" id="profile-dropdown-menu">
+                        <a class="dropdown-item" href="/login">Login</a>
+                        <a class="dropdown-item" href="/register">Register</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

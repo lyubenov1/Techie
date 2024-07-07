@@ -89,11 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var profileDropdownMenu = document.getElementById('profile-dropdown-menu');
 
     profileIcon.addEventListener('mouseover', function () {
-        // Show the profile dropdown menu
         profileDropdownMenu.style.display = 'block';
     });
     profileIcon.addEventListener('mouseout', function () {
-        // Hide the profile dropdown menu
         profileDropdownMenu.style.display = 'none';
     });
 

@@ -510,19 +510,13 @@ body.register .form-check-label {
     color: #fff;
 }
 
-
-@media (max-width: 992px) {
-    .dropdown-submenu {
-        position: static;
-        margin-top: 10px;
-    }
-}
-
-.dropdown-menu li {
+.dropdown-menu li,
+#profile-dropdown-menu .dropdown-item {
     border-bottom: 1px solid #ccc;
 }
 
-.dropdown-menu li:last-child {
+.dropdown-menu li:last-child,
+#profile-dropdown-menu .dropdown-item:last-child {
     border-bottom: none;
 }
 
@@ -531,9 +525,28 @@ body.register .form-check-label {
     width: 100%;
 }
 
+#profile-dropdown {
+    position: relative;
+}
 
+#profile-dropdown-menu {
+    position: absolute;
+    left: -130px;
+    top: 14px;
+}
 
+@media (max-width: 992px) {
+    .dropdown-submenu {
+        position: static;
+        margin-top: 10px;
+    }
 
+    #profile-dropdown-menu {
+        position: absolute;
+        left: -5px;
+        top: 14px;
+    }
+}
 
 .products-main {
     display: flex;
