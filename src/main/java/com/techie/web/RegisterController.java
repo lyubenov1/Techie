@@ -30,23 +30,21 @@ public class RegisterController {
     @GetMapping
     public String getRegister(Model model) {
         if (!model.containsAttribute("userRegisterForm")) {
-            model.addAttribute("userRegisterForm", new UserRegisterFormDTO());
+            model.addAttribute("userRegisterForm", new UserRegisterForm());
         }
         return "register";
     }
 
     @ModelAttribute("userRegisterForm")
-    public UserRegisterFormDTO initForm() {
-        return new UserRegisterFormDTO();
+    public UserRegisterForm initForm() {
+        return new UserRegisterForm();
     }
 
     @PostMapping
     public String postRegister(
-            @Valid @ModelAttribute("userRegisterForm") UserRegisterFormDTO userRegisterForm,
-            BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            HttpServletRequest request,
-            HttpServletResponse response) {
+            @Valid @ModelAttribute("userRegisterForm") UserRegisterForm userRegisterForm,
+            BindingResult bindingResult, RedirectAttributes redirectAttributes,
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes

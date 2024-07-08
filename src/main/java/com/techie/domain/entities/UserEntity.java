@@ -3,15 +3,12 @@ package com.techie.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "users")
 public class UserEntity {
 
@@ -46,7 +43,7 @@ public class UserEntity {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
-    private List<RoleEntity> roles;
+    private List<RoleEntity> roles;   // user's role (User or Admin).
 
 
     public void addAddress(Address address) {

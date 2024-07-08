@@ -1,15 +1,8 @@
 package com.techie.domain.model;
 
-import com.techie.validation.PasswordMatch;
-import com.techie.validation.UniqueEmail;
-import com.techie.validation.UniqueUsername;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.techie.validation.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 @Getter
 @Setter
@@ -17,7 +10,7 @@ import lombok.Setter;
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 @UniqueUsername
 @UniqueEmail
-public class UserRegisterFormDTO {
+public class UserRegisterForm {
 
     @NotBlank(message = "Username is required.")
     @Size(min = 4, max = 25)
@@ -46,4 +39,22 @@ public class UserRegisterFormDTO {
     @Size(max = 50)
     private String lastName;
 
+    @NotBlank(message = "Address line 1 is required.")
+    @Size(max = 50)
+    private String addressLine1;
+
+    @Size(max = 50)
+    private String addressLine2;
+
+    @NotBlank(message = "City is required.")
+    @Size(max = 50)
+    private String city;
+
+    @NotBlank(message = "Country is required.")
+    @Size(max = 50)
+    private String country;
+
+    @NotBlank(message = "Zip code is required.")
+    @Size(max = 20)
+    private String zipCode;
 }

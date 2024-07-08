@@ -1,11 +1,10 @@
 package com.techie.validation;
 
-import com.techie.domain.model.UserRegisterFormDTO;
-import com.techie.repository.UserRepository;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import com.techie.domain.model.*;
+import com.techie.repository.*;
+import jakarta.validation.*;
 
-public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, UserRegisterFormDTO> {
+public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, UserRegisterForm> {
 
     private final UserRepository userRepository;
 
@@ -18,8 +17,8 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     }
 
     @Override
-    public boolean isValid(UserRegisterFormDTO userRegisterFormDTO, ConstraintValidatorContext constraintValidatorContext) {
-        String username = userRegisterFormDTO.getUsername();
+    public boolean isValid(UserRegisterForm userRegisterForm, ConstraintValidatorContext constraintValidatorContext) {
+        String username = userRegisterForm.getUsername();
 
         // Check if username is already taken
         if (userRepository.existsByUsername(username)) {
