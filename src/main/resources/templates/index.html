@@ -24,6 +24,11 @@
 </div>
 
 <div class="container main-content">
+    <!-- Display success message if available -->
+    <div th:if="${successMessage}" class="custom-alert-homepage custom-alert-success" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+
     <!-- Hero Section -->
     <section>
         <div id="carouselProductShowcase" class="carousel slide custom-carousel">

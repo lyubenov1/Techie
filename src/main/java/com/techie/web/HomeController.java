@@ -17,4 +17,9 @@ public class HomeController {
         return "about-us";
     }
 
+    @GetMapping("/terms-of-use")
+    public String termsOfUsePage() {
+        return "terms-of-use";
+    }
+
 }

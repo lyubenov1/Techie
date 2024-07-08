@@ -57,4 +57,7 @@ public class UserRegisterForm {
     @NotBlank(message = "Zip code is required.")
     @Size(max = 20)
     private String zipCode;
+
+    @AssertTrue(message = "You must agree to the terms of use.")
+    private boolean termsAccepted;
 }
