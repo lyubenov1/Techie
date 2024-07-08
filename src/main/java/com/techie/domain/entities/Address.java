@@ -9,6 +9,8 @@ import java.util.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "address")
 public class Address {
