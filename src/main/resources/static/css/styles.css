@@ -1971,21 +1971,33 @@ a.rating-info span:first-child {
 
 .register-content .error-message {
     color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
+    background-color: rgb(225, 222, 218);
+    border: 1px solid rgb(225, 222, 218);
     border-radius: 0.25rem;
     padding: 0.375rem 0.75rem;
     font-size: 15px;
+    top: 100%;
 }
 
 .password-field {
     position: relative;
 }
 
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    flex: 1;
+    padding-right: 2.5rem;
+}
+
 .btn-toggle-password {
     position: absolute;
     right: 10px;
-    top: 31%;
+    top: 51%;
     transform: translateY(-50%);
     background: none;
     border: none;
