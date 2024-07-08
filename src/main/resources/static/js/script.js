@@ -888,9 +888,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
 document.getElementById('compareButton').addEventListener('click', function() {
     const productId = this.getAttribute('data-product-id');
     window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
 });
+
+
+
+function togglePassword(fieldId, toggleBtn) {
+    const passwordField = document.getElementById(fieldId);
+    const icon = toggleBtn.querySelector('i');
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = "password";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
