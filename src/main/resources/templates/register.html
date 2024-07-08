@@ -28,7 +28,7 @@
                     <div class="register-card" style="border-radius: 15px;">
                         <div class="register-card-body p-5">
                             <h2 class="fw-normal register-text-uppercase text-center mb-5">Create an account</h2>
-                            <form th:action="@{/register}" th:object="${userRegisterForm}" method="post">
+                            <form th:action="@{/register}" th:object="${userRegisterForm}" method="POST">
                                 <div class="row">
                                     <!-- Left Column -->
                                     <div class="col-md-6">
@@ -37,36 +37,36 @@
                                                 <div class="register-form-outline">
                                                     <input type="text" id="firstName" th:field="*{firstName}" class="form-control form-control-lg" />
                                                     <label class="form-label" for="firstName">First Name</label>
-                                                    <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                                    <p class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="register-form-outline">
                                                     <input type="text" id="lastName" th:field="*{lastName}" class="form-control form-control-lg" />
                                                     <label class="form-label" for="lastName">Last Name</label>
-                                                    <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                                                    <p class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="email" id="email" th:field="*{email}" class="form-control form-control-lg" />
                                             <label class="form-label" for="email">Email</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="username" th:field="*{username}" class="form-control form-control-lg" />
                                             <label class="form-label" for="username">Username</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="password" id="password" th:field="*{password}" class="form-control form-control-lg" />
                                             <label class="form-label" for="password">Password</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control form-control-lg" />
                                             <label class="form-label" for="confirmPassword">Confirm password</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
                                         </div>
                                     </div>
 
@@ -75,27 +75,27 @@
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="addressLine1" th:field="*{addressLine1}" class="form-control form-control-lg" />
                                             <label class="form-label" for="addressLine1">Address Line 1</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('addressLine1')}" th:errors="*{addressLine1}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('addressLine1')}" th:errors="*{addressLine1}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="addressLine2" th:field="*{addressLine2}" class="form-control form-control-lg" />
                                             <label class="form-label" for="addressLine2">Address Line 2 (Optional)</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('addressLine2')}" th:errors="*{addressLine2}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('addressLine2')}" th:errors="*{addressLine2}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="city" th:field="*{city}" class="form-control form-control-lg" />
                                             <label class="form-label" for="city">City</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="country" th:field="*{country}" class="form-control form-control-lg" />
                                             <label class="form-label" for="country">Country</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
                                         </div>
                                         <div class="register-form-outline mb-4">
                                             <input type="text" id="zipCode" th:field="*{zipCode}" class="form-control form-control-lg" />
                                             <label class="form-label" for="zipCode">Zip Code</label>
-                                            <div class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></div>
+                                            <p class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
                                         </div>
                                     </div>
                                 </div>
