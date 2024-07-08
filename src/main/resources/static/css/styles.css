@@ -135,10 +135,6 @@ form[role="search"] input[type="search"] {
     }
 }
 
-footer.bg-dark-shade {
-    background-color: #1a1c1d !important;
-}
-
 .side-banner {
     position: fixed;
     top: 0;
@@ -173,6 +169,21 @@ footer.bg-dark-shade {
 
 .footer {
     background-color: #1a1c1d;
+    color: rgb(225, 222, 218) !important;
+    font-family: 'Roboto Condensed', serif;
+}
+
+.footer .col-auto {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+}
+
+@media (max-width: 768px) {
+    .footer .col-auto{
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 .container-fluid.footer-wrapper {
@@ -1933,4 +1944,27 @@ a.rating-info span:first-child {
     padding: 8px;
     box-sizing: border-box;
     text-align: right;
+}
+
+.register-content {
+    color: rgb(225, 222, 218) !important;
+    font-family: 'Roboto Condensed', serif;
+}
+
+.register-content .form-control {
+    background-color: inherit !important;
+    padding-bottom: 7px;
+    border: 1px solid grey !important;
+    font-size: 17px;
+    color: rgb(225, 222, 218) !important;
+}
+
+.register-content .form-check-label,
+.register-content .register-prompt {
+    font-size: 18px !important;
+}
+
+.register-content .form-check-input {
+    position: relative;
+    top: 1.5px;
 }
