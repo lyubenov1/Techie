@@ -24,11 +24,9 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return
-                userRepository.
-                        findByEmail(username).
-                        map(this::map).
-                        orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+        return userRepository.findByEmail(username)
+                .map(this::map)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
     private UserDetails map(UserEntity userEntity) {
@@ -40,11 +38,8 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> extractAuthorities(UserEntity user) {
-        return user.
-                getRoles().
-                stream().
-                map(this::mapRole).
-                toList();
+        return user.getRoles().stream()
+                .map(this::mapRole).toList();
     }
 
     private GrantedAuthority mapRole(RoleEntity userRoleEntity) {

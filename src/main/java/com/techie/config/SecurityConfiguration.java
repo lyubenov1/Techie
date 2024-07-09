@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 .formLogin(form -> form
                         .loginPage("/login")
                         // the names of the username, password input fields in the custom login form
-                        .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                        .usernameParameter("email")
                         .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                         // where do we go after login
                         .defaultSuccessUrl("/", true) // use true argument if you always want to go there, otherwise go to previous page

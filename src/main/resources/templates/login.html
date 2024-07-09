@@ -33,7 +33,7 @@
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
 
-                                <form class="w-100" th:action="@{/login}" th:object="${loginModel}" method="POST">
+                                <form class="w-100" th:action="@{/login}" method="POST">
                                     <div class="d-flex align-items-center">
                                         <img src="/images/logo_black_transparent.png" alt="Your Logo"
                                              class="me-3" style="width: 75px; height: 75px;">
@@ -42,13 +42,13 @@
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign in to your account</h5>
 
                                     <div class="form-outline mb-4">
-                                        <input type="email" th:field="*{email}" id="loginEmail" class="form-control form-control-lg" autocomplete="email"/>
+                                        <input type="email" name = "email" th:value="${email}" id="loginEmail" class="form-control form-control-lg" autocomplete="email"/>
                                         <label class="form-label" for="loginEmail">Email address</label>
                                     </div>
 
                                     <div class="form-outline mb-4 password-field">
                                         <div class="input-wrapper">
-                                            <input type="password" th:field="*{password}" id="loginPassword" class="form-control form-control-lg" autocomplete="current-password" />
+                                            <input type="password" name = "password" id="loginPassword" class="form-control form-control-lg" autocomplete="current-password" />
                                             <label class="form-label" for="loginPassword">Password</label>
                                             <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('loginPassword', this)">
                                                 <i class="fa-solid fa-lg fa-eye"></i>
