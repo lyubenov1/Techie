@@ -3,6 +3,13 @@
     top: 0; /* Initially visible */
 }
 
+.navbar .navbar-collapse {
+    font-family: 'Roboto Condensed', serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #mainHeader.hidden {
     top: -100px; /* Moves header out of view */
 }
@@ -17,7 +24,7 @@
     border-radius: 40px;
 }
 
-.navbar-nav .dropdown-toggle::after {
+.navbar-nav .categories-wrapper::after {
     display: none;
 }
 
@@ -39,20 +46,8 @@
     animation-fill-mode: both;
 }
 
-.icon-container {
+.nav-first .icon-container {
     width: 19px;
-}
-
-.navbar-nav .nav-link{
-    margin-top: -1px;
-}
-
-.navbar-nav .nav-item{
-    font-family: 'Roboto Condensed', serif;
-}
-
-form[role="search"] {
-    margin-top: 16px;
 }
 
 form[role="search"] input[type="search"] {
@@ -60,7 +55,6 @@ form[role="search"] input[type="search"] {
 }
 
 .navbar-nav:last-child {
-    margin-left: auto;
     flex-direction: row;
 }
 
@@ -77,34 +71,30 @@ form[role="search"] input[type="search"] {
     right: -2px;
 }
 
-.navbar-nav:last-child .nav-item {
-    margin-right: 4px;
+.navbar-nav {
+    display: flex;
+    align-items: center;
 }
 
-@media (min-width: 1400px) {
-    form[role="search"] {
-        margin-right: 150px;
-    }
+.nav-section {
+    display: flex;
+    align-items: center;
 }
 
-@media (max-width: 576px) {
-    form[role="search"] {
-        margin-top: -11px;
-    }
-
-    .navbar-nav:last-child .nav-item {
-        margin-right: 15px;
-    }
-
+.nav-section .d-flex {
+    margin-bottom: 0;
 }
 
-@media (min-width: 400px) and (max-width: 991px) {
-    form[role="search"] {
-        margin-top: -11px;
+
+
+@media (max-width: 992px) {
+    .nav-first .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .navbar-nav:last-child .nav-item {
-        margin-right: 15px;
+    .nav-third .nav-item {
+        margin-right: 13px;
     }
 
     .navbar-nav .nav-link .badge {
@@ -115,23 +105,28 @@ form[role="search"] input[type="search"] {
         top: -7px;
         right: -9px;
     }
+
+    .navbar .navbar-collapse {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-third {
+        margin-top: 15px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
     form[role="search"] input[type="search"] {
         width: 200px;
-        font-size: 13px;
-    }
-
-    .navbar-nav.me-auto .nav-item:not(:last-child) {
-        margin-right: -6px;
+        font-size: 14px;
     }
 }
 
-@media (max-width: 991px) {
-    .navbar-nav.ul.first {
-        flex-direction: column;
-        align-items: flex-start;
+@media (max-width: 410px) {
+    form[role="search"] input[type="search"] {
+        width: 150px;
+        font-size: 11px;
     }
 }
 
@@ -429,19 +424,14 @@ form[role="search"] input[type="search"] {
     color: white;
 }
 
-.card {
-    border: none !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.image-container {
+.category-products .image-container {
     width: 100%;
     padding-top: 100%;
     position: relative;
     overflow: hidden;
 }
 
-.image-container img {
+.category-products .image-container img {
     position: absolute;
     top: 0;
     left: 0;
@@ -450,26 +440,33 @@ form[role="search"] input[type="search"] {
     object-fit: contain;
 }
 
-.vh-100 {
-    height: 100vh !important;
-    display: flex;
-    align-items: center;
+.login-container .card {
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.card-body {
+.login-container {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-content .card-body {
     font-family: 'Roboto Condensed', serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100%;
 }
 
-img.img-fluid {
+.login-container .img-fluid {
     height: 100%;
     object-fit: cover;
     border-radius: 1rem 0 0 1rem;
 }
 
-.form-check-label {
+.login-container .form-check-label {
     margin-left: 5px;
     font-size: 1rem;
     color: #495057;
@@ -492,7 +489,7 @@ body.register .form-check-label {
     color: #fff;
 }
 
-.btn-success {
+.register .btn-success {
     margin-top: -15px; 
 }
 
@@ -557,6 +554,8 @@ body.register .form-check-label {
         left: -5px;
         top: 14px;
     }
+
+
 }
 
 .products-main {
@@ -2028,20 +2027,20 @@ a.rating-info span:first-child {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.login-content {
+.login-container {
     font-family: 'Roboto Condensed', serif;
 }
 
-.login-content .form-control {
+.login-container .form-control {
     padding-bottom: 7px;
     font-size: 17px;
 }
 
-.login-content .password-field {
+.login-container .password-field {
     position: relative;
 }
 
-.login-content .password-field .btn-toggle-password {
+.login-container .password-field .btn-toggle-password {
     position: absolute;
     right: 15px;
     top: 31%;
