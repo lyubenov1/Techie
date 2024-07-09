@@ -34,7 +34,7 @@ public class UserEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<>();
+    private Set<Address> addresses = new LinkedHashSet<>();
 
     @Column(name = "profile_image_id")
     private String profileImageUrl;
