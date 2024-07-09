@@ -22,4 +22,9 @@ public class HomeController {
         return "terms-of-use";
     }
 
+    @GetMapping("/privacy-policy")
+    public String privacyPolicyPage() {
+        return "privacy-policy";
+    }
+
 }

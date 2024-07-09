@@ -1,5 +1,6 @@
 package com.techie.domain.model;
 
+import com.techie.domain.model.DTOs.*;
 import lombok.*;
 
 import java.util.*;

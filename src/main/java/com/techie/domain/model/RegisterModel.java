@@ -10,7 +10,7 @@ import lombok.*;
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 @UniqueUsername
 @UniqueEmail
-public class UserRegisterForm {
+public class RegisterModel {
 
     @NotBlank(message = "Username is required.")
     @Size(min = 4, max = 25, message = "Username size must be between 4 and 25 characters.")

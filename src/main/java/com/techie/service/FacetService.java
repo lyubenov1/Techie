@@ -1,6 +1,6 @@
 package com.techie.service;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.utils.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;

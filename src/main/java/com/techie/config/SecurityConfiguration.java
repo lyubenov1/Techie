@@ -38,8 +38,8 @@ public class SecurityConfiguration {
                         // allow access to all static files (images, CSS, js)
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/products/**").permitAll()
-                        .requestMatchers("/login", "/register", "/login-error").permitAll()
-                        .requestMatchers("/terms-of-use", "/unauthorized").permitAll()
+                        .requestMatchers("/login/**", "/register", "/login-error").permitAll()
+                        .requestMatchers("/terms-of-use", "/unauthorized", "privacy-policy").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/profile/**").authenticated()
                         .requestMatchers("/api/**").permitAll()  // Allow access to all API endpoints

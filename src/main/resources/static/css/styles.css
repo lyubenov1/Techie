@@ -2027,3 +2027,34 @@ a.rating-info span:first-child {
     color: #333;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+.login-content {
+    font-family: 'Roboto Condensed', serif;
+}
+
+.login-content .form-control {
+    padding-bottom: 7px;
+    font-size: 17px;
+}
+
+.login-content .password-field {
+    position: relative;
+}
+
+.login-content .password-field .btn-toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 31%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+

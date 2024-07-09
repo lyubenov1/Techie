@@ -36,7 +36,7 @@ public class UserService {
     }
 
     @Transactional
-    public void registerUser(UserRegisterForm registrationDTO, Consumer<Authentication> successfulLoginProcessor) {
+    public void registerUser(RegisterModel registrationDTO, Consumer<Authentication> successfulLoginProcessor) {
 
         // Create UserEntity
         UserEntity userEntity = UserEntity.builder()

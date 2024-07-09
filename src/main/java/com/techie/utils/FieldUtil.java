@@ -1,6 +1,6 @@
 package com.techie.utils;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 
 import java.lang.reflect.*;
 

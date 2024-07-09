@@ -28,7 +28,7 @@
                     <div class="register-card" style="border-radius: 15px;">
                         <div class="register-card-body p-5">
                             <h2 class="fw-normal register-text-uppercase text-center mb-5">Create an account</h2>
-                            <form th:action="@{/register}" th:object="${userRegisterForm}" method="POST">
+                            <form th:action="@{/register}" th:object="${registerModel}" method="POST">
                                 <div class="row">
                                     <!-- Left Column -->
                                     <div class="col-md-6">

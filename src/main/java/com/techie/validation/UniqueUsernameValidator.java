@@ -4,7 +4,7 @@ import com.techie.domain.model.*;
 import com.techie.repository.*;
 import jakarta.validation.*;
 
-public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, UserRegisterForm> {
+public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, RegisterModel> {
 
     private final UserRepository userRepository;
 
@@ -17,8 +17,8 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     }
 
     @Override
-    public boolean isValid(UserRegisterForm userRegisterForm, ConstraintValidatorContext constraintValidatorContext) {
-        String username = userRegisterForm.getUsername();
+    public boolean isValid(RegisterModel registerModel, ConstraintValidatorContext constraintValidatorContext) {
+        String username = registerModel.getUsername();
 
         // Check if username is already taken
         if (userRepository.existsByUsername(username)) {

@@ -1,7 +1,7 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.cache.annotation.*;

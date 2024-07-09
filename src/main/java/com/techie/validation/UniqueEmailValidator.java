@@ -4,7 +4,7 @@ import com.techie.domain.model.*;
 import com.techie.repository.*;
 import jakarta.validation.*;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, UserRegisterForm> {
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, RegisterModel> {
 
     private final UserRepository userRepository;
 
@@ -17,8 +17,8 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, Us
     }
 
     @Override
-    public boolean isValid(UserRegisterForm userRegisterForm, ConstraintValidatorContext constraintValidatorContext) {
-        String email = userRegisterForm.getEmail();
+    public boolean isValid(RegisterModel registerModel, ConstraintValidatorContext constraintValidatorContext) {
+        String email = registerModel.getEmail();
 
         // Check if email is already taken
         if (userRepository.existsByEmail(email)) {

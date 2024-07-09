@@ -1,6 +1,6 @@
-package com.techie.domain.model.productsDTOs;
+package com.techie.domain.model.DTOs.productsDTOs;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 import lombok.*;
 
 @Getter

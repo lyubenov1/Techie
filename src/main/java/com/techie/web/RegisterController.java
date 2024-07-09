@@ -29,32 +29,32 @@ public class RegisterController {
 
     @GetMapping
     public String getRegister(Model model) {
-        if (!model.containsAttribute("userRegisterForm")) {
-            model.addAttribute("userRegisterForm", new UserRegisterForm());
+        if (!model.containsAttribute("registerModel")) {
+            model.addAttribute("registerModel", new RegisterModel());
         }
         return "register";
     }
 
-    @ModelAttribute("userRegisterForm")
-    public UserRegisterForm initForm() {
-        return new UserRegisterForm();
+    @ModelAttribute("registerModel")
+    public RegisterModel initForm() {
+        return new RegisterModel();
     }
 
     @PostMapping
     public String postRegister(
-            @Valid @ModelAttribute("userRegisterForm") UserRegisterForm userRegisterForm,
+            @Valid @ModelAttribute("registerModel") RegisterModel registerModel,
             BindingResult bindingResult, RedirectAttributes redirectAttributes,
             HttpServletRequest request, HttpServletResponse response) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes
-                    .addFlashAttribute("userRegisterForm", userRegisterForm)
-                    .addFlashAttribute(BINDING_RESULT_PATH + "userRegisterForm", bindingResult);
+                    .addFlashAttribute("registerModel", registerModel)
+                    .addFlashAttribute(BINDING_RESULT_PATH + "registerModel", bindingResult);
 
             return "redirect:/register";
         }
 
-        userService.registerUser(userRegisterForm, successfulAuth -> {
+        userService.registerUser(registerModel, successfulAuth -> {
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
             SecurityContext context = strategy.createEmptyContext();

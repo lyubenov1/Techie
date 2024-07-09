@@ -1,7 +1,7 @@
 package com.techie.utils;
 
 import com.techie.domain.entities.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 
 import java.util.*;
 import java.util.stream.*;

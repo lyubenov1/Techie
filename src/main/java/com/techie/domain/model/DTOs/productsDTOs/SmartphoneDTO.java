@@ -1,14 +1,14 @@
-package com.techie.domain.model.productsDTOs;
+package com.techie.domain.model.DTOs.productsDTOs;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "tabletBuilder")
-public class TabletDTO extends ProductDTO {
+@Builder(builderMethodName = "smartphoneBuilder")
+public class SmartphoneDTO extends ProductDTO {
 
     private String screenSize;
     private String screenResolution;

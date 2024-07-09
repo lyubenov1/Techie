@@ -1,7 +1,9 @@
 package com.techie.web;
 
+import com.techie.domain.model.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
@@ -10,8 +12,14 @@ import org.springframework.web.servlet.mvc.support.*;
 public class LoginController {
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("loginModel", new LoginModel());
         return "login";
+    }
+
+    @GetMapping("/login/forgot-password")
+    public String forgotPasswordPage() {
+        return "forgot-password";
     }
 
     @PostMapping("/login-error")

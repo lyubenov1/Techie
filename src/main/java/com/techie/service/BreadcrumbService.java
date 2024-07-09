@@ -1,7 +1,7 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.DTOs.*;
 import jakarta.servlet.http.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
