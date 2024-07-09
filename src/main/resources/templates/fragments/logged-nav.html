@@ -65,23 +65,35 @@
             <div class="nav-section nav-third">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/favorites">
                             <i class="far fa-heart fa-lg text-white"></i>
                             <span class="badge rounded-pill badge-notification bg-danger">0</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/cart">
                             <i class="fas fa-shopping-cart fa-lg text-white"></i>
                             <span class="badge rounded-pill badge-notification bg-danger">0</span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <div class="user-profile">
-                            <form th:action="@{/users/logout}" th:method="post">
-                                <input class="btn btn-link nav-link" type="submit" value="Logout">
+                    <li class="nav-item" id="profile-dropdown">
+                        <div class="nav-link user-profile">
+                            <img src="/images/profile_default_photo.png" alt="User Profile" class="user-profile-image">
+                        </div>
+                        <!-- Dropdown menu for profile -->
+                        <div class="dropdown-menu slideIn" id="profile-dropdown-menu">
+                            <a class="dropdown-item" href="/user-profile">Your profile</a>
+                            <a class="dropdown-item" href="/order/history">Order history</a>
+                            <a class="dropdown-item" href="/cart">Cart</a>
+                            <a class="dropdown-item" href="/favorites">Wishlist</a>
+                            <a class="dropdown-item" href="/addresses">Addresses</a>
+                            <a class="dropdown-item" href="/settings">Settings</a>
+                            <form th:action="@{/users/logout}" th:method="post" class="dropdown-item logout-form">
+                                <button type="submit" class="btn nav-link">
+                                    <i class="fa-solid fa-right-from-bracket logout-icon"></i> Logout
+                                </button>
                             </form>
                         </div>
                     </li>

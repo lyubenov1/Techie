@@ -543,6 +543,25 @@ body.register .form-check-label {
     top: 14px;
 }
 
+.nav-item .dropdown-menu .logout-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item .dropdown-menu .logout-form .btn {
+    width: 100%;
+    text-align: center;
+}
+
+.nav-item .dropdown-menu .logout-form .logout-icon {
+    color: rgb(225, 222, 218);
+    margin-right: 8px;
+}
+
+
 @media (max-width: 992px) {
     .dropdown-submenu {
         position: static;
@@ -2057,3 +2076,9 @@ a.rating-info span:first-child {
     height: 30px;
 }
 
+.nav-third .nav-item .user-profile-image {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
