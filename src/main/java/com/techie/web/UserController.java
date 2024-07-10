@@ -9,6 +9,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getUserProfile() {
-        return "user-profile";
+        return "profile";
     }
 }
