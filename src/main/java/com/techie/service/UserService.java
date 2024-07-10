@@ -4,6 +4,7 @@ import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
 import com.techie.repository.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
@@ -23,6 +24,7 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final RoleRepository roleRepository;
     private final AddressRepository addressRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
     @Autowired
@@ -84,5 +86,31 @@ public class UserService {
     public UserEntity findByUsername(String username) {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
+
+    @Transactional
+    public void addRoleToUser(String email, UserRoleEnum role) {
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+        Optional<RoleEntity> optionalRole = roleRepository.findRoleEntityByRole(role);
+
+        if (optionalUser.isPresent() && optionalRole.isPresent()) {
+            UserEntity user = optionalUser.get();
+            RoleEntity roleEntity = optionalRole.get();
+
+            if (user.getRoles().contains(roleEntity)) {
+                logger.info("User {} already has role: {}", email, role);
+            } else {
+                user.getRoles().add(roleEntity);
+                userRepository.save(user);
+                logger.info("Added role {} to user: {}", role, email);
+            }
+        } else {
+            if (optionalUser.isEmpty()) {
+                logger.warn("User with email {} not found.", email);
+            }
+            if (optionalRole.isEmpty()) {
+                logger.warn("Role {} not found.", role);
+            }
+        }
     }
 }
