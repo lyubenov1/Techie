@@ -519,12 +519,14 @@ body.register .form-check-label {
 }
 
 .dropdown-menu li,
-#profile-dropdown-menu .dropdown-item {
+#profile-dropdown-menu-logged .dropdown-item,
+#profile-dropdown-menu-guest .dropdown-item {
     border-bottom: 1px solid #ccc;
 }
 
 .dropdown-menu li:last-child,
-#profile-dropdown-menu .dropdown-item:last-child {
+#profile-dropdown-menu-logged .dropdown-item:last-child,
+#profile-dropdown-menu-guest .dropdown-item:last-child {
     border-bottom: none;
 }
 
@@ -533,14 +535,21 @@ body.register .form-check-label {
     width: 100%;
 }
 
-#profile-dropdown {
+#profile-dropdown-logged,
+#profile-dropdown-guest {
     position: relative;
 }
 
-#profile-dropdown-menu {
+#profile-dropdown-menu-guest {
     position: absolute;
     left: -130px;
     top: 14px;
+}
+
+#profile-dropdown-menu-logged {
+    position: absolute;
+    left: -120px;
+    top: 30px;
 }
 
 .nav-item .dropdown-menu .logout-form {
@@ -561,20 +570,23 @@ body.register .form-check-label {
     margin-right: 8px;
 }
 
-
 @media (max-width: 992px) {
     .dropdown-submenu {
         position: static;
         margin-top: 10px;
     }
 
-    #profile-dropdown-menu {
+    #profile-dropdown-menu-guest {
         position: absolute;
         left: -5px;
         top: 14px;
     }
 
-
+    #profile-dropdown-menu-logged {
+        position: absolute;
+        left: -5px;
+        top: 35px;
+    }
 }
 
 .products-main {
@@ -2079,6 +2091,5 @@ a.rating-info span:first-child {
 .nav-third .nav-item .user-profile-image {
     width: 28px;
     height: 28px;
-    border-radius: 50%;
     object-fit: cover;
 }

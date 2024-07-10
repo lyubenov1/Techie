@@ -85,14 +85,19 @@ document.addEventListener('DOMContentLoaded', function() {
         closeIcon.classList.add('d-none');
     });
 
-    var profileIcon = document.getElementById('profile-dropdown');
-    var profileDropdownMenu = document.getElementById('profile-dropdown-menu');
+    var profileIcons = document.getElementsByClassName('profile-dropdown');
+    var profileDropdownMenus = document.getElementsByClassName('profile-dropdown-menu');
 
-    profileIcon.addEventListener('mouseover', function () {
-        profileDropdownMenu.style.display = 'block';
-    });
-    profileIcon.addEventListener('mouseout', function () {
-        profileDropdownMenu.style.display = 'none';
+    Array.from(profileIcons).forEach(function(profileIcon, index) {
+        var profileDropdownMenu = profileDropdownMenus[index];
+
+        profileIcon.addEventListener('mouseover', function () {
+            profileDropdownMenu.style.display = 'block';
+        });
+
+        profileIcon.addEventListener('mouseout', function () {
+            profileDropdownMenu.style.display = 'none';
+        });
     });
 
 
