@@ -2093,3 +2093,10 @@ a.rating-info span:first-child {
     height: 28px;
     object-fit: cover;
 }
+
+#profile-dropdown-logged .greet {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 500;
+}

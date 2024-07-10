@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/login/**", "/register", "/login-error").permitAll()
                         .requestMatchers("/terms-of-use", "/unauthorized", "/privacy-policy", "/about-us").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/users/profile/**").authenticated()
+                        .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/**").permitAll()  // Allow access to all API endpoints
                         .anyRequest().authenticated()
                 )

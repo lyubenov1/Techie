@@ -81,4 +81,8 @@ public class UserService {
         successfulLoginProcessor.accept(authentication);
     }
 
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
 }
