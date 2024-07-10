@@ -11,8 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
+import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.security.web.context.*;
 import org.springframework.security.web.csrf.*;
+
+import javax.sql.*;
 
 @Configuration
 @EnableMethodSecurity
@@ -21,12 +24,14 @@ public class SecurityConfiguration {
 
     private final ApplicationUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final DataSource dataSource;
 
     @Autowired
     public SecurityConfiguration(ApplicationUserDetailsService userDetailsService,
-                                 PasswordEncoder passwordEncoder) {
+                                 PasswordEncoder passwordEncoder, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.dataSource = dataSource;
     }
 
     @Bean
@@ -81,13 +86,21 @@ public class SecurityConfiguration {
                 .rememberMe(rememberMe -> rememberMe
                         .rememberMeParameter("remember-me")
                         .rememberMeCookieName("remember-me-cookie")
-                        .tokenValiditySeconds(100000)
+                        .tokenValiditySeconds(2592000) // 30 days
+                        .tokenRepository(persistentTokenRepository())
                         .userDetailsService(userDetailsService)
                 );
 
         return http.build();
     }
 
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
