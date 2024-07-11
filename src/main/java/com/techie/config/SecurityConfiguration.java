@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                         // allow access to all static files (images, CSS, js)
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/products/**").permitAll()
-                        .requestMatchers("/login/**", "/register", "/login-error").permitAll()
+                        .requestMatchers("/login/**", "/register", "/login-error").anonymous()
                         .requestMatchers("/terms-of-use", "/unauthorized", "/privacy-policy", "/about-us").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").authenticated()
@@ -63,7 +63,7 @@ public class SecurityConfiguration {
                 )
                 // configure logout
                 .logout(logout -> logout
-                        .logoutUrl("/users/logout")
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
