@@ -14,132 +14,132 @@
 
 <body class="register bg-dark text-white">
 
-<header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container-xl">
-    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-</div>
+    <div class = "container-xl">
+        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
+    </div>
 
-<section class="register-vh-100 bg-image register-content" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-    <div class="register-mask d-flex align-items-center h-100 gradient-custom-3">
-        <div class="container-fluid h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="register-card" style="border-radius: 15px;">
-                        <div class="register-card-body p-5">
-                            <h2 class="fw-normal register-text-uppercase text-center mb-5">Create an account</h2>
-                            <form th:action="@{/register}" th:object="${registerModel}" method="POST">
-                                <div class="row">
-                                    <!-- Left Column -->
-                                    <div class="col-md-6">
-                                        <div class="row mb-4">
-                                            <div class="col">
-                                                <div class="register-form-outline">
-                                                    <input type="text" id="firstName" th:field="*{firstName}" class="form-control form-control-lg" />
-                                                    <label class="form-label" for="firstName">First Name</label>
-                                                    <p class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    <main class="register-vh-100 bg-image register-content" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+        <div class="register-mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container-fluid h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="register-card" style="border-radius: 15px;">
+                            <div class="register-card-body p-5">
+                                <h2 class="fw-normal register-text-uppercase text-center mb-5">Create an account</h2>
+                                <form th:action="@{/register}" th:object="${registerModel}" method="POST">
+                                    <div class="row">
+                                        <!-- Left Column -->
+                                        <div class="col-md-6">
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <div class="register-form-outline">
+                                                        <input type="text" id="firstName" th:field="*{firstName}" class="form-control form-control-lg" />
+                                                        <label class="form-label" for="firstName">First Name</label>
+                                                        <p class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="register-form-outline">
+                                                        <input type="text" id="lastName" th:field="*{lastName}" class="form-control form-control-lg" />
+                                                        <label class="form-label" for="lastName">Last Name</label>
+                                                        <p class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="register-form-outline">
-                                                    <input type="text" id="lastName" th:field="*{lastName}" class="form-control form-control-lg" />
-                                                    <label class="form-label" for="lastName">Last Name</label>
-                                                    <p class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="email" id="email" th:field="*{email}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="email">Email</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                                            </div>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="username" th:field="*{username}" class="form-control form-control-lg" autocomplete="username" />
+                                                <label class="form-label" for="username">Username</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                                            </div>
+                                            <div class="register-form-outline password-field mb-4">
+                                                <div class="input-wrapper">
+                                                    <input type="password" id="password" th:field="*{password}" class="form-control form-control-lg" autocomplete="new-password" />
+                                                    <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('password', this)">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
                                                 </div>
+                                                <label class="form-label" for="password">Password</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                                            </div>
+                                            <div class="register-form-outline password-field mb-4">
+                                                <div class="input-wrapper">
+                                                    <input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control form-control-lg" autocomplete="new-password" />
+                                                    <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('confirmPassword', this)">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                                <label class="form-label" for="confirmPassword">Confirm password</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
                                             </div>
                                         </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="email" id="email" th:field="*{email}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="email">Email</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                                        </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="username" th:field="*{username}" class="form-control form-control-lg" autocomplete="username" />
-                                            <label class="form-label" for="username">Username</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                                        </div>
-                                        <div class="register-form-outline password-field mb-4">
-                                            <div class="input-wrapper">
-                                                <input type="password" id="password" th:field="*{password}" class="form-control form-control-lg" autocomplete="new-password" />
-                                                <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('password', this)">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </button>
+
+                                        <!-- Right Column -->
+                                        <div class="col-md-6">
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="addressLine1" th:field="*{addressLine1}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="addressLine1">Address Line 1</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('addressLine1')}" th:errors="*{addressLine1}"></p>
                                             </div>
-                                            <label class="form-label" for="password">Password</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                                        </div>
-                                        <div class="register-form-outline password-field mb-4">
-                                            <div class="input-wrapper">
-                                                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control form-control-lg" autocomplete="new-password" />
-                                                <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('confirmPassword', this)">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </button>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="addressLine2" th:field="*{addressLine2}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="addressLine2">Address Line 2 (Optional)</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('addressLine2')}" th:errors="*{addressLine2}"></p>
                                             </div>
-                                            <label class="form-label" for="confirmPassword">Confirm password</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="city" th:field="*{city}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="city">City</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                                            </div>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="country" th:field="*{country}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="country">Country</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
+                                            </div>
+                                            <div class="register-form-outline mb-4">
+                                                <input type="text" id="zipCode" th:field="*{zipCode}" class="form-control form-control-lg" />
+                                                <label class="form-label" for="zipCode">Zip Code</label>
+                                                <p class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- Right Column -->
-                                    <div class="col-md-6">
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="addressLine1" th:field="*{addressLine1}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="addressLine1">Address Line 1</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('addressLine1')}" th:errors="*{addressLine1}"></p>
-                                        </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="addressLine2" th:field="*{addressLine2}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="addressLine2">Address Line 2 (Optional)</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('addressLine2')}" th:errors="*{addressLine2}"></p>
-                                        </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="city" th:field="*{city}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="city">City</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-                                        </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="country" th:field="*{country}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="country">Country</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
-                                        </div>
-                                        <div class="register-form-outline mb-4">
-                                            <input type="text" id="zipCode" th:field="*{zipCode}" class="form-control form-control-lg" />
-                                            <label class="form-label" for="zipCode">Zip Code</label>
-                                            <p class="error-message" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
-                                        </div>
+                                    <div class="form-check d-flex justify-content-center mb-2">
+                                        <input class="form-check-input me-2" type="checkbox" id="termsAccepted" th:field="*{termsAccepted}" name="termsAccepted" />
+                                        <label class="form-check-label" for="termsAccepted">I agree to all statements in
+                                            <a href="/terms-of-use" class="text-body"><u>Terms of use</u></a>
+                                        </label>
                                     </div>
-                                </div>
+                                    <p class="error-message terms" th:if="${#fields.hasErrors('termsAccepted')}" th:errors="*{termsAccepted}"></p>
 
-                                <div class="form-check d-flex justify-content-center mb-2">
-                                    <input class="form-check-input me-2" type="checkbox" id="termsAccepted" th:field="*{termsAccepted}" name="termsAccepted" />
-                                    <label class="form-check-label" for="termsAccepted">I agree to all statements in
-                                        <a href="/terms-of-use" class="text-body"><u>Terms of use</u></a>
-                                    </label>
-                                </div>
-                                <p class="error-message terms" th:if="${#fields.hasErrors('termsAccepted')}" th:errors="*{termsAccepted}"></p>
+                                    <div class="register-prompt text-center">
+                                        <p class="mb-5 pb-lg-2" style="color: #ffffff;">Already have an account?
+                                            <a href="/login" style="color: #212529;">Login</a>
+                                        </p>
+                                    </div>
 
-                                <div class="register-prompt text-center">
-                                    <p class="mb-5 pb-lg-2" style="color: #ffffff;">Already have an account?
-                                        <a href="/login" style="color: #212529;">Login</a>
-                                    </p>
-                                </div>
-
-                                <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                                </div>
-                            </form>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
+
+
+    <div class="container-fluid footer-wrapper">
+        <footer th:replace="~{/fragments/footer::footer}"></footer>
     </div>
-</section>
-
-
-<div class="container-fluid footer-wrapper">
-    <footer th:replace="~{/fragments/footer::footer}"></footer>
-</div>
 
 <script src="/js/script.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>

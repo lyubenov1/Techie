@@ -13,158 +13,158 @@
 
 <body class="bg-dark text-white">
 
-<header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-<!-- Side Banners -->
-<div class="side-banner left">
-    <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Left Banner 1">
-</div>
-<div class="side-banner right">
-    <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Right Banner 1">
-</div>
-
-<div class="container main-content">
-    <!-- Display success message if available -->
-    <div th:if="${successMessage}" class="custom-alert-homepage custom-alert-success" role="alert">
-        <span th:text="${successMessage}"></span>
+    <!-- Side Banners -->
+    <div class="side-banner left">
+        <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Left Banner 1">
+    </div>
+    <div class="side-banner right">
+        <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Right Banner 1">
     </div>
 
-    <!-- Hero Section -->
-    <section>
-        <div id="carouselProductShowcase" class="carousel slide custom-carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
+    <main class="container main-content">
+        <!-- Display success message if available -->
+        <div th:if="${successMessage}" class="custom-alert-homepage custom-alert-success" role="alert">
+            <span th:text="${successMessage}"></span>
+        </div>
 
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="carousel-image-wrapper">
-                        <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1717458353/Categories/Laptops1_zg2olr.jpg"
-                             class="d-block w-100" alt="Laptops">
+        <!-- Hero Section -->
+        <section>
+            <div id="carouselProductShowcase" class="carousel slide custom-carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselProductShowcase" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="carousel-image-wrapper">
+                            <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1717458353/Categories/Laptops1_zg2olr.jpg"
+                                 class="d-block w-100" alt="Laptops">
+                        </div>
+                        <div class="carousel-caption">
+                            <h5>Slide 1 - Laptops</h5>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
                     </div>
-                    <div class="carousel-caption">
-                        <h5>Slide 1 - Laptops</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
+                    <div class="carousel-item">
+                        <div class="carousel-image-wrapper">
+                            <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" class="d-block w-100" alt="Earbuds">
+                        </div>
+                        <div class="carousel-caption">
+                            <h5>Slide 2 - Earbuds</h5>
+                            <p>Some representative placeholder content for the second slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-image-wrapper">
+                            <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716220466/Categories/Smartphones.jpg" class="d-block w-100" alt="Smartphones">
+                        </div>
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Slide 3 - Smartphones</h5>
+                            <p>Some representative placeholder content for the third slide.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <div class="carousel-image-wrapper">
-                        <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" class="d-block w-100" alt="Earbuds">
-                    </div>
-                    <div class="carousel-caption">
-                        <h5>Slide 2 - Earbuds</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
+                <button class="carousel-control-prev custom-button" type="button" data-bs-target="#carouselProductShowcase" data-bs-slide="prev">
+                    <i class="fa-solid fa-chevron-left fa-xl" style="color: #ffffff;"></i>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next custom-button" type="button" data-bs-target="#carouselProductShowcase" data-bs-slide="next">
+                    <i class="fa-solid fa-chevron-right fa-xl" style="color: #ffffff;"></i>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
+        </section>
+
+
+        <div class="services-info-box">
+            <div class="service-item">
+                <i class="fa-solid fa-rotate-left fa-xl"></i>
+                <h2>Return policy</h2>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-truck-fast fa-xl"></i>
+                <h2>Express delivery</h2>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-dolly fa-xl"></i>
+                <h2>Free shipping</h2>
+            </div>
+            <div class="service-item">
+                <i class="fa-regular fa-calendar-check fa-xl"></i>
+                <h2>Extended warranty</h2>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-headset fa-xl"></i>
+                <h2>Expert support</h2>
+            </div>
+            <div class="service-item">
+                <i class="fa-solid fa-landmark fa-xl"></i>
+                <h2>Financing options</h2>
+            </div>
+        </div>
+
+
+        <!-- Content Section -->
+        <div class="container bg-light text-dark rounded-3 p-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the first column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
                 </div>
-                <div class="carousel-item">
-                    <div class="carousel-image-wrapper">
-                        <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716220466/Categories/Smartphones.jpg" class="d-block w-100" alt="Smartphones">
-                    </div>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Slide 3 - Smartphones</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the second column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the third column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
                 </div>
             </div>
-            <button class="carousel-control-prev custom-button" type="button" data-bs-target="#carouselProductShowcase" data-bs-slide="prev">
-                <i class="fa-solid fa-chevron-left fa-xl" style="color: #ffffff;"></i>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next custom-button" type="button" data-bs-target="#carouselProductShowcase" data-bs-slide="next">
-                <i class="fa-solid fa-chevron-right fa-xl" style="color: #ffffff;"></i>
-                <span class="visually-hidden">Next</span>
-            </button>
+        </div>
 
+        <!-- Hero Section -->
+        <div class="p-5 mb-4 bg-light rounded-3 text-dark">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Hello, world!</h1>
+                <p class="col-md-8 fs-4">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <button class="btn btn-primary btn-lg" type="button">Learn more</button>
+            </div>
         </div>
-    </section>
 
+        <!-- Content Section -->
+        <div class="container bg-light text-dark rounded-3 p-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the first column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the second column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
+                </div>
+                <div class="col-md-4">
+                    <h2>Heading</h2>
+                    <p>Some representative placeholder content for the third column of text below the carousel.</p>
+                    <button class="btn btn-secondary" type="button">View details »</button>
+                </div>
+            </div>
+        </div>
 
-    <div class="services-info-box">
-        <div class="service-item">
-            <i class="fa-solid fa-rotate-left fa-xl"></i>
-            <h2>Return policy</h2>
-        </div>
-        <div class="service-item">
-            <i class="fa-solid fa-truck-fast fa-xl"></i>
-            <h2>Express delivery</h2>
-        </div>
-        <div class="service-item">
-            <i class="fa-solid fa-dolly fa-xl"></i>
-            <h2>Free shipping</h2>
-        </div>
-        <div class="service-item">
-            <i class="fa-regular fa-calendar-check fa-xl"></i>
-            <h2>Extended warranty</h2>
-        </div>
-        <div class="service-item">
-            <i class="fa-solid fa-headset fa-xl"></i>
-            <h2>Expert support</h2>
-        </div>
-        <div class="service-item">
-            <i class="fa-solid fa-landmark fa-xl"></i>
-            <h2>Financing options</h2>
-        </div>
+    </main>
+
+    <div class="container-fluid footer-wrapper">
+        <footer th:replace="~{/fragments/footer::footer}"></footer>
     </div>
-
-
-    <!-- Content Section -->
-    <div class="container bg-light text-dark rounded-3 p-4">
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the first column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the second column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the third column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <div class="p-5 mb-4 bg-light rounded-3 text-dark">
-        <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">Hello, world!</h1>
-            <p class="col-md-8 fs-4">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            <button class="btn btn-primary btn-lg" type="button">Learn more</button>
-        </div>
-    </div>
-
-    <!-- Content Section -->
-    <div class="container bg-light text-dark rounded-3 p-4">
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the first column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the second column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Some representative placeholder content for the third column of text below the carousel.</p>
-                <button class="btn btn-secondary" type="button">View details »</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="container-fluid footer-wrapper">
-    <footer th:replace="~{/fragments/footer::footer}"></footer>
-</div>
 
 <script src="/js/script.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>

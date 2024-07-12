@@ -13,107 +13,107 @@
 
 <body class="bg-dark text-white">
 
-<header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container-xl">
-    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-</div>
+    <div class = "container-xl">
+        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
+    </div>
 
-<div class="container-xl">
-    <div class="product-main row">
-        <div class="product-photos col-lg-7 col-md-12">
-            <div class="photo-container">
-                <div class="thumbnail-photos">
-                    <div th:each="imageUrl, iterStat : ${product.imageUrls}"
-                         class="thumbnail">
-                        <img th:src="${imageUrl}" th:alt="'Product image ' + ${iterStat.count}">
+    <main class="container-xl">
+        <div class="product-main row">
+            <div class="product-photos col-lg-7 col-md-12">
+                <div class="photo-container">
+                    <div class="thumbnail-photos">
+                        <div th:each="imageUrl, iterStat : ${product.imageUrls}"
+                             class="thumbnail">
+                            <img th:src="${imageUrl}" th:alt="'Product image ' + ${iterStat.count}">
+                        </div>
+                    </div>
+                    <div class="main-product-photo">
+                        <img id="main-photo" th:if="${not #lists.isEmpty(product.imageUrls)}" th:src="${product.imageUrls[0]}" alt="Main product image">
                     </div>
                 </div>
-                <div class="main-product-photo">
-                    <img id="main-photo" th:if="${not #lists.isEmpty(product.imageUrls)}" th:src="${product.imageUrls[0]}" alt="Main product image">
-                </div>
             </div>
-        </div>
-        <div class="product-info col-lg-5 col-md-12">
-            <h1 th:text="${product.name}">Product Name</h1>
-            <div class="rating-box-wrapper">
-                <div class="rate">
-                    <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
-                </div>
-                <a href="#" class="rating-info">
-                    <span th:text="${product.averageRating}">0.0</span> (<span th:text="${#lists.size(product.comments)} + ' reviews'">0 reviews</span>)
-                </a>
-            </div>
-            <div class="price-box">
-                <span class="original-price" th:text="'$' + ${product.originalPrice}">Original price</span>
-            </div>
-            <div class="cart-and-favourites">
-                    <a href="#" class="add-to-cart">
-                        <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart
+            <div class="product-info col-lg-5 col-md-12">
+                <h1 th:text="${product.name}">Product Name</h1>
+                <div class="rating-box-wrapper">
+                    <div class="rate">
+                        <input type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text">5 stars</label>
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">4 stars</label>
+                        <input type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">3 stars</label>
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">2 stars</label>
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">1 star</label>
+                    </div>
+                    <a href="#" class="rating-info">
+                        <span th:text="${product.averageRating}">0.0</span> (<span th:text="${#lists.size(product.comments)} + ' reviews'">0 reviews</span>)
                     </a>
-                    <a href="#" class="add-to-favourites">
-                        <i class="far fa-heart fa-md text-white"></i> Save
-                    </a>
-            </div>
-            <div class="product-info-icons">
-                <div class="icon-text">
-                    <i class="fa-solid fa-rotate-left"></i>
-                    <span>30-Day Right of Return</span>
                 </div>
-                <div class="icon-text">
-                    <i class="fa-regular fa-clock"></i>
-                    <span>Express Delivery</span>
+                <div class="price-box">
+                    <span class="original-price" th:text="'$' + ${product.originalPrice}">Original price</span>
                 </div>
-                <div class="icon-text">
-                    <i class="fa-solid fa-landmark"></i>
-                    <span>Leasing</span>
+                <div class="cart-and-favourites">
+                        <a href="#" class="add-to-cart">
+                            <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart
+                        </a>
+                        <a href="#" class="add-to-favourites">
+                            <i class="far fa-heart fa-md text-white"></i> Save
+                        </a>
+                </div>
+                <div class="product-info-icons">
+                    <div class="icon-text">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>30-Day Right of Return</span>
+                    </div>
+                    <div class="icon-text">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>Express Delivery</span>
+                    </div>
+                    <div class="icon-text">
+                        <i class="fa-solid fa-landmark"></i>
+                        <span>Leasing</span>
+                    </div>
+                </div>
+                <div class="review-compare-buttons">
+                    <button class="review-button">Write a Review</button>
+                    <button class="compare-button" id="compareButton" th:attr="data-product-id=${product.id}">Compare</button>
                 </div>
             </div>
-            <div class="review-compare-buttons">
-                <button class="review-button">Write a Review</button>
-                <button class="compare-button" id="compareButton" th:attr="data-product-id=${product.id}">Compare</button>
+        </div>
+        <div class="product-specs">
+            <h2>Specifications</h2>
+            <div th:each="specEntry : ${specifications}" class="spec-item">
+                <span class="spec-label" th:text="${specEntry.key}">Label</span>
+                <span class="spec-value" th:text="${specEntry.value}">Value</span>
             </div>
         </div>
-    </div>
-    <div class="product-specs">
-        <h2>Specifications</h2>
-        <div th:each="specEntry : ${specifications}" class="spec-item">
-            <span class="spec-label" th:text="${specEntry.key}">Label</span>
-            <span class="spec-value" th:text="${specEntry.value}">Value</span>
+        <div class="product-description">
+            <button id="toggleDescriptionBtn" class="toggle-button" type="button" aria-expanded="false" aria-controls="productDescription">
+                Product Description
+            </button>
+            <div id="productDescription" class="description-content">
+                <p th:text="${product.description}">Product description</p>
+            </div>
         </div>
-    </div>
-    <div class="product-description">
-        <button id="toggleDescriptionBtn" class="toggle-button" type="button" aria-expanded="false" aria-controls="productDescription">
-            Product Description
-        </button>
-        <div id="productDescription" class="description-content">
-            <p th:text="${product.description}">Product description</p>
+        <div class="similar-products-container">
+            <h2>Similar Products</h2>
+            <div class="similar-products category-products">
+                <!-- Similar products will be inserted here by JavaScript -->
+            </div>
         </div>
-    </div>
-    <div class="similar-products-container">
-        <h2>Similar Products</h2>
-        <div class="similar-products category-products">
-            <!-- Similar products will be inserted here by JavaScript -->
+        <div class="product-customer-reviews">
+            <!-- Customer reviews go here -->
         </div>
-    </div>
-    <div class="product-customer-reviews">
-        <!-- Customer reviews go here -->
-    </div>
-</div>
+    </main>
 
 
-<div class="container-fluid footer-wrapper">
-    <footer th:replace="~{/fragments/footer::footer}"></footer>
-</div>
+    <div class="container-fluid footer-wrapper">
+        <footer th:replace="~{/fragments/footer::footer}"></footer>
+    </div>
 
 <script src="/js/script.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>
