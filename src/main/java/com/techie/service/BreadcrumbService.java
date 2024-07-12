@@ -65,7 +65,7 @@ public class BreadcrumbService {
 
         for (int i = 0; i < urlParts.length; i++) {
             String part = urlParts[i];
-            if (part.isEmpty() || part.equals("users")) continue; // Skip empty parts and "users"
+            if (part.isEmpty()) continue; // Skip empty parts
 
             urlBuilder.append("/").append(part);
             String fullUrl = urlBuilder.toString();
@@ -93,14 +93,15 @@ public class BreadcrumbService {
         breadcrumbs.add(new BreadcrumbItem(text, url));
     }
 
-    // Add a regular breadcrumb (product or formatted string)
+    // Add a regular breadcrumb (product or formatted string). If the part is "users", it is omitted.
     private void addRegularBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, String part) {
         Optional<Product> productOpt = productService.findByNameIgnoreCase(part);
 
         if (productOpt.isPresent()) {
             ProductDTO product = productService.convertToDTO(productOpt.get());
             breadcrumbs.add(new BreadcrumbItem(product.getName(), url));
-        } else {
+        }
+        else if (!part.equals("users")) {
             String formattedPart = formatUrlPart(part);
             breadcrumbs.add(new BreadcrumbItem(formattedPart, url));
         }
