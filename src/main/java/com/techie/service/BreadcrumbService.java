@@ -65,7 +65,7 @@ public class BreadcrumbService {
 
         for (int i = 0; i < urlParts.length; i++) {
             String part = urlParts[i];
-            if (part.isEmpty()) continue;
+            if (part.isEmpty() || part.equals("users")) continue; // Skip empty parts and "users"
 
             urlBuilder.append("/").append(part);
             String fullUrl = urlBuilder.toString();
