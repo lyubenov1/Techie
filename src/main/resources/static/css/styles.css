@@ -2100,3 +2100,94 @@ a.rating-info span:first-child {
     font-size: 18px;
     font-weight: 500;
 }
+
+
+
+
+
+
+
+
+.profile-main.container-xl {
+    display: flex;
+    flex-wrap: wrap;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.profile-main aside {
+    flex: 0 0 15%;
+    max-width: 15%;
+    background-color: inherit;
+    margin-left: 60px;
+    padding-right: 20px;
+}
+
+.profile-main aside nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-main aside nav ul li {
+    text-align: start;
+    border-bottom: 1px solid grey;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.profile-main aside nav ul li a {
+    color: rgb(225, 222, 218);
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.profile-main aside nav ul li form {
+    padding: 10px;
+    display: block;
+    margin-bottom: 0;
+}
+
+.profile-main aside nav ul li .logout-button .logout-text {
+    transition: color 0.3s ease;
+}
+
+.profile-main aside nav ul li .logout-button .logout-icon {
+    color: rgb(225, 222, 218);
+    margin-right: 8px;
+}
+
+.profile-main aside nav ul li a:hover,
+.profile-main aside nav ul li .logout-button:hover .logout-text {
+    color: #444;
+}
+
+
+.profile-main aside nav ul li.active a {
+    background-color: #444;
+}
+
+.profile-main > .profile-main-content {
+    flex: 1;
+    background-color: inherit;
+    margin-right: 60px;
+}
+
+@media (max-width: 768px) {
+    .profile-main aside {
+        display: none; /* Hide the sidebar */
+    }
+
+    .profile-main > .profile-main-content {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.profile-main aside nav ul li .logout-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}

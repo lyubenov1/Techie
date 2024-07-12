@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<nav th:fragment="profileNav">
+    <ul>
+        <li><a th:href="@{/users/profile}">Profile</a></li>
+        <li th:classappend="${activeMenuItem == 'settings' ? 'active' : ''}">
+            <a th:href="@{/users/profile/settings}">Settings</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'addresses' ? 'active' : ''}">
+            <a th:href="@{/users/profile/addresses}">Addresses</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'order-history' ? 'active' : ''}">
+            <a th:href="@{/users/profile/order-history}">Order history</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'wishlist' ? 'active' : ''}">
+            <a th:href="@{/users/profile/wishlist}">Wishlist</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'cart' ? 'active' : ''}">
+            <a th:href="@{/users/profile/cart}">Cart</a>
+        </li>
+        <li>
+            <form th:action="@{/logout}" th:method="post" class="logout-form">
+                <button type="submit" class="btn nav-link logout-button">
+                    <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</nav>
+
+</html>
