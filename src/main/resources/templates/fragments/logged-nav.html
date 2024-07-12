@@ -87,13 +87,13 @@
                             <span class="dropdown-item greet">
                                 Hello,&nbsp;<span th:text="${loggedUser.firstName}">user</span>!
                             </span>
-                            <a class="dropdown-item" th:href="@{/users/profile}">Your profile</a>
+                            <a class="dropdown-item" th:href="@{/users/profile}">My profile</a>
                             <a class="dropdown-item" th:href="@{/users/profile/order-history}">Order history</a>
                             <a class="dropdown-item" th:href="@{/users/profile/cart}">Cart</a>
                             <a class="dropdown-item" th:href="@{/users/profile/wishlist}">Wishlist</a>
                             <a class="dropdown-item" th:href="@{/users/profile/addresses}">Addresses</a>
                             <a class="dropdown-item" th:href="@{/users/profile/settings}">Settings</a>
-                            <form th:action="@{/logout}" th:method="post" class="dropdown-item logout-form">
+                            <form th:action="@{/logout}" th:method="POST" class="dropdown-item logout-form">
                                 <button type="submit" class="btn nav-link">
                                     <i class="fa-solid fa-right-from-bracket logout-icon"></i> Logout
                                 </button>

@@ -899,7 +899,6 @@ document.getElementById('compareButton').addEventListener('click', function() {
 });
 
 
-
 function togglePassword(fieldId, toggleBtn) {
     const passwordField = document.getElementById(fieldId);
     const icon = toggleBtn.querySelector('i');

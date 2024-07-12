@@ -13,24 +13,24 @@
 
 <body class="bg-dark text-white">
 
-<header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container-xl">
-    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-</div>
-
-<main class="profile-main container-xl">
-    <aside>
-        <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
-    </aside>
-    <div class="profile-main-content" >
-        aaaa
+    <div class = "container-md">
+        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
     </div>
-</main>
 
-<div class="container-fluid footer-wrapper">
-    <footer th:replace="~{/fragments/footer::footer}"></footer>
-</div>
+    <main class="profile-main container-xl">
+        <aside>
+            <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
+        </aside>
+        <div class="profile-main-content" >
+            aaaa
+        </div>
+    </main>
+
+    <div class="container-fluid footer-wrapper">
+        <footer th:replace="~{/fragments/footer::footer}"></footer>
+    </div>
 
 <script src="/js/script.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>

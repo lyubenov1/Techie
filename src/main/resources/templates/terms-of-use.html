@@ -13,19 +13,19 @@
 
 <body class="bg-dark text-white">
 
-<header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container">
-    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-</div>
+    <div class = "container-md">
+        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
+    </div>
 
-<div class="search-error container-md">
-    <p class="lead">Terms of use.</p>
-</div>
+    <main class="search-error container-md">
+        <p class="lead">Terms of use.</p>
+    </main>
 
-<div class="container-fluid footer-wrapper">
-    <footer th:replace="~{/fragments/footer::footer}"></footer>
-</div>
+    <div class="container-fluid footer-wrapper">
+        <footer th:replace="~{/fragments/footer::footer}"></footer>
+    </div>
 
 <script src="/js/script.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>
