@@ -56,8 +56,13 @@ public class SecurityConfiguration {
                         // the names of the username, password input fields in the custom login form
                         .usernameParameter("email")
                         .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-                        // where do we go after login
-                        .defaultSuccessUrl("/", true) // use true argument if you always want to go there, otherwise go to previous page
+                        .successHandler((request, response, authentication) -> {
+                            // Using successHandler to set a login message in the session and control the post-login redirect.
+                            request.getSession().setAttribute("loginMessage", "✓ You have successfully logged in!");
+                            response.sendRedirect("/users/profile");
+                        })
+                        // Commented, because it doesn't work with successHandler. Still a valid option.
+                        // .defaultSuccessUrl("/users/profile", true) // use true argument if you always want to go there, otherwise go to previous page
                         .failureForwardUrl("/login-error")
                         .permitAll()
                 )

@@ -1,5 +1,6 @@
 package com.techie.web;
 
+import jakarta.servlet.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @GetMapping
-    public String getUserProfile() {
+    public String getUserProfile(Model model, HttpSession session) {
+        if (session.getAttribute("loginMessage") != null) {
+            model.addAttribute("loginMessage", session.getAttribute("loginMessage"));
+            session.removeAttribute("loginMessage");    // Remove the successful login message on subsequent visits to the endpoint
+        }
         return "profile";
     }
 
