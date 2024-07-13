@@ -36,6 +36,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Wishlist> wishlists = new LinkedHashSet<>();
+
     @Column(name = "profile_image_id")
     private String profileImageUrl;
 
@@ -56,6 +59,16 @@ public class UserEntity {
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setUser(null);
+    }
+
+    public void addWishlist(Wishlist wishlist) {
+        wishlists.add(wishlist);
+        wishlist.setUser(this);
+    }
+
+    public void removeWishlist(Wishlist wishlist) {
+        wishlists.remove(wishlist);
+        wishlist.setUser(null);
     }
 
 }
