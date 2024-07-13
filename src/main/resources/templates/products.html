@@ -17,104 +17,130 @@
 
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <div class = "container-md">
-        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
+    <!-- Side Banners -->
+    <div th:switch="${category.name}" class="side-banner left">
+        <img th:case="'Laptops'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900529/Categories/macro-blur-keyboard-laptop-wallpaper-preview_vlalqu.jpg" alt="Laptops Left Banner">
+        <img th:case="'Smartphones'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" alt="Smartphones Left Banner">
+        <img th:case="'Tablets'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900419/Categories/HD-wallpaper-watch-camera-luxury_wqnifm.jpg" alt="Tablets Left Banner">
+        <img th:case="'Accessories'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900824/Categories/7530_w6bmiq.jpg" alt="Accessories Left Banner">
+        <img th:case="'Cables'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900256/Categories/HD-wallpaper-connection-cables-technology_ie9n7g.jpg" alt="Cables Left Banner">
+        <img th:case="'Chargers'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900997/Categories/photo-1524100880052-104a85d5ab82_gtnnkq.avif" alt="Chargers Left Banner">
+        <img th:case="'Earbuds'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900877/Categories/e5f89476205d8fdce91230db0d4cc7fc_ollsdl.jpg" alt="Earbuds Left Banner">
+        <img th:case="'Powerbanks'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Powerbanks Left Banner">
     </div>
 
-    <main class="products-main container-xl">
-        <div class="col-main-products col-main col-sm-12">
-            <div class="products-header">
-                <h1 class="category-h1" th:text="${category != null ? category.name : (searchQuery != null ? searchQuery : 'All Products')}">Category</h1>
-                <div class="product-header-sort">
-                    <form id="sortForm">
-                        <label for="sort">Sort by:</label>
-                        <select id="sort" name="sort" onchange="this.form.submit()">
-                            <option value="newest" th:selected="${param.sort == null || param.sort[0] == 'newest'}">Newest</option>
-                            <option value="price-low-high" th:selected="${param.sort != null && param.sort[0] == 'price-low-high'}">Price: Low to High</option>
-                            <option value="price-high-low" th:selected="${param.sort != null && param.sort[0] == 'price-high-low'}">Price: High to Low</option>
-                            <option value="rating" th:selected="${param.sort != null && param.sort[0] == 'rating'}">Rating</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <div class="category-products">
-                <a th:each="product : ${productsPage.content}" class="card" th:href="${'/products/'+ product.categoryName.toLowerCase() + '/' + product.url}" style="width: 18rem;">
-                    <div class="image-container">
-                        <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-body-wrapper">
-                            <div class="card-icon-box">
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                                <div class="wishlist-and-shopping-cart">
-                                    <span class="add-to-wishlist">
-                                        <i class="far fa-heart fa-md text-white"></i>
-                                    </span>
-                                    <span class="shopping-cart">
-                                        <i class="fas fa-shopping-cart fa-md text-white"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-title" th:text="${product.name}">Product Name</div>
-                            <div class="card-text">
-                                <span th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Pagination -->
-            <input type="hidden" id="currentPage" th:value="${currentPage}" />
-            <input type="hidden" id="totalPages" th:value="${totalPages}" />
-            <input type="hidden" id="categoryName" th:value="${category != null ? category.name : (searchQuery != null ? 'Search' : 'All')}" />
-            <input type="hidden" id="pageSize" th:value="${pageSize}" />
-            <input type="hidden" id="productsPage" th:value="${productsPage}" />
-            <input type="hidden" id="searchQueryParam" th:if="${searchQuery != null}" th:value="${searchQuery}" />
+    <div th:switch="${category.name}" class="side-banner right">
+        <img th:case="'Laptops'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900529/Categories/macro-blur-keyboard-laptop-wallpaper-preview_vlalqu.jpg" alt="Laptops Right Banner">
+        <img th:case="'Smartphones'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" alt="Smartphones Right Banner">
+        <img th:case="'Tablets'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900419/Categories/HD-wallpaper-watch-camera-luxury_wqnifm.jpg" alt="Tablets Right Banner">
+        <img th:case="'Accessories'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900824/Categories/7530_w6bmiq.jpg" alt="Accessories Right Banner">
+        <img th:case="'Cables'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900256/Categories/HD-wallpaper-connection-cables-technology_ie9n7g.jpg" alt="Cables Right Banner">
+        <img th:case="'Chargers'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900997/Categories/photo-1524100880052-104a85d5ab82_gtnnkq.avif" alt="Chargers Right Banner">
+        <img th:case="'Earbuds'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900877/Categories/e5f89476205d8fdce91230db0d4cc7fc_ollsdl.jpg" alt="Earbuds Right Banner">
+        <img th:case="'Powerbanks'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Powerbanks Right Banner">
+    </div>
 
-            <div class="pagination-products-container">
-                <div class="pagination-products-wrapper">
-                    <nav aria-label="Page navigation example">
-                        <ul id="pagination" class="pagination">
-                            <!-- Pagination buttons will be appended here dynamically via js code -->
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+    <main class="products-wrapper-main container-xl">
 
-
+        <div class = "container-md">
+            <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
         </div>
 
-        <aside class="sidebar-products sidebar col-sm-12">
-            <div id="filterContainer">
-                <div id="appliedFiltersContainer" class="applied-filters-section" style="display: none;">
-                    <h5><i class="fa-solid fa-filter"></i> Applied Filters</h5>
-                    <ul id="appliedFiltersList" class="applied-filters"></ul>
-                </div>
-                <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
-                    <h5 th:text="${filterEntry.value}">Filter criteria</h5>
-                    <div class="search-container" style="display: none;">
-                        <input type="text" th:name="${filterEntry.key}" th:placeholder="Search" class="filter-search">
+        <div class="products-main container-xl">
+            <div class="col-main-products col-main col-sm-12">
+                <div class="products-header">
+                    <h1 class="category-h1" th:text="${category != null ? category.name : (searchQuery != null ? searchQuery : 'All Products')}">Category</h1>
+                    <div class="product-header-sort">
+                        <form id="sortForm">
+                            <label for="sort">Sort by:</label>
+                            <select id="sort" name="sort" onchange="this.form.submit()">
+                                <option value="newest" th:selected="${param.sort == null || param.sort[0] == 'newest'}">Newest</option>
+                                <option value="price-low-high" th:selected="${param.sort != null && param.sort[0] == 'price-low-high'}">Price: Low to High</option>
+                                <option value="price-high-low" th:selected="${param.sort != null && param.sort[0] == 'price-high-low'}">Price: High to Low</option>
+                                <option value="rating" th:selected="${param.sort != null && param.sort[0] == 'rating'}">Rating</option>
+                            </select>
+                        </form>
                     </div>
-                    <ul class="filter-list custom-scrollspy">
-                        <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
-                            <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">
-                            <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}"></label>
-                        </li>
-                    </ul>
                 </div>
+                <div class="category-products">
+                    <a th:each="product : ${productsPage.content}" class="card" th:href="${'/products/'+ product.categoryName.toLowerCase() + '/' + product.url}" style="width: 18rem;">
+                        <div class="image-container">
+                            <img th:src="${product.imageUrls[0]}" class="card-img-top" alt="Product Image">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body-wrapper">
+                                <div class="card-icon-box">
+                                    <div class="rate">
+                                        <input type="radio" id="star5" name="rate" value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rate" value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rate" value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rate" value="2" />
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rate" value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+                                    <div class="wishlist-and-shopping-cart">
+                                        <span class="add-to-wishlist">
+                                            <i class="far fa-heart fa-md text-white"></i>
+                                        </span>
+                                        <span class="shopping-cart">
+                                            <i class="fas fa-shopping-cart fa-md text-white"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-title" th:text="${product.name}">Product Name</div>
+                                <div class="card-text">
+                                    <span th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Pagination -->
+                <input type="hidden" id="currentPage" th:value="${currentPage}" />
+                <input type="hidden" id="totalPages" th:value="${totalPages}" />
+                <input type="hidden" id="categoryName" th:value="${category != null ? category.name : (searchQuery != null ? 'Search' : 'All')}" />
+                <input type="hidden" id="pageSize" th:value="${pageSize}" />
+                <input type="hidden" id="productsPage" th:value="${productsPage}" />
+                <input type="hidden" id="searchQueryParam" th:if="${searchQuery != null}" th:value="${searchQuery}" />
+
+                <div class="pagination-products-container">
+                    <div class="pagination-products-wrapper">
+                        <nav aria-label="Page navigation example">
+                            <ul id="pagination" class="pagination">
+                                <!-- Pagination buttons will be appended here dynamically via js code -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+
             </div>
-        </aside>
+
+            <aside class="sidebar-products sidebar col-sm-12">
+                <div id="filterContainer">
+                    <div id="appliedFiltersContainer" class="applied-filters-section" style="display: none;">
+                        <h5><i class="fa-solid fa-filter"></i> Applied Filters</h5>
+                        <ul id="appliedFiltersList" class="applied-filters"></ul>
+                    </div>
+                    <div th:each="filterEntry : ${filterCriteriaFields.entrySet()}" class="filter-section">
+                        <h5 th:text="${filterEntry.value}">Filter criteria</h5>
+                        <div class="search-container" style="display: none;">
+                            <input type="text" th:name="${filterEntry.key}" th:placeholder="Search" class="filter-search">
+                        </div>
+                        <ul class="filter-list custom-scrollspy">
+                            <li th:each="option : ${filterOptions[filterEntry.key].entrySet()}">
+                                <input type="checkbox" th:id="${filterEntry.key + '-' + option.key}" th:value="${option.key}" th:name="${filterEntry.key}">
+                                <label th:for="${filterEntry.key + '-' + option.key}" th:text="${option.key + ' (' + option.value + ')'}"></label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <div class="container-fluid footer-wrapper">
