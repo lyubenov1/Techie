@@ -2100,12 +2100,6 @@ a.rating-info span:first-child {
     font-weight: 500;
 }
 
-
-
-
-
-
-
 .your-profile {
     color: rgb(225, 222, 218);
     font-family: 'Roboto Condensed', serif;
@@ -2122,6 +2116,10 @@ a.rating-info span:first-child {
     margin-bottom: 1rem;
     border: 1px solid #c3e6cb;
     border-radius: .25rem;
+}
+
+.your-profile .page-title h2 {
+    font-weight: bold;
 }
 
 .your-profile .alert-success p {
@@ -2177,6 +2175,10 @@ a.rating-info span:first-child {
     width: 100%;
     text-align: left;
 }
+
+
+
+
 
 
 

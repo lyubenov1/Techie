@@ -37,10 +37,24 @@ public class UserService {
         this.addressRepository = addressRepository;
     }
 
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
+
     @Transactional
     public void registerUser(RegisterModel registrationDTO, Consumer<Authentication> successfulLoginProcessor) {
+        UserEntity userEntity = createUserEntity(registrationDTO);
+        userRepository.save(userEntity);
 
-        // Create UserEntity
+        Address address = createAddress(registrationDTO, userEntity);
+        addressRepository.save(address);
+
+        Authentication authentication = authenticateUser(registrationDTO.getEmail());
+        successfulLoginProcessor.accept(authentication);
+    }
+
+    private UserEntity createUserEntity(RegisterModel registrationDTO) {
         UserEntity userEntity = UserEntity.builder()
                 .username(registrationDTO.getUsername())
                 .firstName(registrationDTO.getFirstName())
@@ -49,15 +63,14 @@ public class UserService {
                 .password(passwordEncoder.encode(registrationDTO.getPassword()))
                 .build();
 
-        // Set roles
         RoleEntity userRole = roleRepository.findRoleEntityByRole(UserRoleEnum.USER).orElseThrow();
         userEntity.setRoles(List.of(userRole));
 
-        // Save UserEntity
-        userRepository.save(userEntity);
+        return userEntity;
+    }
 
-        // Create Address
-        Address address = Address.builder()
+    private Address createAddress(RegisterModel registrationDTO, UserEntity userEntity) {
+        return Address.builder()
                 .addressLine1(registrationDTO.getAddressLine1())
                 .addressLine2(registrationDTO.getAddressLine2())
                 .city(registrationDTO.getCity())
@@ -65,27 +78,16 @@ public class UserService {
                 .zipcode(registrationDTO.getZipCode())
                 .user(userEntity)
                 .build();
+    }
 
-        // Save Address
-        addressRepository.save(address);
+    private Authentication authenticateUser(String email) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-        // Load UserDetails
-        UserDetails userDetails = userDetailsService.loadUserByUsername(registrationDTO.getEmail());
-
-        // Create Authentication
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
+        return new UsernamePasswordAuthenticationToken(
                 userDetails,
                 userDetails.getPassword(),
                 userDetails.getAuthorities()
         );
-
-        // Process successful login
-        successfulLoginProcessor.accept(authentication);
-    }
-
-    public UserEntity findByUsername(String username) {
-        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
     @Transactional
