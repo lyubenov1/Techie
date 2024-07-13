@@ -43,14 +43,14 @@ public class UserService {
     }
 
     @Transactional
-    public void registerUser(RegisterModel registrationDTO, Consumer<Authentication> successfulLoginProcessor) {
-        UserEntity userEntity = createUserEntity(registrationDTO);
+    public void registerUser(RegisterModel registerModel, Consumer<Authentication> successfulLoginProcessor) {
+        UserEntity userEntity = createUserEntity(registerModel);
         userRepository.save(userEntity);
 
-        Address address = createAddress(registrationDTO, userEntity);
+        Address address = createAddress(registerModel, userEntity);
         addressRepository.save(address);
 
-        Authentication authentication = authenticateUser(registrationDTO.getEmail());
+        Authentication authentication = authenticateUser(registerModel.getEmail());
         successfulLoginProcessor.accept(authentication);
     }
 

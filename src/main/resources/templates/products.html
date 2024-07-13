@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${category != null ? category.name : (searchQuery != null ? 'Search: ' + searchQuery : 'All Products')}">Products</title>
+    <title th:text="${category != null ? category.name +
+                   ' | Techie.com' : (searchQuery != null ?
+                   'Search: ' + searchQuery : 'All Products') + ' | Techie.com'}">Products</title>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
