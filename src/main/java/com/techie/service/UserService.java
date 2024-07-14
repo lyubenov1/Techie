@@ -24,17 +24,20 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final RoleRepository roleRepository;
     private final AddressRepository addressRepository;
+    private final WishlistService wishlistService;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
-                       RoleRepository roleRepository, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       UserDetailsService userDetailsService, RoleRepository roleRepository,
+                       AddressRepository addressRepository, WishlistService wishlistService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
+        this.wishlistService = wishlistService;
     }
 
     public UserEntity findByUsername(String username) {
@@ -49,6 +52,9 @@ public class UserService {
 
         Address address = createAddress(registerModel, userEntity);
         addressRepository.save(address);
+
+        // Create default wishlist. Relationship with user is established before entity persisting.
+        wishlistService.createWishlist(userEntity.getEmail(), "Main wishlist");
 
         Authentication authentication = authenticateUser(registerModel.getEmail());
         successfulLoginProcessor.accept(authentication);
