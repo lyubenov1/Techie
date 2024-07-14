@@ -54,19 +54,20 @@ public class UserService {
         addressRepository.save(address);
 
         // Create default wishlist. Relationship with user is established before entity persisting.
-        wishlistService.createWishlist(userEntity.getEmail(), "Main wishlist");
+        wishlistService.createWishlist(userEntity, "Main wishlist");
 
         Authentication authentication = authenticateUser(registerModel.getEmail());
         successfulLoginProcessor.accept(authentication);
     }
 
-    private UserEntity createUserEntity(RegisterModel registrationDTO) {
+    private UserEntity createUserEntity(RegisterModel registrationModel) {
         UserEntity userEntity = UserEntity.builder()
-                .username(registrationDTO.getUsername())
-                .firstName(registrationDTO.getFirstName())
-                .lastName(registrationDTO.getLastName())
-                .email(registrationDTO.getEmail())
-                .password(passwordEncoder.encode(registrationDTO.getPassword()))
+                .username(registrationModel.getUsername())
+                .firstName(registrationModel.getFirstName())
+                .lastName(registrationModel.getLastName())
+                .email(registrationModel.getEmail())
+                .password(passwordEncoder.encode(registrationModel.getPassword()))
+                .wishlists(new LinkedHashSet<>())
                 .build();
 
         RoleEntity userRole = roleRepository.findRoleEntityByRole(UserRoleEnum.USER).orElseThrow();

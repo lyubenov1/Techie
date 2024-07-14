@@ -34,10 +34,10 @@ public class UserEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Address> addresses = new LinkedHashSet<>();
+    private Set<Address> addresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Wishlist> wishlists = new LinkedHashSet<>();
+    private Set<Wishlist> wishlists;
 
     @Column(name = "profile_image_id")
     private String profileImageUrl;
@@ -52,6 +52,9 @@ public class UserEntity {
 
 
     public void addAddress(Address address) {
+        if (addresses == null) {
+            addresses = new LinkedHashSet<>();
+        }
         addresses.add(address);
         address.setUser(this);
     }
@@ -62,6 +65,9 @@ public class UserEntity {
     }
 
     public void addWishlist(Wishlist wishlist) {
+        if (wishlists == null) {
+            wishlists = new LinkedHashSet<>();
+        }
         wishlists.add(wishlist);
         wishlist.setUser(this);
     }
