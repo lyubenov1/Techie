@@ -18,4 +18,5 @@ public class UserDisplayView {
     private String lastName;
     private String profileImageUrl;
     private List<AddressDTO> addresses;
+    private Set<WishlistDTO> wishlists;
 }

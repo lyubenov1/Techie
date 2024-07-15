@@ -913,3 +913,11 @@ function togglePassword(fieldId, toggleBtn) {
         icon.classList.add('fa-eye');
     }
 }
+
+
+const myModal = document.getElementById('myModal');
+const myInput = document.getElementById('myInput');
+
+myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus();
+});
