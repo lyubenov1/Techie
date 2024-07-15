@@ -18,7 +18,7 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <!-- Side Banners -->
-    <div th:switch="${category.name}" class="side-banner left">
+    <div th:switch="${category != null ? category.name : 'default'}" class="side-banner left">
         <img th:case="'Laptops'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900529/Categories/macro-blur-keyboard-laptop-wallpaper-preview_vlalqu.jpg" alt="Laptops Left Banner">
         <img th:case="'Smartphones'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" alt="Smartphones Left Banner">
         <img th:case="'Tablets'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900419/Categories/HD-wallpaper-watch-camera-luxury_wqnifm.jpg" alt="Tablets Left Banner">
@@ -27,9 +27,10 @@
         <img th:case="'Chargers'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900997/Categories/photo-1524100880052-104a85d5ab82_gtnnkq.avif" alt="Chargers Left Banner">
         <img th:case="'Earbuds'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900877/Categories/e5f89476205d8fdce91230db0d4cc7fc_ollsdl.jpg" alt="Earbuds Left Banner">
         <img th:case="'Powerbanks'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Powerbanks Left Banner">
+        <img th:case="'default'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1721075079/Categories/desk-watch-iphone-mobile-phone_pvet26.jpg" alt="Default Left Banner">
     </div>
 
-    <div th:switch="${category.name}" class="side-banner right">
+    <div th:switch="${category != null ? category.name : 'default'}" class="side-banner right">
         <img th:case="'Laptops'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900529/Categories/macro-blur-keyboard-laptop-wallpaper-preview_vlalqu.jpg" alt="Laptops Right Banner">
         <img th:case="'Smartphones'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716234093/Categories/Earbuds.jpg" alt="Smartphones Right Banner">
         <img th:case="'Tablets'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900419/Categories/HD-wallpaper-watch-camera-luxury_wqnifm.jpg" alt="Tablets Right Banner">
@@ -38,6 +39,7 @@
         <img th:case="'Chargers'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900997/Categories/photo-1524100880052-104a85d5ab82_gtnnkq.avif" alt="Chargers Right Banner">
         <img th:case="'Earbuds'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1720900877/Categories/e5f89476205d8fdce91230db0d4cc7fc_ollsdl.jpg" alt="Earbuds Right Banner">
         <img th:case="'Powerbanks'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716233753/Categories/Powerbanks.jpg" alt="Powerbanks Right Banner">
+        <img th:case="'default'" src="https://res.cloudinary.com/dztiecgdt/image/upload/v1721075079/Categories/desk-watch-iphone-mobile-phone_pvet26.jpg" alt="Default Left Banner">
     </div>
 
     <main class="products-wrapper-main container-xl">
