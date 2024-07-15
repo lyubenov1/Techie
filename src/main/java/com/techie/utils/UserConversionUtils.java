@@ -33,6 +33,7 @@ public class UserConversionUtils {
                 .lastName(user.getLastName())
                 .profileImageUrl(user.getProfileImageUrl())
                 .addresses(addressDTOs)
+                .wishlists(user.getWishlists())
                 .build();
     }
 
