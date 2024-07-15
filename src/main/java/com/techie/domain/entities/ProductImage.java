@@ -25,6 +25,9 @@ public class ProductImage {
     @Column(nullable = false)
     private String imageUrl;
 
+    @Column(nullable = false)
+    private boolean isPrimary; // Default value is false
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

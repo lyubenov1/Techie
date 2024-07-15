@@ -95,7 +95,7 @@ public class BreadcrumbService {
 
     // Add a regular breadcrumb (product or formatted string). If the part is "users", it is omitted.
     private void addRegularBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, String part) {
-        Optional<Product> productOpt = productService.findByNameIgnoreCase(part);
+        Optional<Product> productOpt = productService.findByName(part);
 
         if (productOpt.isPresent()) {
             ProductDTO product = productService.convertToDTO(productOpt.get());

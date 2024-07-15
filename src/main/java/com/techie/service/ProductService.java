@@ -59,10 +59,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Product> findByNameIgnoreCase(String urlProductName) {
+    public Optional<Product> findByName(String urlProductName) {
         String decodedName = UriUtils.decode(urlProductName, StandardCharsets.UTF_8);
 
         return productRepository.findByNameIgnoreCase(decodedName);
+    }
+
+    public Optional<Product> findByNameWithAllImages(String urlProductName) {
+        String decodedName = UriUtils.decode(urlProductName, StandardCharsets.UTF_8);
+
+        return productRepository.findByNameIgnoreCaseWithAllImages(decodedName);
     }
 
     public List<ProductDTO> getProductsByCategory(Long categoryId) {

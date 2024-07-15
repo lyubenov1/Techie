@@ -52,16 +52,6 @@ public class Product {
     @ColumnDefault("0.0")
     private Double averageRating;
 
-    public void addImage(ProductImage image) {
-        productImages.add(image);
-        image.setProduct(this);
-    }
-
-    public void removeImage(ProductImage image) {
-        productImages.remove(image);
-        image.setProduct(null);
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

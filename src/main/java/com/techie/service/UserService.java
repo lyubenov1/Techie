@@ -2,8 +2,10 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.*;
 import com.techie.repository.*;
+import com.techie.utils.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.authentication.*;
@@ -41,7 +43,7 @@ public class UserService {
     }
 
     public UserEntity findByUsername(String username) {
-        return userRepository.findByEmail(username)
+        return userRepository.findByEmailWithWishlists(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
@@ -99,7 +101,7 @@ public class UserService {
 
     @Transactional
     public void addRoleToUser(String email, UserRoleEnum role) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+        Optional<UserEntity> optionalUser = userRepository.findByEmailWithRoles(email);
         Optional<RoleEntity> optionalRole = roleRepository.findRoleEntityByRole(role);
 
         if (optionalUser.isPresent() && optionalRole.isPresent()) {
@@ -121,5 +123,14 @@ public class UserService {
                 logger.warn("Role {} not found.", role);
             }
         }
+    }
+
+    public UserDisplayView convertToView(UserEntity user) {
+        UserDisplayView view = UserConversionUtils.convertToView(user);
+        List<WishlistDTO> wishlistDTOs = user.getWishlists().stream()
+                .map(wishlistService::convertToDto)
+                .toList();
+        view.setWishlists(wishlistDTOs);
+        return view;
     }
 }

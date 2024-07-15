@@ -65,13 +65,19 @@ public class InitService {
 
             imageMap.forEach((products, imageUrls) -> {
                 for (String productModel : products) {
-                    for (String imageUrl : imageUrls) {
+                    for (int i = 0; i < imageUrls.size(); i++) {
+                        String imageUrl = imageUrls.get(i);
+
                         ProductImage productImage = new ProductImage();
 
                         Optional<Product> product = productRepository.findByName(productModel);
                         if (product.isPresent()) {
                             productImage.setProduct(product.get());
                             productImage.setImageUrl(imageUrl);
+                            if (i == 0) {
+                                // Set the first image as primary, the rest as not primary
+                                productImage.setPrimary(true);
+                            }
                             productImageRepository.save(productImage);
                         }
                     }
