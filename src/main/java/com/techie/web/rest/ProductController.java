@@ -22,7 +22,7 @@ public class ProductController {
 
     @GetMapping("/{productName}/similar")
     public ResponseEntity<List<ProductDTO>> getSimilarProducts(@PathVariable String productName) {
-        Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
+        Optional<Product> productOptional = productService.findByName(productName);
 
         if (productOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping("/{productName}")
     public ResponseEntity<ProductDTO> getProductByName(@PathVariable String productName) {
-        Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
+        Optional<Product> productOptional = productService.findByName(productName);
 
         if (productOptional.isEmpty()) {
             return ResponseEntity.notFound().build();

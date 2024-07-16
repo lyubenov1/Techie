@@ -1,6 +1,5 @@
 package com.techie.domain.model;
 
-import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
 import lombok.*;
 
@@ -18,6 +17,5 @@ public class UserDisplayView {
     private String firstName;
     private String lastName;
     private String profileImageUrl;
-    private List<AddressDTO> addresses;
-    private Set<Wishlist> wishlists;
+    private List<WishlistDTO> wishlists;
 }

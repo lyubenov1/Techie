@@ -34,7 +34,7 @@ public class UserEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Address> addresses;
+    private List<Address> addresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Wishlist> wishlists;
@@ -53,7 +53,7 @@ public class UserEntity {
 
     public void addAddress(Address address) {
         if (addresses == null) {
-            addresses = new LinkedHashSet<>();
+            addresses = new ArrayList<>();
         }
         addresses.add(address);
         address.setUser(this);

@@ -110,7 +110,7 @@ public class ProductViewController {
 
     @GetMapping("/{categoryName}/{productName}")
     public String productPage(@PathVariable String productName, @PathVariable String categoryName, Model model) {
-        Optional<Product> productOptional = productService.findByNameIgnoreCase(productName);
+        Optional<Product> productOptional = productService.findByNameWithAllImages(productName);
 
         if (productOptional.isEmpty()) {
             return "redirect:/products";
