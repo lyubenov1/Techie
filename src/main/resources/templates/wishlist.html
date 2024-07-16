@@ -15,7 +15,7 @@
 
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <div class = "container-md">
+    <div class = "container-lg">
         <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
     </div>
 
@@ -35,14 +35,14 @@
             </div>
 
             <div class="wishlist-container">
-                <div th:each="wishlist : ${loggedUser.wishlists}">
-                    <div class="main-wishlist">
+                <div class="wishlist-item" th:each="wishlist : ${loggedUser.wishlists}">
+                    <div class="wishlist-field">
                         <h2 th:text="${wishlist.name}"></h2>
                         <p th:text="${#lists.size(wishlist.products)} + ' products'"></p>
                     </div>
                 </div>
 
-                <div class="new-wishlist">
+                <div class="wishlist-item new-wishlist">
                     <button id="create-wishlist-btn btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
                         <span>+</span>
                         <span>Create a new wishlist</span>
