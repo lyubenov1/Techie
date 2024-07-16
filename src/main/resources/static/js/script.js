@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var closeIcon = document.querySelector('.close-icon');
     var dropdownMenu = document.querySelector('.dropdown-menu');
 
-    // Function to update the state of the icons
     function updateIcons() {
         if (dropdownMenu.classList.contains('show')) {
             barsIcon.classList.add('d-none');
@@ -56,13 +55,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update the icons state on page load
     updateIcons();
 
-    // Add click event listener to the dropdown toggle
     dropdownToggle.addEventListener('click', function() {
         // Toggle the visibility of the dropdown menu
         updateIcons();
     });
 
-    // Add click event listener to the document
     document.addEventListener('click', function(event) {
         // Check if the click event occurred outside the dropdown toggle
         if (!dropdownToggle.contains(event.target)) {
@@ -72,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Listen for show.bs.dropdown and hide.bs.dropdown events on the dropdown menu
     dropdownMenu.addEventListener('show.bs.dropdown', function() {
         // Ensure the close icon is visible when the dropdown menu is shown
         barsIcon.classList.add('d-none');
@@ -165,26 +161,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dropdownMenu = document.querySelector('.dropdown-menu');
 
                 data.forEach(category => {
-                    const categoryItem = document.createElement('li');
+                    const categoryItem = document.createElement('a');
                     categoryItem.classList.add('dropdown-item');
 
-                    const categoryLink = document.createElement('a');
-                    categoryLink.href = category.url;
-                    categoryLink.textContent = category.name;
-                    categoryItem.appendChild(categoryLink);
+                    categoryItem.href = category.url;
+                    categoryItem.textContent = category.name;
 
                     if (category.children && category.children.length > 0) {
-                        const submenu = document.createElement('ul');
+                        const submenu = document.createElement('div');
                         submenu.classList.add('dropdown-submenu');
-                        submenu.style.display = 'none'; // Initially hide submenu
 
                         category.children.forEach(child => {
-                            const childItem = document.createElement('li');
-                            const childLink = document.createElement('a');
-                            childLink.classList.add('dropdown-item');
-                            childLink.href = child.url;
-                            childLink.textContent = child.name;
-                            childItem.appendChild(childLink);
+                            const childItem = document.createElement('a');
+                            childItem.classList.add('dropdown-item');
+                            childItem.href = child.url;
+                            childItem.textContent = child.name;
                             submenu.appendChild(childItem);
                         });
 
@@ -201,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 // Add click event listener
                                 categoryItem.addEventListener('click', toggleSubmenu);
                                 // Prevent default link behavior for parent categories with subcategories
-                                categoryLink.removeAttribute('href');
+                                categoryItem.removeAttribute('href');
                             } else {
                                 // Remove click event listener
                                 categoryItem.removeEventListener('click', toggleSubmenu);
@@ -209,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 categoryItem.addEventListener('mouseover', showSubmenu);
                                 categoryItem.addEventListener('mouseout', hideSubmenu);
                                 // Re-add href attribute if it doesn't exist
-                                categoryLink.href = category.url;
+                                categoryItem.href = category.url;
                             }
                         }
 
@@ -920,4 +911,24 @@ const myInput = document.getElementById('myInput');
 
 myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus();
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Add click event listeners to wishlist items
+    const wishlistItems = document.querySelectorAll('.wishlist-item.clickable');
+    wishlistItems.forEach((item, index) => {
+        item.addEventListener('click', () => showWishlist(index));
+    });
+
+    function showWishlist(index) {
+        const wishlistContainers = document.querySelectorAll('[id^="wishlist-content-"]');
+        wishlistContainers.forEach(container => {
+            container.style.display = container.id === `wishlist-content-${index}` ? 'block' : 'none';
+        });
+    }
+
+    // Show the first wishlist (Main wishlist) by default
+    showWishlist(0);
 });
