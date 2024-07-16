@@ -2396,10 +2396,6 @@ a.rating-info span:first-child {
     background-color: #666;
 }
 
-.profile-main .empty-wishlist {
-    text-align: center;
-}
-
 @media (max-width: 501px) {
     .profile-main .wishlist-content .header {
         display: flex;
@@ -2412,4 +2408,15 @@ a.rating-info span:first-child {
     .profile-main .wishlist-content .header h5 {
         margin-bottom: 0;
     }
+}
+
+
+
+.wishlist-item.clickable {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.wishlist-item.clickable:hover {
+    background-color: #f0f0f0;
 }

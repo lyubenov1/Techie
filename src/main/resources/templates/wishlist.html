@@ -36,15 +36,15 @@
 
             <div class="wishlist-container">
                 <div class="wishlist-items">
-                    <div class="wishlist-item" th:each="wishlist : ${loggedUser.wishlists}">
+                    <div class="wishlist-item clickable" th:each="wishlist : ${loggedUser.wishlists}" th:data-wishlist-id="${wishlist.id}"
+                         th:data-wishlist-name="${wishlist.name}" th:data-wishlist-size="${#lists.size(wishlist.products)}">
                         <div class="wishlist-item-content">
                             <div class="wishlist-item-text" th:text="${wishlist.name}"></div>
                             <p th:text="${#lists.size(wishlist.products)} + ' products'"></p>
                         </div>
                     </div>
-
                     <div class="wishlist-item new-wishlist">
-                        <button id="create-wishlist-btn btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button id="create-wishlist-btn" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
                             <span>+</span>
                             <span class="wishlist-item-text create">Create a new wishlist</span>
                         </button>
@@ -53,8 +53,8 @@
 
                 <div class="wishlist-content">
                     <div class="header">
-                        <h2>Wishlist</h2>
-                        <h6>Products</h6>
+                        <h2 id="wishlist-name">Wishlist</h2>
+                        <h6 id="wishlist-size">Products</h6>
                         <div class="wishlist-actions">
                             <button>
                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -62,19 +62,20 @@
                             </button>
                         </div>
                     </div>
-                    <div class="wishlist-details" th:if="${wishlist.products != null}">
-                        <div class="wishlist-products">
-
+                    <div class="wishlist-details">
+                        <div class="wishlist-products" id="wishlist-products">
+                            <!-- Products will be inserted here -->
                         </div>
-                    </div>
-                    <div class="wishlist-details" th:unless="${wishlist.products != null}">
-                        <div class="=image-container">
+                        <div class="image-container" id="empty-wishlist-message" style="display: none;">
                             <img src="/images/empty_basket.png" alt="Dummy Icon" width="200px" height="200px">
+                            <p>You haven't added products to this wishlist yet.</p>
                         </div>
-                        <p>You haven't added products to this wishlist yet.</p>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     </main>
 
