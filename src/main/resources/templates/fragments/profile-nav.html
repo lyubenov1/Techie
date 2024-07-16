@@ -3,20 +3,20 @@
 
 <nav th:fragment="profileNav">
     <ul>
-        <li><a th:href="@{/users/profile}">Profile</a></li>
-        <li th:classappend="${activeMenuItem == 'settings' ? 'active' : ''}">
+        <li class="inactive"><a th:href="@{/users/profile}">Profile</a></li>
+        <li th:classappend="${activeMenuItem == 'settings' ? 'active' : 'inactive'}">
             <a th:href="@{/users/profile/settings}">Settings</a>
         </li>
-        <li th:classappend="${activeMenuItem == 'addresses' ? 'active' : ''}">
+        <li th:classappend="${activeMenuItem == 'addresses' ? 'active' : 'inactive'}">
             <a th:href="@{/users/profile/addresses}">Addresses</a>
         </li>
-        <li th:classappend="${activeMenuItem == 'order-history' ? 'active' : ''}">
+        <li th:classappend="${activeMenuItem == 'order-history' ? 'active' : 'inactive'}">
             <a th:href="@{/users/profile/order-history}">Order history</a>
         </li>
-        <li th:classappend="${activeMenuItem == 'wishlist' ? 'active' : ''}">
+        <li th:classappend="${activeMenuItem == 'wishlist' ? 'active' : 'inactive'}">
             <a th:href="@{/users/profile/wishlist}">Wishlist</a>
         </li>
-        <li th:classappend="${activeMenuItem == 'cart' ? 'active' : ''}">
+        <li th:classappend="${activeMenuItem == 'cart' ? 'active' : 'inactive'}">
             <a th:href="@{/users/profile/cart}">Cart</a>
         </li>
         <li>
