@@ -22,7 +22,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT DISTINCT u FROM UserEntity u " +
             "LEFT JOIN FETCH u.wishlists w " +
             "LEFT JOIN FETCH w.products p " +
-            "JOIN FETCH (SELECT pi FROM ProductImage pi WHERE pi.product = p AND pi.isPrimary = true) pi " +
             "WHERE u.email = :email")
     Optional<UserEntity> findByEmailWithWishlists(@Param("email") String email);
 

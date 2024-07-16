@@ -7,7 +7,7 @@ import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
-import java.util.stream.*;
+import java.util.*;
 
 
 @Service
@@ -15,11 +15,14 @@ public class WishlistService {
 
     private final WishlistRepository wishlistRepository;
     private final ProductService productService;
+    private final ProductImageRepository productImageRepository;
 
     @Autowired
-    public WishlistService(WishlistRepository wishlistRepository, ProductService productService) {
+    public WishlistService(WishlistRepository wishlistRepository, ProductService productService,
+                           ProductImageRepository productImageRepository) {
         this.wishlistRepository = wishlistRepository;
         this.productService = productService;
+        this.productImageRepository = productImageRepository;
     }
 
     public void createWishlist(UserEntity user, String wishlistName) {
@@ -36,12 +39,23 @@ public class WishlistService {
     }
 
     public WishlistDTO convertToDto(Wishlist wishlist) {
+        List<Product> products = wishlist.getProducts();
+        setImageForEachProduct(products);  // Since we cannot directly fetch the productImages list from the database due to MultipleBagFetchException.
+                                           // This assignment affects only the current instance of the Product object in memory
+                                           // and does not persistently alter the default or existing data in the productImages table
+
         return WishlistDTO.builder()
                 .id(wishlist.getId())
                 .name(wishlist.getName())
-                .products(wishlist.getProducts().stream()
+                .products(products.stream()
                         .map(productService::convertToDTO)
-                        .collect(Collectors.toList()))
+                        .toList())
                 .build();
     }
+
+    private void setImageForEachProduct(List<Product> products) {
+        products.forEach(product ->
+                product.setProductImages(productImageRepository.findPrimaryImagesByProductId(product.getId())));
+    }
+
 }
