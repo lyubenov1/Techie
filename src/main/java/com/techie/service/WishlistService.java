@@ -58,4 +58,9 @@ public class WishlistService {
                 product.setProductImages(productImageRepository.findPrimaryImagesByProductId(product.getId())));
     }
 
+    public Wishlist findById(Long id) {
+        return wishlistRepository.findById(id)
+                .orElseThrow(() -> new WishlistNotFoundException("Wishlist not found with id: " + id));
+    }
+
 }
