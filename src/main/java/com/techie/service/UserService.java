@@ -126,11 +126,16 @@ public class UserService {
     }
 
     public UserDisplayView convertToView(UserEntity user) {
-        UserDisplayView view = UserConversionUtils.convertToView(user);
+        UserDisplayView userDisplayView = UserConversionUtils.convertToView(user);
+        setWishlists(userDisplayView, user);
+
+        return userDisplayView;
+    }
+
+    private void setWishlists(UserDisplayView userDisplayView, UserEntity user) {
         List<WishlistDTO> wishlistDTOs = user.getWishlists().stream()
                 .map(wishlistService::convertToDto)
                 .toList();
-        view.setWishlists(wishlistDTOs);
-        return view;
+        userDisplayView.setWishlists(wishlistDTOs);
     }
 }
