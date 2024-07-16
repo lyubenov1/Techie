@@ -35,29 +35,43 @@
             </div>
 
             <div class="wishlist-container">
-                <div class="wishlist-item" th:each="wishlist : ${loggedUser.wishlists}">
-                    <div class="wishlist-field">
-                        <h2 th:text="${wishlist.name}"></h2>
-                        <p th:text="${#lists.size(wishlist.products)} + ' products'"></p>
+                <div class="wishlist-items">
+                    <div class="wishlist-item" th:each="wishlist : ${loggedUser.wishlists}">
+                        <div class="wishlist-item-content">
+                            <div class="wishlist-item-text" th:text="${wishlist.name}"></div>
+                            <p th:text="${#lists.size(wishlist.products)} + ' products'"></p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="wishlist-item new-wishlist">
-                    <button id="create-wishlist-btn btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-                        <span>+</span>
-                        <span>Create a new wishlist</span>
-                    </button>
+                    <div class="wishlist-item new-wishlist">
+                        <button id="create-wishlist-btn btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                            <span>+</span>
+                            <span class="wishlist-item-text create">Create a new wishlist</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="wishlist-content">
-                    <h2>Списък с любими <span>0 products</span></h2>
-                    <div class="wishlist-actions">
-                        <button>Редактирай</button>
+                    <div class="header">
+                        <h2>Wishlist</h2>
+                        <h6>Products</h6>
+                        <div class="wishlist-actions">
+                            <button>
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                Edit
+                            </button>
+                        </div>
                     </div>
-                    <div class="empty-wishlist">
-                        <!-- Add your empty wishlist icon here -->
-                        <p>Все още не си добавил продукти в този списък.</p>
-                        <p>Отбележи любимите си продукти, за да получаваш известия относно промяна в цената и наличността им.</p>
+                    <div class="wishlist-details" th:if="${wishlist.products != null}">
+                        <div class="wishlist-products">
+
+                        </div>
+                    </div>
+                    <div class="wishlist-details" th:unless="${wishlist.products != null}">
+                        <div class="=image-container">
+                            <img src="/images/empty_basket.png" alt="Dummy Icon" width="200px" height="200px">
+                        </div>
+                        <p>You haven't added products to this wishlist yet.</p>
                     </div>
                 </div>
             </div>
