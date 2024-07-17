@@ -2179,15 +2179,6 @@ a.rating-info span:first-child {
     text-align: left;
 }
 
-
-
-
-
-
-
-
-
-
 .profile-main.container-xl {
     display: flex;
     flex-wrap: nowrap;
@@ -2426,3 +2417,66 @@ a.rating-info span:first-child {
 .wishlist-details .empty-container .image-container img {
     height: auto;
 }
+
+.add-wishlist.modal .modal-content {
+    background-color: rgb(32, 32, 32);
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.add-wishlist.modal .modal-content .modal-header h5{
+    text-decoration-color: black;
+}
+
+.add-wishlist.modal .btn-close {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    filter: invert(1) brightness(150%) grayscale(50%);
+}
+
+.add-wishlist.modal .modal-body #myInput {
+    background-color: inherit;
+    border: 1px solid grey;
+    transition: background-color 0.3s, border-color 0.3s;
+    caret-color: rgb(225, 222, 218);
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.add-wishlist.modal .modal-body #myInput::placeholder {
+    color: #aeaeae;
+    font-size: 15px;
+    font-family: 'Roboto Condensed', serif;
+    padding-left: 8px;
+}
+
+.add-wishlist.modal .modal-body #myInput:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.add-wishlist.modal .modal-body #myInput:hover{
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.add-wishlist.modal .modal-body .btn.btn-primary {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    margin-top: 20px;
+    padding: 5px 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.add-wishlist.modal .modal-body .btn.btn-primary:hover {
+    background-color: grey;
+    color: white;
+    border-color: white;
+}
+
+
