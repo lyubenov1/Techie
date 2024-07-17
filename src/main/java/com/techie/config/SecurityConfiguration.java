@@ -44,7 +44,9 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/products/**").permitAll()
                         .requestMatchers("/login/**", "/register", "/login-error").anonymous()
-                        .requestMatchers("/terms-of-use", "/unauthorized", "/privacy-policy", "/about-us").permitAll()
+                        .requestMatchers("/terms-of-use", "/unauthorized",
+                                         "/privacy-policy", "/about-us", "example/test").permitAll()
+
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/**").permitAll()  // Allow access to all API endpoints
