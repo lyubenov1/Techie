@@ -2283,6 +2283,7 @@ a.rating-info span:first-child {
 .profile-main .wishlist-items {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 15px;
 }
