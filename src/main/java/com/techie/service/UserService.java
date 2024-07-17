@@ -135,7 +135,10 @@ public class UserService {
     private void setWishlists(UserDisplayView userDisplayView, UserEntity user) {
         List<WishlistDTO> wishlistDTOs = user.getWishlists().stream()
                 .map(wishlistService::convertToDto)
+                .sorted(Comparator.comparing(WishlistDTO::getId))
                 .toList();
+
+        logger.info("User has wishlists with IDs: {}", wishlistDTOs.stream().map(WishlistDTO::getId).toList());
         userDisplayView.setWishlists(wishlistDTOs);
     }
 }
