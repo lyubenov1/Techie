@@ -63,7 +63,14 @@ public class WishlistService {
                 .orElseThrow(() -> new WishlistNotFoundException(id));
     }
 
-    public void deleteWishlist(UserEntity user, Long id) {
+    public List<WishlistDTO> getAndConvertWishlists(String username) {
+        return wishlistRepository.findByUserEmail(username)
+                .stream()
+                .map(this::convertToDto)
+                .sorted(Comparator.comparing(WishlistDTO::getId))
+                .toList();
     }
 
+    public void deleteWishlist(UserEntity user, Long id) {
+    }
 }

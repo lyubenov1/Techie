@@ -2,7 +2,6 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
-import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
@@ -43,7 +42,7 @@ public class UserService {
     }
 
     public UserEntity findByUsername(String username) {
-        return userRepository.findByEmailWithWishlists(username)
+        return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
@@ -126,19 +125,6 @@ public class UserService {
     }
 
     public UserDisplayView convertToView(UserEntity user) {
-        UserDisplayView userDisplayView = UserConversionUtils.convertToView(user);
-        setWishlists(userDisplayView, user);
-
-        return userDisplayView;
-    }
-
-    private void setWishlists(UserDisplayView userDisplayView, UserEntity user) {
-        List<WishlistDTO> wishlistDTOs = user.getWishlists().stream()
-                .map(wishlistService::convertToDto)
-                .sorted(Comparator.comparing(WishlistDTO::getId))
-                .toList();
-
-        logger.info("User has wishlists with IDs: {}", wishlistDTOs.stream().map(WishlistDTO::getId).toList());
-        userDisplayView.setWishlists(wishlistDTOs);
+        return UserConversionUtils.convertToView(user);
     }
 }
