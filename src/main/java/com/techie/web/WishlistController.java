@@ -12,27 +12,28 @@ import org.springframework.web.servlet.mvc.support.*;
 
 @Controller
 public class WishlistController {
-
-    private final WishlistService wishlistService;
     private final UserService userService;
+    private final WishlistService wishlistService;
 
     @Autowired
-    public WishlistController(WishlistService wishlistService, UserService userService) {
-        this.wishlistService = wishlistService;
+    public WishlistController(UserService userService, WishlistService wishlistService) {
         this.userService = userService;
+        this.wishlistService = wishlistService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/users/profile/wishlist/create")
     public String createWishlist(@AuthenticationPrincipal UserDetails userDetails,
-                                 @RequestParam String wishlistName,
-                                 RedirectAttributes redirectAttributes) {
+                                 @RequestParam String wishlistName, RedirectAttributes redirectAttributes) {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
+
         try {
             wishlistService.createWishlist(user, wishlistName);
             redirectAttributes.addFlashAttribute("successMessage", "Wishlist created successfully!");
+            return "redirect:/users/profile/wishlist";
         } catch (DuplicateWishlistException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/users/profile/wishlist";
         }
-        return "redirect:/wishlist";
     }
+
 }

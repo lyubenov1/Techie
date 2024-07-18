@@ -1,6 +1,7 @@
 package com.techie.web.rest;
 
 import com.techie.domain.entities.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
@@ -24,19 +25,10 @@ public class WishlistRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createWishlist(@AuthenticationPrincipal UserDetails userDetails,
-                                            @RequestParam String wishlistName) {
-        UserEntity user = userService.findByUsername(userDetails.getUsername());
-
-        try {
-            wishlistService.createWishlist(user, wishlistName);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Wishlist created successfully!"));
-        } catch (DuplicateWishlistException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("errorMessage", e.getMessage()));
-        }
+    @GetMapping("/get")
+    public List<WishlistDTO> getWishlists(@AuthenticationPrincipal UserDetails userDetails) {
+        return wishlistService.getAndConvertWishlists(userDetails.getUsername());
     }
-
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteWishlist(@AuthenticationPrincipal UserDetails userDetails,
