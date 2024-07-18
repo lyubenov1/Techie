@@ -60,7 +60,10 @@ public class WishlistService {
 
     public Wishlist findById(Long id) {
         return wishlistRepository.findById(id)
-                .orElseThrow(() -> new WishlistNotFoundException("Wishlist not found with id: " + id));
+                .orElseThrow(() -> new WishlistNotFoundException(id));
+    }
+
+    public void deleteWishlist(UserEntity user, Long id) {
     }
 
 }

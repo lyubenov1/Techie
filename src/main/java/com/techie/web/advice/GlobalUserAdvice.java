@@ -10,12 +10,12 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 @ControllerAdvice
-public class GlobalControllerAdvice {
+public class GlobalUserAdvice {
 
     private final UserService userService;
 
     @Autowired
-    public GlobalControllerAdvice(UserService userService) {
+    public GlobalUserAdvice(UserService userService) {
         this.userService = userService;
     }
 

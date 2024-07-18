@@ -47,7 +47,7 @@ public class ProductFilterService {
 
     public List<ProductDTO> getFilteredProducts(String categoryName, Map<String, String> filters, String sort) {
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
-        Map<String, List<String>> convertedFilters = convertFilters(filters);     // Convert the checked filter options to an easier format to work with
+        Map<String, List<String>> convertedFilters = convertFilters(filters);   // Convert the checked filter options to an easier format to work with
 
         if (categoryOptional.isPresent()) {
             Category category = categoryOptional.get();
@@ -57,7 +57,7 @@ public class ProductFilterService {
 
             return products;
         } else {
-            throw new CategoryNotFoundException("Category with name " + categoryName + " not found");
+            throw new CategoryNotFoundException(categoryName);
         }
     }
 

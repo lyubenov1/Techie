@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class ExampleController {
 
     /**
-     * Handler method that deliberately throws a NullPointerException for demonstration purposes.
+     * Handler method that deliberately throws a RuntimeException for demonstration purposes.
      *
      * @return This method does not return a value since it throws an exception.
      */
     @GetMapping("/test")
-    public String test() {
-        throw new NullPointerException("This is a test NullPointerException");
+    public String testError() {
+        throw new RuntimeException("Simulated internal server error");
     }
 }

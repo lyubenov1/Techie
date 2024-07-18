@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public String productsPage(@RequestParam(required = false) Map<String, String> filters,
+    public String allProductsPage(@RequestParam(required = false) Map<String, String> filters,
                                @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
                                Model model) {
@@ -111,11 +111,12 @@ public class ProductController {
     public String productPage(@PathVariable String productName, @PathVariable String categoryName, Model model) {
         Optional<Product> productOptional = productService.findByNameWithAllImages(productName);
 
-        if (productOptional.isEmpty()) {
-            return "redirect:/products";
-        }
+        Category category = categoryService.findByName(categoryName)
+                .orElseThrow(() -> new CategoryNotFoundException(categoryName));
 
-        ProductDTO productDTO = productService.convertToDTO(productOptional.get());
+        Product product = productOptional.orElseThrow(() -> new ProductNotFoundException(productName));
+
+        ProductDTO productDTO = productService.convertToDTO(product);
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);

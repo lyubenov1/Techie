@@ -1,7 +1,6 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
@@ -24,10 +23,5 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> getCategories() {
         List<CategoryDTO> categories = categoryService.getParentCategoryDTOs();
         return new ResponseEntity<>(categories, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<String> handleCategoryNotFoundException(CategoryNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

@@ -4,7 +4,6 @@ import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
 import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.util.*;
 
@@ -24,14 +23,12 @@ public class CategoryService {
         this.productService = productService;
     }
 
-    @Cacheable(cacheNames = "categories", key = "'parentCategoryDTOs'")
     public List<CategoryDTO> getParentCategoryDTOs() {
         return getRootCategories().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(cacheNames = "categories", key = "#category.id")
     public CategoryDTO convertToDTO(Category category) {
         CategoryDTO dto = mapCategoryToDTO(category);
         dto.setProducts(fetchProductsForCategory(category));
@@ -52,7 +49,6 @@ public class CategoryService {
         return dto;
     }
 
-    @Cacheable(cacheNames = "categories", key = "#categoryName")
     public Optional<Category> findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
     }

@@ -117,10 +117,10 @@ public class UserService {
             }
         } else {
             if (optionalUser.isEmpty()) {
-                logger.warn("User with email {} not found.", email);
+                logger.info("User with email {} not found.", email);
             }
             if (optionalRole.isEmpty()) {
-                logger.warn("Role {} not found.", role);
+                logger.info("Role {} not found.", role);
             }
         }
     }
