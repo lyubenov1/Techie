@@ -2296,6 +2296,10 @@ a.rating-info span:first-child {
     position: relative;
 }
 
+.profile-main .wishlist-item.selected {
+    border: 1px solid rgb(225, 222, 218);
+}
+
 .profile-main .wishlist-item-content {
     border: 1px solid grey;
     padding: 15px;
@@ -2437,7 +2441,7 @@ a.rating-info span:first-child {
     filter: invert(1) brightness(150%) grayscale(50%);
 }
 
-.add-wishlist.modal .modal-body #myInput {
+.add-wishlist.modal .modal-body #wishlistName {
     background-color: inherit;
     border: 1px solid grey;
     transition: background-color 0.3s, border-color 0.3s;
@@ -2446,20 +2450,20 @@ a.rating-info span:first-child {
     font-family: 'Roboto Condensed', serif;
 }
 
-.add-wishlist.modal .modal-body #myInput::placeholder {
+.add-wishlist.modal .modal-body #wishlistName::placeholder {
     color: #aeaeae;
     font-size: 15px;
     font-family: 'Roboto Condensed', serif;
     padding-left: 8px;
 }
 
-.add-wishlist.modal .modal-body #myInput:focus {
+.add-wishlist.modal .modal-body #wishlistName:focus {
     border-color: rgba(255, 255, 255, 0.5);
     outline: none;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.add-wishlist.modal .modal-body #myInput:hover{
+.add-wishlist.modal .modal-body #wishlistName:hover{
     border-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
@@ -2480,4 +2484,23 @@ a.rating-info span:first-child {
     border-color: white;
 }
 
+.not-found-img {
+    margin-top: 25px;
+}
+
+.wishlist-success, .wishlist-error {
+    font-size: 1.3rem;
+    color: black !important;
+    font-family: 'Roboto Condensed', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.wishlist-error p, .wishlist-success p {
+    margin: 0;
+}
 
