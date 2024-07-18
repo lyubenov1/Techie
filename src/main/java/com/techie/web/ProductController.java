@@ -2,6 +2,7 @@ package com.techie.web;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
+import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -12,7 +13,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/products")
-public class ProductViewController {
+public class ProductController {
 
     private final CategoryService categoryService;
     private final ProductFilterService productFilterService;
@@ -21,9 +22,9 @@ public class ProductViewController {
     private final ProductService productService;
 
     @Autowired
-    public ProductViewController(CategoryService categoryService, ProductFilterService productFilterService,
-                                 PaginationService paginationService, FacetService facetService,
-                                 ProductService productService) {
+    public ProductController(CategoryService categoryService, ProductFilterService productFilterService,
+                             PaginationService paginationService, FacetService facetService,
+                             ProductService productService) {
         this.categoryService = categoryService;
         this.productFilterService = productFilterService;
         this.paginationService = paginationService;
@@ -91,11 +92,9 @@ public class ProductViewController {
         filters.remove("sort");
 
         Optional<Category> categoryOptional = categoryService.findByName(categoryName);
-        if (categoryOptional.isEmpty()) {
-            return "redirect:/";
-        }
+        Category category = categoryOptional.orElseThrow(() -> new CategoryNotFoundException(categoryName));
 
-        CategoryDTO categoryDTO = categoryService.convertToDTO(categoryOptional.get());
+        CategoryDTO categoryDTO = categoryService.convertToDTO(category);
 
         List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters, sort);
         categoryDTO.setProducts(filteredProducts);

@@ -1,5 +1,6 @@
 package com.techie.config;
 
+import com.techie.exceptions.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.handler.*;
@@ -23,11 +24,11 @@ public class ErrorConfig {
 
         // Define properties to map exception classes to specific view names
         Properties properties = new Properties();
-        properties.setProperty(NullPointerException.class.getSimpleName(), "error-pages/null-pointer-exception");
+        properties.setProperty(NullPointerException.class.getName(), "error-pages/null-pointer-exception");
+        properties.setProperty(ObjectNotFoundException.class.getName(), "error-pages/not-found");
 
         // Set the exception mappings
         resolver.setExceptionMappings(properties);
-
         return resolver;
     }
 }

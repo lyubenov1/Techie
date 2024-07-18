@@ -11,12 +11,12 @@ import java.util.*;
 
 @RestController
 @RequestMapping("api/products")
-public class ProductController {
+public class ProductRestController {
 
     private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductRestController(ProductService productService) {
         this.productService = productService;
     }
 
