@@ -904,31 +904,3 @@ function togglePassword(fieldId, toggleBtn) {
         icon.classList.add('fa-eye');
     }
 }
-
-
-const myModal = document.getElementById('myModal');
-const myInput = document.getElementById('myInput');
-
-myModal.addEventListener('shown.bs.modal', () => {
-    myInput.focus();
-});
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Add click event listeners to wishlist items
-    const wishlistItems = document.querySelectorAll('.wishlist-item.clickable');
-    wishlistItems.forEach((item, index) => {
-        item.addEventListener('click', () => showWishlist(index));
-    });
-
-    function showWishlist(index) {
-        const wishlistContainers = document.querySelectorAll('[id^="wishlist-content-"]');
-        wishlistContainers.forEach(container => {
-            container.style.display = container.id === `wishlist-content-${index}` ? 'block' : 'none';
-        });
-    }
-
-    // Show the first wishlist (Main wishlist) by default
-    showWishlist(0);
-});
