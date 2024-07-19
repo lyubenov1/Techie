@@ -101,14 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wishlist.products.length > 0) {
             wishlist.products.forEach(product => {
                 const productCard = document.createElement('a');
-                productCard.href = product.url;
+                productCard.href = '/products/' + product.categoryName.toLowerCase() + '/' + product.url;
                 productCard.classList.add('card');
                 productCard.style.width = '18rem';
 
                 // Construct the product card HTML here
                 productCard.innerHTML = `
                 <div class="image-container">
-                    <img src="${product.imageUrl}" alt="Product Image" class="card-img-top">
+                    <img src="${product.imageUrls[0]}" alt="Product Image" class="card-img-top">
                 </div>
                 <div class="card-body">
                     <div class="card-body-wrapper">
