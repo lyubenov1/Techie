@@ -1266,10 +1266,10 @@ a.rating-info span:first-child {
 }
 
 .product-info .add-to-cart, .add-to-favourites {
-    display: inline-flex;
+    display: block;
+    margin-top: 10px;
     align-items: center;
     justify-content: center;
-    margin-right: 5px;
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
@@ -1278,6 +1278,46 @@ a.rating-info span:first-child {
     color: rgb(225, 222, 218);
     font-size: 16px;
     font-weight: 600;
+}
+
+.wishlist-wrapper {
+    position: relative;
+}
+
+#wishlist-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    background-color: #343a40;
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    border-radius: 5px;
+}
+
+.wishlist-option {
+    color: #fff;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 15px;
+}
+
+.wishlist-option:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+.choose-option {
+    background-color: #495057;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-to-favourites {
+    width: 102px;
 }
 
 .add-to-cart i, .add-to-favourites i {
@@ -1306,15 +1346,6 @@ a.rating-info span:first-child {
 
 
 @media (min-width: 992px) and (max-width: 1200px) {
-    .add-to-cart, .add-to-favourites {
-        display: block;
-        margin: 5px;
-    }
-
-    .add-to-favourites {
-        width: 102px;
-    }
-
     .product-specs {
         max-width: 500px;
         padding: 20px;
@@ -1394,8 +1425,8 @@ a.rating-info span:first-child {
 }
 
 @media (max-width: 472px) {
-    .add-to-cart, .add-to-favourites {
-        margin: 5px;
+    .product-photos .photo-container {
+        margin-bottom: 0;
     }
 }
 

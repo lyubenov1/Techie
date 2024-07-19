@@ -57,12 +57,20 @@
                     <span class="original-price" th:text="'$' + ${product.originalPrice}">Original price</span>
                 </div>
                 <div class="cart-and-favourites">
-                        <a href="#" class="add-to-cart">
-                            <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart
-                        </a>
-                        <a href="#" class="add-to-favourites">
+                    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="hidden" id="product-id" th:value="${product.id}">
+                    <a href="#" class="add-to-cart">
+                        <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart
+                    </a>
+                    <div class="wishlist-wrapper">
+                        <a href="#" id="save-to-wishlist" class="add-to-favourites">
                             <i class="far fa-heart fa-md text-white"></i> Save
                         </a>
+                        <!-- Dropdown menu for multiple wishlists -->
+                        <div id="wishlist-dropdown" class="wishlist-dropdown">
+                            <!-- Options will be populated dynamically -->
+                        </div>
+                    </div>
                 </div>
                 <div class="product-info-icons">
                     <div class="icon-text">
@@ -116,6 +124,7 @@
     </div>
 
 <script src="/js/script.js"></script>
+<script src="/js/productScript.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
