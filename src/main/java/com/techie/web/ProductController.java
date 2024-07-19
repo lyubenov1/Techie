@@ -117,7 +117,7 @@ public class ProductController {
 
         Product product = productOptional.orElseThrow(() -> new ProductNotFoundException(productName));
 
-        ProductDTO productDTO = productService.convertToDTO(product);
+        ProductDTO productDTO = productService.convertToDTOWithComments(product);
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);

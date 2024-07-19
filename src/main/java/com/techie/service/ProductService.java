@@ -78,14 +78,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-
-    public ProductDTO convertToDTO(Product product) {
+    public ProductDTO convertToDTOWithComments(Product product) {
         ProductDTO productDTO = ProductConversionUtils.convertToDTO(product);
         List<CommentDTO> commentDTOs = commentService.fetchAndConvertCommentsToDTOs(product);
         productDTO.setComments(commentDTOs);
         return productDTO;
     }
 
+    public ProductDTO convertToDTO(Product product) {
+        return ProductConversionUtils.convertToDTO(product);
+    }
 
     public void addSpecifications(ProductDTO productDTO, Model model) {
         model.addAttribute("specifications", retrieveSpecifications(productDTO));

@@ -4,6 +4,7 @@ import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
 import com.techie.exceptions.*;
 import com.techie.repository.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -16,6 +17,7 @@ public class WishlistService {
     private final WishlistRepository wishlistRepository;
     private final ProductService productService;
     private final ProductImageRepository productImageRepository;
+    private static final Logger logger = LoggerFactory.getLogger(WishlistService.class);
 
     @Autowired
     public WishlistService(WishlistRepository wishlistRepository, ProductService productService,
@@ -52,16 +54,20 @@ public class WishlistService {
 
     public WishlistDTO convertToDto(Wishlist wishlist) {
         List<Product> products = wishlist.getProducts();
+        logger.info("Products in wishlist {}: {}", wishlist.getId(), products);
         setImageForEachProduct(products);  // Since we cannot directly fetch the productImages list from the database due to MultipleBagFetchException.
                                            // This assignment affects only the current instance of the Product object in memory
                                            // and does not persistently alter the default or existing data in the productImages table
 
+        List<ProductDTO> productDTOs = products.stream()
+                .map(productService::convertToDTO)
+                .toList();
+        logger.info("Converted productDTOs: {}", productDTOs);
+
         return WishlistDTO.builder()
                 .id(wishlist.getId())
                 .name(wishlist.getName())
-                .products(products.stream()
-                        .map(productService::convertToDTO)
-                        .toList())
+                .products(productDTOs)
                 .build();
     }
 
@@ -71,8 +77,9 @@ public class WishlistService {
     }
 
     public List<WishlistDTO> getAndConvertWishlists(String username) {
-        return wishlistRepository.findByUserEmail(username)
-                .stream()
+        List<Wishlist> wishlists = wishlistRepository.findByUserEmail(username);
+        logger.info("Fetched wishlists: {}", wishlists);
+        return wishlists.stream()
                 .map(this::convertToDto)
                 .sorted(Comparator.comparing(WishlistDTO::getId))
                 .toList();
@@ -103,5 +110,26 @@ public class WishlistService {
 
         wishlist.setName(newName);
         wishlistRepository.save(wishlist);
+    }
+
+    public void addProductToWishlist(UserEntity user, Long wishlistId, Long productId)
+                                        throws WishlistNotFoundException, ProductNotFoundException {
+        logger.info("Attempting to add product with ID {} to wishlist with ID {} for user {}", productId, wishlistId, user.getUsername());
+
+        Wishlist wishlist = wishlistRepository.findByIdAndUserJoinFetchProducts(wishlistId, user)
+                .orElseThrow(() -> new WishlistNotFoundException(wishlistId));
+        Product product = productService.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+
+        // Check if the product already exists in the wishlist
+        if (wishlistRepository.existsProductInWishlist(wishlistId, productId)) {
+            throw new ProductAlreadyInWishlistException(product.getName(), wishlist.getName());
+        }
+        
+        wishlist.getProducts().add(product);
+        wishlistRepository.save(wishlist);
+
+        logger.info("Successfully added product with ID {} to wishlist with ID {}. Wishlist now contains {} products.",
+                productId, wishlistId, wishlist.getProducts().size());
     }
 }

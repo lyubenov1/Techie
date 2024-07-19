@@ -12,9 +12,22 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     boolean existsByUserAndName(UserEntity user, String wishlistName);
 
     @Query("SELECT w FROM Wishlist w " +
-            "LEFT JOIN FETCH w.products " +
+            "LEFT JOIN FETCH w.products p " +
+            "LEFT JOIN FETCH p.category " +
+            "LEFT JOIN FETCH p.brand " +
             "WHERE w.user.email = :email")
     List<Wishlist> findByUserEmail(@Param("email") String email);
 
     Optional<Wishlist> findByIdAndUser(Long id, UserEntity user);
+
+    @Query("SELECT w FROM Wishlist w " +
+            "LEFT JOIN FETCH w.products " +
+            "WHERE w.user = :user AND w.id = :wishlistId")
+    Optional<Wishlist> findByIdAndUserJoinFetchProducts(@Param("wishlistId") Long id, @Param("user") UserEntity user);
+
+    @Query("SELECT CASE WHEN COUNT(p) > 0 " +
+            "THEN true ELSE false END " +
+            "FROM Wishlist w JOIN w.products p " +
+            "WHERE w.id = :wishlistId AND p.id = :productId")
+    boolean existsProductInWishlist(@Param("wishlistId") Long wishlistId, @Param("productId") Long productId);
 }
