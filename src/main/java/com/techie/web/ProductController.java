@@ -67,7 +67,7 @@ public class ProductController {
     public String allProductsPage(@RequestParam(required = false) Map<String, String> filters,
                                @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
-                               Model model) {
+                               Model model) throws CategoryNotFoundException {
         filters.remove("p");
         filters.remove("sort");
 
@@ -87,7 +87,7 @@ public class ProductController {
                                @RequestParam(required = false) Map<String, String> filters,
                                @RequestParam(name = "p", defaultValue = "0", required = false) int page,
                                @RequestParam(name = "sort", defaultValue = "newest", required = false) String sort,
-                               Model model) {
+                               Model model) throws CategoryNotFoundException {
         filters.remove("p");
         filters.remove("sort");
 
@@ -108,7 +108,8 @@ public class ProductController {
     }
 
     @GetMapping("/{categoryName}/{productName}")
-    public String productPage(@PathVariable String productName, @PathVariable String categoryName, Model model) {
+    public String productPage(@PathVariable String productName, @PathVariable String categoryName,
+                              Model model) throws ProductNotFoundException, CategoryNotFoundException {
         Optional<Product> productOptional = productService.findByNameWithAllImages(productName);
 
         Category category = categoryService.findByName(categoryName)

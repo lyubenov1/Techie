@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function createWishlistItem(wishlist) {
         const wishlistItem = document.createElement('div');
         wishlistItem.classList.add('wishlist-item', 'clickable');
-        wishlistItem.setAttribute('data-wishlist-id', wishlist.id);
         wishlistItem.setAttribute('data-wishlist-name', wishlist.name);
         wishlistItem.setAttribute('data-wishlist-size', wishlist.products.length);
         wishlistItem.onclick = function() {
@@ -154,6 +153,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             wishlistProductsDiv.appendChild(emptyContainer);
         }
+
+        // Set up the edit button to trigger the modal with the current wishlist details
+        const editButton = document.querySelector('.wishlist-actions button');
+        editButton.onclick = function() {
+            openEditModal(wishlist);
+        };
+    }
+
+    function openEditModal(wishlist) {
+        const editWishlistModal = new bootstrap.Modal(document.getElementById('editWishlistModal'), {});
+        const editWishlistNameInput = document.getElementById('editWishlistName');
+        const wishlistIdInput = document.getElementById('editWishlistId');
+
+        // Populate the modal with the wishlist details
+        editWishlistNameInput.value = wishlist.name;
+        wishlistIdInput.value = wishlist.id;
+
+        // Open the modal
+        editWishlistModal.show();
     }
 
     fetchAndPopulateWishlists();

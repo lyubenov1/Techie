@@ -2423,25 +2423,29 @@ a.rating-info span:first-child {
     height: auto;
 }
 
-.add-wishlist.modal .modal-content {
+.add-wishlist.modal .modal-content,
+.edit-wishlist.modal .modal-content {
     background-color: rgb(32, 32, 32);
     border: 1px solid grey;
     color: rgb(225, 222, 218);
     font-family: 'Roboto Condensed', serif;
 }
 
-.add-wishlist.modal .modal-content .modal-header h5{
+.add-wishlist.modal .modal-content .modal-header h5,
+.edit-wishlist.modal .modal-content .modal-header h5 {
     text-decoration-color: black;
 }
 
-.add-wishlist.modal .btn-close {
+.add-wishlist.modal .btn-close,
+.edit-wishlist.modal .btn-close {
     font-size: 1.2rem;
     width: 1.2rem;
     height: 1.2rem;
     filter: invert(1) brightness(150%) grayscale(50%);
 }
 
-.add-wishlist.modal .modal-body #wishlistName {
+.add-wishlist.modal .modal-body #wishlistName,
+.edit-wishlist.modal .modal-body #editWishlistName {
     background-color: inherit;
     border: 1px solid grey;
     transition: background-color 0.3s, border-color 0.3s;
@@ -2450,25 +2454,29 @@ a.rating-info span:first-child {
     font-family: 'Roboto Condensed', serif;
 }
 
-.add-wishlist.modal .modal-body #wishlistName::placeholder {
+.add-wishlist.modal .modal-body #wishlistName::placeholder,
+.edit-wishlist.modal .modal-body #editWishlistName::placeholder {
     color: #aeaeae;
     font-size: 15px;
     font-family: 'Roboto Condensed', serif;
     padding-left: 8px;
 }
 
-.add-wishlist.modal .modal-body #wishlistName:focus {
+.add-wishlist.modal .modal-body #wishlistName:focus,
+.edit-wishlist.modal .modal-body #editWishlistName:focus {
     border-color: rgba(255, 255, 255, 0.5);
     outline: none;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.add-wishlist.modal .modal-body #wishlistName:hover{
+.add-wishlist.modal .modal-body #wishlistName:hover,
+.edit-wishlist.modal .modal-body #editWishlistName:hover {
     border-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.add-wishlist.modal .modal-body .btn.btn-primary {
+.add-wishlist.modal .modal-body .btn.btn-primary,
+.edit-wishlist.modal .modal-body .btn.btn-primary {
     background-color: inherit;
     border: 1px solid grey;
     color: rgb(225, 222, 218);
@@ -2478,10 +2486,33 @@ a.rating-info span:first-child {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.add-wishlist.modal .modal-body .btn.btn-primary:hover {
-    background-color: grey;
+.edit-wishlist.modal .modal-body .btn.btn-danger {
+    color: rgb(225, 222, 218);
+    margin-top: 20px;
+    padding: 5px 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.edit-wishlist.modal .modal-body .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.add-wishlist.modal .modal-body .btn.btn-primary:hover,
+.edit-wishlist.modal .modal-body .btn.btn-primary:hover {
+    background-color: #505050;
     color: white;
     border-color: white;
+}
+
+.edit-wishlist.modal .modal-body .btn.btn-danger:hover {
+    background-color: #4c0404;
+}
+
+#editWishlistForm {
+    margin-bottom: 0;
 }
 
 .not-found-img {

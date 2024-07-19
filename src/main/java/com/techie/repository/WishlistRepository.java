@@ -15,4 +15,6 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
             "LEFT JOIN FETCH w.products " +
             "WHERE w.user.email = :email")
     List<Wishlist> findByUserEmail(@Param("email") String email);
+
+    Optional<Wishlist> findByIdAndUser(Long id, UserEntity user);
 }

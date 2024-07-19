@@ -73,4 +73,16 @@ public class WishlistService {
 
     public void deleteWishlist(UserEntity user, Long id) {
     }
+
+    public void updateWishlistName(UserEntity user, Long id, String newName)
+                                            throws WishlistNotFoundException, InvalidWishlistNameException {
+        if (newName.length() > 50) {
+            throw new InvalidWishlistNameException("Wishlist name cannot be more than 50 characters");
+        }
+        Wishlist wishlist = wishlistRepository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new WishlistNotFoundException(id));
+
+        wishlist.setName(newName);
+        wishlistRepository.save(wishlist);
+    }
 }
