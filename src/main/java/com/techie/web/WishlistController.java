@@ -4,14 +4,11 @@ import com.techie.domain.entities.*;
 import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
-
-import java.util.*;
 
 @Controller
 public class WishlistController {
@@ -26,14 +23,15 @@ public class WishlistController {
 
     @PostMapping("/users/profile/wishlist/create")
     public String createWishlist(@AuthenticationPrincipal UserDetails userDetails,
-                                 @RequestParam String wishlistName, RedirectAttributes redirectAttributes) throws DuplicateWishlistException {
+                                 @RequestParam String wishlistName,
+                                 RedirectAttributes redirectAttributes) throws InvalidWishlistNameException, DuplicateWishlistException {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
 
         try {
             wishlistService.createWishlist(user, wishlistName);
             redirectAttributes.addFlashAttribute("successMessage", "Wishlist created successfully!");
             return "redirect:/users/profile/wishlist";
-        } catch (DuplicateWishlistException e) {
+        } catch (InvalidWishlistNameException | DuplicateWishlistException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/users/profile/wishlist";
         }
@@ -43,13 +41,8 @@ public class WishlistController {
     public String editWishlistName(@AuthenticationPrincipal UserDetails userDetails,
                                    @RequestParam Long wishlistId,
                                    @RequestParam String wishlistName,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes) throws InvalidWishlistNameException, WishlistNotFoundException {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
-
-        if (wishlistName == null || wishlistName.trim().isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "New name cannot be empty");
-            return "redirect:/users/profile/wishlist";
-        }
 
         try {
             wishlistService.updateWishlistName(user, wishlistId, wishlistName);
@@ -61,16 +54,19 @@ public class WishlistController {
         return "redirect:/users/profile/wishlist";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteWishlist(@AuthenticationPrincipal UserDetails userDetails,
-                                            @PathVariable Long id) {
+    @DeleteMapping("/users/profile/wishlist/delete")
+    public String deleteWishlist(@AuthenticationPrincipal UserDetails userDetails,
+                                            @RequestParam Long wishlistId,
+                                            RedirectAttributes redirectAttributes) throws WishlistNotFoundException {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
 
         try {
-            wishlistService.deleteWishlist(user, id);
-            return ResponseEntity.ok().body(Map.of("message", "Wishlist deleted successfully!"));
+            wishlistService.deleteWishlist(user, wishlistId);
+            redirectAttributes.addFlashAttribute("successMessage", "Wishlist was deleted successfully!");
         } catch (WishlistNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
+
+        return "redirect:/users/profile/wishlist";
     }
 }

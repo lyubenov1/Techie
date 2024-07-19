@@ -2481,6 +2481,7 @@ a.rating-info span:first-child {
     border: 1px solid grey;
     color: rgb(225, 222, 218);
     float: right;
+    width: 90px;
     margin-top: 20px;
     padding: 5px 20px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -2489,6 +2490,7 @@ a.rating-info span:first-child {
 .edit-wishlist.modal .modal-body .btn.btn-danger {
     color: rgb(225, 222, 218);
     margin-top: 20px;
+    width: 90px;
     padding: 5px 20px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
@@ -2511,7 +2513,7 @@ a.rating-info span:first-child {
     background-color: #4c0404;
 }
 
-#editWishlistForm {
+#editWishlistForm, #deleteWishlistForm {
     margin-bottom: 0;
 }
 

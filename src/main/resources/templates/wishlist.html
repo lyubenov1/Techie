@@ -111,6 +111,12 @@
         </div>
     </div>
 
+    <!-- Hidden form for delete action -->
+    <form id="deleteWishlistForm" th:action="@{/users/profile/wishlist/delete}" method="POST" style="display: none;">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" id="deleteWishlistId" name="wishlistId" />
+    </form>
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>

@@ -25,10 +25,20 @@ public class WishlistService {
         this.productImageRepository = productImageRepository;
     }
 
-    public void createWishlist(UserEntity user, String wishlistName) {
+    public void createWishlist(UserEntity user, String wishlistName)
+                               throws InvalidWishlistNameException, DuplicateWishlistException {
+        if (wishlistName == null || wishlistName.trim().isEmpty()) {
+            throw new InvalidWishlistNameException("Wishlist name cannot be empty");
+        }
+
+        if (wishlistName.length() > 50) {
+            throw new InvalidWishlistNameException("Wishlist name cannot be more than 50 characters");
+        }
+
+
         boolean wishlistExists = wishlistRepository.existsByUserAndName(user, wishlistName);
         if (wishlistExists) {
-            throw new DuplicateWishlistException("You already have a wishlist named '" + wishlistName + "'.");
+            throw new DuplicateWishlistException(wishlistName);
         }
 
         Wishlist wishlist = new Wishlist();
@@ -37,6 +47,8 @@ public class WishlistService {
 
         wishlistRepository.save(wishlist);
     }
+
+
 
     public WishlistDTO convertToDto(Wishlist wishlist) {
         List<Product> products = wishlist.getProducts();
@@ -58,11 +70,6 @@ public class WishlistService {
                 product.setProductImages(productImageRepository.findPrimaryImagesByProductId(product.getId())));
     }
 
-    public Wishlist findById(Long id) {
-        return wishlistRepository.findById(id)
-                .orElseThrow(() -> new WishlistNotFoundException(id));
-    }
-
     public List<WishlistDTO> getAndConvertWishlists(String username) {
         return wishlistRepository.findByUserEmail(username)
                 .stream()
@@ -71,16 +78,28 @@ public class WishlistService {
                 .toList();
     }
 
-    public void deleteWishlist(UserEntity user, Long id) {
+    public void deleteWishlist(UserEntity user, Long id) throws WishlistNotFoundException {
+        Wishlist wishlist = wishlistRepository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new WishlistNotFoundException(id));
+
+        wishlistRepository.delete(wishlist);
     }
 
     public void updateWishlistName(UserEntity user, Long id, String newName)
                                             throws WishlistNotFoundException, InvalidWishlistNameException {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new InvalidWishlistNameException("New name cannot be empty");
+        }
         if (newName.length() > 50) {
             throw new InvalidWishlistNameException("Wishlist name cannot be more than 50 characters");
         }
+
         Wishlist wishlist = wishlistRepository.findByIdAndUser(id, user)
                 .orElseThrow(() -> new WishlistNotFoundException(id));
+
+        if (newName.equals(wishlist.getName())) {
+            throw new InvalidWishlistNameException("New name cannot be the same");
+        }
 
         wishlist.setName(newName);
         wishlistRepository.save(wishlist);

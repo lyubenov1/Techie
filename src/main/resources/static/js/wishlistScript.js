@@ -159,16 +159,23 @@ document.addEventListener('DOMContentLoaded', () => {
         editButton.onclick = function() {
             openEditModal(wishlist);
         };
+
+        document.getElementById('deleteWishlistBtn').addEventListener('click', function() {
+            // Copy the wishlist ID from the edit form to the delete form
+            document.getElementById('deleteWishlistId').value = document.getElementById('editWishlistId').value;
+            // Submit the delete form
+            document.getElementById('deleteWishlistForm').submit();
+        });
     }
 
     function openEditModal(wishlist) {
         const editWishlistModal = new bootstrap.Modal(document.getElementById('editWishlistModal'), {});
         const editWishlistNameInput = document.getElementById('editWishlistName');
-        const wishlistIdInput = document.getElementById('editWishlistId');
+        const wishlistId = document.getElementById('editWishlistId');
 
         // Populate the modal with the wishlist details
         editWishlistNameInput.value = wishlist.name;
-        wishlistIdInput.value = wishlist.id;
+        wishlistId.value = wishlist.id;
 
         // Open the modal
         editWishlistModal.show();
