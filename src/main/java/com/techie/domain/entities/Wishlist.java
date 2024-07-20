@@ -27,9 +27,13 @@ public class Wishlist {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "wishlist_id")
-    private List<Product> products;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "wishlist_product",
+            joinColumns = @JoinColumn(name = "wishlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Product> products = new LinkedHashSet<>();
 
     @Override
     public final boolean equals(Object o) {
