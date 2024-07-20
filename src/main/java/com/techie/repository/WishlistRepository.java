@@ -24,10 +24,4 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
             "LEFT JOIN FETCH w.products " +
             "WHERE w.user = :user AND w.id = :wishlistId")
     Optional<Wishlist> findByIdAndUserJoinFetchProducts(@Param("wishlistId") Long id, @Param("user") UserEntity user);
-
-    @Query("SELECT CASE WHEN COUNT(p) > 0 " +
-            "THEN true ELSE false END " +
-            "FROM Wishlist w JOIN w.products p " +
-            "WHERE w.id = :wishlistId AND p.id = :productId")
-    boolean existsProductInWishlist(@Param("wishlistId") Long wishlistId, @Param("productId") Long productId);
 }

@@ -53,7 +53,7 @@ public class WishlistService {
 
 
     public WishlistDTO convertToDto(Wishlist wishlist) {
-        List<Product> products = wishlist.getProducts();
+        Set<Product> products = wishlist.getProducts();
         logger.info("Products in wishlist {}: {}", wishlist.getId(), products);
         setImageForEachProduct(products);  // Since we cannot directly fetch the productImages list from the database due to MultipleBagFetchException.
                                            // This assignment affects only the current instance of the Product object in memory
@@ -71,7 +71,7 @@ public class WishlistService {
                 .build();
     }
 
-    private void setImageForEachProduct(List<Product> products) {
+    private void setImageForEachProduct(Set<Product> products) {
         products.forEach(product ->
                 product.setProductImages(productImageRepository.findPrimaryImagesByProductId(product.getId())));
     }
@@ -113,7 +113,7 @@ public class WishlistService {
     }
 
     public void addProductToWishlist(UserEntity user, Long wishlistId, Long productId)
-                                        throws WishlistNotFoundException, ProductNotFoundException {
+                                        throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException {
         logger.info("Attempting to add product with ID {} to wishlist with ID {} for user {}", productId, wishlistId, user.getUsername());
 
         Wishlist wishlist = wishlistRepository.findByIdAndUserJoinFetchProducts(wishlistId, user)
@@ -122,10 +122,10 @@ public class WishlistService {
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
         // Check if the product already exists in the wishlist
-        if (wishlistRepository.existsProductInWishlist(wishlistId, productId)) {
+        if (wishlist.getProducts().contains(product)) {
             throw new ProductAlreadyInWishlistException(product.getName(), wishlist.getName());
         }
-        
+
         wishlist.getProducts().add(product);
         wishlistRepository.save(wishlist);
 

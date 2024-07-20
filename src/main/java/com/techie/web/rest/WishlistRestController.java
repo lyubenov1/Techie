@@ -40,13 +40,16 @@ public class WishlistRestController {
 
     @PostMapping("/add/{wishlistId}/{productId}")
     public ResponseEntity<String> addToWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
-                                              @AuthenticationPrincipal UserDetails userDetails) throws WishlistNotFoundException, ProductNotFoundException  {
+                                                @AuthenticationPrincipal UserDetails userDetails)
+                                                  throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException  {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
         try {
             wishlistService.addProductToWishlist(user, wishlistId, productId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Product successfully added to wishlist");
         } catch (ProductNotFoundException | WishlistNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (ProductAlreadyInWishlistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409 status code
         }
     }
 }
