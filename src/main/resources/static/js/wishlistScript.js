@@ -114,15 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-body-wrapper">
                         <div class="card-icon-box">
                             <div class="rate">
-                                <!-- Rating stars here -->
+                                <input type="radio" id="star5_${product.id}" name="rate_${product.id}" value="5" />
+                                <label for="star5_${product.id}" title="text">5 stars</label>
+                                <input type="radio" id="star4_${product.id}" name="rate_${product.id}" value="4" />
+                                <label for="star4_${product.id}" title="text">4 stars</label>
+                                <input type="radio" id="star3_${product.id}" name="rate_${product.id}" value="3" />
+                                <label for="star3_${product.id}" title="text">3 stars</label>
+                                <input type="radio" id="star2_${product.id}" name="rate_${product.id}" value="2" />
+                                <label for="star2_${product.id}" title="text">2 stars</label>
+                                <input type="radio" id="star1_${product.id}" name="rate_${product.id}" value="1" />
+                                <label for="star1_${product.id}" title="text">1 star</label>
                             </div>
-                            <div class="wishlist-and-shopping-cart">
-                                <span class="add-to-wishlist">
-                                    <i class="far fa-heart fa-md text-white"></i>
-                                </span>
-                                <span class="shopping-cart">
-                                    <i class="fas fa-shopping-cart fa-md text-white"></i>
-                                </span>
+                            <div class="delete-icon">
+                                 <span class="remove-product">
+                                     <i class="far fa-trash-can fa-lg text-white"></i>
+                                 </span>
                             </div>
                         </div>
                         <div class="card-title">${product.name}</div>
@@ -150,8 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             emptyContainer.appendChild(imageContainer);
             emptyContainer.appendChild(emptyText);
-
-            wishlistProductsDiv.appendChild(emptyContainer);
         }
 
         // Set up the edit button to trigger the modal with the current wishlist details

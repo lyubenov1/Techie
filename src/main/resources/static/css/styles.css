@@ -773,14 +773,16 @@ body.register .form-check-label {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-.category-products {
+.category-products,
+.wishlist-products {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 20px;
 }
 
-.category-products .card {
+.category-products .card,
+.wishlist-products .card {
     flex: 0 0 calc(25% - 1rem);
     background-color: transparent;
     border: none !important;
@@ -795,7 +797,8 @@ body.register .form-check-label {
     position: relative;
 }
 
-.category-products .card::before {
+.category-products .card::before,
+.wishlist-products .card::before{
     content: '';
     position: absolute;
     top: -5px;
@@ -808,17 +811,20 @@ body.register .form-check-label {
     border-radius: 7px;
 }
 
-.category-products .card:hover::before {
+.category-products .card:hover::before,
+.wishlist-products .card:hover::before {
     border-color: rgb(255, 255, 255, 0.1);
 }
 
 
-.category-products .card-body {
+.category-products .card-body,
+.wishlist-products .card-body  {
     flex: 1;
     padding: 0;
 }
 
-.category-products .card-body-wrapper {
+.category-products .card-body-wrapper,
+.wishlist-products .card-body-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -841,6 +847,21 @@ body.register .form-check-label {
     margin-right: 0.5rem;
 }
 
+@media (min-width: 768px) and (max-width: 992px) {
+    .sidebar-products {
+        max-width: 23%;
+    }
+
+    .col-main-products {
+        max-width: 77%;
+    }
+
+    .category-products .card,
+    .wishlist-products .card {
+        flex: 0 0 calc(33.333% - 1rem);
+    }
+}
+
 @media (max-width: 768px) {
     .products-main {
         flex-direction: column;
@@ -858,27 +879,13 @@ body.register .form-check-label {
         padding-right: 0;
     }
 
-    .category-products .card {
+    .category-products .card,
+    .wishlist-products .card {
         flex: 0 0 calc(50% - 1rem);
     }
 
     .pagination-products-container {
         justify-content: center;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 992px) {
-    .sidebar-products {
-        max-width: 23%;
-    }
-
-    .col-main-products {
-        max-width: 77%;
-    }
-
-    .category-products .card,
-    .similar-products. card {
-        flex: 0 0 calc(33.333% - 1rem);
     }
 }
 
@@ -2306,7 +2313,6 @@ a.rating-info span:first-child {
 .profile-main .wishlist-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     background-color: inherit;
     color: rgb(225, 222, 218);
 }
