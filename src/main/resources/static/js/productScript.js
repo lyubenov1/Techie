@@ -51,11 +51,32 @@ document.addEventListener('click', function(event) {
 
 document.getElementById('wishlist-dropdown').addEventListener('click', function(event) {
     if (event.target.classList.contains('wishlist-option') && !event.target.classList.contains('choose-option')) {
+        event.preventDefault();
         const wishlistId = event.target.dataset.wishlistId;
         addToWishlist(wishlistId);
     }
 });
 
+
+function showMessage(message, isError = false) {
+    const messagePopup = document.createElement('div');
+    messagePopup.className = `message-popup ${isError ? 'error' : 'success'}`;
+    messagePopup.textContent = message;
+
+    const wishlistWrapper = document.querySelector('.wishlist-wrapper');
+    wishlistWrapper.appendChild(messagePopup);
+
+    // Show message
+    messagePopup.classList.add('show');
+
+    // Hide message after 5 seconds
+    setTimeout(() => {
+        messagePopup.classList.remove('show');
+        setTimeout(() => {
+            wishlistWrapper.removeChild(messagePopup);
+        }, 300); // Wait for fade out transition
+    }, 5000);
+}
 
 function addToWishlist(wishlistId) {
     const productId = document.getElementById('product-id').value;
@@ -69,12 +90,24 @@ function addToWishlist(wishlistId) {
         }
     })
         .then(response => {
-            if (response.ok) {
-                alert('Product added to wishlist');
-            } else {
-                alert('Failed to add product to wishlist');
-            }
+            return response.text().then(message => {
+                if (response.ok) {
+                    showMessage(message, false); // Show success message
+                } else if (response.status === 409) {
+                    showMessage(message, true); // Show error message for conflict
+                } else {
+                    throw new Error(message || 'Failed to add product to wishlist');
+                }
+            });
+        })
+        .catch(error => {
+            showMessage(error.message, true);
         });
+
+    // Close dropdown after attempting to add
+    const dropdown = document.getElementById('wishlist-dropdown');
+    dropdown.style.display = 'none';
+    isDropdownOpen = false;
 }
 
 
