@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-
     // Last scroll position
     var lastScrollTop = 0;
 
@@ -738,10 +737,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <label for="star1_${product.id}" title="text">1 star</label>
                                     </div>
                                     <div class="wishlist-and-shopping-cart">
-                                        <span class="add-to-wishlist">
+                                        <span class="add-to-wishlist" data-product-id="${product.id}">
                                             <i class="far fa-heart fa-md text-white"></i>
                                         </span>
-                                        <span class="shopping-cart">
+                                        <span class="shopping-cart" data-product-id="${product.id}">
                                             <i class="fas fa-shopping-cart fa-md text-white"></i>
                                         </span>
                                     </div>
@@ -888,7 +887,6 @@ document.getElementById('compareButton').addEventListener('click', function() {
     const productId = this.getAttribute('data-product-id');
     window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
 });
-
 
 function togglePassword(fieldId, toggleBtn) {
     const passwordField = document.getElementById(fieldId);
