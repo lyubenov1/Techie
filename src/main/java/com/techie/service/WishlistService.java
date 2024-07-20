@@ -132,4 +132,25 @@ public class WishlistService {
         logger.info("Successfully added product with ID {} to wishlist with ID {}. Wishlist now contains {} products.",
                 productId, wishlistId, wishlist.getProducts().size());
     }
+
+    public void removeProductFromWishlist(UserEntity user, Long wishlistId, Long productId)
+            throws WishlistNotFoundException, ProductNotFoundException, ProductNotInWishlistException {
+        logger.info("Attempting to remove product with ID {} from wishlist with ID {} for user {}", productId, wishlistId, user.getUsername());
+
+        Wishlist wishlist = wishlistRepository.findByIdAndUserJoinFetchProducts(wishlistId, user)
+                .orElseThrow(() -> new WishlistNotFoundException(wishlistId));
+        Product product = productService.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
+
+        // Check if the product exists in the wishlist
+        if (!wishlist.getProducts().contains(product)) {
+            throw new ProductNotInWishlistException(product.getName(), wishlist.getName());
+        }
+
+        wishlist.getProducts().remove(product);
+        wishlistRepository.save(wishlist);
+
+        logger.info("Successfully removed product with ID {} from wishlist with ID {}. Wishlist now contains {} products.",
+                productId, wishlistId, wishlist.getProducts().size());
+    }
 }

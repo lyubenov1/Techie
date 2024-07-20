@@ -44,9 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 newWishlistItem.appendChild(createWishlistBtn);
                 wishlistItemsDiv.appendChild(newWishlistItem);
 
-                // Set default selected wishlist (first one)
                 if (wishlists.length > 0) {
-                    showWishlist(wishlists[0]);
+                    if (isNavigatedFromAnotherPage()) {
+                        // User came from another page, show the Main wishlist
+                        showWishlist(wishlists[0]);
+                    } else {
+                        // User refreshed the page or navigated within the wishlist page
+                        // We'll show the last viewed wishlist or the first one if there's no last viewed
+                        const lastViewedWishlistId = localStorage.getItem('lastViewedWishlistId');
+                        const wishlistToShow = lastViewedWishlistId
+                            ? wishlists.find(w => w.id.toString() === lastViewedWishlistId)
+                            : wishlists[0];
+                        showWishlist(wishlistToShow || wishlists[0]);
+                    }
                 }
             })
             .catch(error => {
@@ -88,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const wishlistSizeElem = document.getElementById('wishlist-size');
         const wishlistProductsDiv = document.getElementById('wishlist-products');
         const emptyContainer = document.querySelector('.empty-container');
+        localStorage.setItem('lastViewedWishlistId', wishlist.id.toString());
 
         wishlistNameElem.textContent = wishlist.name;
         wishlistSizeElem.textContent = `${wishlist.products.length} Products`;
@@ -126,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <label for="star1_${product.id}" title="text">1 star</label>
                             </div>
                             <div class="delete-icon">
-                                 <span class="remove-product">
+                                 <span class="remove-product" data-product-id="${product.id}">
                                      <i class="far fa-trash-can fa-lg text-white"></i>
                                  </span>
                             </div>
@@ -139,6 +150,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 wishlistProductsDiv.appendChild(productCard);
             });
+
+            // Event listener for the trash-can icon
+            document.querySelectorAll('.remove-product').forEach(icon => {
+                icon.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default anchor behavior
+                    event.stopPropagation(); // Stop event from bubbling up
+                    const productId = this.dataset.productId;
+                    deleteProductFromWishlist(wishlist.id, productId);
+                });
+
+                // Enlarge the icon on hover
+                icon.addEventListener('mouseover', function() {
+                    this.style.transform = 'scale(1.2)';
+                });
+
+                icon.addEventListener('mouseout', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
         } else {
             // Handle case when no products are present in the wishlist
             const imageContainer = document.createElement('div');
@@ -158,8 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
             emptyContainer.appendChild(emptyText);
         }
 
-        // Set up the edit button to trigger the modal with the current wishlist details
         const editButton = document.querySelector('.wishlist-actions button');
+
+        // If the selected wishlist is the main one, hide the 'Edit' button.
+        if (wishlist.name !== "Main wishlist") {
+            editButton.style.display = 'inline-block';
+        } else {
+            editButton.style.display = 'none';
+        }
+
+        // Set up the edit button to trigger the modal with the current wishlist details
         editButton.onclick = function() {
             openEditModal(wishlist);
         };
@@ -170,6 +209,37 @@ document.addEventListener('DOMContentLoaded', () => {
             // Submit the delete form
             document.getElementById('deleteWishlistForm').submit();
         });
+    }
+
+    function deleteProductFromWishlist(wishlistId, productId) {
+        const csrfToken = document.getElementById('csrf-token').value;
+
+        fetch(`/api/wishlist/remove/${wishlistId}/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
+            .then(response => {
+                return response.text().then(message => {
+                    if (response.ok) {
+                        console.log('Product removed successfully:', message);
+                        // Reload the page
+                        window.location.reload();
+                    } else {
+                        throw new Error(message || 'Failed to remove product from wishlist');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error.message);
+            });
+    }
+
+    function isNavigatedFromAnotherPage() {
+        return document.referrer !== '' &&
+            !document.referrer.includes('/users/profile/wishlist');
     }
 
     function openEditModal(wishlist) {

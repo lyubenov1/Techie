@@ -2625,3 +2625,13 @@ a.rating-info span:first-child {
 .message-popup.error::after {
     border-bottom-color: #f8d7da;
 }
+
+.wishlist-and-shopping-cart .add-to-favourites,
+.wishlist-and-shopping-cart .add-to-cart,
+.wishlist-products .remove-product {
+    position: absolute; /* Position the icon absolutely within the card */
+    right: 7px;
+    z-index: 9999 !important;
+    cursor: pointer;
+    transition: transform 0.2s;
+}

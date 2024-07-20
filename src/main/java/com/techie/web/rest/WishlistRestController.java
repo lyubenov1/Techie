@@ -41,7 +41,7 @@ public class WishlistRestController {
     @PostMapping("/add/{wishlistId}/{productId}")
     public ResponseEntity<String> addToWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
                                                 @AuthenticationPrincipal UserDetails userDetails)
-                                                  throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException  {
+                                                  throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
         try {
             wishlistService.addProductToWishlist(user, wishlistId, productId);
@@ -50,6 +50,22 @@ public class WishlistRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (ProductAlreadyInWishlistException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409 status code
+        }
+    }
+
+    @DeleteMapping("/remove/{wishlistId}/{productId}")
+    public ResponseEntity<String> removeFromWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
+                                                     @AuthenticationPrincipal UserDetails userDetails)
+                                                       throws WishlistNotFoundException, ProductNotFoundException {
+        UserEntity user = userService.findByUsername(userDetails.getUsername());
+        try {
+            wishlistService.removeProductFromWishlist(user, wishlistId, productId);
+            return ResponseEntity.ok("Product successfully removed from wishlist");
+        } catch (WishlistNotFoundException | ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Unexpected error: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 }
