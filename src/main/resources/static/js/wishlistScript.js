@@ -110,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyContainer.innerHTML = '';
 
         if (wishlist.products.length > 0) {
+            // Show the Delete All button
+            document.getElementById('wishlistDeleteAll').style.display = 'inline-block';
+
             wishlist.products.forEach(product => {
                 const productCard = document.createElement('a');
                 productCard.href = '/products/' + product.categoryName.toLowerCase() + '/' + product.url;
@@ -169,8 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.style.transform = 'scale(1)';
                 });
             });
+        }
+        else {
+            // Hide the Delete All button
+            document.getElementById('wishlistDeleteAll').style.display = 'none';
 
-        } else {
             // Handle case when no products are present in the wishlist
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
@@ -189,7 +195,35 @@ document.addEventListener('DOMContentLoaded', () => {
             emptyContainer.appendChild(emptyText);
         }
 
-        const editButton = document.querySelector('.wishlist-actions button');
+        document.getElementById('wishlistDeleteAll').addEventListener('click', function() {
+            const wishlistId = wishlist.id;
+            const csrfToken = document.getElementById('csrf-token').value;
+
+            fetch(`/api/wishlist/removeAll/${wishlistId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text) });
+                    }
+                    window.location.reload();
+                    return response.text();
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while removing all products from the wishlist: " + error.message);
+                });
+        });
+
+
+        const editButton = document.getElementById('wishlistEditButton');
 
         // If the selected wishlist is the main one, hide the 'Edit' button.
         if (wishlist.name !== "Main wishlist") {

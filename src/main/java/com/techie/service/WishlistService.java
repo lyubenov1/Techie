@@ -153,4 +153,17 @@ public class WishlistService {
         logger.info("Successfully removed product with ID {} from wishlist with ID {}. Wishlist now contains {} products.",
                 productId, wishlistId, wishlist.getProducts().size());
     }
+
+
+    public void removeAllProductsFromWishlist(UserEntity user, Long wishlistId) throws WishlistNotFoundException {
+        logger.info("Attempting to remove all products from wishlist with ID {} for user {}", wishlistId, user.getUsername());
+
+        Wishlist wishlist = wishlistRepository.findByIdAndUserJoinFetchProducts(wishlistId, user)
+                .orElseThrow(() -> new WishlistNotFoundException(wishlistId));
+
+        wishlist.getProducts().clear();
+        wishlistRepository.save(wishlist);
+
+        logger.info("Successfully removed all products from wishlist with ID {}", wishlistId);
+    }
 }

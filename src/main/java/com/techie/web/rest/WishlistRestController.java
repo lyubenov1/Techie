@@ -68,4 +68,19 @@ public class WishlistRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
+
+    @DeleteMapping("/removeAll/{wishlistId}")
+    public ResponseEntity<String> removeAllFromWishlist(@PathVariable Long wishlistId,
+                                                        @AuthenticationPrincipal UserDetails userDetails) {
+        UserEntity user = userService.findByUsername(userDetails.getUsername());
+        try {
+            wishlistService.removeAllProductsFromWishlist(user, wishlistId);
+            return ResponseEntity.ok("All products successfully removed from wishlist");
+        } catch (WishlistNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Unexpected error: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+    }
 }
