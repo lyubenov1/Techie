@@ -67,6 +67,7 @@ public class UserService {
                 .firstName(registrationModel.getFirstName())
                 .lastName(registrationModel.getLastName())
                 .email(registrationModel.getEmail())
+                .profileImageUrl("/images/profile_default_photo.png")
                 .password(passwordEncoder.encode(registrationModel.getPassword()))
                 .wishlists(new LinkedHashSet<>())
                 .build();

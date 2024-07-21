@@ -68,12 +68,12 @@
 
                     <li class="nav-item profile-dropdown" id="profile-dropdown-logged">
                         <div class="nav-link user-profile">
-                            <img src="/images/profile_default_photo.png" alt="User Profile" class="user-profile-image">
+                            <img th:src="${loggedUser.profileImage}" alt="User Profile" class="user-profile-image">
                         </div>
                         <!-- Dropdown menu for profile -->
                         <div class="dropdown-menu slideIn profile-dropdown-menu" id="profile-dropdown-menu-logged">
                             <span class="dropdown-item greet">
-                                Hello,&nbsp;<span th:text="${loggedUser.firstName}">user</span>!
+                                Hello,&nbsp;<span th:text="${loggedUser.firstName}">User</span>!
                             </span>
                             <a class="dropdown-item" th:href="@{/users/profile}">My profile</a>
                             <a class="dropdown-item" th:href="@{/users/profile/order-history}">Order history</a>

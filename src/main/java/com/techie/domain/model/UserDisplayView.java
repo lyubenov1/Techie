@@ -16,6 +16,6 @@ public class UserDisplayView {
     private String email;
     private String firstName;
     private String lastName;
-    private String profileImageUrl;
+    private String profileImage;
     private List<WishlistDTO> wishlists;
 }

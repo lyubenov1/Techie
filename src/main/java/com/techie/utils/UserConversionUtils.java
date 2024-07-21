@@ -12,7 +12,7 @@ public class UserConversionUtils {
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .profileImageUrl(user.getProfileImageUrl())
+                .profileImage(user.getProfileImageUrl())
                 .build();
     }
 
