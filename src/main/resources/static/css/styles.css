@@ -843,10 +843,6 @@ body.register .form-check-label {
     width: 100%;
 }
 
-.add-to-wishlist {
-    margin-right: 0.5rem;
-}
-
 @media (min-width: 768px) and (max-width: 992px) {
     .sidebar-products {
         max-width: 23%;
@@ -2626,12 +2622,35 @@ a.rating-info span:first-child {
     border-bottom-color: #f8d7da;
 }
 
-.wishlist-and-shopping-cart .add-to-favourites,
-.wishlist-and-shopping-cart .add-to-cart,
 .wishlist-products .remove-product {
-    position: absolute; /* Position the icon absolutely within the card */
+    position: absolute;
     right: 7px;
     z-index: 9999 !important;
     cursor: pointer;
     transition: transform 0.2s;
+}
+
+.wishlist-and-shopping-cart .shopping-cart,
+.wishlist-and-shopping-cart .add-to-wishlist {
+    right: 0;
+    position: absolute;
+    z-index: 9999 !important;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.wishlist-and-shopping-cart .add-to-wishlist {
+    right: 26px;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
 }

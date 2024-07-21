@@ -1,3 +1,100 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all wishlist icons
+    document.querySelectorAll('.add-to-wishlist').forEach(icon => {
+        icon.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            event.stopPropagation(); // Stop event from bubbling up
+            const productId = this.dataset.productId;
+            addProductToWishlist(productId, this);
+        });
+
+        // Enlarge the icon on hover
+        icon.addEventListener('mouseover', function() {
+            this.style.transform = 'scale(1.2)';
+        });
+
+        icon.addEventListener('mouseout', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Select all shopping cart icons
+    document.querySelectorAll('.shopping-cart').forEach(icon => {
+        icon.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const productId = this.dataset.productId;
+            // addProductToCart(productId, this);
+        });
+
+        // Enlarge the icon on hover
+        icon.addEventListener('mouseover', function() {
+            this.style.transform = 'scale(1.2)';
+        });
+
+        icon.addEventListener('mouseout', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    function addProductToWishlist(productId, icon) {    // Different function than the original addToWishlist.
+                                                                          // This one is designed for product cards
+        fetch('/api/wishlist/get')
+            .then(response => response.json())
+            .then(wishlists => {
+                // Add product to the first wishlist (index 0)
+                const wishlistId = wishlists[0].id;
+                const csrfToken = document.getElementById('csrf-token').value;
+                fetch(`/api/wishlist/add/${wishlistId}/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                })
+                    .then(response => {
+                        return response.text().then(message => {
+                            if (response.ok) {
+                                console.log('Product added successfully:', message);
+                                showTickIcon(icon);
+                            } else {
+                                throw new Error(message || 'Failed to add product to wishlist');
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error adding product:', error.message);
+                        shakeIcon(icon);
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching wishlists:', error);
+                shakeIcon(icon);
+            });
+    }
+
+    function showTickIcon(icon) {
+        const originalIcon = icon.innerHTML;
+        icon.innerHTML = '<i class="fas fa-check"></i>';
+        icon.style.transition = 'transform 0.3s ease';
+        icon.style.transform = 'scale(1.2)';
+
+        setTimeout(() => {
+            icon.style.transform = 'scale(1)';
+            setTimeout(() => {
+                icon.innerHTML = originalIcon;
+            }, 300); // Wait for scale down animation to finish
+        }, 2700); // Start scale down after 2.7 seconds (total 3 seconds)
+    }
+
+    function shakeIcon(icon) {
+        icon.classList.add('shake');
+        setTimeout(() => {
+            icon.classList.remove('shake');
+        }, 500); // Duration of the shake animation
+    }
+});
+
 let isDropdownOpen = false;
 
 document.getElementById('save-to-wishlist').addEventListener('click', function(event) {
@@ -78,7 +175,7 @@ function showMessage(message, isError = false) {
     }, 5000);
 }
 
-function addToWishlist(wishlistId) {
+function addToWishlist(wishlistId) {    // Function designed specifically for the main product page's "Save" button
     const productId = document.getElementById('product-id').value;
     const csrfToken = document.getElementById('csrf-token').value;
 

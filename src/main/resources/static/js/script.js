@@ -736,14 +736,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <input type="radio" id="star1_${product.id}" name="rate_${product.id}" value="1" />
                                         <label for="star1_${product.id}" title="text">1 star</label>
                                     </div>
-                                    <div class="wishlist-and-shopping-cart">
-                                        <span class="add-to-wishlist" data-product-id="${product.id}">
-                                            <i class="far fa-heart fa-md text-white"></i>
-                                        </span>
-                                        <span class="shopping-cart" data-product-id="${product.id}">
-                                            <i class="fas fa-shopping-cart fa-md text-white"></i>
-                                        </span>
-                                    </div>
                                 </div>
                                 <div class="card-title">${product.name}</div>
                                 <div class="card-text">
