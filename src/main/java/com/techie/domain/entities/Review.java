@@ -37,7 +37,7 @@ public class Review {
     @Column(nullable = false)
     private int productRating;
 
-    @Column(columnDefinition = "TEXT")  // TODO: implement character count
+    @Column(columnDefinition = "TEXT")
     @Size(max = 600, message = "Comment cannot exceed 600 characters")
     private String comment;
 
