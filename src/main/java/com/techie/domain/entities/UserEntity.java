@@ -39,7 +39,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Wishlist> wishlists;
 
-    @Column(name = "profile_image_id")
+    @Column(name = "profile_image_url")
     private String profileImageUrl;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
