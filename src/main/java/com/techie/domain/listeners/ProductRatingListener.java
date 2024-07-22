@@ -15,13 +15,13 @@ public class ProductRatingListener {
     @PostUpdate
     @PostRemove
     @Transactional
-    public void calculateAverageRating(ProductRating productRating) {
-        updateAverageRating(productRating.getProduct());
+    public void calculateAverageRating(Review review) {
+        updateAverageRating(review.getProduct());
     }
 
     public void updateAverageRating(Product product) {
         Double avgRating = entityManager.createQuery(
-                        "SELECT AVG(pr.rating) FROM ProductRating pr WHERE pr.product = :product", Double.class)
+                        "SELECT AVG(r.productRating) FROM Review r WHERE r.product = :product", Double.class)
                 .setParameter("product", product)
                 .getSingleResult();
 
