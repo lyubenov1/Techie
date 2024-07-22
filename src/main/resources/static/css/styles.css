@@ -1110,8 +1110,6 @@ body.register .form-check-label {
     background: #b3b3b3;
 }
 
-
-
 .photo-container {
     display: flex;
     height: 580px;
@@ -1196,7 +1194,7 @@ body.register .form-check-label {
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 25px;
     color: #ccc;
     margin-left: -3px;
 }
@@ -1480,7 +1478,7 @@ a.rating-info span:first-child {
 
 
 .product-description {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     padding: 20px;
     font-family: 'Roboto Condensed', serif;
     color: rgb(225, 222, 218);
@@ -1517,7 +1515,8 @@ a.rating-info span:first-child {
 
 .similar-products-container {
     position: relative;
-    margin-bottom: 90px;
+    margin-bottom: 50px;
+    margin-top: 20px;
 }
 
 .similar-products {
@@ -2124,7 +2123,7 @@ a.rating-info span:first-child {
     height: 30px;
 }
 
-.nav-third .nav-item .user-profile-image {
+.user-profile-image {
     width: 28px;
     height: 28px;
     object-fit: cover;
@@ -2655,17 +2654,13 @@ a.rating-info span:first-child {
     animation: shake 0.5s ease;
 }
 
-
-
-
-
-
-
-
-
-
-
-
+hr {
+    border-top: none !important;
+    height: 15px;
+    background-color: #495057;
+    margin: 20px 0;
+    width: 100%;
+}
 
 .product-customer-reviews {
     width: 100%;
@@ -2715,7 +2710,7 @@ a.rating-info span:first-child {
 
 .product-customer-reviews .average-rating .rating-review .total-reviews {
     margin-bottom: 15px;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .product-customer-reviews .rating-breakdown {
@@ -2736,6 +2731,7 @@ a.rating-info span:first-child {
 .product-customer-reviews .rating-bar .stars {
     width: 20px;
     text-align: left;
+    color: rgb(153, 134, 0);
 }
 
 .product-customer-reviews .rating-bar .star-number,
@@ -2766,19 +2762,31 @@ a.rating-info span:first-child {
     border-radius: 7px;
 }
 
-.product-customer-reviews, .review-list .review {
-    border-bottom: 1px solid #ddd;
-    padding: 20px 0;
+.full-width-border {
+    margin-top: 20px;
+    width: 100%;
+    height: 1px;
+    background-color: grey;
 }
 
-.product-customer-reviews, .review-header {
+.product-customer-reviews, .review-list {
+    width: 100%;
+}
+
+.product-customer-reviews .review-list .review {
+    border-bottom: 1px solid grey;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.product-customer-reviews .review-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
-.product-customer-reviews, .stars {
-    color: rgb(153, 134, 0);
+.product-customer-reviews .review-header .stars-and-date .stars {
+    margin-right: 5px;
+    margin-left: 20px;
 }
 
 .product-customer-reviews, .review-info {
@@ -2788,4 +2796,169 @@ a.rating-info span:first-child {
 
 .product-customer-reviews, .review-body {
     margin-top: 10px;
+}
+
+
+.product-customer-reviews .write-a-review {
+    width: 55%;
+    padding: 20px;
+    background-color: inherit;
+}
+
+.product-customer-reviews .write-a-review .write-review-header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .product-customer-reviews .write-a-review {
+        width: 100%;
+    }
+}
+
+.product-customer-reviews .write-a-review .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-customer-reviews .write-a-review .form-group.rating-group {
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-customer-reviews .write-a-review .form-group .review-rate {
+    margin-left: 15px;
+    transform: translateY(1px);
+}
+
+.product-customer-reviews .write-a-review .form-group #review-comment {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    position: relative;
+    width: 100%;
+}
+
+.product-customer-reviews .write-a-review .comment-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.product-customer-reviews .write-a-review label {
+    display: block;
+}
+
+.product-customer-reviews .write-a-review textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.product-customer-reviews .write-a-review .image-upload-container {
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
+}
+
+.product-customer-reviews .write-a-review .custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: inherit;
+    border: 1px solid grey;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.product-customer-reviews .write-a-review .custom-file-upload:hover {
+    background-color: grey;
+}
+
+.product-customer-reviews .write-a-review #image-upload {
+    display: none;
+}
+
+.product-customer-reviews .write-a-review .image-preview-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.product-customer-reviews .write-a-review .image-preview-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-customer-reviews .write-a-review .remove-image {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.product-customer-reviews .write-a-review .remove-image:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.product-customer-reviews .write-a-review #image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.product-customer-reviews .write-a-review #image-preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-customer-reviews .write-a-review button {
+    background-color: inherit;
+    padding: 10px 20px;
+    color: rgb(225, 222, 218);
+    border: 1px solid grey;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.product-customer-reviews .write-a-review button:hover {
+    background-color: grey;
+}
+
+.product-customer-reviews .write-a-review .image-warning {
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 10px;
+    color: red;
+    background-color: inherit;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    vertical-align: top;
+}
+
+.product-customer-reviews .write-a-review .image-warning.show {
+    opacity: 1;
+}
+
+.product-customer-reviews .write-a-review .image-upload-container {
+    display: flex;
+    align-items: flex-start;
 }
