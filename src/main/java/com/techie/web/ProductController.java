@@ -91,11 +91,7 @@ public class ProductController {
         filters.remove("p");
         filters.remove("sort");
 
-        Optional<Category> categoryOptional = categoryService.findByName(categoryName);
-        Category category = categoryOptional.orElseThrow(() -> new CategoryNotFoundException(categoryName));
-
-        CategoryDTO categoryDTO = categoryService.convertToDTO(category);
-
+        CategoryDTO categoryDTO = categoryService.findByNameAndConvert(categoryName);
         List<ProductDTO> filteredProducts = productFilterService.getFilteredProducts(categoryName, filters, sort);
         categoryDTO.setProducts(filteredProducts);
 
@@ -110,14 +106,11 @@ public class ProductController {
     @GetMapping("/{categoryName}/{productName}")
     public String productPage(@PathVariable String productName, @PathVariable String categoryName,
                               Model model) throws ProductNotFoundException, CategoryNotFoundException {
-        Optional<Product> productOptional = productService.findByNameWithAllImages(productName);
+        ProductDTO productDTO = productService.findByNameWithAllImages(productName);
 
         Category category = categoryService.findByName(categoryName)
                 .orElseThrow(() -> new CategoryNotFoundException(categoryName));
 
-        Product product = productOptional.orElseThrow(() -> new ProductNotFoundException(productName));
-
-        ProductDTO productDTO = productService.convertToDTOWithComments(product);
         productService.addSpecifications(productDTO, model);
 
         model.addAttribute("product", productDTO);

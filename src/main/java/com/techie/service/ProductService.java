@@ -2,6 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
+import com.techie.exceptions.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
@@ -21,13 +22,11 @@ import java.util.stream.*;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final CommentService commentService;
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
-    public ProductService(ProductRepository productRepository, CommentService commentService) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.commentService = commentService;
     }
 
     public Optional<Product> findById(Long productId) {
@@ -65,10 +64,11 @@ public class ProductService {
         return productRepository.findByNameIgnoreCase(decodedName);
     }
 
-    public Optional<Product> findByNameWithAllImages(String urlProductName) {
+    public ProductDTO findByNameWithAllImages(String urlProductName) {
         String decodedName = UriUtils.decode(urlProductName, StandardCharsets.UTF_8);
-
-        return productRepository.findByNameIgnoreCaseWithAllImages(decodedName);
+        Optional<Product> productOptional = productRepository.findByNameIgnoreCaseWithAllImages(decodedName);
+        Product product = productOptional.orElseThrow(() -> new ProductNotFoundException(urlProductName));
+        return convertToDTO(product);
     }
 
     public List<ProductDTO> getProductsByCategory(Long categoryId) {
@@ -78,15 +78,29 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductDTO convertToDTOWithComments(Product product) {
+    public ProductDTO convertToDTO(Product product) {
         ProductDTO productDTO = ProductConversionUtils.convertToDTO(product);
-        List<CommentDTO> commentDTOs = commentService.fetchAndConvertCommentsToDTOs(product);
-        productDTO.setComments(commentDTOs);
+        Map<Integer, Integer> ratingCounts = getRatingCounts(product.getId());
+        productDTO.setRatings(ratingCounts);  // Count of reviews for a given rating (1 to 5)
+        productDTO.setReviewCount(ratingCounts.values().stream().mapToInt(Integer::intValue).sum()); // Number of all reviews
         return productDTO;
     }
 
-    public ProductDTO convertToDTO(Product product) {
-        return ProductConversionUtils.convertToDTO(product);
+    private Map<Integer, Integer> getRatingCounts(Long productId) {
+        List<Object[]> results = productRepository.findRatingCountsByProductId(productId);
+        Map<Integer, Integer> ratingCounts = new HashMap<>();
+
+        for (int i = 1; i <= 5; i++) {
+            ratingCounts.put(i, 0);  // Initialize all ratings with 0 count
+        }
+
+        for (Object[] result : results) {
+            Integer rating = ((Number) result[0]).intValue();
+            Integer count = ((Number) result[1]).intValue();
+            ratingCounts.put(rating, count);
+        }
+
+        return ratingCounts;
     }
 
     public void addSpecifications(ProductDTO productDTO, Model model) {

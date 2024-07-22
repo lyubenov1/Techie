@@ -11,7 +11,6 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 public class ProductDTO {
-
     private Long id;
     private String name;
     private BigDecimal originalPrice;
@@ -21,7 +20,7 @@ public class ProductDTO {
     private int stock;
     private String description;
     private Double averageRating;
-    private List<CommentDTO> comments;
+    private Map<Integer, Integer> ratings;  // Map of individual ratings from 1-5, along with their count
+    private Integer reviewCount;
     private String url;
-
 }

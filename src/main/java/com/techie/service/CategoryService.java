@@ -2,6 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
+import com.techie.exceptions.*;
 import com.techie.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -81,4 +82,8 @@ public class CategoryService {
         return UriUtils.encode(categoryName.toLowerCase().replace(" ", "-"), StandardCharsets.UTF_8);
     }
 
+    public CategoryDTO findByNameAndConvert(String categoryName) {
+        Category category = findByName(categoryName).orElseThrow(() -> new CategoryNotFoundException(categoryName));
+        return convertToDTO(category);
+    }
 }

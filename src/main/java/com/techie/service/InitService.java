@@ -34,9 +34,12 @@ public class InitService {
     @PostConstruct
     private void initRoles() {
         if (roleRepository.count() == 0) {
-
             RoleEntity userRole = RoleEntity.builder()
                     .role(UserRoleEnum.USER)
+                    .build();
+
+            RoleEntity moderatorRole = RoleEntity.builder()
+                    .role(UserRoleEnum.MODERATOR)
                     .build();
 
             RoleEntity adminRole = RoleEntity.builder()
@@ -44,6 +47,7 @@ public class InitService {
                     .build();
 
             roleRepository.save(userRole);
+            roleRepository.save(moderatorRole);
             roleRepository.save(adminRole);
         }
     }

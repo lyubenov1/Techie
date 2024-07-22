@@ -55,4 +55,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "JOIN FETCH p.brand JOIN FETCH p.productImages " +
             "WHERE LOWER(p.name) = LOWER(:name)")
     Optional<Product> findByNameIgnoreCaseWithAllImages(@Param("name") String name);
+
+    @Query("SELECT r.productRating as rating, COUNT(r) as count FROM Review r WHERE r.product.id = :productId GROUP BY r.productRating")
+    List<Object[]> findRatingCountsByProductId(@Param("productId") Long productId);
 }

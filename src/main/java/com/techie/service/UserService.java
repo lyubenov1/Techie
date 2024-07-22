@@ -3,6 +3,7 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
+import com.techie.exceptions.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
@@ -128,4 +129,11 @@ public class UserService {
     public UserDisplayView convertToView(UserEntity user) {
         return UserConversionUtils.convertToView(user);
     }
+
+    public void updateProfileImage(Long userId, String newProfileImageUrl) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new ImageTooBigException(newProfileImageUrl));
+        user.setProfileImageUrl(newProfileImageUrl);
+        userRepository.save(user);
+    }
+
 }
