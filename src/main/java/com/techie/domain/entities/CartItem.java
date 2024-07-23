@@ -1,6 +1,5 @@
 package com.techie.domain.entities;
 
-import com.techie.domain.listeners.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +9,6 @@ import java.math.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@EntityListeners(CartItemListener.class)
 @Table(name = "cart_item")
 public class CartItem {
 

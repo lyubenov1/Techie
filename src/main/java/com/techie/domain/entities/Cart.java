@@ -1,14 +1,11 @@
 package com.techie.domain.entities;
 
-import com.techie.domain.listeners.CartListener;
+import com.techie.events.listeners.*;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.math.*;
+import java.util.*;
 
 @Setter
 @Getter
