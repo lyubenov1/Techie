@@ -13,7 +13,6 @@ import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.security.web.context.*;
-import org.springframework.security.web.csrf.*;
 
 import javax.sql.*;
 
@@ -49,7 +48,8 @@ public class SecurityConfiguration {
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").authenticated()
-                        .requestMatchers("/api/**").permitAll()  // Allow access to all API endpoints
+                        .requestMatchers("/api/categories", "/api/products",
+                                           "/api/search", "api/reviews/get/**").permitAll()  // Allow access to all API endpoints
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form
@@ -84,10 +84,6 @@ public class SecurityConfiguration {
                         .accessDeniedHandler(customAccessDeniedHandler())
                 )
                 .authenticationProvider(authenticationProvider()
-                )
-                // Configure CSRF protection
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(csrfTokenRepository())
                 )
                 // configure "Remember Me" functionality
                 .rememberMe(rememberMe -> rememberMe
@@ -129,12 +125,4 @@ public class SecurityConfiguration {
                 new HttpSessionSecurityContextRepository()
         );
     }
-
-    @Bean
-    public CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setSessionAttributeName("_csrf");
-        return repository;
-    }
-
 }
