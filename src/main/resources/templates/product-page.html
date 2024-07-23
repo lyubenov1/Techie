@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -136,18 +137,10 @@
                         </div>
                         <span class="count" th:text="${#numbers.formatInteger(product.ratings.get(rating), 1, 'COMMA')}">0</span>
                     </div>
-                    <div class="rating-bar">
-                        <span class="star-number">1</span>
-                        <span class="stars">★</span>
-                        <div class="bar">
-                            <div class="filled" style="width: 3%"></div>
-                        </div>
-                        <span class="count">297</span>
-                    </div>
                 </div>
             </div>
             <div class="full-width-border"></div>
-            <div class="write-a-review">
+            <div sec:authorize="isAuthenticated()" class="write-a-review">
                 <div class="write-review-header">
                     <h2>Write a Review</h2>
                 </div>
@@ -185,6 +178,7 @@
                             <input type="file" id="image-upload" name="image-upload" accept="image/*" multiple>
                             <div id="image-preview"></div>
                             <div id="image-warning" class="image-warning"></div>
+                            <div class="product-page-message"></div>
                         </div>
                     </div>
                     <button type="submit">Submit Review</button>

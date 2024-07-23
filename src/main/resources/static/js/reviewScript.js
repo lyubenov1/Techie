@@ -1,9 +1,54 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.getElementById('review-form');
+    const csrfToken = document.querySelector('#csrf-token').value;
+
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault()
+
+        const rating = document.querySelector('input[name="rate"]:checked');
+        if (!rating) {
+            console.log("No rating selected");
+            showWarning("Rating is required!");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('review-comment', document.getElementById('review-comment').value);
+        formData.append('rate', rating.value);
+        formData.append('productId', productId);
+
+        const files = document.getElementById('image-upload').files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append('image-upload', files[i]);
+        }
+
+        fetch('/api/reviews/create', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: formData
+        })
+            .then(response => {
+                return response.text().then(message => {
+                    if (response.ok) {
+                        console.log('Review created successfully:', message);
+                        showSuccessReviewMessage(message)
+                    } else {
+                        throw new Error(message || 'Failed to create review');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error creating review:', error.message);
+                showWarning(error.message);
+            });
+    });
+
     const commentTextarea = document.getElementById('review-comment');
     const charCount = document.getElementById('comment-char-count');
     const imageUpload = document.getElementById('image-upload');
     const imagePreview = document.getElementById('image-preview');
-    const imageWarning = document.getElementById('image-warning');
 
     console.log('Elements selected:', { commentTextarea, charCount, imageUpload, imagePreview });
 
@@ -59,14 +104,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showWarning(message) {
+        const imageWarning = document.getElementById('image-warning');
         imageWarning.textContent = message;
         imageWarning.classList.add('show');
         setTimeout(() => {
             imageWarning.classList.remove('show');
         }, 5000);
     }
-});
 
+    function showSuccessReviewMessage(message) {
+        const productPageMessage = document.querySelector('.product-page-message');
+        if (productPageMessage) {
+            productPageMessage.textContent = message;
+            productPageMessage.classList.add('show');
+
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+    }
+});
 
 const reviewContainer = document.querySelector('.review-list');
 let currentPage = 0;
@@ -114,4 +171,3 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 1.0 });
 
 observer.observe(document.querySelector('.loading-indicator'));
-

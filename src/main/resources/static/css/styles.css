@@ -1186,8 +1186,9 @@ body.register .form-check-label {
 
 .rate:not(:checked) > input {
     position: absolute;
-    top: -9999px;
+    left: -9999px;
 }
+
 .rate:not(:checked) > label {
     float: right;
     width: 1em;
@@ -1198,16 +1199,20 @@ body.register .form-check-label {
     color: #ccc;
     margin-left: -3px;
 }
+
 .rate:not(:checked) > label:before {
     content: '★ ';
 }
+
 .rate > input:checked ~ label {
     color: #ffc700;
 }
+
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
     color: #deb217;
 }
+
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
@@ -1215,6 +1220,7 @@ body.register .form-check-label {
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
 }
+
 .rating-box-wrapper > * {
     display: inline-block;
     vertical-align: middle;
@@ -2955,6 +2961,23 @@ hr {
 }
 
 .product-customer-reviews .write-a-review .image-warning.show {
+    opacity: 1;
+}
+
+.product-page-message {
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 10px;
+    color: #00ff59;
+    background-color: inherit;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    vertical-align: top;
+}
+
+.product-page-message.show {
     opacity: 1;
 }
 
