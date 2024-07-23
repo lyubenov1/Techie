@@ -18,6 +18,7 @@ import org.springframework.web.multipart.*;
 
 import java.io.*;
 import java.time.*;
+import java.time.format.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -64,7 +65,7 @@ public class ReviewService {
                                 .map(ReviewImage::getImageUrl)
                                 .collect(Collectors.toList())
                         : new ArrayList<>())
-                .date(review.getTimestamp())
+                .date(formatDateTime(review))
                 .upvote(review.getUpvote())
                 .downvote(review.getDownvote())
                 .build();
@@ -87,6 +88,11 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewCreatedEvent(savedReview.getId()));
         convertToModel(savedReview);
+    }
+
+    private String formatDateTime(Review review) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm", Locale.ENGLISH);
+        return review.getTimestamp().format(formatter);
     }
 
     private Product getProductById(Long productId) throws ProductNotFoundException {
@@ -159,17 +165,9 @@ public class ReviewService {
      * This method performs the actual calculation and update.
      */
     public void updateProductAverageRating(Long reviewId) {
-        logger.debug("Updating average rating for review ID: {}", reviewId);
         Review review = reviewRepository.findByIdWithProduct(reviewId);
-        if (review == null) {
-            logger.warn("Review not found for ID: {}", reviewId);
-            return;
-        }
-
         Long productId = review.getProduct().getId();
         Double averageRating = reviewRepository.calculateAverageRatingByProductId(productId);
-        logger.debug("Calculated average rating {} for product ID: {}", averageRating, productId);
         productService.updateAverageRating(productId, averageRating);
-        logger.info("Updated average rating for product ID: {}", productId);
     }
 }

@@ -218,9 +218,7 @@ public class ProductService {
      */
     @Transactional
     public void updateAverageRating(Long productId, Double newAverageRating) {
-        log.debug("Updating average rating to {} for product ID: {}", newAverageRating, productId);
         productRepository.updateAverageRating(productId, newAverageRating);
-        log.debug("Average rating updated successfully for product ID: {}", productId);
     }
 }
 

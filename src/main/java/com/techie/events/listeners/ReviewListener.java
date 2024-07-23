@@ -2,7 +2,6 @@ package com.techie.events.listeners;
 
 import com.techie.events.*;
 import com.techie.service.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.*;
@@ -12,7 +11,6 @@ import org.springframework.transaction.event.*;
 public class ReviewListener {
 
     private static ReviewService reviewService;
-    private static final Logger logger = LoggerFactory.getLogger(ReviewListener.class);
 
     @Autowired
     public void setReviewService(ReviewService reviewService) {
@@ -29,10 +27,6 @@ public class ReviewListener {
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void onReviewChange(ReviewCreatedEvent event) {
-        try {
-            reviewService.updateProductAverageRatingAsync(event.reviewId());
-        } catch (Exception e) {
-            logger.error("Error updating average rating for review ID: {}", event.reviewId(), e);
-        }
+        reviewService.updateProductAverageRatingAsync(event.reviewId());
     }
 }

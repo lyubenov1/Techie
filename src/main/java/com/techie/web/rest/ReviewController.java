@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
+import java.io.*;
 import java.util.*;
 
 @RestController
@@ -41,17 +42,12 @@ public class ReviewController {
                                                     @RequestParam("productId") Long productId,
                                                     @RequestParam(value = "image-upload", required = false) MultipartFile[] images,
                                                     @AuthenticationPrincipal UserDetails userDetails)
-                                                        throws InvalidRatingException, OneReviewPerUserException {
-
+                                                        throws InvalidRatingException, OneReviewPerUserException, IOException {
         try {
             reviewService.createReview(comment, rating, productId, images, userDetails);
-            logger.info("Successfully created review for product ID: {}", productId);
             return ResponseEntity.ok("Review successfully created!");
-        } catch (OneReviewPerUserException | InvalidRatingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } catch (Exception e) {
-            logger.error("Failed to create review for product ID: {}", productId, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 

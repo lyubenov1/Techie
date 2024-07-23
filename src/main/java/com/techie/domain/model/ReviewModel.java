@@ -2,7 +2,6 @@ package com.techie.domain.model;
 
 import lombok.*;
 
-import java.time.*;
 import java.util.*;
 
 @Getter
@@ -17,7 +16,7 @@ public class ReviewModel {
     private int productRating;
     private String comment;
     private List<String> imageUrls;
-    private LocalDateTime date;
+    private String date;
     private int upvote;
     private int downvote;
 }
