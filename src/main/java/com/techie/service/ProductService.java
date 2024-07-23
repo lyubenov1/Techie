@@ -9,6 +9,7 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.ui.*;
 import org.springframework.web.util.*;
 
@@ -206,6 +207,20 @@ public class ProductService {
             return retrieveSpecifications(productDTO).keySet();
         }
         return Collections.emptySet();
+    }
+
+    /**
+     * Updates the average rating of a product.
+     * The method is transactional to ensure the update is atomic.
+     *
+     * @param productId The ID of the product to update
+     * @param newAverageRating The new average rating to set for the product
+     */
+    @Transactional
+    public void updateAverageRating(Long productId, Double newAverageRating) {
+        log.debug("Updating average rating to {} for product ID: {}", newAverageRating, productId);
+        productRepository.updateAverageRating(productId, newAverageRating);
+        log.debug("Average rating updated successfully for product ID: {}", productId);
     }
 }
 

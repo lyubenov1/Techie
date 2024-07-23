@@ -1,4 +1,4 @@
-package com.techie.domain.listeners;
+package com.techie.events.listeners;
 
 import com.techie.domain.entities.*;
 import jakarta.persistence.*;

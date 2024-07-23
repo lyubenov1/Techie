@@ -4,13 +4,16 @@ import com.cloudinary.*;
 import com.cloudinary.utils.*;
 import com.techie.domain.entities.*;
 import com.techie.domain.model.*;
+import com.techie.events.*;
 import com.techie.exceptions.*;
 import com.techie.repository.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.*;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
 
 import java.io.*;
@@ -24,15 +27,18 @@ public class ReviewService {
     private final UserService userService;
     private final ProductService productService;
     private final Cloudinary cloudinary;
+    private final ApplicationEventPublisher eventPublisher;
     private static final Logger logger = LoggerFactory.getLogger(ReviewService.class);
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository, UserService userService,
-                         ProductService productService, Cloudinary cloudinary) {
+                         ProductService productService, Cloudinary cloudinary,
+                         ApplicationEventPublisher eventPublisher) {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
         this.productService = productService;
         this.cloudinary = cloudinary;
+        this.eventPublisher = eventPublisher;
     }
 
     public List<ReviewModel> getReviewsForProduct(Long productId, int page, int size) {
@@ -64,6 +70,7 @@ public class ReviewService {
                 .build();
     }
 
+    @Transactional
     public void createReview(String comment, int rating, Long productId, MultipartFile[] images, UserDetails userDetails)
             throws ProductNotFoundException, IOException, InvalidRatingException, OneReviewPerUserException {
 
@@ -78,6 +85,7 @@ public class ReviewService {
 
         review.setImageUrls(reviewImages);
         Review savedReview = reviewRepository.save(review);
+        eventPublisher.publishEvent(new ReviewCreatedEvent(savedReview.getId()));
         convertToModel(savedReview);
     }
 
@@ -135,4 +143,33 @@ public class ReviewService {
         return reviewImages;
     }
 
+    /**
+     * Asynchronously updates the average rating of a product associated with a review.
+     * This method creates a new transaction to ensure database operations are properly managed.
+     *
+     * @param reviewId The ID of the review that triggered the update
+     */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void updateProductAverageRatingAsync(Long reviewId) {
+        updateProductAverageRating(reviewId);
+    }
+
+    /**
+     * Updates the average rating of a product associated with a review.
+     * This method performs the actual calculation and update.
+     */
+    public void updateProductAverageRating(Long reviewId) {
+        logger.debug("Updating average rating for review ID: {}", reviewId);
+        Review review = reviewRepository.findByIdWithProduct(reviewId);
+        if (review == null) {
+            logger.warn("Review not found for ID: {}", reviewId);
+            return;
+        }
+
+        Long productId = review.getProduct().getId();
+        Double averageRating = reviewRepository.calculateAverageRatingByProductId(productId);
+        logger.debug("Calculated average rating {} for product ID: {}", averageRating, productId);
+        productService.updateAverageRating(productId, averageRating);
+        logger.info("Updated average rating for product ID: {}", productId);
+    }
 }

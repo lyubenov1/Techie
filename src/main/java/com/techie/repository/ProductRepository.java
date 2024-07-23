@@ -58,4 +58,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT r.productRating as rating, COUNT(r) as count FROM Review r WHERE r.product.id = :productId GROUP BY r.productRating")
     List<Object[]> findRatingCountsByProductId(@Param("productId") Long productId);
+
+    @Modifying
+    @Query("UPDATE Product p SET p.averageRating = :averageRating WHERE p.id = :productId")
+    void updateAverageRating(@Param("productId") Long productId, @Param("averageRating") Double averageRating);
 }

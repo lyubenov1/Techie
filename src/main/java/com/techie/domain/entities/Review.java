@@ -1,6 +1,5 @@
 package com.techie.domain.entities;
 
-import com.techie.domain.listeners.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
@@ -19,7 +18,6 @@ import java.util.*;
 @Table(name = "reviews", indexes = {
         @Index(name = "idx_reviews_product_id", columnList = "product_id")
 })
-@EntityListeners(ProductRatingListener.class)
 public class Review {
 
     @Id
