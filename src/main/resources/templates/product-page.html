@@ -14,6 +14,7 @@
 
 <body class="bg-dark text-white">
 
+    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <header th:replace="~{fragments/header :: header}"></header>
 
     <div class = "container-lg">
@@ -59,7 +60,6 @@
                     <span class="original-price" th:text="'$' + ${product.originalPrice}">Original price</span>
                 </div>
                 <div class="cart-and-favourites">
-                    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <input type="hidden" id="product-id" th:value="${product.id}">
                     <a href="#" class="add-to-cart">
                         <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart

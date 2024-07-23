@@ -130,7 +130,7 @@ let currentPage = 0;
 const productId = document.querySelector('.review-list').dataset.productId;
 
 function fetchMoreReviews() {
-    fetch(`/api/reviews/${productId}?p=${currentPage}&s=7`)
+    fetch(`/api/reviews/get/${productId}?p=${currentPage}&s=7`)
         .then(response => response.json())
         .then(reviews => {
             reviews.forEach(review => {

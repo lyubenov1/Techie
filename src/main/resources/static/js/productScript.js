@@ -1,3 +1,5 @@
+const csrfToken = document.getElementById('csrf-token').value;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Select all wishlist icons
     document.querySelectorAll('.add-to-wishlist').forEach(icon => {
@@ -38,10 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function addProductToWishlist(productId, icon) {    // Different function than the original addToWishlist.
-                                                                          // This one is designed for product cards
+                                                             // This one is designed for product cards
         fetch('/api/wishlist/get')
-            .then(response => response.json())
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url; // Redirect to the login page
+                    return;
+                }
+                return response.json();
+            })
             .then(wishlists => {
+                if (!wishlists) return; // Exit if already redirected
                 // Add product to the first wishlist (index 0)
                 const wishlistId = wishlists[0].id;
                 const csrfToken = document.getElementById('csrf-token').value;
@@ -67,10 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         shakeIcon(icon);
                     });
             })
-            .catch(error => {
-                console.error('Error fetching wishlists:', error);
-                shakeIcon(icon);
-            });
     }
 
     function showTickIcon(icon) {
@@ -107,8 +112,15 @@ document.getElementById('save-to-wishlist').addEventListener('click', function(e
     } else {
         // Fetch the user's wishlists
         fetch('/api/wishlist/get')
-            .then(response => response.json())
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url; // Redirect to the login page
+                    return;
+                }
+                return response.json();
+            })
             .then(wishlists => {
+                if (!wishlists) return; // Exit if already redirected
                 dropdown.innerHTML = ''; // Clear existing options
                 if (wishlists.length > 1) {
                     // Add "Choose a wishlist" option
@@ -177,7 +189,6 @@ function showMessage(message, isError = false) {
 
 function addToWishlist(wishlistId) {    // Function designed specifically for the main product page's "Save" button
     const productId = document.getElementById('product-id').value;
-    const csrfToken = document.getElementById('csrf-token').value;
 
     fetch(`/api/wishlist/add/${wishlistId}/${productId}`, {
         method: 'POST',
@@ -215,7 +226,6 @@ document.getElementById('add-to-cart').addEventListener('click', function(event)
 
 function addToCart() {
     const productId = document.getElementById('product-id').value;
-    const csrfToken = document.getElementById('csrf-token').value;
 
     fetch(`/api/cart/add/${productId}`, {
         method: 'POST',

@@ -15,6 +15,7 @@
 
 <body class="bg-dark text-white">
 
+    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <header th:replace="~{fragments/header :: header}"></header>
 
     <!-- Side Banners -->
@@ -85,7 +86,6 @@
                                         <label for="star1" title="text">1 star</label>
                                     </div>
                                     <div class="wishlist-and-shopping-cart">
-                                        <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                         <span class="add-to-wishlist" th:data-product-id="${product.id}">
                                             <i class="far fa-heart fa-md text-white"></i>
                                         </span>

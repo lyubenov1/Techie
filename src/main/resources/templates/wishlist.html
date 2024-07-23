@@ -13,6 +13,7 @@
 
 <body class="bg-dark text-white">
 
+    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <header th:replace="~{fragments/header :: header}"></header>
 
     <div class = "container-lg">
@@ -78,7 +79,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="createWishlistForm" th:action="@{/users/profile/wishlist/create}" method="POST">
-                    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <div class="modal-body">
                         Organize your favorite products into different wishlists.
                         <label for="wishlistName"></label>
