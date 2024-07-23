@@ -1,10 +1,15 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.*;
+import com.techie.exceptions.*;
 import com.techie.service.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 
 import java.util.*;
 
@@ -13,6 +18,7 @@ import java.util.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     @Autowired
     public ReviewController(ReviewService reviewService) {
@@ -23,8 +29,30 @@ public class ReviewController {
     public ResponseEntity<List<ReviewModel>> getReviews(@PathVariable Long productId,
                                                         @RequestParam(name = "p") int page,
                                                         @RequestParam(name= "s") int size) {
+        logger.info("Fetching reviews for product ID: {}, page: {}, size: {}", productId, page, size);
         List<ReviewModel> reviews = reviewService.getReviewsForProduct(productId, page, size);
+        logger.info("Retrieved {} reviews", reviews.size());
         return ResponseEntity.ok(reviews);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createReview(@RequestParam(value = "review-comment", required = false) String comment,
+                                                    @RequestParam("rate") int rating,
+                                                    @RequestParam("productId") Long productId,
+                                                    @RequestParam(value = "image-upload", required = false) MultipartFile[] images,
+                                                    @AuthenticationPrincipal UserDetails userDetails)
+                                                        throws InvalidRatingException, OneReviewPerUserException {
+
+        try {
+            reviewService.createReview(comment, rating, productId, images, userDetails);
+            logger.info("Successfully created review for product ID: {}", productId);
+            return ResponseEntity.ok("Review successfully created!");
+        } catch (OneReviewPerUserException | InvalidRatingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Failed to create review for product ID: {}", productId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
     }
 
 }

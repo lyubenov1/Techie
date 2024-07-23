@@ -9,7 +9,6 @@ import lombok.*;
 @Entity
 @Table(name = "comment_images")
 public class ReviewImage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

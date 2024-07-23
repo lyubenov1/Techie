@@ -130,7 +130,7 @@ public class UserService {
         return UserConversionUtils.convertToView(user);
     }
 
-    public void updateProfileImage(Long userId, String newProfileImageUrl) {
+    public void updateProfileImage(Long userId, String newProfileImageUrl) {  // TODO
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new ImageTooBigException(newProfileImageUrl));
         user.setProfileImageUrl(newProfileImageUrl);
         userRepository.save(user);
