@@ -128,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const reviewContainer = document.querySelector('.review-list');
 let currentPage = 0;
 const productId = document.querySelector('.review-list').dataset.productId;
+let currentImageIndex = 0;
+let imageUrls = [];
 
 function fetchMoreReviews() {
     fetch(`/api/reviews/get/${productId}?p=${currentPage}&s=7`)
@@ -147,13 +149,17 @@ function fetchMoreReviews() {
               </div>
               <div class="stars-and-date">
                 <span class="stars">${'★'.repeat(review.productRating)}${'☆'.repeat(5 - review.productRating)}</span>
-                <span class="review-date">${new Date(review.date).toLocaleDateString()}</span>
+                <span class="review-date">${review.date}</span>
               </div>
             </div>
             <div class="review-body">
               <p>${review.comment}</p>
               <div class="review-images">
-                ${review.imageUrls.map(url => `<img src="${url}" alt="Review image">`).join('')}
+                  ${review.imageUrls.map((url, index) => {
+                        // Append transformation parameters to the URL
+                        const transformedUrl = url.replace("/upload/", "/upload/w_180,h_150,c_fill/");
+                        return `<img src="${transformedUrl}" alt="Review image" onclick="openModal('${review.imageUrls}', ${index})">`;
+                    }).join('')}
               </div>
             </div>
           `;
@@ -162,6 +168,48 @@ function fetchMoreReviews() {
             });
             currentPage++;
         });
+}
+
+function openModal(urls, index) {
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("modalImage");
+    var captionText = document.getElementById("caption");
+
+    imageUrls = urls.split(',');
+    currentImageIndex = index;
+
+    modal.style.display = "flex";
+    modalImg.src = imageUrls[currentImageIndex];
+    captionText.innerHTML = "";
+
+    // Add event listener for keyboard navigation
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+function closeModal() {
+    var modal = document.getElementById("imageModal");
+    modal.style.display = "none";
+
+    // Remove event listener for keyboard navigation
+    document.removeEventListener('keydown', handleKeyDown);
+}
+
+function changeImage(direction) {
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) {
+        currentImageIndex = imageUrls.length - 1;
+    } else if (currentImageIndex >= imageUrls.length) {
+        currentImageIndex = 0;
+    }
+    document.getElementById("modalImage").src = imageUrls[currentImageIndex];
+}
+
+function handleKeyDown(event) {
+    if (event.key === 'ArrowLeft') {
+        changeImage(-1);
+    } else if (event.key === 'ArrowRight') {
+        changeImage(1);
+    }
 }
 
 const observer = new IntersectionObserver(entries => {

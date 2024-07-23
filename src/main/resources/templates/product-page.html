@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <a href="#" class="rating-info">
-                        <span th:text="${#numbers.formatDecimal(product.averageRating, 1, 1)}">0.0</span>
+                        <span th:text="${#numbers.formatDecimal(product.averageRating, 1, 2)}">0.0</span>
                         <span th:with="reviewText=${product.reviewCount == 1 ? 'review' : 'reviews'}"
                               th:text="'(' + ${product.reviewCount} + ' ' + ${reviewText} + ')'">0 reviews</span>
                     </a>
@@ -191,6 +191,13 @@
         </div>
     </main>
 
+    <div id="imageModal" class="cloudinary-image-modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+        <img class="modal-content" id="modalImage" alt="Image" src="">
+        <span class="next" onclick="changeImage(1)">&#10095;</span>
+        <div id="caption"></div>
+    </div>
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>
