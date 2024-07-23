@@ -25,7 +25,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/get/{productId}")
     public ResponseEntity<List<ReviewModel>> getReviews(@PathVariable Long productId,
                                                         @RequestParam(name = "p") int page,
                                                         @RequestParam(name= "s") int size) {
