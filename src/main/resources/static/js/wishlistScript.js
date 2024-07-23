@@ -127,17 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="card-body">
                     <div class="card-body-wrapper">
                         <div class="card-icon-box">
-                            <div class="rate">
-                                <input type="radio" id="star5_${product.id}" name="rate_${product.id}" value="5" />
-                                <label for="star5_${product.id}" title="text">5 stars</label>
-                                <input type="radio" id="star4_${product.id}" name="rate_${product.id}" value="4" />
-                                <label for="star4_${product.id}" title="text">4 stars</label>
-                                <input type="radio" id="star3_${product.id}" name="rate_${product.id}" value="3" />
-                                <label for="star3_${product.id}" title="text">3 stars</label>
-                                <input type="radio" id="star2_${product.id}" name="rate_${product.id}" value="2" />
-                                <label for="star2_${product.id}" title="text">2 stars</label>
-                                <input type="radio" id="star1_${product.id}" name="rate_${product.id}" value="1" />
-                                <label for="star1_${product.id}" title="text">1 star</label>
+                            <div class="rate-rating">
+                                 <!-- Empty stars as background -->
+                                 <div class="stars-outer">
+                                     <div class="stars-inner"></div>
+                                 </div>
+                                 <span class="stars-rating wishlist"></span>
                             </div>
                             <div class="delete-icon">
                                  <span class="remove-product" data-product-id="${product.id}">
@@ -150,7 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
+                // Set the width of stars-inner based on averageRating
+                const starsInner = productCard.querySelector('.stars-inner');
+                starsInner.style.width = (product.averageRating / 5.0 * 100) + '%';
 
+                // Set the text of stars-rating based on averageRating
+                const starsRating = productCard.querySelector('.stars-rating');
+                starsRating.textContent = `(${product.averageRating})`;
                 wishlistProductsDiv.appendChild(productCard);
             });
 
