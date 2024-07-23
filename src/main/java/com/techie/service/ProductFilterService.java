@@ -37,10 +37,14 @@ public class ProductFilterService {
 
     public List<ProductDTO> getFilteredProductsAll(List<CategoryDTO> categories, Map<String, String> filters, String sort) {
         List<ProductDTO> filteredProducts = new ArrayList<>();
+        Map<String, List<String>> convertedFilters = convertFilters(filters);   // Convert the checked filter options to an easier format to work with
 
         for (CategoryDTO category : categories) {
             filteredProducts.addAll(getFilteredProducts(category.getName(), filters, sort));
         }
+
+        applyFilters(filteredProducts, convertedFilters);
+        applySorting(filteredProducts, sort);
 
         return filteredProducts;
     }
