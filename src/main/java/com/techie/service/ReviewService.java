@@ -46,7 +46,9 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Review> reviews = reviewRepository.findByProductId(productId, pageable);
         return reviews.stream()
-                .filter(review -> review.getComment() != null && !review.getComment().isEmpty())
+                .filter(review ->
+                        (review.getComment() != null && !review.getComment().isEmpty()) ||
+                                (review.getImageUrls() != null && !review.getImageUrls().isEmpty()))
                 .map(this::convertToModel)
                 .collect(Collectors.toList());
     }

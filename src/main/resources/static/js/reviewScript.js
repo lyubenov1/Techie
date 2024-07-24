@@ -150,7 +150,7 @@ function fetchMoreReviews() {
         .then(response => response.json())
         .then(reviews => {
             reviews.forEach(review => {
-                if (review.comment) {
+                if (review.comment || review.imageUrls.length > 0) {
                     const reviewElement = document.createElement('div');
                     reviewElement.classList.add('review');
                     reviewElement.innerHTML = `
