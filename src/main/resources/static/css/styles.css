@@ -3201,3 +3201,33 @@ hr {
     display: inline-block;
     margin-bottom: 10px;
 }
+
+.review .reviewer-info .thumbs {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review .reviewer-info .thumbs .vote-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.review .reviewer-info .thumbs .vote-icon {
+    font-size: 1.3em;
+    margin-right: 5px;
+    transition: color 0.3s ease;
+}
+
+.review .reviewer-info .thumbs .fa-thumbs-up:hover{
+    color: #28a745;
+}
+
+.review .reviewer-info .thumbs .fa-thumbs-down:hover{
+    color: #dc3545;
+}
+
+.review .reviewer-info .thumbs .vote-count {
+    font-size: 1.1em;
+}

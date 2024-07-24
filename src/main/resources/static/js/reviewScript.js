@@ -182,6 +182,16 @@ function createReviewElement(review) {
             </span>
             <span class="review-date">${review.date}</span>
             <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
+            <span class="thumbs" data-review-id="${review.id}"> 
+                <span class="vote-wrapper">
+                    <i class="fa-solid fa-thumbs-up vote-icon"></i>
+                    <span class="vote-count upvote-count">${review.upvote}</span>
+                </span>
+                <span class="vote-wrapper">
+                    <i class="fa-solid fa-thumbs-down vote-icon"></i>
+                    <span class="vote-count downvote-count">${review.downvote}</span>
+                </span>
+            </span>
         </div>
         <div class="review-body">
             <div class="stars-container">
