@@ -151,67 +151,9 @@ function fetchMoreReviews() {
         .then(reviews => {
             reviews.forEach(review => {
                 if (review.comment || review.imageUrls.length > 0) {
-                    const reviewElement = document.createElement('div');
-                    reviewElement.classList.add('review');
-                    reviewElement.innerHTML = `
-            <div class="reviewer-info">
-              <span class="profile-picture">
-                <img src="${review.reviewer.profileImage}" alt="Profile Picture" class="user-profile-image-review">
-              </span>
-              <span class="reviewer">${review.reviewer.firstName} ${review.reviewer.lastName}
-                    ${review.reviewer.role === 'Moderator' || review.reviewer.role === 'Admin' ?
-                        '<img src="/images/blue-check.png" alt="Verified" class="blue-check">' : ''}  
-              </span>
-              <span class="review-date">${review.date}</span>
-              <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
-            </div>
-            <div class="review-body">
-                <div class="stars-container">
-                    <span class="stars">${'★'.repeat(review.productRating)}${'☆'.repeat(5 - review.productRating)}</span>
-                    <div class="rate review-rate" id="review-rate" style="display: none;">
-                        <input type="radio" id="rate-star5-${review.id}" name="rate-${review.id}" value="5" ${review.productRating === 5 ? 'checked' : ''} />
-                        <label for="rate-star5-${review.id}" title="text">5 stars</label>
-                        <input type="radio" id="rate-star4-${review.id}" name="rate-${review.id}" value="4" ${review.productRating === 4 ? 'checked' : ''} />
-                        <label for="rate-star4-${review.id}" title="text">4 stars</label>
-                        <input type="radio" id="rate-star3-${review.id}" name="rate-${review.id}" value="3" ${review.productRating === 3 ? 'checked' : ''} />
-                        <label for="rate-star3-${review.id}" title="text">3 stars</label>
-                        <input type="radio" id="rate-star2-${review.id}" name="rate-${review.id}" value="2" ${review.productRating === 2 ? 'checked' : ''} />
-                        <label for="rate-star2-${review.id}" title="text">2 stars</label>
-                        <input type="radio" id="rate-star1-${review.id}" name="rate-${review.id}" value="1" ${review.productRating === 1 ? 'checked' : ''} />
-                        <label for="rate-star1-${review.id}" title="text">1 star</label>
-                    </div>
-                </div>
-                <div class="comment-container">
-                    <p class="comment">${review.comment}</p>
-                </div>
-                <div class="review-images">
-                  ${review.imageUrls.map((url, index) => {
-                        // Append transformation parameters to the URL
-                        const transformedUrl = url.replace("/upload/", "/upload/w_180,h_150,c_fill/");
-                        return `<img src="${transformedUrl}" alt="Review image" onclick="openModal('${review.imageUrls}', ${index})">`;
-                    }).join('')}
-                </div>
-            </div>
-            <div class="review-options">
-                <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
-                <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
-            </div>
-            <div class="edit-options" style="display: none;">
-                <i class="fa-solid fa-check save-icon fa-lg" data-id="${review.id}"></i>
-                <i class="fa-solid fa-xmark cancel-icon fa-lg" data-id="${review.id}"></i>
-            </div>
-          `;
+                    const reviewElement = createReviewElement(review);
                     reviewContainer.appendChild(reviewElement);
-                    // Apply role-based color
-                    const roleElement = reviewElement.querySelector('.role');
-                    const role = review.reviewer.role;
-                    if (role === 'Admin') {
-                        roleElement.style.color = 'rgb(153, 134, 0)';
-                    } else if (role === 'Moderator') {
-                        roleElement.style.color = 'rgb(25, 135, 84)';
-                    } else {
-                        roleElement.style.color = 'rgb(225, 222, 218)'; // Default color
-                    }
+                    applyRoleBasedColor(reviewElement, review.reviewer.role);
                 }
             });
             currentPage++;
@@ -219,67 +161,78 @@ function fetchMoreReviews() {
         });
 }
 
+function createReviewElement(review) {
+    const reviewElement = document.createElement('div');
+    reviewElement.classList.add('review');
+    reviewElement.innerHTML = `
+        <div class="reviewer-info">
+            <span class="profile-picture">
+                <img src="${review.reviewer.profileImage}" alt="Profile Picture" class="user-profile-image-review">
+            </span>
+            <span class="reviewer">${review.reviewer.firstName} ${review.reviewer.lastName}
+                ${review.reviewer.role === 'Moderator' || review.reviewer.role === 'Admin' ? '<img src="/images/blue-check.png" alt="Verified" class="blue-check">' : ''}  
+            </span>
+            <span class="review-date">${review.date}</span>
+            <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
+        </div>
+        <div class="review-body">
+            <div class="stars-container">
+                <span class="stars">${'★'.repeat(review.productRating)}${'☆'.repeat(5 - review.productRating)}</span>
+                <div class="rate review-rate" id="review-rate" style="display: none;">
+                    ${[5, 4, 3, 2, 1].map(rating => `
+                        <input type="radio" id="rate-star${rating}-${review.id}" name="rate-${review.id}" value="${rating}" ${review.productRating === rating ? 'checked' : ''} />
+                        <label for="rate-star${rating}-${review.id}" title="text">${rating} stars</label>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="comment-container">
+                <p class="comment">${review.comment}</p>
+            </div>
+            <div class="review-images">
+                ${review.imageUrls.map((url, index) => {
+        const transformedUrl = url.replace("/upload/", "/upload/w_180,h_150,c_fill/");
+        return `<img src="${transformedUrl}" alt="Review image" onclick="openModal('${review.imageUrls}', ${index})">`;
+    }).join('')}
+            </div>
+        </div>
+        <div class="review-options">
+            <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
+            <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
+        </div>
+        <div class="edit-options" style="display: none;">
+            <i class="fa-solid fa-check save-icon fa-xl" data-id="${review.id}"></i>
+            <i class="fa-solid fa-xmark cancel-icon fa-xl" data-id="${review.id}"></i>
+        </div>
+    `;
+    return reviewElement;
+}
+
+function applyRoleBasedColor(reviewElement, role) {
+    const roleElement = reviewElement.querySelector('.role');
+    if (role === 'Admin') {
+        roleElement.style.color = 'rgb(153, 134, 0)';
+    } else if (role === 'Moderator') {
+        roleElement.style.color = 'rgb(25, 135, 84)';
+    } else {
+        roleElement.style.color = 'rgb(225, 222, 218)';
+    }
+}
+
 function addEventListeners() {
-    document.querySelectorAll('.edit-icon').forEach(icon => {
-        icon.addEventListener('click', handleEditClick);
-    });
-    document.querySelectorAll('.delete-icon').forEach(icon => {
-        icon.addEventListener('click', handleDeleteClick);
-    });
-    document.querySelectorAll('.save-icon').forEach(icon => {
-        icon.addEventListener('click', handleSaveClick);
-    });
-    document.querySelectorAll('.cancel-icon').forEach(icon => {
-        icon.addEventListener('click', handleCancelClick);
-    });
+    document.querySelectorAll('.edit-icon').forEach(icon => icon.addEventListener('click', handleEditClick));
+    document.querySelectorAll('.delete-icon').forEach(icon => icon.addEventListener('click', handleDeleteClick));
+    document.querySelectorAll('.save-icon').forEach(icon => icon.addEventListener('click', handleSaveClick));
+    document.querySelectorAll('.cancel-icon').forEach(icon => icon.addEventListener('click', handleCancelClick));
 }
 
 function handleEditClick(event) {
     const reviewId = event.target.getAttribute('data-id');
-    console.log('Edit review with ID:', reviewId);
-
-    // Find the corresponding review element
     const reviewElement = event.target.closest('.review');
 
-    const reviewBody = reviewElement.querySelector('.review-body');
-
-    const commentContainer = reviewBody.querySelector('.comment-container');
-    const commentParagraph = commentContainer.querySelector('.comment');
-
-    if (commentParagraph) {
-        commentParagraph.contentEditable = true;
-        commentParagraph.classList.add('editing');
-        commentParagraph.focus();
-        // Place cursor at the end of the text
-        const range = document.createRange();
-        range.selectNodeContents(commentParagraph);
-        range.collapse(false);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
-
-    const starsContainer = reviewBody.querySelector('.stars-container');
-    const whiteStars = starsContainer.querySelector('.stars');
-    const yellowStars = starsContainer.querySelector('.rate');
-    if (whiteStars && yellowStars) {
-        whiteStars.style.display = 'none';
-        yellowStars.style.display = 'block';
-        yellowStars.style.position = 'absolute';
-        yellowStars.style.top = '0';
-        yellowStars.style.left = '0';
-    }
-
-    // Show edit options
-    const editOptions = reviewElement.querySelector('.edit-options');
-    editOptions.style.display = 'flex'; // Show edit options
-
-    // Hide default options
-    const reviewOptions = reviewElement.querySelector('.review-options');
-    reviewOptions.style.display = 'none';
+    toggleEditingState(reviewElement, true);
 
     // Display delete icons on images
-    const reviewImages = reviewBody.querySelector('.review-images');
+    const reviewImages = reviewElement.querySelector('.review-images');
     reviewImages.querySelectorAll('img').forEach(img => {
         const imageContainer = document.createElement('div');
         imageContainer.style.position = 'relative';
@@ -294,6 +247,18 @@ function handleEditClick(event) {
         removeIcon.style.color = '#dc3545';
         removeIcon.style.cursor = 'pointer';
         removeIcon.style.fontSize = '18px';
+        removeIcon.style.transition = 'font-size 0.3s ease, color 0.3s ease';
+
+        removeIcon.addEventListener('mouseover', () => {
+            removeIcon.style.fontSize = '22px';
+            removeIcon.style.color = '#f00';
+        });
+
+        removeIcon.addEventListener('mouseout', () => {
+            removeIcon.style.fontSize = '18px';
+            removeIcon.style.color = '#dc3545';
+        });
+
         removeIcon.addEventListener('click', () => imageContainer.remove());
 
         img.parentNode.insertBefore(imageContainer, img);
@@ -306,31 +271,12 @@ function handleSaveClick(event) {
     const reviewId = event.target.getAttribute('data-id');
     const reviewElement = event.target.closest('.review');
 
-    const starsContainer = reviewElement.querySelector('.stars-container');
-    const whiteStars = starsContainer.querySelector('.stars');
-    const yellowStars = starsContainer.querySelector('.rate');
-    if (whiteStars && yellowStars) {
-        whiteStars.style.display = 'inline-block';
-        yellowStars.style.display = 'none';
-    }
-
-    reviewElement.querySelectorAll('.review-images > div').forEach(container => {
-        const img = container.querySelector('img');
-        if (img) {
-            container.parentNode.insertBefore(img, container);
-        }
-        container.remove();
-    });
-
-    const commentParagraph = reviewElement.querySelector('.comment');
-    if (commentParagraph) {
-        commentParagraph.contentEditable = false;
-        commentParagraph.classList.remove('editing');
-    }
+    toggleEditingState(reviewElement, false);
 
     // Get updated values
-    const comment = reviewElement.querySelector('.review-body p').textContent;
-    const rating = Array.from(reviewElement.querySelectorAll('.rate input:checked')).map(input => input.value)[0];
+    const comment = reviewElement.querySelector('.review-body p.comment').textContent;
+    const rating = reviewElement.querySelector('.rate input:checked') ? reviewElement.querySelector('.rate input:checked').value : null;
+    const remainingImageUrls = Array.from(reviewElement.querySelectorAll('.review-images img')).map(img => img.src);
 
     // Send PATCH request to update review
     fetch(`/api/reviews/update/${reviewId}`, {
@@ -339,7 +285,7 @@ function handleSaveClick(event) {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         },
-        body: JSON.stringify({ comment, rating })
+        body: JSON.stringify({ comment, rating, remainingImageUrls })
     })
         .then(response => response.json())
         .then(data => {
@@ -349,21 +295,25 @@ function handleSaveClick(event) {
         .catch(error => {
             console.error('Error updating review:', error);
         });
-
-    // Reset UI
-    reviewElement.querySelector('.edit-options').style.display = 'none';
-    reviewElement.querySelector('.review-options').style.display = 'flex';
 }
 
 function handleCancelClick(event) {
     const reviewElement = event.target.closest('.review');
+    toggleEditingState(reviewElement, false);
+}
+
+function toggleEditingState(reviewElement, isEditing) {
     const starsContainer = reviewElement.querySelector('.stars-container');
     const whiteStars = starsContainer.querySelector('.stars');
     const yellowStars = starsContainer.querySelector('.rate');
-
     if (whiteStars && yellowStars) {
-        whiteStars.style.display = 'inline-block';
-        yellowStars.style.display = 'none';
+        whiteStars.style.display = isEditing ? 'none' : 'inline-block';
+        yellowStars.style.display = isEditing ? 'block' : 'none';
+        if (isEditing) {
+            yellowStars.style.position = 'absolute';
+            yellowStars.style.top = '0';
+            yellowStars.style.left = '0';
+        }
     }
 
     reviewElement.querySelectorAll('.review-images > div').forEach(container => {
@@ -376,12 +326,23 @@ function handleCancelClick(event) {
 
     const commentParagraph = reviewElement.querySelector('.comment');
     if (commentParagraph) {
-        commentParagraph.contentEditable = false;
-        commentParagraph.classList.remove('editing');
+        commentParagraph.contentEditable = isEditing;
+        if (isEditing) {
+            commentParagraph.classList.add('editing');
+            commentParagraph.focus();
+            const range = document.createRange();
+            range.selectNodeContents(commentParagraph);
+            range.collapse(false);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        } else {
+            commentParagraph.classList.remove('editing');
+        }
     }
 
-    reviewElement.querySelector('.edit-options').style.display = 'none';
-    reviewElement.querySelector('.review-options').style.display = 'flex';
+    reviewElement.querySelector('.edit-options').style.display = isEditing ? 'flex' : 'none';
+    reviewElement.querySelector('.review-options').style.display = isEditing ? 'none' : 'flex';
 }
 
 function handleDeleteClick(event) {

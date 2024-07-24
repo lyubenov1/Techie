@@ -3128,75 +3128,47 @@ hr {
 }
 
 .review-options, .edit-options {
-    display: inline-flex; 
+    display: inline-flex;
     align-items: start;
     gap: 10px;
     margin-top: 10px;
 }
 
-.review .review-options i {
+.review .review-options i,
+.review .edit-options i{
     cursor: pointer;
     padding: 5px;
     transition: color 0.3s ease;
 }
 
-.review .review-options i:hover {
-    color: #f0a500;
+.review .review-options .edit-icon:hover {
+    color: #007bff !important;
 }
 
-.review .review-options .edit-icon {
-    color: #007bff;
+.review .review-options .delete-icon:hover {
+    color: #dc3545 !important;
 }
 
-.review .review-options .delete-icon {
-    color: #dc3545;
+.review .edit-options .save-icon:hover {
+    color: #39f43e !important;
 }
 
-.review.review-body {
-    transition: background-color 0.3s ease;
+.review .edit-options .cancel-icon:hover {
+    color: #dc3545 !important
 }
 
-.review.review-body.dimmed {
-    background-color: rgba(0, 0, 0, 0.5);
+.review-images .remove-image {
+    transition: font-size 0.3s ease;
 }
 
 .review.review-images {
     position: relative;
 }
 
-.review.remove-image {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: #dc3545;
-    cursor: pointer;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-.review.remove-image:hover {
-    color: #f0a500;
-}
-
 .review.edit-options {
     display: none;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.review.save-icon .edit-options .cancel-icon {
-    font-size: 18px;
-    color: #28a745;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.review.cancel-icon .edit-options {
-    color: #dc3545;
-}
-
-.review.save-icon:hover, .cancel-icon:hover {
-    opacity: 0.7;
 }
 
 .review-body .stars-container {
