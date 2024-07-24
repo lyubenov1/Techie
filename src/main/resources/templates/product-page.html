@@ -134,7 +134,7 @@
                     </div>
                 </div>
             </div>
-            <div class="full-width-border"></div>
+            <div class="full-width-border first"></div>
             <div sec:authorize="isAuthenticated()" class="write-a-review">
                 <div class="write-review-header">
                     <h2>Write a Review</h2>
@@ -180,7 +180,7 @@
                 </form>
             </div>
 
-            <div class="full-width-border"></div>
+            <div sec:authorize="isAuthenticated()" class="full-width-border"></div>
             <div class="review-list" th:data-product-id="${product.id}">
                 <!-- Existing reviews will be here -->
             </div>

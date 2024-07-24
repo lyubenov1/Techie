@@ -140,19 +140,19 @@ function fetchMoreReviews() {
                     const reviewElement = document.createElement('div');
                     reviewElement.classList.add('review');
                     reviewElement.innerHTML = `
-            <div class="review-header">
-              <div class="review-info">
-                <span class="profile-picture">
-                  <img src="${review.reviewer.profileImage}" alt="Profile Picture" class="user-profile-image">
-                </span>
-                <span class="reviewer">${review.reviewer.firstName} ${review.reviewer.lastName}</span>
-              </div>
-              <div class="stars-and-date">
-                <span class="stars">${'★'.repeat(review.productRating)}${'☆'.repeat(5 - review.productRating)}</span>
-                <span class="review-date">${review.date}</span>
-              </div>
+            <div class="reviewer-info">
+              <span class="profile-picture">
+                <img src="${review.reviewer.profileImage}" alt="Profile Picture" class="user-profile-image-review">
+              </span>
+              <span class="reviewer">${review.reviewer.firstName} ${review.reviewer.lastName}
+                    ${review.reviewer.role === 'Moderator' || review.reviewer.role === 'Admin' ?
+                        '<img src="/images/blue-check.png" alt="Verified" class="blue-check">' : ''}  
+              </span>
+              <span class="review-date">${review.date}</span>
+              <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
             </div>
             <div class="review-body">
+                <span class="stars">${'★'.repeat(review.productRating)}${'☆'.repeat(5 - review.productRating)}</span>
               <p>${review.comment}</p>
               <div class="review-images">
                   ${review.imageUrls.map((url, index) => {
@@ -164,6 +164,16 @@ function fetchMoreReviews() {
             </div>
           `;
                     reviewContainer.appendChild(reviewElement);
+                    // Apply role-based color
+                    const roleElement = reviewElement.querySelector('.role');
+                    const role = review.reviewer.role;
+                    if (role === 'Admin') {
+                        roleElement.style.color = 'rgb(153, 134, 0)';
+                    } else if (role === 'Moderator') {
+                        roleElement.style.color = 'rgb(25, 135, 84)';
+                    } else {
+                        roleElement.style.color = 'rgb(225, 222, 218)'; // Default color
+                    }
                 }
             });
             currentPage++;

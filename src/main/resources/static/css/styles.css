@@ -2718,6 +2718,7 @@ hr {
     flex-direction: row;
     align-items: flex-start;
     gap: 20px;
+    padding: 20px;
 }
 
 .product-customer-reviews .average-rating {
@@ -2783,7 +2784,7 @@ hr {
 .product-customer-reviews .rating-bar .bar {
     flex-grow: 1;
     height: 15px;
-    width: 120px;
+    width: 200px;
     background: #333;
     position: relative;
     overflow: hidden;
@@ -2794,7 +2795,7 @@ hr {
     width: 60px;
     margin-left: 5px;
     text-align: left;
-    color: rgb(153, 134, 0);
+    color: rgb(225, 222, 218);
 }
 
 .product-customer-reviews .bar .filled {
@@ -2804,10 +2805,13 @@ hr {
 }
 
 .full-width-border {
-    margin-top: 20px;
     width: 100%;
     height: 1px;
     background-color: grey;
+}
+
+.full-width-border.first {
+    margin-top: 20px;
 }
 
 .product-customer-reviews, .review-list {
@@ -2816,29 +2820,49 @@ hr {
 
 .product-customer-reviews .review-list .review {
     border-bottom: 1px solid grey;
-    padding: 20px 0;
+    padding: 20px;
     width: 100%;
-}
-
-.product-customer-reviews .review-header {
     display: flex;
-    align-items: center;
+    gap: 40px;
 }
 
-.product-customer-reviews .review-header .stars-and-date .stars {
-    margin-right: 5px;
-    margin-left: 20px;
-}
-
-.product-customer-reviews, .review-info {
+.product-customer-reviews .reviewer-info {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.product-customer-reviews, .review-body {
-    margin-top: 10px;
+.product-customer-reviews .review-body {
+    display: flex;
+    flex-direction: column;
 }
 
+.user-profile-image-review {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.reviewer-info .reviewer {
+    position: relative;
+    display: inline-block;
+}
+
+.blue-check {
+    position: absolute;
+    bottom: 4px;
+    right: 18px;
+    width: 15px;
+    height: 15px;
+}
+
+.review .review-body .stars {
+    font-size: 20px;
+}
+
+.review .review-body p {
+    font-size: 18px;
+}
 
 .product-customer-reviews .write-a-review {
     width: 55%;
