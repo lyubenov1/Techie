@@ -2822,20 +2822,22 @@ hr {
     border-bottom: 1px solid grey;
     padding: 20px;
     width: 100%;
-    display: flex;
     gap: 40px;
+    display: flex;
 }
 
 .product-customer-reviews .reviewer-info {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    min-width: 150px;
 }
 
 .product-customer-reviews .review-body {
     display: flex;
     flex-direction: column;
     min-width: 600px;
+    margin-left: 0;
 }
 
 .user-profile-image-review {
@@ -3132,6 +3134,7 @@ hr {
     align-items: start;
     gap: 10px;
     margin-top: 10px;
+    margin-left: auto;
 }
 
 .review .review-options i,

@@ -162,6 +162,14 @@ function fetchMoreReviews() {
 }
 
 function createReviewElement(review) {
+    let loggedUserId = document.getElementById('loggedUserId').value;
+    let loggedUserRole = document.getElementById('loggedUserRole').value;
+
+
+    const isReviewOwner = String(loggedUserId) === String(review.reviewer.id);
+    const isAdminOrModerator = ['Admin', 'Moderator'].includes(loggedUserRole);
+    const showReviewOptions = isReviewOwner || isAdminOrModerator;
+
     const reviewElement = document.createElement('div');
     reviewElement.classList.add('review');
     reviewElement.innerHTML = `
@@ -195,7 +203,7 @@ function createReviewElement(review) {
     }).join('')}
             </div>
         </div>
-        <div class="review-options">
+        <div class="review-options" style="display: ${showReviewOptions ? 'flex' : 'none'};">
             <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
             <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
         </div>
@@ -204,6 +212,7 @@ function createReviewElement(review) {
             <i class="fa-solid fa-xmark cancel-icon fa-xl" data-id="${review.id}"></i>
         </div>
     `;
+
     return reviewElement;
 }
 

@@ -204,6 +204,9 @@
         <div id="caption"></div>
     </div>
 
+    <input type="hidden" id="loggedUserId" th:value="${loggedUser != null ? loggedUser.id : ''}">
+    <input type="hidden" id="loggedUserRole" th:value="${loggedUser != null ? loggedUser.role : ''}">
+
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>
     </div>
