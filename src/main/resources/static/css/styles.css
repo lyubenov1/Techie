@@ -2835,6 +2835,7 @@ hr {
 .product-customer-reviews .review-body {
     display: flex;
     flex-direction: column;
+    min-width: 600px;
 }
 
 .user-profile-image-review {
@@ -3124,4 +3125,104 @@ hr {
 .prev:focus, .next:focus {
     color: #bbb;
     text-decoration: none;
+}
+
+.review-options, .edit-options {
+    display: inline-flex; 
+    align-items: start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.review .review-options i {
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.review .review-options i:hover {
+    color: #f0a500;
+}
+
+.review .review-options .edit-icon {
+    color: #007bff;
+}
+
+.review .review-options .delete-icon {
+    color: #dc3545;
+}
+
+.review.review-body {
+    transition: background-color 0.3s ease;
+}
+
+.review.review-body.dimmed {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.review.review-images {
+    position: relative;
+}
+
+.review.remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.review.remove-image:hover {
+    color: #f0a500;
+}
+
+.review.edit-options {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.review.save-icon .edit-options .cancel-icon {
+    font-size: 18px;
+    color: #28a745;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.review.cancel-icon .edit-options {
+    color: #dc3545;
+}
+
+.review.save-icon:hover, .cancel-icon:hover {
+    opacity: 0.7;
+}
+
+.review-body .stars-container {
+    position: relative;
+    display: inline-block;
+}
+
+.review-body .stars {
+    display: inline-block;
+}
+
+.review-body .rate {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.review-body .comment.editing {
+    background-color: #575757;
+    padding: 5px;
+    border-radius: 5px;
+    min-height: 20px;
+    margin-top: 35px;
+}
+
+.review-body .stars-container {
+    display: inline-block;
+    margin-bottom: 10px;
 }
