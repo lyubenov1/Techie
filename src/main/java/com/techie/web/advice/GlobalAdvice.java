@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.*;
 
 import java.util.*;
@@ -42,6 +43,12 @@ public class GlobalAdvice {
         ModelAndView modelAndView = new ModelAndView("error-pages/not-found");
         addUserToModel(userDetails, modelAndView.getModel());
         return modelAndView;
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException ex) {
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)  // 413 status code
+                .body("File size exceeds the maximum limit.");
     }
 
     // Catch-all for other exceptions
