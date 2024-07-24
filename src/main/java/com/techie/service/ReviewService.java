@@ -52,7 +52,8 @@ public class ReviewService {
     }
 
     public ReviewModel convertToModel(Review review) {
-        UserDisplayView userDisplayView= userService.convertToView(review.getUser());
+        UserEntity user = userService.findByUsername(review.getUser().getEmail());  // To eagerly fetch the user's roles
+        UserDisplayView userDisplayView = userService.convertToView(user);
 
         return ReviewModel.builder()
                 .id(review.getId())
