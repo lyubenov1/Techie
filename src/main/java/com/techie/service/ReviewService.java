@@ -173,4 +173,110 @@ public class ReviewService {
         Double averageRating = reviewRepository.calculateAverageRatingByProductId(productId);
         productService.updateAverageRating(productId, averageRating);
     }
+
+
+    @Transactional
+    public ReviewModel updateReview(Long reviewId, ReviewUpdateRequest updateRequest, UserDetails userDetails) {
+        logger.info("Starting review update for reviewId: {}", reviewId);
+        try {
+            Review review = reviewRepository.findByIdJoinFetch(reviewId)
+                    .orElseThrow(() -> new ReviewNotFoundException(reviewId));
+
+            // Check if the user is authorized to update this review
+            if (!review.getUser().getEmail().equals(userDetails.getUsername()) &&
+                    userDetails.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MODERATOR"))) {
+                throw new UnauthorizedException("You are not authorized to update this review");
+            }
+
+            logger.info("Updating review content for reviewId: {}", reviewId);
+            if (updateRequest.getComment() != null) {
+                review.setComment(updateRequest.getComment());
+            }
+            if (updateRequest.getRating() != null) {
+                review.setProductRating(updateRequest.getRating());
+            }
+
+            logger.info("Updating review images for reviewId: {}", reviewId);
+            if (updateRequest.getRemainingImageUrls() != null) {
+                updateReviewImages(review, updateRequest.getRemainingImageUrls());
+            }
+
+            logger.info("Saving updated review for reviewId: {}", reviewId);
+            review = reviewRepository.save(review);
+
+            logger.info("Review update completed for reviewId: {}", reviewId);
+            return convertToModel(review);
+        } catch (Exception e) {
+            logger.error("Error occurred while updating review with id: {}", reviewId, e);
+            throw e;
+        }
+    }
+
+    private void updateReviewImages(Review review, List<String> remainingImageUrls) {
+        List<ReviewImage> currentImages = review.getImageUrls();
+        List<ReviewImage> imagesToRemove = new ArrayList<>();
+
+        // Identify images to remove
+        for (ReviewImage image : currentImages) {
+            boolean imageFound = remainingImageUrls.stream()
+                    .anyMatch(url -> url.contains(extractPublicIdFromUrl(image.getImageUrl())));
+            if (!imageFound) {
+                imagesToRemove.add(image);
+            }
+        }
+
+        // Remove images from Cloudinary and the review
+        for (ReviewImage image : imagesToRemove) {
+            deleteImageFromCloudinary(image.getImageUrl());
+            currentImages.remove(image);
+        }
+
+        review.setImageUrls(currentImages);
+    }
+
+    private void deleteImageFromCloudinary(String imageUrl) {
+        try {
+            String publicId = extractPublicIdFromUrl(imageUrl);
+            cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+        } catch (IOException e) {
+            logger.error("Error deleting image from Cloudinary: ", e);
+        }
+    }
+
+    private String extractPublicIdFromUrl(String imageUrl) {
+        // Remove any query parameters
+        String urlWithoutParams = imageUrl.split("\\?")[0];
+
+        // Split the URL
+        String[] urlParts = urlWithoutParams.split("/");
+
+        // Find the index of "upload" in the URL parts
+        int uploadIndex = -1;
+        for (int i = 0; i < urlParts.length; i++) {
+            if (urlParts[i].equals("upload")) {
+                uploadIndex = i;
+                break;
+            }
+        }
+
+        if (uploadIndex == -1 || uploadIndex == urlParts.length - 1) {
+            throw new IllegalArgumentException("Invalid Cloudinary URL structure");
+        }
+
+        // Construct the public ID
+        StringBuilder publicId = new StringBuilder();
+        for (int i = uploadIndex + 1; i < urlParts.length; i++) {
+            if (i > uploadIndex + 1) publicId.append("/");
+            publicId.append(urlParts[i]);
+        }
+
+        // Remove file extension
+        String result = publicId.toString();
+        int lastDotIndex = result.lastIndexOf('.');
+        if (lastDotIndex != -1) {
+            result = result.substring(0, lastDotIndex);
+        }
+
+        return result;
+    }
 }

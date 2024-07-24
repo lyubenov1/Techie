@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
 
+import java.util.*;
+
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
@@ -23,5 +25,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT AVG(r.productRating) FROM Review r WHERE r.product.id = :productId")
     double calculateAverageRatingByProductId(@Param("productId") Long productId);
+
+    @Query("SELECT r FROM Review r " +
+            "JOIN FETCH r.product p " +
+            "JOIN FETCH r.user " +
+            "LEFT JOIN FETCH r.imageUrls " +
+            "WHERE r.id = :reviewId")
+    Optional<Review> findByIdJoinFetch(@Param("reviewId") Long reviewId);
 }
 

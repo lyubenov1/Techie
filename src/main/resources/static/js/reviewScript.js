@@ -248,6 +248,13 @@ function handleEditClick(event) {
     const reviewId = event.target.getAttribute('data-id');
     const reviewElement = event.target.closest('.review');
 
+    // Store original state of review
+    reviewElement.dataset.originalState = JSON.stringify({
+        comment: reviewElement.querySelector('.comment').textContent,
+        rating: reviewElement.querySelector('.stars').innerHTML,
+        images: Array.from(reviewElement.querySelectorAll('.review-images img')).map(img => img.outerHTML)
+    });
+
     toggleEditingState(reviewElement, true);
 
     // Display delete icons on images
@@ -290,8 +297,6 @@ function handleSaveClick(event) {
     const reviewId = event.target.getAttribute('data-id');
     const reviewElement = event.target.closest('.review');
 
-    toggleEditingState(reviewElement, false);
-
     // Get updated values
     const comment = reviewElement.querySelector('.review-body p.comment').textContent;
     const rating = reviewElement.querySelector('.rate input:checked') ? reviewElement.querySelector('.rate input:checked').value : null;
@@ -306,18 +311,46 @@ function handleSaveClick(event) {
         },
         body: JSON.stringify({ comment, rating, remainingImageUrls })
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Review updated:', data);
-            // Handle successful update, e.g., reload reviews or show success message
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(updatedReview => {
+            console.log('Review updated:', updatedReview);
+            // Update the review in the DOM with the new data
+            updateReviewInDOM(reviewElement, updatedReview);
+            toggleEditingState(reviewElement, false);
         })
         .catch(error => {
             console.error('Error updating review:', error);
+            alert('Failed to update review. Please try again.');
+            toggleEditingState(reviewElement, false);
         });
 }
 
+function updateReviewInDOM(reviewElement, updatedReview) {
+    // Update the review content in the DOM
+    reviewElement.querySelector('.comment').textContent = updatedReview.comment;
+    reviewElement.querySelector('.stars').innerHTML = '★'.repeat(updatedReview.productRating) + '☆'.repeat(5 - updatedReview.productRating);
+
+    const imagesContainer = reviewElement.querySelector('.review-images');
+    imagesContainer.innerHTML = updatedReview.imageUrls.map((url, index) => {
+        const transformedUrl = url.replace("/upload/", "/upload/w_180,h_150,c_fill/");
+        return `<img src="${transformedUrl}" alt="Review Image ${index + 1}" class="review-image">`;
+    }).join('');
+}
+
+
 function handleCancelClick(event) {
     const reviewElement = event.target.closest('.review');
+    // Restore original state
+    const originalState = JSON.parse(reviewElement.dataset.originalState);
+    reviewElement.querySelector('.comment').textContent = originalState.comment;
+    reviewElement.querySelector('.stars').innerHTML = originalState.rating;
+    reviewElement.querySelector('.review-images').innerHTML = originalState.images.join('');
+
     toggleEditingState(reviewElement, false);
 }
 
@@ -333,6 +366,11 @@ function toggleEditingState(reviewElement, isEditing) {
             yellowStars.style.top = '0';
             yellowStars.style.left = '0';
         }
+    }
+
+    if (!isEditing) {
+        // Remove the stored original state when exiting edit mode
+        delete reviewElement.dataset.originalState;
     }
 
     reviewElement.querySelectorAll('.review-images > div').forEach(container => {

@@ -51,4 +51,17 @@ public class ReviewController {
         }
     }
 
+    @PatchMapping("/update/{reviewId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long reviewId,
+                                          @RequestBody ReviewUpdateRequest updateRequest,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            ReviewModel updatedReview = reviewService.updateReview(reviewId, updateRequest, userDetails);
+            return ResponseEntity.ok(updatedReview);
+        } catch (Exception e) {
+            logger.error("Error updating review: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 }
