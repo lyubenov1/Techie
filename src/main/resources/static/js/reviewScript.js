@@ -74,30 +74,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
             newFiles.forEach(file => {
                 if (uploadedFiles.length < 3) {
-                    uploadedFiles.push(file);
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        console.log('File read successfully');
-                        const imgContainer = document.createElement('div');
-                        imgContainer.className = 'image-preview-container';
+                    if (file.size <= 7 * 1024 * 1024) { // Check if file is <= 7 MB
+                        uploadedFiles.push(file);
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            console.log('File read successfully');
+                            const imgContainer = document.createElement('div');
+                            imgContainer.className = 'image-preview-container';
 
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
 
-                        const removeIcon = document.createElement('i');
-                        removeIcon.className = 'fas fa-times remove-image';
-                        removeIcon.addEventListener('click', function() {
-                            imgContainer.remove();
-                            uploadedFiles = uploadedFiles.filter(f => f !== file);
-                            console.log('Image removed, remaining:', uploadedFiles.length);
-                        });
+                            const removeIcon = document.createElement('i');
+                            removeIcon.className = 'fas fa-times remove-image';
+                            removeIcon.addEventListener('click', function () {
+                                imgContainer.remove();
+                                uploadedFiles = uploadedFiles.filter(f => f !== file);
+                                console.log('Image removed, remaining:', uploadedFiles.length);
+                            });
 
-                        imgContainer.appendChild(img);
-                        imgContainer.appendChild(removeIcon);
-                        imagePreview.appendChild(imgContainer);
-                        console.log('Image preview added');
+                            imgContainer.appendChild(img);
+                            imgContainer.appendChild(removeIcon);
+                            imagePreview.appendChild(imgContainer);
+                            console.log('Image preview added');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        showWarning("File size cannot be more than 7 MB");
                     }
-                    reader.readAsDataURL(file);
                 }
             });
         });
