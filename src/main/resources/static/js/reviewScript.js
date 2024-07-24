@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const reviewForm = document.getElementById('review-form');
     const csrfToken = document.querySelector('#csrf-token').value;
+    const spinner = document.getElementById('upload-spinner');
 
     reviewForm.addEventListener('submit', function(event) {
         event.preventDefault()
@@ -22,6 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('image-upload', files[i]);
         }
 
+        // Show the spinner
+        spinner.style.display = 'block';
+        document.getElementById('image-preview').style.display = 'none'
+
         fetch('/api/reviews/create', {
             method: 'POST',
             headers: {
@@ -42,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error creating review:', error.message);
                 showWarning(error.message);
+            })
+            .finally(() => {
+                // Hide the spinner
+                spinner.style.display = 'none';
+                document.getElementById('image-preview').style.display = 'block';
             });
     });
 

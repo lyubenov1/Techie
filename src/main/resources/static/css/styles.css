@@ -2949,6 +2949,10 @@ hr {
     display: none;
 }
 
+#upload-spinner {
+    margin-bottom: 10px;
+}
+
 .product-customer-reviews .write-a-review .image-preview-container {
     position: relative;
     display: inline-block;

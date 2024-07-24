@@ -171,10 +171,15 @@
                                 <i class="fa-solid fa-upload"></i>
                             </label>
                             <input type="file" id="image-upload" name="image-upload" accept="image/*" multiple>
-                            <div id="image-preview"></div>
+                            <div id="image-preview">
+                            </div>
                             <div id="image-warning" class="image-warning"></div>
                             <div class="product-page-message"></div>
                         </div>
+                    </div>
+                    <!-- Spinner during file upload -->
+                    <div id="upload-spinner" class="spinner-border" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                     <button type="submit">Submit Review</button>
                 </form>
