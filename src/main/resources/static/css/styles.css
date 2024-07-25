@@ -2719,6 +2719,7 @@ hr {
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
+    margin-bottom: 15px;
 }
 
 .product-customer-reviews .average-rating {
@@ -2810,16 +2811,12 @@ hr {
     background-color: grey;
 }
 
-.full-width-border.first {
-    margin-top: 20px;
-}
-
 .product-customer-reviews, .review-list {
     width: 100%;
 }
 
 .product-customer-reviews .review-list .review {
-    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
     padding: 20px;
     width: 100%;
     gap: 40px;

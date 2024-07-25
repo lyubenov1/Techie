@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             newFiles.forEach(file => {
                 if (uploadedFiles.length < 3) {
-                    if (file.size <= 7 * 1024 * 1024) { // Check if file is <= 7 MB
+                    if (file.size <= 7 * 1024 * 1024) { // Check if the file is <= 7 MB
                         uploadedFiles.push(file);
                         const reader = new FileReader();
                         reader.onload = function (e) {
@@ -418,7 +418,7 @@ function handleDeleteClick(event) {
     const reviewId = event.target.getAttribute('data-id');
     const reviewElement = event.target.closest('.review');
 
-    // Create and show a custom confirm dialog
+    // Create and show a custom confirmation dialog
     const confirmDialog = createConfirmDialog('Are you sure you want to delete this review?');
     document.body.appendChild(confirmDialog);
 
@@ -544,3 +544,46 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 1.0 });
 
 observer.observe(document.querySelector('.loading-indicator'));
+
+function smoothScroll(target, duration) {
+    var targetElement = document.querySelector(target);
+    var targetPosition = targetElement.getBoundingClientRect().top;
+    var startPosition = window.pageYOffset;
+    var distance = targetPosition - startPosition;
+    var startTime = null;
+
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        var timeElapsed = currentTime - startTime;
+        var run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+}
+
+document.getElementById('scrollToReviews').addEventListener('click', function(event) {
+    event.preventDefault();
+    smoothScroll('.product-customer-reviews', 800);
+});
+
+document.getElementById('scrollToReviewForm').addEventListener('click', function(event) {
+    const loggedUserId = document.getElementById('loggedUserId').value;
+    event.preventDefault();
+
+    if (!loggedUserId) {
+        window.location.href = '/login'; // Redirect to the login page
+    } else {
+        smoothScroll('.product-customer-reviews', 800); // Smooth scroll to the reviews section
+    }
+});
+
+

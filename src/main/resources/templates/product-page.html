@@ -40,12 +40,12 @@
                 <h1 th:text="${product.name}">Product Name</h1>
                 <div class="rating-box-wrapper">
                     <div class="rate-rating">
-                        <!-- Empty stars as background -->
+                        <!-- Empty stars as a background -->
                         <div class="stars-outer">
                             <div class="stars-inner" th:style="'width:' + (${product.averageRating} / 5.0 * 100) + '%'"></div>
                         </div>
                     </div>
-                    <a href="#" class="rating-info">
+                    <a href="#" class="rating-info" id="scrollToReviews">
                         <span th:text="${#numbers.formatDecimal(product.averageRating, 1, 2)}">0.0</span>
                         <span th:with="reviewText=${product.reviewCount == 1 ? 'review' : 'reviews'}"
                               th:text="'(' + ${product.reviewCount} + ' ' + ${reviewText} + ')'">0 reviews</span>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="review-compare-buttons">
-                    <button class="review-button">Write a Review</button>
+                    <button class="review-button" id="scrollToReviewForm">Write a Review</button>
                     <button class="compare-button" id="compareButton" th:attr="data-product-id=${product.id}">Compare</button>
                 </div>
             </div>
@@ -108,7 +108,7 @@
         <div class="similar-products-container">
             <h2>Similar Products</h2>
             <div class="similar-products category-products">
-                <!-- Similar products will be inserted here by JavaScript -->
+                <!-- JavaScript will insert similar products here -->
             </div>
         </div>
         <hr>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
             </div>
-            <div class="full-width-border first"></div>
+            <div sec:authorize="isAuthenticated()" class="full-width-border"></div>
             <div sec:authorize="isAuthenticated()" class="write-a-review">
                 <div class="write-review-header">
                     <h2>Write a Review</h2>
@@ -184,8 +184,6 @@
                     <button type="submit">Submit Review</button>
                 </form>
             </div>
-
-            <div sec:authorize="isAuthenticated()" class="full-width-border"></div>
             <div class="review-list" th:data-product-id="${product.id}">
                 <!-- Existing reviews will be here -->
             </div>
