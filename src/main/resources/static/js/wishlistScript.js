@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-body-wrapper">
                         <div class="card-icon-box">
                             <div class="rate-rating">
-                                 <!-- Empty stars as background -->
+                                 <!-- Empty stars as a background -->
                                  <div class="stars-outer">
                                      <div class="stars-inner"></div>
                                  </div>
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Set the text of stars-rating based on averageRating
                 const starsRating = productCard.querySelector('.stars-rating');
-                starsRating.textContent = `(${product.averageRating})`;
+                starsRating.textContent = `(${product.averageRating.toFixed(2)})`;
                 wishlistProductsDiv.appendChild(productCard);
             });
 

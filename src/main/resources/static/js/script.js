@@ -725,11 +725,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="card-body-wrapper">
                                 <div class="card-icon-box">
                                      <div class="rate-rating">
-                                        <!-- Empty stars as background -->
+                                        <!-- Empty stars as a background -->
                                         <div class="stars-outer">
                                             <div class="stars-inner" style="width: ${product.averageRating / 5 * 100}%;"></div>
                                         </div>
-                                        <span class="stars-rating">(${product.averageRating})</span></span>
+                                        <span class="stars-rating">(${product.averageRating.toFixed(2)})</span></span>
                                     </div>
                                 </div>
                                 <div class="card-title">${product.name}</div>

@@ -78,7 +78,7 @@
                                         <div class="stars-outer">
                                             <div class="stars-inner" th:style="'width:' + (${product.averageRating} / 5.0 * 100) + '%'"></div>
                                         </div>
-                                        <span class="stars-rating" th:text="'(' + ${product.averageRating} + ')'"></span>
+                                        <span class="stars-rating" th:text="'(' + ${#numbers.formatDecimal(product.averageRating, 1, 2)} + ')'"></span>
                                     </div>
                                     <div class="wishlist-and-shopping-cart">
                                         <span class="add-to-wishlist" th:data-product-id="${product.id}">
