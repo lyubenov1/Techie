@@ -89,7 +89,7 @@ public class ReviewService {
 
         review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
-        eventPublisher.publishEvent(new ReviewCreatedEvent(savedReview.getId()));
+        eventPublisher.publishEvent(new ReviewEvent(productId));
         convertToModel(savedReview);
     }
 
@@ -158,20 +158,18 @@ public class ReviewService {
      * Asynchronously updates the average rating of a product associated with a review.
      * This method creates a new transaction to ensure database operations are properly managed.
      *
-     * @param reviewId The ID of the review that triggered the update
+     * @param productId The ID of the product that needs its average rating to be updated
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void updateProductAverageRatingAsync(Long reviewId) {
-        updateProductAverageRating(reviewId);
+    public void updateProductAverageRatingAsync(Long productId) {
+        updateProductAverageRating(productId);
     }
 
     /**
      * Updates the average rating of a product associated with a review.
      * This method performs the actual calculation and update.
      */
-    public void updateProductAverageRating(Long reviewId) {
-        Review review = reviewRepository.findByIdWithProduct(reviewId);
-        Long productId = review.getProduct().getId();
+    public void updateProductAverageRating(Long productId) {
         Double averageRating = reviewRepository.calculateAverageRatingByProductId(productId);
         productService.updateAverageRating(productId, averageRating);
     }
@@ -199,8 +197,8 @@ public class ReviewService {
         }
 
         review = reviewRepository.save(review);
+        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
         return convertToModel(review);
-
     }
 
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
@@ -236,7 +234,7 @@ public class ReviewService {
 
     @Transactional
     public void deleteReview(Long reviewId, UserDetails userDetails) throws ReviewNotFoundException, UnauthorizedException, CloudinaryImageDeletionException {
-        Review review = reviewRepository.findById(reviewId)
+        Review review = reviewRepository.findByIdWithProduct(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException(reviewId));
 
         // Check if the user is authorized to delete this review
@@ -250,6 +248,7 @@ public class ReviewService {
 
         // Delete the review from the database
         reviewRepository.delete(review);
+        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
     }
 
     private void deleteImagesFromCloudinary(Review review) {

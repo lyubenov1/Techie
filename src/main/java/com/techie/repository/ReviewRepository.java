@@ -18,10 +18,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE p.id = :productId")
     Page<Review> findByProductId(@Param("productId") Long productId, Pageable pageable);
 
-    boolean existsByUserAndProduct(UserEntity user, Product product);
-
     @Query("SELECT r FROM Review r JOIN FETCH r.product WHERE r.id = :reviewId")
-    Review findByIdWithProduct(@Param("reviewId") Long reviewId);
+    Optional<Review> findByIdWithProduct(@Param("reviewId") Long reviewId);
 
     @Query("SELECT AVG(r.productRating) FROM Review r WHERE r.product.id = :productId")
     double calculateAverageRatingByProductId(@Param("productId") Long productId);

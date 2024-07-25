@@ -22,11 +22,11 @@ public class ReviewListener {
      * This method is executed after the transaction that created the review is committed.
      * It runs asynchronously to avoid blocking the main thread.
      *
-     * @param event The ReviewCreatedEvent containing the ID of the newly created review
+     * @param event The ReviewEvent containing the ID of the newly created review
      */
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void onReviewChange(ReviewCreatedEvent event) {
-        reviewService.updateProductAverageRatingAsync(event.reviewId());
+    public void onReviewChange(ReviewEvent event) {
+        reviewService.updateProductAverageRatingAsync(event.productId());
     }
 }
