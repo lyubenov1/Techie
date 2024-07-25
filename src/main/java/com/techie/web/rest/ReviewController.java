@@ -54,14 +54,35 @@ public class ReviewController {
     @PatchMapping("/update/{reviewId}")
     public ResponseEntity<?> updateReview(@PathVariable Long reviewId,
                                           @RequestBody ReviewUpdateRequest updateRequest,
-                                          @AuthenticationPrincipal UserDetails userDetails) {
+                                          @AuthenticationPrincipal UserDetails userDetails)
+                                             throws CloudinaryImageDeletionException, ReviewNotFoundException, UnauthorizedException {
         try {
             ReviewModel updatedReview = reviewService.updateReview(reviewId, updateRequest, userDetails);
             return ResponseEntity.ok(updatedReview);
+        } catch (ReviewNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());  // 403 status code
         } catch (Exception e) {
-            logger.error("Error updating review: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            logger.error("Error deleting review: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the review");
         }
     }
 
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId,
+                                          @AuthenticationPrincipal UserDetails userDetails)
+                                             throws CloudinaryImageDeletionException, ReviewNotFoundException, UnauthorizedException {
+        try {
+            reviewService.deleteReview(reviewId, userDetails);
+            return ResponseEntity.ok("Review successfully deleted");
+        } catch (ReviewNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error deleting review: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the review");
+        }
+    }
 }

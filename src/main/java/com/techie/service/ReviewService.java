@@ -48,7 +48,7 @@ public class ReviewService {
         return reviews.stream()
                 .filter(review ->
                         (review.getComment() != null && !review.getComment().isEmpty()) ||
-                                (review.getImageUrls() != null && !review.getImageUrls().isEmpty()))
+                                (review.getImages() != null && !review.getImages().isEmpty()))
                 .map(this::convertToModel)
                 .collect(Collectors.toList());
     }
@@ -63,8 +63,8 @@ public class ReviewService {
                 .productId(review.getProduct().getId())
                 .productRating(review.getProductRating())
                 .comment(review.getComment() != null ? review.getComment() : "")
-                .imageUrls(review.getImageUrls() != null ?
-                        review.getImageUrls().stream()
+                .imageUrls(review.getImages() != null ?
+                        review.getImages().stream()
                                 .map(ReviewImage::getImageUrl)
                                 .collect(Collectors.toList())
                         : new ArrayList<>())
@@ -87,7 +87,7 @@ public class ReviewService {
         Review review = createReview(comment, rating, product, user);
         List<ReviewImage> reviewImages = uploadImages(images, productId, review);
 
-        review.setImageUrls(reviewImages);
+        review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewCreatedEvent(savedReview.getId()));
         convertToModel(savedReview);
@@ -178,13 +178,13 @@ public class ReviewService {
 
 
     @Transactional
-    public ReviewModel updateReview(Long reviewId, ReviewUpdateRequest updateRequest, UserDetails userDetails) {
+    public ReviewModel updateReview(Long reviewId, ReviewUpdateRequest updateRequest, UserDetails userDetails)
+                                      throws CloudinaryImageDeletionException, ReviewNotFoundException, UnauthorizedException {
         Review review = reviewRepository.findByIdJoinFetch(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException(reviewId));
 
         // Check if the user is authorized to update this review
-        if (!review.getUser().getEmail().equals(userDetails.getUsername()) &&
-                userDetails.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MODERATOR"))) {
+        if (!review.getUser().getEmail().equals(userDetails.getUsername())) {
             throw new UnauthorizedException("You are not authorized to update this review");
         }
 
@@ -204,7 +204,7 @@ public class ReviewService {
     }
 
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
-        List<ReviewImage> currentImages = review.getImageUrls();
+        List<ReviewImage> currentImages = review.getImages();
         List<ReviewImage> imagesToRemove = new ArrayList<>();
 
         // Identify images to remove
@@ -222,7 +222,7 @@ public class ReviewService {
             currentImages.remove(image);
         }
 
-        review.setImageUrls(currentImages);
+        review.setImages(currentImages);
     }
 
     private void deleteImageFromCloudinary(String publicId) {
@@ -231,6 +231,43 @@ public class ReviewService {
         } catch (IOException e) {
             logger.error("Error deleting image from Cloudinary: publicId={}, error={}", publicId, e.getMessage(), e);
             throw new CloudinaryImageDeletionException("Failed to delete image: " + publicId);
+        }
+    }
+
+    @Transactional
+    public void deleteReview(Long reviewId, UserDetails userDetails) throws ReviewNotFoundException, UnauthorizedException, CloudinaryImageDeletionException {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException(reviewId));
+
+        // Check if the user is authorized to delete this review
+        if (!review.getUser().getEmail().equals(userDetails.getUsername()) &&
+                userDetails.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MODERATOR"))) {
+            throw new UnauthorizedException("You are not authorized to delete this review");
+        }
+
+        // Delete associated images from Cloudinary
+        deleteImagesFromCloudinary(review);
+
+        // Delete the review from the database
+        reviewRepository.delete(review);
+    }
+
+    private void deleteImagesFromCloudinary(Review review) {
+        if (review.getImages() != null && !review.getImages().isEmpty()) {
+            List<String> publicIds = review.getImages().stream()
+                    .map(ReviewImage::getPublicId)
+                    .collect(Collectors.toList());
+
+            try {
+                Map<String, Object> params = new HashMap<>();
+                params.put("public_ids", publicIds);
+                params.put("invalidate", true);
+
+                cloudinary.api().deleteResources(publicIds, params);
+            } catch (Exception e) {
+                logger.error("Error deleting images from Cloudinary: ", e);
+                throw new CloudinaryImageDeletionException("Failed to delete images: " + publicIds);
+            }
         }
     }
 }

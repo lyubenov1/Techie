@@ -214,8 +214,11 @@ function createReviewElement(review) {
             </div>
         </div>
         <div class="review-options" style="display: ${showReviewOptions ? 'flex' : 'none'};">
-            <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
-            <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
+            <div class="review-actions">
+               <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
+               <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
+            </div>
+            <div class="error-message" style="display: none;"></div>
         </div>
         <div class="edit-options" style="display: none;">
             <i class="fa-solid fa-check save-icon fa-xl" data-id="${review.id}"></i>
@@ -245,7 +248,6 @@ function addEventListeners() {
 }
 
 function handleEditClick(event) {
-    const reviewId = event.target.getAttribute('data-id');
     const reviewElement = event.target.closest('.review');
 
     // Store original state of review
@@ -313,20 +315,24 @@ function handleSaveClick(event) {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.text().then(text => {
+                    throw new Error(text || 'Failed to update review');
+                });
+            } else {
+                return response.json();
             }
-            return response.json();
         })
         .then(updatedReview => {
             console.log('Review updated:', updatedReview);
             // Update the review in the DOM with the new data
             updateReviewInDOM(reviewElement, updatedReview);
             toggleEditingState(reviewElement, false);
+            showSuccessMessage('Review edited successfully');
         })
         .catch(error => {
-            console.error('Error updating review:', error);
-            alert('Failed to update review. Please try again.');
+            console.error('Error updating review:', error.message);
             toggleEditingState(reviewElement, false);
+            showErrorMessage(error.message, reviewElement);
         });
 }
 
@@ -404,27 +410,83 @@ function toggleEditingState(reviewElement, isEditing) {
 
 function handleDeleteClick(event) {
     const reviewId = event.target.getAttribute('data-id');
-    if (confirm('Are you sure you want to delete this review?')) {
-        fetch(`/api/reviews/${reviewId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
+    const reviewElement = event.target.closest('.review');
+
+    // Create and show a custom confirm dialog
+    const confirmDialog = createConfirmDialog('Are you sure you want to delete this review?');
+    document.body.appendChild(confirmDialog);
+
+    confirmDialog.querySelector('.confirm-btn').addEventListener('click', () => {
+        confirmDialog.remove();
+        deleteReview(reviewId, reviewElement);
+    });
+
+    confirmDialog.querySelector('.cancel-btn').addEventListener('click', () => {
+        confirmDialog.remove();
+    });
+}
+
+function createConfirmDialog(message) {
+    const dialog = document.createElement('div');
+    dialog.className = 'custom-confirm-dialog';
+    dialog.innerHTML = `
+        <div class="confirm-content">
+            <p>${message}</p>
+            <div class="confirm-buttons">
+                <button class="confirm-btn">Yes, delete</button>
+                <button class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+    `;
+    return dialog;
+}
+
+function deleteReview(reviewId, reviewElement) {
+    fetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                showSuccessMessage('Review deleted successfully');
+                reviewElement.remove();
+            } else {
+                return response.text().then(text => {
+                    throw new Error(text || 'Failed to delete review');
+                });
             }
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Review deleted successfully');
-                    // Optionally, remove the review element from the DOM
-                    event.target.closest('.review').remove();
-                } else {
-                    throw new Error('Failed to delete review');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting review:', error.message);
-            });
-    }
+        .catch(error => {
+            console.error('Error deleting review:', error.message);
+            showErrorMessage(error.message, reviewElement);
+        });
+}
+
+function showSuccessMessage(message) {
+    const messageElement = createMessageElement(message, 'success');
+    document.body.appendChild(messageElement);
+    setTimeout(() => {
+        messageElement.remove();
+    }, 3000);
+}
+
+function showErrorMessage(message, reviewElement) {
+    const errorMessageElement = reviewElement.querySelector('.error-message');
+    errorMessageElement.textContent = message;
+    errorMessageElement.style.display = 'block';
+    setTimeout(() => {
+        errorMessageElement.style.display = 'none';
+    }, 5000);
+}
+
+function createMessageElement(message, type) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${type}`;
+    messageElement.textContent = message;
+    return messageElement;
 }
 
 function openModal(urls, index) {

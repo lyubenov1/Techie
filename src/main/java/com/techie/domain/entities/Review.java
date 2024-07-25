@@ -52,6 +52,6 @@ public class Review {
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Size(max = 3, message = "A review cannot have more than 3 images")
-    private List<ReviewImage> imageUrls;
+    private List<ReviewImage> images;
 
 }

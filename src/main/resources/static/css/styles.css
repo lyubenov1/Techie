@@ -3130,9 +3130,18 @@ hr {
     text-decoration: none;
 }
 
-.review-options, .edit-options {
+.edit-options {
     display: inline-flex;
     align-items: start;
+    gap: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+}
+
+.review-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     gap: 10px;
     margin-top: 10px;
     margin-left: auto;
@@ -3231,4 +3240,73 @@ hr {
 
 .review .reviewer-info .thumbs .vote-count {
     font-size: 1.1em;
+}
+
+.custom-confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.confirm-content {
+    background-color: inherit;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid grey;
+}
+
+.confirm-buttons {
+    margin-top: 15px;
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 8px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.message.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.review-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.error-message {
+    color: red;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 1.1em;
+    max-width: 200px;
+    text-align: center;
+    margin-top: 5px;
 }

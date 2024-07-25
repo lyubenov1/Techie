@@ -14,7 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT r FROM Review r " +
             "JOIN FETCH r.product p " +
             "JOIN FETCH r.user " +
-            "LEFT JOIN FETCH r.imageUrls " +
+            "LEFT JOIN FETCH r.images " +
             "WHERE p.id = :productId")
     Page<Review> findByProductId(@Param("productId") Long productId, Pageable pageable);
 
@@ -29,7 +29,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT r FROM Review r " +
             "JOIN FETCH r.product p " +
             "JOIN FETCH r.user " +
-            "LEFT JOIN FETCH r.imageUrls " +
+            "LEFT JOIN FETCH r.images " +
             "WHERE r.id = :reviewId")
     Optional<Review> findByIdJoinFetch(@Param("reviewId") Long reviewId);
 }
