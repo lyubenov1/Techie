@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "comment_images")  // TODO
+@Table(name = "review_images")
 public class ReviewImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +19,7 @@ public class ReviewImage {
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
+
+    @Column(name = "public_id", nullable = false)
+    private String publicId;  // Cloudinary public ID for a given asset (photo)
 }

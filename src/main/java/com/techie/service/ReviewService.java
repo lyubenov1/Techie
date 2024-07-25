@@ -137,11 +137,13 @@ public class ReviewService {
                 try {
                     Map<String, Object> uploadResult = (Map<String, Object>) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap(
                             "folder", "reviews/" + productId));
-                    String imageUrl = (String) uploadResult.get("secure_url");
+                    String imageUrl = uploadResult.get("secure_url").toString();
+                    String publicId = uploadResult.get("public_id").toString();
 
                     ReviewImage reviewImage = new ReviewImage();
                     reviewImage.setImageUrl(imageUrl);
                     reviewImage.setReview(review);
+                    reviewImage.setPublicId(publicId);
                     reviewImages.add(reviewImage);
                 } catch (IOException e) {
                     logger.error("Error uploading image to Cloudinary: ", e);
@@ -177,39 +179,28 @@ public class ReviewService {
 
     @Transactional
     public ReviewModel updateReview(Long reviewId, ReviewUpdateRequest updateRequest, UserDetails userDetails) {
-        logger.info("Starting review update for reviewId: {}", reviewId);
-        try {
-            Review review = reviewRepository.findByIdJoinFetch(reviewId)
-                    .orElseThrow(() -> new ReviewNotFoundException(reviewId));
+        Review review = reviewRepository.findByIdJoinFetch(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException(reviewId));
 
-            // Check if the user is authorized to update this review
-            if (!review.getUser().getEmail().equals(userDetails.getUsername()) &&
-                    userDetails.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MODERATOR"))) {
-                throw new UnauthorizedException("You are not authorized to update this review");
-            }
-
-            logger.info("Updating review content for reviewId: {}", reviewId);
-            if (updateRequest.getComment() != null) {
-                review.setComment(updateRequest.getComment());
-            }
-            if (updateRequest.getRating() != null) {
-                review.setProductRating(updateRequest.getRating());
-            }
-
-            logger.info("Updating review images for reviewId: {}", reviewId);
-            if (updateRequest.getRemainingImageUrls() != null) {
-                updateReviewImages(review, updateRequest.getRemainingImageUrls());
-            }
-
-            logger.info("Saving updated review for reviewId: {}", reviewId);
-            review = reviewRepository.save(review);
-
-            logger.info("Review update completed for reviewId: {}", reviewId);
-            return convertToModel(review);
-        } catch (Exception e) {
-            logger.error("Error occurred while updating review with id: {}", reviewId, e);
-            throw e;
+        // Check if the user is authorized to update this review
+        if (!review.getUser().getEmail().equals(userDetails.getUsername()) &&
+                userDetails.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_MODERATOR"))) {
+            throw new UnauthorizedException("You are not authorized to update this review");
         }
+
+        if (updateRequest.getComment() != null) {
+            review.setComment(updateRequest.getComment());
+        }
+        if (updateRequest.getRating() != null) {
+            review.setProductRating(updateRequest.getRating());
+        }
+        if (updateRequest.getRemainingImageUrls() != null) {
+            updateReviewImages(review, updateRequest.getRemainingImageUrls());
+        }
+
+        review = reviewRepository.save(review);
+        return convertToModel(review);
+
     }
 
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
@@ -219,7 +210,7 @@ public class ReviewService {
         // Identify images to remove
         for (ReviewImage image : currentImages) {
             boolean imageFound = remainingImageUrls.stream()
-                    .anyMatch(url -> url.contains(extractPublicIdFromUrl(image.getImageUrl())));
+                    .anyMatch(url -> url.contains(image.getPublicId()));
             if (!imageFound) {
                 imagesToRemove.add(image);
             }
@@ -227,56 +218,19 @@ public class ReviewService {
 
         // Remove images from Cloudinary and the review
         for (ReviewImage image : imagesToRemove) {
-            deleteImageFromCloudinary(image.getImageUrl());
+            deleteImageFromCloudinary(image.getPublicId());
             currentImages.remove(image);
         }
 
         review.setImageUrls(currentImages);
     }
 
-    private void deleteImageFromCloudinary(String imageUrl) {
+    private void deleteImageFromCloudinary(String publicId) {
         try {
-            String publicId = extractPublicIdFromUrl(imageUrl);
-            cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", "true"));
         } catch (IOException e) {
-            logger.error("Error deleting image from Cloudinary: ", e);
+            logger.error("Error deleting image from Cloudinary: publicId={}, error={}", publicId, e.getMessage(), e);
+            throw new CloudinaryImageDeletionException("Failed to delete image: " + publicId);
         }
-    }
-
-    private String extractPublicIdFromUrl(String imageUrl) {
-        // Remove any query parameters
-        String urlWithoutParams = imageUrl.split("\\?")[0];
-
-        // Split the URL
-        String[] urlParts = urlWithoutParams.split("/");
-
-        // Find the index of "upload" in the URL parts
-        int uploadIndex = -1;
-        for (int i = 0; i < urlParts.length; i++) {
-            if (urlParts[i].equals("upload")) {
-                uploadIndex = i;
-                break;
-            }
-        }
-
-        if (uploadIndex == -1 || uploadIndex == urlParts.length - 1) {
-            throw new IllegalArgumentException("Invalid Cloudinary URL structure");
-        }
-
-        // Construct the public ID
-        StringBuilder publicId = new StringBuilder();
-        for (int i = uploadIndex + 1; i < urlParts.length; i++) {
-            if (i > uploadIndex + 1) publicId.append("/");
-            publicId.append(urlParts[i]);
-        }
-
-        // Remove file extension
-        String result = publicId.toString();
-        int lastDotIndex = result.lastIndexOf('.');
-        if (lastDotIndex != -1) {
-            result = result.substring(0, lastDotIndex);
-        }
-
-        return result;
     }
 }

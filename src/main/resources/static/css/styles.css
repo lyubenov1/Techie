@@ -2836,7 +2836,7 @@ hr {
 .product-customer-reviews .review-body {
     display: flex;
     flex-direction: column;
-    min-width: 600px;
+    min-width: 300px;
     margin-left: 0;
 }
 
@@ -3055,6 +3055,7 @@ hr {
 .product-customer-reviews .review-list .review-images {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 @media (max-width: 410px) {
