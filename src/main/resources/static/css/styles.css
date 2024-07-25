@@ -3317,3 +3317,7 @@ hr {
     margin-top: 13px;
     font-size: 1.3em;
 }
+
+.vote-icon[data-voted="true"] {
+    color: #007bff;
+}

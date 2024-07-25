@@ -1,5 +1,6 @@
 package com.techie.domain.model;
 
+import com.techie.domain.enums.*;
 import lombok.*;
 
 import java.util.*;
@@ -19,4 +20,5 @@ public class ReviewModel {
     private String date;
     private int upvote;
     private int downvote;
+    private VoteStatus userVote;
 }

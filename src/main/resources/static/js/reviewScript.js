@@ -190,11 +190,11 @@ function createReviewElement(review) {
             <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
             <span class="thumbs" data-review-id="${review.id}"> 
                 <span class="vote-wrapper">
-                    <i class="fa-solid fa-thumbs-up vote-icon"></i>
+                    <i class="fa-solid fa-thumbs-up vote-icon" data-vote="up" data-voted="${review.userVote === 'UP'}"></i>
                     <span class="vote-count upvote-count">${review.upvote}</span>
                 </span>
                 <span class="vote-wrapper">
-                    <i class="fa-solid fa-thumbs-down vote-icon"></i>
+                    <i class="fa-solid fa-thumbs-down vote-icon" data-vote="down" data-voted="${review.userVote === 'DOWN'}"></i>
                     <span class="vote-count downvote-count">${review.downvote}</span>
                 </span>
             </span>
@@ -251,6 +251,7 @@ function addEventListeners() {
     document.querySelectorAll('.delete-icon').forEach(icon => icon.addEventListener('click', handleDeleteClick));
     document.querySelectorAll('.save-icon').forEach(icon => icon.addEventListener('click', handleSaveClick));
     document.querySelectorAll('.cancel-icon').forEach(icon => icon.addEventListener('click', handleCancelClick));
+    document.querySelectorAll('.vote-icon').forEach(icon => icon.addEventListener('click', handleVoteClick));
 }
 
 function handleEditClick(event) {
@@ -535,6 +536,47 @@ function handleKeyDown(event) {
     } else if (event.key === 'ArrowRight') {
         changeImage(1);
     }
+}
+
+function handleVoteClick(event) {
+    const icon = event.target;
+    const reviewId = icon.closest('.thumbs').dataset.reviewId;
+    const isUpvote = icon.dataset.vote === 'up';
+
+    if (!isUserAuthenticated()) {
+        window.location.href = '/login';
+        return;
+    }
+
+    fetch(`/api/reviews/vote/${reviewId}?isUpvote=${isUpvote}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+        .then(response => response.json())
+        .then(updatedReview => {
+            updateVoteDisplay(icon.closest('.thumbs'), updatedReview);
+        })
+        .catch(error => console.error('Error voting:', error));
+}
+
+function isUserAuthenticated() {
+    return document.getElementById('loggedUserId') !== null;
+}
+
+function updateVoteDisplay(thumbsElement, updatedReview) {
+    const upvoteIcon = thumbsElement.querySelector('.fa-thumbs-up');
+    const downvoteIcon = thumbsElement.querySelector('.fa-thumbs-down');
+    const upvoteCount = thumbsElement.querySelector('.upvote-count');
+    const downvoteCount = thumbsElement.querySelector('.downvote-count');
+
+    upvoteIcon.dataset.voted = (updatedReview.userVote === 'UP').toString();
+    downvoteIcon.dataset.voted = (updatedReview.userVote === 'DOWN').toString();
+
+    upvoteCount.textContent = updatedReview.upvote;
+    downvoteCount.textContent = updatedReview.downvote;
 }
 
 const observer = new IntersectionObserver(entries => {

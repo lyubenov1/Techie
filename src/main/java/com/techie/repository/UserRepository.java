@@ -17,11 +17,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT u from UserEntity u " +
             "JOIN FETCH u.roles " +
             "WHERE u.email = :email")
-    Optional<UserEntity> findByEmailWithRoles(@Param("email") String email);
+    Optional<UserEntity> findByEmailFetchRoles(@Param("email") String email);
 
     @Query("SELECT u FROM UserEntity u " +
             "JOIN FETCH u.roles " +
             "LEFT JOIN FETCH u.wishlists " +
             "WHERE u.email = :email")
+    Optional<UserEntity> findByEmailFetchRolesAndWishlists(@Param("email") String email);
+
+    @Query("SELECT u FROM UserEntity u WHERE u.email = :email")
     Optional<UserEntity> findByEmail(@Param("email") String email);
 }

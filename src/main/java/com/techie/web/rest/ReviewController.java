@@ -27,13 +27,17 @@ public class ReviewController {
     }
 
     @GetMapping("/get/{productId}")
-    public ResponseEntity<List<ReviewModel>> getReviews(@PathVariable Long productId,
-                                                        @RequestParam(name = "p") int page,
-                                                        @RequestParam(name= "s") int size) {
-        logger.info("Fetching reviews for product ID: {}, page: {}, size: {}", productId, page, size);
-        List<ReviewModel> reviews = reviewService.getReviewsForProduct(productId, page, size);
-        logger.info("Retrieved {} reviews", reviews.size());
-        return ResponseEntity.ok(reviews);
+    public ResponseEntity<?> getReviews(@PathVariable Long productId,
+                                        @RequestParam(name = "p") int page,
+                                        @RequestParam(name= "s") int size,
+                                        @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            List<ReviewModel> reviews = reviewService.getReviewsForProduct(productId, page, size, userDetails);
+            return ResponseEntity.ok(reviews);
+        } catch (Exception e) {
+            logger.error("Error fetching reviews for product {}: {}", productId, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching reviews");
+        }
     }
 
     @PostMapping("/create")
@@ -83,6 +87,18 @@ public class ReviewController {
         } catch (Exception e) {
             logger.error("Error deleting review: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the review");
+        }
+    }
+
+    @PostMapping("/vote/{reviewId}")
+    public ResponseEntity<?> voteReview(@PathVariable Long reviewId,
+                                        @RequestParam boolean isUpvote,
+                                        @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            ReviewModel updatedReview = reviewService.voteReview(reviewId, isUpvote, userDetails);
+            return ResponseEntity.ok(updatedReview);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

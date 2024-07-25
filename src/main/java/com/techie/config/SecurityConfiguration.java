@@ -49,7 +49,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/categories", "/api/products/**",
-                                           "/api/search", "api/reviews/get/**").permitAll()  // Allow access to all API endpoints
+                                           "/api/search", "api/reviews/get/**",
+                                             "api/reviews/vote/**").permitAll()  // Allow access to all API endpoints
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form

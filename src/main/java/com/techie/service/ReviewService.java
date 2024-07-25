@@ -3,6 +3,7 @@ package com.techie.service;
 import com.cloudinary.*;
 import com.cloudinary.utils.*;
 import com.techie.domain.entities.*;
+import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
 import com.techie.events.*;
 import com.techie.exceptions.*;
@@ -27,35 +28,37 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserService userService;
     private final ProductService productService;
+    private final ReviewVoteRepository voteRepository;
     private final Cloudinary cloudinary;
     private final ApplicationEventPublisher eventPublisher;
     private static final Logger logger = LoggerFactory.getLogger(ReviewService.class);
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository, UserService userService,
-                         ProductService productService, Cloudinary cloudinary,
-                         ApplicationEventPublisher eventPublisher) {
+                         ProductService productService, ReviewVoteRepository voteRepository,
+                         Cloudinary cloudinary, ApplicationEventPublisher eventPublisher) {
         this.reviewRepository = reviewRepository;
         this.userService = userService;
         this.productService = productService;
+        this.voteRepository = voteRepository;
         this.cloudinary = cloudinary;
         this.eventPublisher = eventPublisher;
     }
 
-    public List<ReviewModel> getReviewsForProduct(Long productId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Review> reviews = reviewRepository.findByProductId(productId, pageable);
+    public List<ReviewModel> getReviewsForProduct(Long productId, int page, int size, UserDetails userDetails) {
+        Page<Review> reviews = reviewRepository.findByProductId(productId, PageRequest.of(page, size));
+
         return reviews.stream()
                 .filter(review ->
                         (review.getComment() != null && !review.getComment().isEmpty()) ||
                                 (review.getImages() != null && !review.getImages().isEmpty()))
-                .map(this::convertToModel)
+                .map(review -> convertToModel(review, userDetails))
                 .collect(Collectors.toList());
     }
 
-    public ReviewModel convertToModel(Review review) {
-        UserEntity user = userService.findByUsername(review.getUser().getEmail());  // To eagerly fetch the user's roles
-        UserDisplayView userDisplayView = userService.convertToView(user);
+    public ReviewModel convertToModel(Review review, UserDetails userDetails) {
+        UserEntity currentUser = userService.findByUsernameWithRoles(userDetails.getUsername());
+        UserDisplayView userDisplayView = userService.convertToView(currentUser);
 
         return ReviewModel.builder()
                 .id(review.getId())
@@ -71,7 +74,17 @@ public class ReviewService {
                 .date(formatDateTime(review))
                 .upvote(review.getUpvote())
                 .downvote(review.getDownvote())
+                .userVote(setVote(currentUser, review))
                 .build();
+    }
+
+    private VoteStatus setVote(UserEntity currentUser, Review review) {
+        ReviewVote userVote = voteRepository.findByUserAndReview(currentUser, review).orElse(null);
+        if (userVote != null) {
+            return userVote.isUpvote() ? VoteStatus.UP : VoteStatus.DOWN;
+        } else {
+            return VoteStatus.NONE;
+        }
     }
 
     @Transactional
@@ -79,7 +92,7 @@ public class ReviewService {
             throws ProductNotFoundException, IOException, InvalidRatingException, OneReviewPerUserException {
 
         Product product = getProductById(productId);
-        UserEntity user = getUserByUsername(userDetails.getUsername());
+        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
 
         //checkIfUserAlreadyReviewedProduct(user, product);
         validateRating(rating, productId);
@@ -90,7 +103,7 @@ public class ReviewService {
         review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewEvent(productId));
-        convertToModel(savedReview);
+        convertToModel(savedReview, userDetails);
     }
 
     private String formatDateTime(Review review) {
@@ -100,10 +113,6 @@ public class ReviewService {
 
     private Product getProductById(Long productId) throws ProductNotFoundException {
         return productService.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
-    }
-
-    private UserEntity getUserByUsername(String username) {
-        return userService.findByUsername(username);
     }
 
     //private void checkIfUserAlreadyReviewedProduct(UserEntity user, Product product) throws OneReviewPerUserException {
@@ -198,7 +207,7 @@ public class ReviewService {
 
         review = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
-        return convertToModel(review);
+        return convertToModel(review, userDetails);
     }
 
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
@@ -268,5 +277,46 @@ public class ReviewService {
                 throw new CloudinaryImageDeletionException("Failed to delete images: " + publicIds);
             }
         }
+    }
+
+    @Transactional
+    public ReviewModel voteReview(Long reviewId, boolean isUpvote, UserDetails userDetails) {
+        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException(reviewId));
+
+        ReviewVote vote = voteRepository.findByUserAndReview(user, review)
+                .orElse(new ReviewVote());
+
+        if (vote.getId() == null) {
+            // New vote
+            vote.setUser(user);
+            vote.setReview(review);
+            vote.setUpvote(isUpvote);
+            voteRepository.save(vote);
+            updateReviewVoteCount(review, isUpvote, true);
+        } else if (vote.isUpvote() == isUpvote) {
+            // Remove existing vote if it's the same type
+            voteRepository.delete(vote);
+            updateReviewVoteCount(review, isUpvote, false);
+        } else {
+            // Change vote type
+            updateReviewVoteCount(review, vote.isUpvote(), false);  // Remove old vote
+            vote.setUpvote(isUpvote);
+            voteRepository.save(vote);
+            updateReviewVoteCount(review, isUpvote, true);  // Add new vote
+        }
+
+        return convertToModel(review, userDetails);
+    }
+
+    private void updateReviewVoteCount(Review review, boolean isUpvote, boolean isIncrement) {
+        if (isUpvote) {
+            review.setUpvote(review.getUpvote() + (isIncrement ? 1 : -1));
+        } else {
+            review.setDownvote(review.getDownvote() + (isIncrement ? 1 : -1));
+        }
+        reviewRepository.save(review);
     }
 }

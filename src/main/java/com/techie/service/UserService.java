@@ -42,6 +42,16 @@ public class UserService {
     }
 
     public UserEntity findByUsername(String username) {
+        return userRepository.findByEmailFetchRolesAndWishlists(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
+
+    public UserEntity findByUsernameWithRoles(String username) {
+        return userRepository.findByEmailFetchRoles(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
+    }
+
+    public UserEntity findByUsernameNoFetches(String username) {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
@@ -101,7 +111,7 @@ public class UserService {
 
     @Transactional
     public void addRoleToUser(String email, UserRoleEnum role) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmailWithRoles(email);
+        Optional<UserEntity> optionalUser = userRepository.findByEmailFetchRoles(email);
         Optional<RoleEntity> optionalRole = roleRepository.findRoleEntityByRole(role);
 
         if (optionalUser.isPresent() && optionalRole.isPresent()) {
