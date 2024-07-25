@@ -3310,3 +3310,13 @@ hr {
     text-align: center;
     margin-top: 5px;
 }
+
+.product-customer-reviews .loading-indicator {
+    display: flex;
+    align-self: center;
+}
+
+.product-customer-reviews .loading-indicator p {
+    margin-top: 13px;
+    font-size: 1.3em;
+}

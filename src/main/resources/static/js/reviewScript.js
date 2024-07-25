@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const reviewContainer = document.querySelector('.review-list');
+const loadingIndicator = document.querySelector('.indicator-text');
 let currentPage = 0;
 const productId = document.querySelector('.review-list').dataset.productId;
 let currentImageIndex = 0;
@@ -158,6 +159,11 @@ function fetchMoreReviews() {
             });
             currentPage++;
             addEventListeners();
+
+            // Hide loading indicator if there are no more reviews to load
+            if (reviews.length === 0) {
+                loadingIndicator.style.display = 'none';
+            }
         });
 }
 

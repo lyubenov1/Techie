@@ -81,7 +81,7 @@ public class ReviewService {
         Product product = getProductById(productId);
         UserEntity user = getUserByUsername(userDetails.getUsername());
 
-        checkIfUserAlreadyReviewedProduct(user, product);
+        //checkIfUserAlreadyReviewedProduct(user, product);
         validateRating(rating, productId);
 
         Review review = createReview(comment, rating, product, user);
@@ -106,11 +106,11 @@ public class ReviewService {
         return userService.findByUsername(username);
     }
 
-    private void checkIfUserAlreadyReviewedProduct(UserEntity user, Product product) throws OneReviewPerUserException {
-        if (reviewRepository.existsByUserAndProduct(user, product)) {
-            throw new OneReviewPerUserException();
-        }
-    }
+    //private void checkIfUserAlreadyReviewedProduct(UserEntity user, Product product) throws OneReviewPerUserException {
+    //    if (reviewRepository.existsByUserAndProduct(user, product)) {
+    //        throw new OneReviewPerUserException();
+    //    }
+    //}
 
     private void validateRating(int rating, Long productId) throws InvalidRatingException {
         if (rating < 1 || rating > 5) {
