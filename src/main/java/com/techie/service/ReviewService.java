@@ -52,13 +52,16 @@ public class ReviewService {
                 .filter(review ->
                         (review.getComment() != null && !review.getComment().isEmpty()) ||
                                 (review.getImages() != null && !review.getImages().isEmpty()))
-                .map(review -> convertToModel(review, userDetails))
+                .map(review -> {
+                    ReviewModel model = convertToModel(review);
+                    return setVotesToModel(model, review, userDetails);
+                })
                 .collect(Collectors.toList());
     }
 
-    public ReviewModel convertToModel(Review review, UserDetails userDetails) {
-        UserEntity currentUser = userService.findByUsernameWithRoles(userDetails.getUsername());
-        UserDisplayView userDisplayView = userService.convertToView(currentUser);
+    public ReviewModel convertToModel(Review review) {
+        UserEntity user = userService.findByUsername(review.getUser().getEmail());  // To eagerly fetch the user's roles
+        UserDisplayView userDisplayView = userService.convertToView(user);
 
         return ReviewModel.builder()
                 .id(review.getId())
@@ -74,17 +77,23 @@ public class ReviewService {
                 .date(formatDateTime(review))
                 .upvote(review.getUpvote())
                 .downvote(review.getDownvote())
-                .userVote(setVote(currentUser, review))
+                .userVote(VoteStatus.NONE)  // Default value
                 .build();
     }
 
-    private VoteStatus setVote(UserEntity currentUser, Review review) {
-        ReviewVote userVote = voteRepository.findByUserAndReview(currentUser, review).orElse(null);
-        if (userVote != null) {
-            return userVote.isUpvote() ? VoteStatus.UP : VoteStatus.DOWN;
-        } else {
-            return VoteStatus.NONE;
+    private ReviewModel setVotesToModel(ReviewModel model, Review review, UserDetails userDetails) {
+        if (userDetails != null) {
+            UserEntity currentUser = userService.findByUsernameWithRoles(userDetails.getUsername());
+            VoteStatus userVote = getVote(currentUser, review);
+            model.setUserVote(userVote);
         }
+        return model;
+    }
+
+    private VoteStatus getVote(UserEntity currentUser, Review review) {
+        return voteRepository.findByUserAndReview(currentUser, review)
+                .map(userVote -> userVote.isUpvote() ? VoteStatus.UP : VoteStatus.DOWN)
+                .orElse(VoteStatus.NONE);
     }
 
     @Transactional
@@ -103,7 +112,7 @@ public class ReviewService {
         review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewEvent(productId));
-        convertToModel(savedReview, userDetails);
+        convertToModel(savedReview);
     }
 
     private String formatDateTime(Review review) {
@@ -207,7 +216,7 @@ public class ReviewService {
 
         review = reviewRepository.save(review);
         eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
-        return convertToModel(review, userDetails);
+        return convertToModel(review);
     }
 
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
@@ -254,6 +263,9 @@ public class ReviewService {
 
         // Delete associated images from Cloudinary
         deleteImagesFromCloudinary(review);
+
+        // Delete associated review votes
+        voteRepository.deleteByReviewId(reviewId);
 
         // Delete the review from the database
         reviewRepository.delete(review);
@@ -308,7 +320,9 @@ public class ReviewService {
             updateReviewVoteCount(review, isUpvote, true);  // Add new vote
         }
 
-        return convertToModel(review, userDetails);
+        ReviewModel reviewModel = convertToModel(review);
+        setVotesToModel(reviewModel, review, userDetails);
+        return reviewModel;
     }
 
     private void updateReviewVoteCount(Review review, boolean isUpvote, boolean isIncrement) {

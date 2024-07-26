@@ -6,6 +6,7 @@ import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.lang.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class ReviewController {
     public ResponseEntity<?> getReviews(@PathVariable Long productId,
                                         @RequestParam(name = "p") int page,
                                         @RequestParam(name= "s") int size,
-                                        @AuthenticationPrincipal UserDetails userDetails) {
+                                        @AuthenticationPrincipal @Nullable UserDetails userDetails) {
         try {
             List<ReviewModel> reviews = reviewService.getReviewsForProduct(productId, page, size, userDetails);
             return ResponseEntity.ok(reviews);
