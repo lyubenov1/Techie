@@ -121,22 +121,22 @@
         <h3 class="index-brands-header">Explore products from the world's leading tech giants</h3>
         <div class="container index-brands">
             <div class="gallery">
-                <figure class="gallery__item gallery__item--1">
+                <figure class="gallery__item gallery__item--1" data-brand="Huawei">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716479405/Brands/Huawei_srbchz.jpg" alt="Huawei" class="gallery__img">
                 </figure>
-                <figure class="gallery__item gallery__item--2">
+                <figure class="gallery__item gallery__item--2" data-brand="Acer">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716235704/Brands/Acer_p2ylhp.jpg" alt="Acer" class="gallery__img">
                 </figure>
-                <figure class="gallery__item gallery__item--3">
+                <figure class="gallery__item gallery__item--3" data-brand="Google">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716235779/Brands/Google_vg5dns.jpg" alt="Google" class="gallery__img">
                 </figure>
-                <figure class="gallery__item gallery__item--4">
+                <figure class="gallery__item gallery__item--4" data-brand="Apple">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716235711/Brands/Apple_ticin6.jpg" alt="Apple" class="gallery__img">
                 </figure>
-                <figure class="gallery__item gallery__item--5">
+                <figure class="gallery__item gallery__item--5" data-brand="Samsung">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716235727/Brands/Samsung_eiuffz.jpg" alt="Samsung" class="gallery__img">
                 </figure>
-                <figure class="gallery__item gallery__item--6">
+                <figure class="gallery__item gallery__item--6" data-brand="HP">
                     <img src="https://res.cloudinary.com/dztiecgdt/image/upload/v1716235719/Brands/HP_ghu0sb.jpg" alt="HP" class="gallery__img">
                 </figure>
             </div>
@@ -145,25 +145,27 @@
         <hr>
 
         <div class="index-boxes-other">
-            <a class="box" th:href="@{/products}">
+            <div class="box" id="reviewsBox">
                 <div class="box-img-wrapper">
-                    <img src="/images/review.png" alt="Products">
+                    <img src="/images/review.png" alt="Reviews">
                 </div>
-            </a>
-            <a class="box" th:href="@{/products/compare-products}">
+            </div>
+            <div class="box" id="wishlistsBox">
                 <div class="box-img-wrapper">
-                    <img src="/images/wishlist.png" alt="Compare products">
+                    <img src="/images/wishlist.png" alt="Wishlists">
                 </div>
-            </a>
+            </div>
         </div>
-
     </main>
+
+    <input type="hidden" id="loggedUserId" th:value="${loggedUser != null ? loggedUser.id : ''}">
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>
     </div>
 
 <script src="/js/script.js"></script>
+<script src="/js/indexScript.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

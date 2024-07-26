@@ -438,6 +438,7 @@ form[role="search"] input[type="search"] {
 }
 
 .index-boxes-other .box {
+    cursor: pointer;
     flex: 1 1 calc(50% - 12px);
     display: flex;
     flex-direction: column;
