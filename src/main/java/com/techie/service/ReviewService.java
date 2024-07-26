@@ -54,7 +54,7 @@ public class ReviewService {
                                 (review.getImages() != null && !review.getImages().isEmpty()))
                 .map(review -> {
                     ReviewModel model = convertToModel(review);
-                    return setVotesToModel(model, review, userDetails);
+                    return setVotesToModel(model, review, userDetails);  // Set the vote state for each review for the currently logged user. Handles unauthenticated users also.
                 })
                 .collect(Collectors.toList());
     }
@@ -103,7 +103,7 @@ public class ReviewService {
         Product product = getProductById(productId);
         UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
 
-        //checkIfUserAlreadyReviewedProduct(user, product);
+        checkIfUserAlreadyReviewedProduct(user, product);
         validateRating(rating, productId);
 
         Review review = createReview(comment, rating, product, user);
@@ -111,7 +111,7 @@ public class ReviewService {
 
         review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
-        eventPublisher.publishEvent(new ReviewEvent(productId));
+        eventPublisher.publishEvent(new ReviewEvent(productId));  // // Event which updates the product's average rating
         convertToModel(savedReview);
     }
 
@@ -124,11 +124,11 @@ public class ReviewService {
         return productService.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
     }
 
-    //private void checkIfUserAlreadyReviewedProduct(UserEntity user, Product product) throws OneReviewPerUserException {
-    //    if (reviewRepository.existsByUserAndProduct(user, product)) {
-    //        throw new OneReviewPerUserException();
-    //    }
-    //}
+    private void checkIfUserAlreadyReviewedProduct(UserEntity user, Product product) throws OneReviewPerUserException {
+        if (reviewRepository.existsByUserAndProduct(user, product)) {
+            throw new OneReviewPerUserException();
+        }
+    }
 
     private void validateRating(int rating, Long productId) throws InvalidRatingException {
         if (rating < 1 || rating > 5) {
@@ -147,29 +147,51 @@ public class ReviewService {
         return review;
     }
 
-    @SuppressWarnings("unchecked")
     private List<ReviewImage> uploadImages(MultipartFile[] images, Long productId, Review review) throws IOException {
         List<ReviewImage> reviewImages = new ArrayList<>();
-        if (images != null) {
-            for (MultipartFile image : images) {
-                try {
-                    Map<String, Object> uploadResult = (Map<String, Object>) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap(
-                            "folder", "reviews/" + productId));
-                    String imageUrl = uploadResult.get("secure_url").toString();
-                    String publicId = uploadResult.get("public_id").toString();
+        // Check if images are provided
+        if (images == null || images.length == 0) {
+            return reviewImages;
+        }
+        String folderPath = "reviews/" + productId;
 
-                    ReviewImage reviewImage = new ReviewImage();
-                    reviewImage.setImageUrl(imageUrl);
-                    reviewImage.setReview(review);
-                    reviewImage.setPublicId(publicId);
-                    reviewImages.add(reviewImage);
-                } catch (IOException e) {
-                    logger.error("Error uploading image to Cloudinary: ", e);
-                    throw new IOException("Error uploading image to Cloudinary", e);
-                }
+        for (MultipartFile image : images) {
+            if (image.isEmpty()) {
+                continue;  // Skip empty files
+            }
+            try {
+                // Upload image to Cloudinary
+                Map<String, Object> uploadResult = uploadToCloudinary(image, folderPath);
+
+                // Create and configure ReviewImage object
+                ReviewImage reviewImage = createReviewImage(uploadResult, review);
+                reviewImages.add(reviewImage);
+            } catch (IOException e) {
+                logger.error("Error uploading image to Cloudinary: ", e);
+                throw new IOException("Error uploading image to Cloudinary", e);
             }
         }
         return reviewImages;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> uploadToCloudinary(MultipartFile image, String folderPath) throws IOException {
+        return (Map<String, Object>) cloudinary.uploader().upload(
+                image.getBytes(),
+                ObjectUtils.asMap("folder", folderPath)  // Cloudinary upload method from their upload API
+        );
+    }
+
+    private ReviewImage createReviewImage(Map<String, Object> uploadResult, Review review) {
+        String imageUrl = (String) uploadResult.get("secure_url");
+        String publicId = (String) uploadResult.get("public_id");
+
+        ReviewImage reviewImage = new ReviewImage();
+        reviewImage.setImageUrl(imageUrl);
+        reviewImage.setReview(review);
+        reviewImage.setPublicId(publicId);
+
+        return reviewImage;
     }
 
     /**
@@ -215,7 +237,7 @@ public class ReviewService {
         }
 
         review = reviewRepository.save(review);
-        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
+        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));  // Event which updates the product's average rating
         return convertToModel(review);
     }
 
@@ -243,7 +265,7 @@ public class ReviewService {
 
     private void deleteImageFromCloudinary(String publicId) {
         try {
-            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", "true"));
+            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", "true"));  // destroy method of Cloudinary's upload API
         } catch (IOException e) {
             logger.error("Error deleting image from Cloudinary: publicId={}, error={}", publicId, e.getMessage(), e);
             throw new CloudinaryImageDeletionException("Failed to delete image: " + publicId);
@@ -269,7 +291,7 @@ public class ReviewService {
 
         // Delete the review from the database
         reviewRepository.delete(review);
-        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));
+        eventPublisher.publishEvent(new ReviewEvent(review.getProduct().getId()));  // Event which updates the product's average rating
     }
 
     private void deleteImagesFromCloudinary(Review review) {
@@ -283,7 +305,7 @@ public class ReviewService {
                 params.put("public_ids", publicIds);
                 params.put("invalidate", true);
 
-                cloudinary.api().deleteResources(publicIds, params);
+                cloudinary.api().deleteResources(publicIds, params);  // deleteResources method of Cloudinary's Admin API. It deletes all associated files
             } catch (Exception e) {
                 logger.error("Error deleting images from Cloudinary: ", e);
                 throw new CloudinaryImageDeletionException("Failed to delete images: " + publicIds);
@@ -293,43 +315,65 @@ public class ReviewService {
 
     @Transactional
     public ReviewModel voteReview(Long reviewId, boolean isUpvote, UserDetails userDetails) {
+        // Fetch the user and review
         UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
-
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new ReviewNotFoundException(reviewId));
 
+        // Find existing vote or create a new one
         ReviewVote vote = voteRepository.findByUserAndReview(user, review)
                 .orElse(new ReviewVote());
 
         if (vote.getId() == null) {
-            // New vote
-            vote.setUser(user);
-            vote.setReview(review);
-            vote.setUpvote(isUpvote);
-            voteRepository.save(vote);
-            updateReviewVoteCount(review, isUpvote, true);
+            handleNewVote(vote, user, review, isUpvote);
         } else if (vote.isUpvote() == isUpvote) {
-            // Remove existing vote if it's the same type
-            voteRepository.delete(vote);
-            updateReviewVoteCount(review, isUpvote, false);
+            handleVoteRemoval(vote, review, isUpvote);
         } else {
-            // Change vote type
-            updateReviewVoteCount(review, vote.isUpvote(), false);  // Remove old vote
-            vote.setUpvote(isUpvote);
-            voteRepository.save(vote);
-            updateReviewVoteCount(review, isUpvote, true);  // Add new vote
+            handleVoteChange(vote, review, isUpvote);
         }
 
+        // Convert the updated review to a model and set vote information
         ReviewModel reviewModel = convertToModel(review);
         setVotesToModel(reviewModel, review, userDetails);
         return reviewModel;
     }
 
+    private void handleNewVote(ReviewVote vote, UserEntity user, Review review, boolean isUpvote) {
+        // Set up and save the new vote
+        vote.setUser(user);
+        vote.setReview(review);
+        vote.setUpvote(isUpvote);
+        voteRepository.save(vote);
+
+        // Update the review's vote count
+        updateReviewVoteCount(review, isUpvote, true);
+    }
+
+    private void handleVoteRemoval(ReviewVote vote, Review review, boolean isUpvote) {
+        // Remove the existing vote if it's the same type
+        voteRepository.delete(vote);
+        updateReviewVoteCount(review, isUpvote, false);
+    }
+
+    private void handleVoteChange(ReviewVote vote, Review review, boolean isUpvote) {
+        // Remove the old vote count
+        updateReviewVoteCount(review, vote.isUpvote(), false);
+
+        // Change the vote type
+        vote.setUpvote(isUpvote);
+        voteRepository.save(vote);
+
+        // Add the new vote count
+        updateReviewVoteCount(review, isUpvote, true);
+    }
+
     private void updateReviewVoteCount(Review review, boolean isUpvote, boolean isIncrement) {
+        int voteChange = isIncrement ? 1 : -1;
+
         if (isUpvote) {
-            review.setUpvote(review.getUpvote() + (isIncrement ? 1 : -1));
+            review.setUpvote(review.getUpvote() + voteChange);
         } else {
-            review.setDownvote(review.getDownvote() + (isIncrement ? 1 : -1));
+            review.setDownvote(review.getDownvote() + voteChange);
         }
         reviewRepository.save(review);
     }

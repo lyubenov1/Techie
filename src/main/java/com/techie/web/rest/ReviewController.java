@@ -69,7 +69,6 @@ public class ReviewController {
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());  // 403 status code
         } catch (Exception e) {
-            logger.error("Error deleting review: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the review");
         }
     }
@@ -86,7 +85,6 @@ public class ReviewController {
         } catch (UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         } catch (Exception e) {
-            logger.error("Error deleting review: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the review");
         }
     }

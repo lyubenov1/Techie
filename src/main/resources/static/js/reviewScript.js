@@ -158,7 +158,6 @@ function fetchMoreReviews() {
                 hideLoadingIndicator();
                 return;
             }
-
             reviews.forEach(review => {
                 if (review.comment || review.imageUrls.length > 0) {
                     const reviewElement = createReviewElement(review);

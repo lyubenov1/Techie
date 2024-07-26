@@ -30,5 +30,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "LEFT JOIN FETCH r.images " +
             "WHERE r.id = :reviewId")
     Optional<Review> findByIdJoinFetch(@Param("reviewId") Long reviewId);
+
+    boolean existsByUserAndProduct(UserEntity user, Product product);
 }
 
