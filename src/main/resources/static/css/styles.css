@@ -168,6 +168,14 @@ form[role="search"] input[type="search"] {
     font-family: 'Roboto Condensed', serif;
 }
 
+.footer form {
+    margin-bottom: 0;
+}
+
+.footer-text p {
+    margin-bottom: 0;
+}
+
 .footer .col-auto {
     flex: 1 1 0;
     height: auto;
@@ -273,7 +281,7 @@ form[role="search"] input[type="search"] {
     border: 0;
     text-align: center;
     padding: 0;
-    margin-bottom: 25px;
+    margin-bottom: 13px;
 }
 
 .services-info-box .service-item {
@@ -328,10 +336,6 @@ form[role="search"] input[type="search"] {
 }
 
 @media (min-width: 801px) and (max-width: 1200px) {
-    .services-info-box {
-        margin-bottom: 20px;
-    }
-
     .services-info-box .service-item {
         margin: 15px 1% 0 1%;
         padding-right: 10px;
@@ -358,10 +362,6 @@ form[role="search"] input[type="search"] {
 }
 
 @media (max-width: 800px) {
-    .services-info-box {
-        margin-bottom: 16px;
-    }
-
     .services-info-box .service-item {
         margin: 15px 1% 0 1%;
         padding-right: 10px;
@@ -385,6 +385,176 @@ form[role="search"] input[type="search"] {
         padding-left: 3px;
     }
 }
+
+.index-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.index-boxes .box {
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 13px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto Condensed', serif;
+    align-items: center;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+}
+
+.index-boxes .box-img-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.index-boxes .box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    max-height: 100%;
+}
+
+@media (max-width: 768px) {
+    .index-boxes .box {
+        flex: 1 1 100%;
+    }
+}
+
+.index-boxes-other {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    padding-bottom: 40px;
+}
+
+.index-boxes-other .box {
+    flex: 1 1 calc(50% - 12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 13px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto Condensed', serif;
+    align-items: center;
+    aspect-ratio: 16 / 6;
+    overflow: hidden;
+    position: relative;
+}
+
+.index-boxes-other .box-img-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.index-boxes-other .box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    max-height: 100%;
+}
+
+@media (max-width: 768px) {
+    .index-boxes-other .box {
+        flex: 1 1 100%;
+    }
+}
+
+.index-brands-header,
+.index-brands-footer {
+    text-align: center;
+    font-family: 'Roboto Condensed', serif;
+    color: rgb(225, 222, 218)
+}
+
+.index-brands {
+    margin: 1rem auto;
+}
+
+.index-brands .gallery {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 5vw);
+    grid-gap: 1rem;
+}
+
+.index-brands .gallery__item {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.index-brands .gallery__item:hover {
+    transform: scale(1.03);
+}
+
+.index-brands .gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.index-brands .gallery__item--1 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.index-brands .gallery__item--2 {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.index-brands .gallery__item--3 {
+    grid-column-start: 5;
+    grid-column-end: 9;
+    grid-row-start: 1;
+    grid-row-end: 6;
+}
+
+.index-brands .gallery__item--4 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 6;
+}
+
+.index-brands .gallery__item--5 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 6;
+    grid-row-end: 9;
+}
+
+.index-brands .gallery__item--6 {
+    grid-column-start: 5;
+    grid-column-end: 9;
+    grid-row-start: 6;
+    grid-row-end: 9;
+}
+
+
+
+
 
 .breadcrumb {
     margin-top: 90px;
