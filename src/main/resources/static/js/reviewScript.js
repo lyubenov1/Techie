@@ -145,11 +145,20 @@ let currentPage = 0;
 const productId = document.querySelector('.review-list').dataset.productId;
 let currentImageIndex = 0;
 let imageUrls = [];
+let isLastPage = false;
 
 function fetchMoreReviews() {
+    if (isLastPage) return;
+
     fetch(`/api/reviews/get/${productId}?p=${currentPage}&s=7`)
         .then(response => response.json())
         .then(reviews => {
+            if (reviews.length === 0) {
+                isLastPage = true;
+                hideLoadingIndicator();
+                return;
+            }
+
             reviews.forEach(review => {
                 if (review.comment || review.imageUrls.length > 0) {
                     const reviewElement = createReviewElement(review);
@@ -160,11 +169,23 @@ function fetchMoreReviews() {
             currentPage++;
             addEventListeners();
 
-            // Hide loading indicator if there are no more reviews to load
-            if (reviews.length === 0) {
-                loadingIndicator.style.display = 'none';
+            // If we received fewer reviews than requested, it's the last page
+            if (reviews.length < 7) {
+                isLastPage = true;
+                hideLoadingIndicator();
             }
+        })
+        .catch(error => {
+            console.error('Error fetching reviews:', error);
+            hideLoadingIndicator();
         });
+}
+
+function hideLoadingIndicator() {
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
 }
 
 function createReviewElement(review) {
@@ -175,6 +196,7 @@ function createReviewElement(review) {
     const isReviewOwner = String(loggedUserId) === String(review.reviewer.id);
     const isAdminOrModerator = ['Admin', 'Moderator'].includes(loggedUserRole);
     const showReviewOptions = isReviewOwner || isAdminOrModerator;
+    const showEditIcon = isReviewOwner;
 
     const reviewElement = document.createElement('div');
     reviewElement.classList.add('review');
@@ -219,9 +241,9 @@ function createReviewElement(review) {
     }).join('')}
             </div>
         </div>
-        <div class="review-options" style="display: ${showReviewOptions ? 'flex' : 'none'};">
-            <div class="review-actions">
-               <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" data-id="${review.id}"></i>
+        <div class="review-options">
+            <div class="review-actions" style="display: ${showReviewOptions ? 'flex' : 'none'}">
+               <i class="fa-regular fa-pen-to-square text-white edit-icon fa-lg" style="display: ${showEditIcon ? 'block' : 'none'}" data-id="${review.id}"></i>
                <i class="far fa-trash-can text-white delete-icon fa-lg" data-id="${review.id}"></i>
             </div>
             <div class="error-message" style="display: none;"></div>
@@ -234,7 +256,6 @@ function createReviewElement(review) {
 
     return reviewElement;
 }
-
 function applyRoleBasedColor(reviewElement, role) {
     const roleElement = reviewElement.querySelector('.role');
     if (role === 'Admin') {
@@ -563,7 +584,8 @@ function handleVoteClick(event) {
 }
 
 function isUserAuthenticated() {
-    return document.getElementById('loggedUserId') !== null;
+    const loggedUserIdElement = document.getElementById('loggedUserId');
+    return loggedUserIdElement !== null && loggedUserIdElement.value !== '';
 }
 
 function updateVoteDisplay(thumbsElement, updatedReview) {
