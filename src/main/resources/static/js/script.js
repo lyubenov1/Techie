@@ -1,3 +1,13 @@
+function updateTime() {
+    var now = new Date();
+    var hours = String(now.getHours()).padStart(2, '0');
+    var minutes = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('current-time').textContent = hours + ':' + minutes;
+}
+
+setInterval(updateTime, 60000); // Update every 60000 milliseconds (1 minute)
+updateTime(); // Initial call
+
 document.addEventListener("DOMContentLoaded", function() {
     // Last scroll position
     var lastScrollTop = 0;

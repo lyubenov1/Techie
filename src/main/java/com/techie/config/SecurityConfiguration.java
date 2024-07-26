@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/categories", "/api/products/**",
                                            "/api/search", "api/reviews/get/**",
-                                             "api/reviews/vote/**").permitAll()  // Allow access to all API endpoints
+                                             "api/reviews/vote/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form
