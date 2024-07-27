@@ -1,8 +1,9 @@
-let fetchTimeout;
+const csrfToken = document.getElementById('csrf-token').value;
+let selectedUser = null;
+let fetchTimeout = null;
 
 function fetchUsers() {
     const query = document.getElementById('userEmail').value;
-    const errorMessage = document.getElementById('errorMessage');
     const dropdown = document.getElementById('userDropdown');
 
     if (fetchTimeout) {
@@ -38,7 +39,7 @@ function populateDropdown(users, dropdown) {
         const option = document.createElement('div');
         option.className = 'dropdown-item';
         option.innerHTML = createUserHTML(user);
-        option.addEventListener('click', () => selectUser(user));
+        option.addEventListener('click', () => openModal(user));
         dropdown.appendChild(option);
     });
     dropdown.style.display = 'block';
@@ -51,23 +52,41 @@ function createUserHTML(user) {
             <div class="user-details">
                 <div class="user-email">${user.email}</div>
                 <div class="user-name">${user.firstName} ${user.lastName}</div>
+                <div class="user-role">Role: ${user.role}</div>
             </div>
         </div>
     `;
 }
 
-const csrfToken = document.getElementById('csrf-token').value;
+function openModal(user) {
+    closeDropdown()
 
-function selectUser(user) {
-    console.log('Selected user:', user);
-    // Send POST request to blacklist the user
+    selectedUser = user;
+    document.getElementById('userProfileImage').src = user.profileImage || 'default-profile.png';
+    document.getElementById('username').innerText = user.username;
+    document.getElementById('email').innerText = user.email;
+    document.getElementById('firstName').innerText = user.firstName;
+    document.getElementById('lastName').innerText = user.lastName;
+    document.getElementById('role').innerText = user.role;
+    document.getElementById('createdAt').innerText = user.createdAt;
+    document.getElementById('blacklistReason').value = '';
+
+    var modal = new bootstrap.Modal(document.getElementById('blacklistModal'));
+    modal.show();
+}
+
+function blacklistUser() {
+    if (!selectedUser) return;
+
+    selectedUser.reason = document.getElementById('blacklistReason').value;
+
     fetch('/api/admin/post', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(selectedUser)
     })
         .then(response => {
             if (!response.ok) {
@@ -78,19 +97,19 @@ function selectUser(user) {
                         throw new Error(text || 'Failed to blacklist user');
                     }
                 });
-        }
-        return response.json();
-    })
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('User blacklisted successfully:', data);
-            // You can add more logic here, like updating the UI
+            var modal = bootstrap.Modal.getInstance(document.getElementById('blacklistModal'));
+            modal.hide();
+            // Update the UI if necessary
         })
         .catch(error => {
+            console.error('Error blacklisting user:', error);
             handleError(error.message);
         });
-
-    // Close the dropdown after selection
-    document.getElementById('userDropdown').style.display = 'none';
 }
 
 function handleError(message) {
@@ -99,13 +118,11 @@ function handleError(message) {
     errorMessage.style.display = 'block';
 }
 
-function closeDropdown(event) {
+function closeDropdown() {
     const dropdown = document.getElementById('userDropdown');
-    const userEmailInput = document.getElementById('userEmail');
-    if (!dropdown.contains(event.target) && event.target !== userEmailInput) {
-        dropdown.style.display = 'none';
-    }
+    dropdown.style.display = 'none';
 }
+
 
 // Add event listeners for both focus and input events
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,5 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
     userEmailInput.addEventListener('input', fetchUsers);
 
     // Add click event listener to close dropdown when clicking outside
-    document.addEventListener('click', closeDropdown);
+    document.addEventListener('click', (event) => {
+        const dropdown = document.getElementById('userDropdown');
+        const userEmailInput = document.getElementById('userEmail');
+        if (!dropdown.contains(event.target) && event.target !== userEmailInput) {
+            dropdown.style.display = 'none';
+        }
+    });
 });
