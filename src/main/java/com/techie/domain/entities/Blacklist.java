@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.*;
-import java.util.*;
 
 @Getter
 @Setter
@@ -12,20 +11,26 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "blacklisted_users")
+@Table(name = "blacklist")
 public class Blacklist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blacklist_id")
-    private Set<UserEntity> users = new HashSet<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @Column(name = "reason", nullable = false)
     private String reason;
 
     @Column(name = "timestamp", nullable = false)
     private LocalDateTime timestamp;
+
+    @PrePersist
+    protected void onCreate() {
+        timestamp = LocalDateTime.now();
+    }
 }
