@@ -11,18 +11,18 @@ public class AdminController {
     @GetMapping
     public String getAdminPage(Model model) {
         model.addAttribute("activeMenuItem", "dashboard");
-        return "admin/admin";
+        return "admin-dashboard";
     }
 
     @GetMapping("/promotions")
     public String getPromotionsPage(Model model) {
         model.addAttribute("activeMenuItem", "promotions");
-        return "admin/promotions";
+        return "admin-promotions";
     }
 
     @GetMapping("/blacklist")
     public String getBlacklistPage(Model model) {
         model.addAttribute("activeMenuItem", "blacklist");
-        return "admin/blacklist";
+        return "admin-blacklist";
     }
 }

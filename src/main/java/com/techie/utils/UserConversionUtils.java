@@ -31,4 +31,16 @@ public class UserConversionUtils {
         String highestRoleString = highestRole.name().toLowerCase();
         return highestRoleString.substring(0, 1).toUpperCase() + highestRoleString.substring(1).toLowerCase();
     }
+
+    public static UserBlacklistView convertToBlacklistView(UserEntity user) {
+
+        return UserBlacklistView.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .profileImage(user.getProfileImageUrl())
+                .build();
+    }
 }

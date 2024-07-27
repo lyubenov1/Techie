@@ -38,7 +38,7 @@ public class GlobalAdvice {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ModelAndView onProductNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal UserDetails userDetails) {
+    public ModelAndView onObjectNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal UserDetails userDetails) {
         logger.info("ObjectNotFoundException: {}", ex.getMessage(), ex);
         ModelAndView modelAndView = new ModelAndView("error-pages/not-found");
         addUserToModel(userDetails, modelAndView.getModel());

@@ -25,6 +25,7 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final RoleRepository roleRepository;
     private final AddressRepository addressRepository;
+    private final BlacklistRepository blacklistRepository;
     private final WishlistService wishlistService;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -32,13 +33,15 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService, RoleRepository roleRepository,
-                       AddressRepository addressRepository, WishlistService wishlistService) {
+                       AddressRepository addressRepository, WishlistService wishlistService,
+                       BlacklistRepository blacklistRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
         this.wishlistService = wishlistService;
+        this.blacklistRepository = blacklistRepository;
     }
 
     public UserEntity findByUsername(String username) {
@@ -145,4 +148,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public UserBlacklistView convertToBlacklistView(UserEntity user) {
+        return UserConversionUtils.convertToBlacklistView(user);
+    }
+
+    public List<UserBlacklistView> getUsers(String query) {
+        List<UserEntity> users;
+        if (query == null || query.isEmpty()) {
+            users = userRepository.findAllUsers();
+        } else {
+            users = userRepository.findByEmailContaining(query);
+        }
+
+        return users.stream()
+                .map(this::convertToBlacklistView)
+                .toList();
+    }
 }
