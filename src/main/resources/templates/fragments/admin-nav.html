@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<nav th:fragment="adminNav">
+    <ul>
+        <li th:classappend="${activeMenuItem == 'dashboard' ? 'active' : 'inactive'}">
+            <a th:href="@{/admin}">Dashboard</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'promotions' ? 'active' : 'inactive'}">
+            <a th:href="@{/admin/promotions}">Promotions</a>
+        </li>
+        <li th:classappend="${activeMenuItem == 'blacklist' ? 'active' : 'inactive'}">
+            <a th:href="@{/admin/blacklist}">Blacklist users</a>
+        </li>
+    </ul>
+</nav>
+
+</html>

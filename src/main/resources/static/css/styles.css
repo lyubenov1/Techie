@@ -2499,7 +2499,39 @@ a.rating-info span:first-child {
 }
 
 @media (max-width: 768px) {
-    .profile-main aside {
+    .profile-main.admin {
+        flex-direction: column;
+    }
+
+    .profile-main.admin > :nth-child(2) {
+        align-self: center;
+    }
+
+    .profile-main .admin-aside {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .profile-main .admin-aside ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .profile-main .admin-aside ul li {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .profile-main .profile-aside {
         display: none; /* Hide the sidebar */
     }
 

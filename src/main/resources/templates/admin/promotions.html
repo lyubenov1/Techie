@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Your addresses | Techie.com</title>
+    <title>Admin dashboard | Techie.com</title>
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -12,19 +12,18 @@
 </head>
 
 <body class="bg-dark text-white">
-
 <header th:replace="~{fragments/header :: header}"></header>
 
 <div class = "container-lg">
     <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
 </div>
 
-<main class="profile-main container-xl">
-    <aside class="profile-aside">
-        <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
+<main class="profile-main admin container-xl">
+    <aside class="admin-aside">
+        <th:block th:replace="~{fragments/admin-nav :: adminNav}"></th:block>
     </aside>
-    <div class="profile-main-content" >
-        aaaa
+    <div class="profile-main-content admin">
+        <h1>Promotions</h1>
     </div>
 </main>
 
