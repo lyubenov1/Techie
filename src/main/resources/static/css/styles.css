@@ -742,6 +742,10 @@ body.register .form-check-label {
     margin-right: 8px;
 }
 
+.nav-item.time {
+    margin-right: 20px;
+}
+
 @media (max-width: 991.9px) {
     #profile-dropdown-menu-guest {
         position: absolute;
@@ -3492,3 +3496,4 @@ hr {
 .vote-icon[data-voted="true"] {
     color: #007bff;
 }
+
