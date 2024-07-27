@@ -3,6 +3,7 @@ package com.techie.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.*;
 import java.util.*;
 
 @Setter
@@ -42,6 +43,9 @@ public class UserEntity {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "users_roles",
@@ -50,6 +54,10 @@ public class UserEntity {
     )
     private List<RoleEntity> roles;   // user's role (User or Admin).
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
     public void addAddress(Address address) {
         if (addresses == null) {
