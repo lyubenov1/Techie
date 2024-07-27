@@ -45,11 +45,10 @@ public class SecurityConfiguration {
                         .requestMatchers("/login/**", "/register", "/login-error").anonymous()
                         .requestMatchers("/terms-of-use", "/unauthorized",
                                          "/privacy-policy", "/about-us", "example/test").permitAll()
-
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/api/categories", "/api/products/**",
-                                           "/api/search", "api/reviews/get/**",
+                                           "/api/search", "/api/reviews/get/**",
                                              "api/reviews/vote/**").permitAll()
                         .anyRequest().authenticated()
                 )
