@@ -4,6 +4,7 @@ import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
 
+import java.time.format.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -17,10 +18,16 @@ public class UserConversionUtils {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .role(highestRole)
+                .createdAt(formatDateTime(user))
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .profileImage(user.getProfileImageUrl())
                 .build();
+    }
+
+    private static String formatDateTime(UserEntity user) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm", Locale.ENGLISH);
+        return user.getCreatedAt().format(formatter);
     }
 
     private static String getHighestRole(UserEntity user) {
@@ -32,15 +39,4 @@ public class UserConversionUtils {
         return highestRoleString.substring(0, 1).toUpperCase() + highestRoleString.substring(1).toLowerCase();
     }
 
-    public static UserBlacklistView convertToBlacklistView(UserEntity user) {
-
-        return UserBlacklistView.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .profileImage(user.getProfileImageUrl())
-                .build();
-    }
 }

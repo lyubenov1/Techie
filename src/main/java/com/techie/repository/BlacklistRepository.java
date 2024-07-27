@@ -8,5 +8,5 @@ import java.util.*;
 
 @Repository
 public interface BlacklistRepository extends JpaRepository<Blacklist, Long> {
-    List<Blacklist> findByUserIdIn(List<Long> userIds);
+    Optional<Blacklist> findByUserId(Long userId);
 }

@@ -18,5 +18,7 @@ public class UserDisplayView {
     private String firstName;
     private String lastName;
     private String profileImage;
+    private String createdAt;  // date and time the user created his profile
     private List<WishlistDTO> wishlists;
+    private String reason;  // reasoning of potential blacklisting
 }

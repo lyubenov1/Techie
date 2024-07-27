@@ -24,10 +24,22 @@ public class AdminRestController {
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String query)
                                         throws UserAlreadyBlacklistedException {
         try {
-            List<UserBlacklistView> users = userService.getUsers(query);
+            List<UserDisplayView> users = userService.getUsers(query);
             return ResponseEntity.ok(users);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/post")
+    public ResponseEntity<?> blacklistUser(@RequestBody UserDisplayView userDisplayView) {
+        try {
+            UserDisplayView user = userService.blacklistUser(userDisplayView);
+            return ResponseEntity.ok(user);
+        } catch (UserNotFoundException | UserAlreadyBlacklistedException | AdminBlacklistException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while blacklisting the user");
         }
     }
 }

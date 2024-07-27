@@ -3,6 +3,7 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
+import com.techie.exceptions.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
@@ -148,11 +149,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserBlacklistView convertToBlacklistView(UserEntity user) {
-        return UserConversionUtils.convertToBlacklistView(user);
-    }
-
-    public List<UserBlacklistView> getUsers(String query) {
+    public List<UserDisplayView> getUsers(String query) {
         List<UserEntity> users;
         if (query == null || query.isEmpty()) {
             users = userRepository.findAllUsers();
@@ -161,7 +158,31 @@ public class UserService {
         }
 
         return users.stream()
-                .map(this::convertToBlacklistView)
+                .map(this::convertToView)
                 .toList();
+    }
+
+    public UserDisplayView blacklistUser(UserDisplayView userDisplayView) {
+        UserEntity user = userRepository.findByEmailFetchRoles(userDisplayView.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(userDisplayView.getEmail()));
+
+        // Check if the user is already blacklisted
+        if (blacklistRepository.findByUserId(user.getId()).isPresent()) {
+            throw new UserAlreadyBlacklistedException(user.getEmail());
+        }
+
+        // Prevent blacklisting admin
+        if (user.getRoles().contains("ROLE_ADMIN")) {
+            throw new AdminBlacklistException();
+        }
+
+        // Create and save blacklist entity
+        Blacklist blacklist = Blacklist.builder()
+                .user(user)
+                .reason(userDisplayView.getReason())
+                .build();
+        blacklistRepository.save(blacklist);
+
+        return null;
     }
 }
