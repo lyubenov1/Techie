@@ -1,9 +1,6 @@
 package com.techie.domain.model;
 
-import com.techie.domain.model.DTOs.*;
 import lombok.*;
-
-import java.util.*;
 
 @Getter
 @Setter
@@ -19,6 +16,6 @@ public class UserDisplayView {
     private String lastName;
     private String profileImage;
     private String createdAt;  // date and time the user created his profile
-    private List<WishlistDTO> wishlists;
     private String reason;  // reasoning of potential blacklisting
+    private String blacklistTimestamp;
 }

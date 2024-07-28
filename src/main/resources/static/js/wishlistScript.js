@@ -7,6 +7,7 @@ myModal.addEventListener('shown.bs.modal', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const wishlistDeleteAllButton = document.getElementById('wishlistDeleteAll');
 
     function fetchAndPopulateWishlists() {
         fetch('/api/wishlist/get')
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const wishlistSizeElem = document.getElementById('wishlist-size');
         const wishlistProductsDiv = document.getElementById('wishlist-products');
         const emptyContainer = document.querySelector('.empty-container');
+
         localStorage.setItem('lastViewedWishlistId', wishlist.id.toString());
 
         wishlistNameElem.textContent = wishlist.name;
@@ -110,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyContainer.innerHTML = '';
 
         if (wishlist.products.length > 0) {
-            // Show the Delete All button
-            document.getElementById('wishlistDeleteAll').style.display = 'inline-block';
+            // Make the delete all button visible
+            wishlistDeleteAllButton.style.display = 'inline-block';
 
             wishlist.products.forEach(product => {
                 const productCard = document.createElement('a');
@@ -196,8 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
             emptyContainer.appendChild(emptyText);
         }
 
-        document.getElementById('wishlistDeleteAll').addEventListener('click', function() {
-            const wishlistId = wishlist.id;
+        wishlistDeleteAllButton.addEventListener('click', function() {
+            const lastViewedWishlistId = localStorage.getItem('lastViewedWishlistId');
+            deleteAllProductFromWishlist(lastViewedWishlistId);
+        });
+
+        function deleteAllProductFromWishlist(wishlistId) {
             const csrfToken = document.getElementById('csrf-token').value;
 
             fetch(`/api/wishlist/removeAll/${wishlistId}`, {
@@ -221,8 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('Error:', error);
                     alert("An error occurred while removing all products from the wishlist: " + error.message);
                 });
-        });
-
+        }
 
         const editButton = document.getElementById('wishlistEditButton');
 
