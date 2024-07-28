@@ -5,6 +5,7 @@ import com.techie.domain.entities.products.*;
 import com.techie.domain.entities.products.accessories.*;
 import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.DTOs.productsDTOs.*;
+import com.techie.domain.model.*;
 import com.techie.exceptions.*;
 import org.slf4j.*;
 import org.springframework.web.util.*;
@@ -15,6 +16,17 @@ import java.util.stream.*;
 public class ProductConversionUtils {
 
     private static final Logger log = LoggerFactory.getLogger(ProductConversionUtils.class);
+
+    public static ProductAdminView convertToAdminView(Product product) {
+        return ProductAdminView.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .originalPrice(product.getOriginalPrice())
+                .discount(product.getDiscount())
+                .discountedPrice(product.getDiscountedPrice())
+                .imageUrls(product.getProductImages().stream().map(ProductImage::getImageUrl).collect(Collectors.toList()))
+                .build();
+    }
 
     public static ProductDTO convertToDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();

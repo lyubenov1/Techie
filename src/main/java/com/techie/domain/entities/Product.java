@@ -32,6 +32,12 @@ public class Product {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal originalPrice;
 
+    @Column(precision = 10, scale = 2)
+    private BigDecimal discountedPrice;
+
+    @Column
+    private BigDecimal discount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -52,6 +58,19 @@ public class Product {
     @Column(name = "average_rating")
     @ColumnDefault("0.0")
     private Double averageRating;
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+        calculateDiscountedPrice();
+    }
+
+    private void calculateDiscountedPrice() {
+        if (this.originalPrice != null && this.discount != null) {
+            this.discountedPrice = this.originalPrice.subtract(this.originalPrice.multiply(this.discount));
+        } else {
+            this.discountedPrice = this.originalPrice; // No discount applied
+        }
+    }
 
     @Override
     public final boolean equals(Object o) {

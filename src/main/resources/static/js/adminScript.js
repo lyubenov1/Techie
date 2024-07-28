@@ -1,10 +1,10 @@
-const csrfToken = document.getElementById('csrf-token').value;
+let csrfToken = document.getElementById('csrf-token').value;
 let selectedUser = null;
 let fetchTimeout = null;
 let currentPageType = '';
 
 // Configuration object
-const pageConfig = {
+let pageConfig = {
     blacklist: {
         fetchUrl: '/api/admin/get',
         onUserSelect: openModal
@@ -157,7 +157,7 @@ function displayModerators(users, currentPage, totalPages, totalUsers) {
 }
 
 let currentPage = 0;
-const pageSize = 6;
+let pageSize = 6;
 
 function fetchFilteredUsers(page, type) {
     let url;

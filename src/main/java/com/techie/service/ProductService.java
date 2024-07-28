@@ -2,6 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
+import com.techie.domain.model.*;
 import com.techie.exceptions.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
@@ -85,6 +86,10 @@ public class ProductService {
         productDTO.setRatings(ratingCounts);  // Count of reviews for a given rating (1 to 5)
         productDTO.setReviewCount(ratingCounts.values().stream().mapToInt(Integer::intValue).sum()); // Number of all reviews
         return productDTO;
+    }
+
+    public ProductAdminView convertToAdminView(Product product) {
+        return ProductConversionUtils.convertToAdminView(product);
     }
 
     private Map<Integer, Integer> getRatingCounts(Long productId) {
@@ -220,5 +225,73 @@ public class ProductService {
     public void updateAverageRating(Long productId, Double newAverageRating) {
         productRepository.updateAverageRating(productId, newAverageRating);
     }
+
+
+    public List<ProductAdminView> getProductsAdmin(String query) {
+        List<Product> products;
+
+        if (query == null || query.isEmpty()) {
+            products = productRepository.findAllForAdminView();
+        } else {
+            products = productRepository.findByNameForAdminView(query);
+        }
+
+        return products.stream()
+                .map(this::convertToAdminView)
+                .toList();
+    }
+
+    public Page<ProductAdminView> getDiscountedProducts(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Product> productPage = productRepository.findAllDiscountedProducts(pageable);
+            return productPage.map(this::convertToAdminView);
+        } catch (Exception e) {
+            log.error("Error getting discounted products: ", e);
+            throw e;
+        }
+    }
+
+    @Transactional
+    public void discountProduct(ProductAdminView productAdminView)
+            throws ProductNotFoundException, ProductAlreadyDiscountedException {
+
+        Product product = productRepository.findById(productAdminView.getId())
+                .orElseThrow(() -> new ProductNotFoundException(productAdminView.getId()));
+
+        if (product.getDiscount() != null) {
+            throw new ProductAlreadyDiscountedException(productAdminView.getId());
+        }
+
+        BigDecimal discountPercentage = productAdminView.getDiscount();
+
+        if (discountPercentage == null || discountPercentage.compareTo(BigDecimal.ZERO) <= 0 || discountPercentage.compareTo(new BigDecimal("100")) > 0) {
+            throw new IllegalArgumentException("Invalid discount percentage. Must be between 0 and 100.");
+        }
+
+        // Calculate the discounted price
+        MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
+        BigDecimal discountFactor = BigDecimal.ONE.subtract(discountPercentage.divide(new BigDecimal("100"), mc));
+        BigDecimal discountedPrice = product.getOriginalPrice().multiply(discountFactor, mc);
+
+        product.setDiscount(productAdminView.getDiscount());
+        product.setDiscountedPrice(discountedPrice);
+
+        productRepository.save(product);
+    }
+
+    @Transactional
+    public void removeDiscount(Long productId) throws ProductNotFoundException {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
+
+        if (product.getDiscount() == null) {
+            throw new IllegalStateException("Product does not have a discount applied.");
+        }
+
+        product.setDiscount(null);
+        productRepository.save(product);
+    }
+
 }
 

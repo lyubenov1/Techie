@@ -32,6 +32,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "JOIN FETCH p.productImages pi WHERE p.name LIKE %:query% AND pi.isPrimary = true")
     List<Product> findByNameContaining(@Param("query") String query);
 
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages pi " +
+            "WHERE LOWER(p.name) LIKE LOWER(:query) AND pi.isPrimary = true AND p.discount IS NULL")
+    List<Product> findByNameForAdminView(@Param("query") String query);
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages pi " +
+            "WHERE pi.isPrimary = true AND p.discount IS NULL")
+    List<Product> findAllForAdminView();
+
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.brand " +
             "LEFT JOIN FETCH p.productImages pi WHERE p.name LIKE %:query% AND pi.isPrimary = true ORDER BY p.averageRating DESC")
     List<Product> findByNameContainingAndRating(@Param("query") String query, Pageable pageable);
@@ -62,4 +70,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("UPDATE Product p SET p.averageRating = COALESCE(:averageRating, 0.0) WHERE p.id = :productId")
     void updateAverageRating(@Param("productId") Long productId, @Param("averageRating") Double averageRating);
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages WHERE p.discount IS NOT NULL")
+    Page<Product> findAllDiscountedProducts(Pageable pageable);
 }
