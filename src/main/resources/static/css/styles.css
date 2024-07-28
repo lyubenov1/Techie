@@ -3568,6 +3568,23 @@ hr {
     border: 2px solid black !important;
 }
 
+.admin.blacklist .dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-track {
+    background: #212529;
+}
+
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .admin.blacklist .dropdown-item {
     text-decoration: none;
     display: block;
@@ -3662,7 +3679,7 @@ hr {
     border: 1px solid grey;
     color: rgb(225, 222, 218);
     float: right;
-    width: 120px;
+    width: 100px;
     margin-top: 20px;
     padding: 7px 15px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -3671,7 +3688,7 @@ hr {
 .blacklist-modal .btn.btn-secondary {
     color: rgb(225, 222, 218);
     margin-top: 20px;
-    width: 120px;
+    width: 100px;
     padding: 7px 15px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
