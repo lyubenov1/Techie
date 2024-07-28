@@ -15,10 +15,19 @@ const pageConfig = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    const pageTypeElement = document.getElementById('pageType');
-    currentPageType = pageTypeElement.value;
+document.addEventListener('DOMContentLoaded', () => {
+    fetchFilteredUsersWithType()
 });
+
+function fetchFilteredUsersWithType() {
+    const pageTypeElement = document.getElementById('pageType');
+    if (pageTypeElement) {
+        currentPageType = pageTypeElement.value;
+        fetchFilteredUsers(currentPage, currentPageType);
+    } else {
+        console.error('Page type element not found');
+    }
+}
 
 function fetchUsers() {
     const query = document.getElementById('userEmail').value;
@@ -82,7 +91,7 @@ function makeModerator(user) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken // Make sure you have this token available
+            'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify(user),
     })
@@ -95,10 +104,114 @@ function makeModerator(user) {
         .then(data => {
             console.log('User made moderator successfully:', data);
             handleSuccess(data);
-            // Optionally refresh the user list or update UI
+            window.location.reload();
         })
         .catch(error => {
             console.error('Error making user moderator:', error);
+            handleError(error.message);
+        });
+}
+
+function displayModerators(users, currentPage, totalPages, totalUsers) {
+    const listingDiv = document.getElementById('moderator-listing');
+    listingDiv.innerHTML = ''; // Clear existing content
+
+    const headerContainer = document.createElement('div');
+    headerContainer.className = 'header-container';
+    listingDiv.appendChild(headerContainer);
+
+    const header = document.createElement('h3');
+    header.textContent = 'List of Moderators';
+    headerContainer.appendChild(header);
+
+    const paginationInfo = document.createElement('span');
+    paginationInfo.id = 'paginationInfo';
+    paginationInfo.className = 'pagination-info';
+    headerContainer.appendChild(paginationInfo);
+
+    const container = document.createElement('div');
+    container.id = 'moderator-container';
+    container.className = 'moderator-container';
+    listingDiv.appendChild(container);
+
+    users.forEach(user => {
+        const userRow = document.createElement('div');
+        userRow.className = 'user-row';
+        userRow.innerHTML = `
+            <div class="user-info">
+                <span class="img"><img src="${user.profileImage}" alt="Profile Image" class="img-thumbnail"></span>
+                <span class="email">${user.email}</span>
+                <span class="created-at">Joined: ${user.createdAt}</span>
+            </div>
+            <div class="delete-btn"><button onclick="removeModerator(${user.id})">Remove Moderator Role</button></div>
+        `;
+        container.appendChild(userRow);
+    });
+
+    const paginationDiv = document.createElement('div');
+    paginationDiv.id = 'moderatorPagination';
+    paginationDiv.className = 'moderator-pagination';
+    listingDiv.appendChild(paginationDiv);
+
+    createPagination(currentPage, totalPages, totalUsers, 'moderator');
+}
+
+let currentPage = 0;
+const pageSize = 6;
+
+function fetchFilteredUsers(page, type) {
+    let url;
+
+    if (type === 'blacklist') {
+        url = `/api/admin/blacklist/get?p=${page}&s=${pageSize}`;
+    } else if (type === 'moderator') {
+        url = `/api/admin/moderator/get?p=${page}&s=${pageSize}`;
+    } else {
+        console.error('Invalid user type');
+        return;
+    }
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch ${type} users`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (type === 'blacklist') {
+                displayBlacklistedUsers(data.content, data.number, data.totalPages, data.totalElements);
+            } else if (type === 'moderator') {
+                displayModerators(data.content, data.number, data.totalPages, data.totalElements);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            handleError(error.message);
+        });
+}
+
+function removeModerator(userId) {
+    fetch(`/api/admin/moderator/remove?userId=${userId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken // Make sure you have this token available
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || 'Failed to remove moderator role'); });
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('Moderator role removed successfully:', data);
+            handleSuccess(data);
+            fetchFilteredUsersWithType() // Refresh the list
+        })
+        .catch(error => {
+            console.error('Error removing moderator role:', error);
             handleError(error.message);
         });
 }
@@ -169,7 +282,6 @@ function closeDropdown() {
     dropdown.style.display = 'none';
 }
 
-
 // Add event listeners for both focus and input events
 document.addEventListener('DOMContentLoaded', () => {
     const userEmailInput = document.getElementById('userEmail');
@@ -185,21 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-
-let currentPage = 0;
-const pageSize = 6;
-
-function fetchBlacklistedUsers(page) {
-    fetch(`/api/admin/blacklist/get?p=${page}&s=${pageSize}`)
-        .then(response => response.json())
-        .then(data => {
-            displayBlacklistedUsers(data.content, data.number, data.totalPages, data.totalElements);
-        })
-        .catch(error => {
-            console.error('Error fetching blacklisted users:', error);
-        });
-}
 
 function displayBlacklistedUsers(users, currentPage, totalPages, totalUsers) {
     const listingDiv = document.getElementById('blacklist-listing');
@@ -243,7 +340,7 @@ function displayBlacklistedUsers(users, currentPage, totalPages, totalUsers) {
     paginationDiv.className = 'blacklist-pagination';
     listingDiv.appendChild(paginationDiv);
 
-    createPagination(currentPage, totalPages, totalUsers);
+    createPagination(currentPage, totalPages, totalUsers, 'blacklist');
 }
 
 async function removeFromBlacklist(userId) {
@@ -264,7 +361,7 @@ async function removeFromBlacklist(userId) {
 
         console.log('User removed from blacklist successfully:', data);
         handleSuccess(data);
-        fetchBlacklistedUsers(currentPage); // Refresh the list
+        fetchFilteredUsersWithType() // Refresh the list
     } catch (error) {
         console.error('Error removing user from blacklist:', error);
         handleError(error.message);
@@ -289,15 +386,16 @@ function showMessage(message, type) {
     }, 5000);
 }
 
-function createPagination(currentPage, totalPages, totalUsers) {
-    const paginationDiv = document.getElementById('blacklistPagination');
+function createPagination(currentPage, totalPages, totalUsers, type) {
+    const paginationDivId = type === 'blacklist' ? 'blacklistPagination' : 'moderatorPagination';
+    const paginationDiv = document.getElementById(paginationDivId);
     paginationDiv.innerHTML = ''; // Clear existing content
 
     const prevButton = document.createElement('button');
     prevButton.textContent = '<';
     prevButton.onclick = () => {
         if (currentPage > 0) {
-            fetchBlacklistedUsers(currentPage - 1);
+            fetchFilteredUsers(currentPage - 1, type);
         }
     };
     prevButton.disabled = currentPage === 0;
@@ -306,7 +404,7 @@ function createPagination(currentPage, totalPages, totalUsers) {
     nextButton.textContent = '>';
     nextButton.onclick = () => {
         if (currentPage < totalPages - 1) {
-            fetchBlacklistedUsers(currentPage + 1);
+            fetchFilteredUsers(currentPage + 1, type);
         }
     };
     nextButton.disabled = currentPage === totalPages - 1;
@@ -320,9 +418,3 @@ function createPagination(currentPage, totalPages, totalUsers) {
     const paginationInfo = document.getElementById('paginationInfo');
     paginationInfo.textContent = `${start}-${end} out of ${totalUsers}`;
 }
-
-
-// Call the function to load the first page of blacklisted users when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    fetchBlacklistedUsers(currentPage);
-});

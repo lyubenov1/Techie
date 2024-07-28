@@ -1,15 +1,14 @@
 package com.techie.repository;
 
-import com.techie.domain.entities.RoleEntity;
-import com.techie.domain.enums.UserRoleEnum;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.techie.domain.entities.*;
+import com.techie.domain.enums.*;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
 
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
    Optional<RoleEntity> findRoleEntityByRole(UserRoleEnum role);
-
 }

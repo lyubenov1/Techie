@@ -153,10 +153,11 @@ public class UserService {
 
     public List<UserDisplayView> getUsers(String query) {
         List<UserEntity> users;
+
         if (query == null || query.isEmpty()) {
-            users = userRepository.findAllUsers();
+            users = userRepository.findAllUsersNotBlacklisted();
         } else {
-            users = userRepository.findByEmailContaining(query);
+            users = userRepository.findByEmailContainingNotBlacklisted(query);
         }
 
         return users.stream()
@@ -227,5 +228,31 @@ public class UserService {
         }
 
         addRoleToUser(userDisplayView.getEmail(), UserRoleEnum.MODERATOR);
+    }
+
+    public Page<UserDisplayView> getModerators(int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<UserEntity> moderatorsPage = userRepository.findAllModerators(pageable);
+            return moderatorsPage.map(this::convertToView);
+        } catch (Exception e) {
+            logger.error("Error in getModerators: ", e);
+            throw e;
+        }
+    }
+
+    @Transactional
+    public void removeModeratorRoleFromUser(Long userId) throws UserNotFoundException {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
+
+        RoleEntity moderatorRole = roleRepository.findRoleEntityByRole(UserRoleEnum.MODERATOR)
+                .orElseThrow(() -> new RuntimeException("Moderator role not found"));
+
+        if (user.getRoles().remove(moderatorRole)) {
+            userRepository.save(user);
+        } else {
+            logger.info("User {} is not a moderator, no action taken", userId);
+        }
     }
 }

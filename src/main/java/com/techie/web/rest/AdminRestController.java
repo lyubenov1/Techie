@@ -54,12 +54,7 @@ public class AdminRestController {
                                                  @RequestParam(name = "s", required = false) int size) {
         try {
             Page<UserDisplayView> users = userService.getBlacklistedUsers(page, size);
-            Map<String, Object> response = new HashMap<>();
-            response.put("content", users.getContent());
-            response.put("number", users.getNumber());
-            response.put("totalPages", users.getTotalPages());
-            response.put("totalElements", users.getTotalElements());
-            return ResponseEntity.ok(response);
+            return getResponseEntity(users);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -88,6 +83,39 @@ public class AdminRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+
+    @GetMapping("/moderator/get")
+    public ResponseEntity<?> getModerators(@RequestParam(name = "p", required = false) int page,
+                                                 @RequestParam(name = "s", required = false) int size) {
+        try {
+            Page<UserDisplayView> users = userService.getModerators(page, size);
+            return getResponseEntity(users);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    private ResponseEntity<?> getResponseEntity(Page<UserDisplayView> users) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", users.getContent());
+        response.put("number", users.getNumber());
+        response.put("totalPages", users.getTotalPages());
+        response.put("totalElements", users.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/moderator/remove")
+    public ResponseEntity<String> removeModerator(@RequestParam Long userId) throws UserNotFoundException {
+        try {
+            userService.removeModeratorRoleFromUser(userId);
+            return ResponseEntity.ok("Moderator role removed successfully");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

@@ -52,7 +52,7 @@ public class UserEntity {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
-    private List<RoleEntity> roles;   // user's role (User or Admin).
+    private List<RoleEntity> roles;   // user's role (User, Admin or Moderator).
 
     @PrePersist
     protected void onCreate() {

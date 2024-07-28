@@ -3658,8 +3658,10 @@ hr {
 .blacklist-modal .img-thumbnail {
     width: 200px;
     height: 200px;
-    border-radius: 50%;
     align-self: center;
+    padding: 0;
+    background-color: transparent;
+    border: none;
 }
 
 .blacklist-modal label {
@@ -3724,33 +3726,39 @@ hr {
     margin-top: 7px;
 }
 
-.blacklist-listing {
+.blacklist-listing,
+.moderator-listing {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.blacklist-listing .header-container {
+.blacklist-listing .header-container,
+.moderator-listing .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.blacklist-listing .header-container .pagination-info {
+.blacklist-listing .header-container .pagination-info,
+.moderator-listing .header-container .pagination-info {
     font-size: 18px;
 }
 
-.blacklist-listing .blacklist-pagination {
+.blacklist-listing .blacklist-pagination,
+.moderator-listing .blacklist-pagination {
     align-self: flex-end;
 }
 
-.blacklist-pagination {
+.blacklist-pagination,
+.moderator-pagination {
     display: flex;
     align-self: flex-end;
     gap: 10px;
 }
 
-.blacklist-pagination button {
+.blacklist-pagination button,
+.moderator-pagination button {
     width: 48px;
     height: 48px;
     background-color: #555;
@@ -3761,41 +3769,48 @@ hr {
     cursor: pointer;
 }
 
-.blacklist-pagination button:disabled {
+.blacklist-pagination button:disabled,
+.moderator-pagination button:disabled {
     opacity: 0.5;
     cursor: default;
 }
 
-.blacklist-listing .blacklist-container {
+.blacklist-listing .blacklist-container,
+.moderator-listing .moderator-container {
     border: 1px solid grey;
 }
 
-.blacklist-container .user-row {
+.blacklist-container .user-row,
+.moderator-container .user-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 80px;
-    flex-wrap: wrap;
     border-bottom: 1px solid grey;
 }
 
-.blacklist-container .user-row .user-info {
+.blacklist-container .user-row .user-info,
+.moderator-container .user-row .user-info {
+    min-width: 400px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-left: 10px;
 }
 
-.user-info span:not(:first-child):not(:last-child)::after {
+.user-info span:not(:first-child):not(:last-child)::after{
     content: "|";
     margin: 8px;
 }
 
-.blacklist-container .user-row .img-thumbnail {
+.blacklist-container .user-row .img-thumbnail,
+.moderator-container .user-row .img-thumbnail {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    object-fit: cover;
     margin-right: 10px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
 }
 
 .blacklist-container .user-row .reason {
@@ -3805,7 +3820,8 @@ hr {
     white-space: nowrap;
 }
 
-.blacklist-container .user-row .delete-btn {
+.blacklist-container .user-row .delete-btn,
+.moderator-container .user-row .delete-btn {
     margin-right: 10px;
 }
 
@@ -3819,12 +3835,22 @@ hr {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.blacklist-container .user-row .delete-btn button:hover {
+.moderator-container .user-row .delete-btn button {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 200px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.blacklist-container .user-row .delete-btn button:hover,
+.moderator-container .user-row .delete-btn button:hover {
     background-color: #505050;
     color: white;
     border-color: white;
 }
-
 
 .admin-error-message {
     background-color: inherit;

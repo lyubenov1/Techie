@@ -1,6 +1,7 @@
 package com.techie.repository;
 
 import com.techie.domain.entities.*;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
@@ -31,6 +32,18 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT u FROM UserEntity u JOIN FETCH u.roles WHERE u.email LIKE %:query%")
     List<UserEntity> findByEmailContaining(@Param("query") String query);
 
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.roles " +
+            "WHERE u.email LIKE %:query% AND u.id NOT IN " +
+            "(SELECT b.user.id FROM Blacklist b)")
+    List<UserEntity> findByEmailContainingNotBlacklisted(@Param("query") String query);
+
     @Query("SELECT u FROM UserEntity u JOIN FETCH u.roles")
     List<UserEntity> findAllUsers();
+
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.roles WHERE u.id " +
+            "NOT IN (SELECT b.user.id FROM Blacklist b)")
+    List<UserEntity> findAllUsersNotBlacklisted();
+
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.roles r WHERE r.role = 'MODERATOR'")
+    Page<UserEntity> findAllModerators(Pageable pageable);
 }
