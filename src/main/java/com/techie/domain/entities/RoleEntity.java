@@ -1,6 +1,6 @@
 package com.techie.domain.entities;
 
-import com.techie.domain.enums.UserRoleEnum;
+import com.techie.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,4 +20,9 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRoleEnum role;
+
+    @Override
+    public String toString() {
+        return this.role.name();
+    }
 }

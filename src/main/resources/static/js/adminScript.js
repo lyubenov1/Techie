@@ -1,6 +1,24 @@
 const csrfToken = document.getElementById('csrf-token').value;
 let selectedUser = null;
 let fetchTimeout = null;
+let currentPageType = '';
+
+// Configuration object
+const pageConfig = {
+    blacklist: {
+        fetchUrl: '/api/admin/get',
+        onUserSelect: openModal
+    },
+    moderator: {
+        fetchUrl: '/api/admin/get',
+        onUserSelect: makeModerator
+    }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const pageTypeElement = document.getElementById('pageType');
+    currentPageType = pageTypeElement.value;
+});
 
 function fetchUsers() {
     const query = document.getElementById('userEmail').value;
@@ -11,7 +29,7 @@ function fetchUsers() {
     }
 
     fetchTimeout = setTimeout(() => {
-        fetch(`/api/admin/get?query=${encodeURIComponent(query)}`)
+        fetch(`${pageConfig[currentPageType].fetchUrl}?query=${encodeURIComponent(query)}`)
             .then(response => {
                 if (!response.ok) {
                     return response.text().then(text => {
@@ -33,13 +51,14 @@ function fetchUsers() {
     }, 300);
 }
 
+
 function populateDropdown(users, dropdown) {
     dropdown.innerHTML = ''; // Clear previous options
     users.forEach(user => {
         const option = document.createElement('div');
         option.className = 'dropdown-item';
         option.innerHTML = createUserHTML(user);
-        option.addEventListener('click', () => openModal(user));
+        option.addEventListener('click', () => pageConfig[currentPageType].onUserSelect(user));
         dropdown.appendChild(option);
     });
     dropdown.style.display = 'block';
@@ -56,6 +75,32 @@ function createUserHTML(user) {
             </div>
         </div>
     `;
+}
+
+function makeModerator(user) {
+    fetch('/api/admin/moderator/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken // Make sure you have this token available
+        },
+        body: JSON.stringify(user),
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || 'Failed to make user moderator'); });
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('User made moderator successfully:', data);
+            handleSuccess(data);
+            // Optionally refresh the user list or update UI
+        })
+        .catch(error => {
+            console.error('Error making user moderator:', error);
+            handleError(error.message);
+        });
 }
 
 function openModal(user) {
@@ -237,7 +282,7 @@ function handleSuccess(message) {
 function showMessage(message, type) {
     const messageElement = document.getElementById('infoMessage');
     messageElement.textContent = message;
-    messageElement.className = type === 'error' ? 'blacklist-error-message' : 'blacklist-success-message';
+    messageElement.className = type === 'error' ? 'admin-error-message' : 'admin-success-message';
     messageElement.style.display = 'block';
     setTimeout(() => {
         messageElement.style.display = 'none';

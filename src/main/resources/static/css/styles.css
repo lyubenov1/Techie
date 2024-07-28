@@ -3534,13 +3534,15 @@ hr {
     color: rgb(225, 222, 218);
 }
 
-.profile-main-content.admin.blacklist label {
+.profile-main-content.admin.blacklist label,
+.profile-main-content.admin.dashboard label {
     display: block;
     margin-top: 20px;
     font-weight: bold;
 }
 
-.profile-main-content.admin.blacklist input[type="text"] {
+.profile-main-content.admin.blacklist input[type="text"],
+.profile-main-content.admin.dashboard input[type="text"] {
     width: 50%;
     padding: 8px;
     margin-top: 8px;
@@ -3551,13 +3553,8 @@ hr {
     color: white;
 }
 
-.profile-main-content.admin.blacklist .error {
-    color: red;
-    margin-top: 20px;
-    display: none;
-}
-
-.admin.blacklist .dropdown-menu {
+.admin.blacklist .dropdown-menu,
+.admin.dashboard .dropdown-menu {
     display: none;
     position: absolute;
     background-color: rgb(225, 222, 218);
@@ -3569,57 +3566,69 @@ hr {
     border: 2px solid black !important;
 }
 
-.admin.blacklist .dropdown-menu::-webkit-scrollbar {
+.admin.blacklist .dropdown-menu::-webkit-scrollbar,
+.admin.dashboard .dropdown-menu::-webkit-scrollbar {
     width: 8px;
 }
 
-.admin.blacklist .dropdown-menu::-webkit-scrollbar-track {
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-track,
+.admin.dashboard .dropdown-menu::-webkit-scrollbar-track {
     background: #212529;
 }
 
-.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb {
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb,
+.admin.dashboard .dropdown-menu::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
 }
 
-.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb:hover {
+.admin.blacklist .dropdown-menu::-webkit-scrollbar-thumb:hover,
+.admin.dashboard .dropdown-menu::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
-.admin.blacklist .dropdown-item {
+.admin.blacklist .dropdown-item,
+.admin.dashboard .dropdown-item {
     text-decoration: none;
     display: block;
     cursor: pointer;
     border-bottom: 2px solid black;
 }
 
-.admin.blacklist .dropdown-item:last-child {
+.admin.blacklist .dropdown-item:last-child,
+.admin.dashboard .dropdown-item:last-child {
     border-bottom: none;
 }
 
-.admin.blacklist .dropdown-item:hover {
+.admin.blacklist .dropdown-item:hover,
+.admin.dashboard .dropdown-item:hover {
     background-color: #f1f1f1;
 }
 
-.admin.blacklist .user-item {
-    display: flex;
-    align-items: center;
-}
-
-.admin.blacklist .user-avatar {
+.admin.blacklist .user-avatar,
+.admin.dashboard .user-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
-.admin.blacklist .user-details {
+.admin.blacklist .user-item,
+.admin.dashboard .user-item {
+    display: flex;
+    align-items: center;
+}
+
+.admin.blacklist .user-details,
+.admin.dashboard .user-details {
     display: flex;
     flex-direction: column;
 }
 
 .admin.blacklist .user-email,
-.admin.blacklist .user-name {
+.admin.blacklist .user-name,
+.admin.dashboard .user-email,
+.admin.dashboard .user-name {
     font-weight: bold;
 }
 
@@ -3817,14 +3826,14 @@ hr {
 }
 
 
-.blacklist-error-message {
+.admin-error-message {
     background-color: inherit;
     color: #cc0000;
     font-size: 20px;
     padding: 10px;
 }
 
-.blacklist-success-message {
+.admin-success-message {
     background-color: inherit;
     color: #009f00;
     font-size: 20px;

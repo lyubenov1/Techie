@@ -118,7 +118,8 @@ public class UserService {
     }
 
     @Transactional
-    public void addRoleToUser(String email, UserRoleEnum role) {
+    public void addRoleToUser(String email, UserRoleEnum role)
+                               throws UserAlreadyHasRoleException {
         Optional<UserEntity> optionalUser = userRepository.findByEmailFetchRoles(email);
         Optional<RoleEntity> optionalRole = roleRepository.findRoleEntityByRole(role);
 
@@ -127,7 +128,7 @@ public class UserService {
             RoleEntity roleEntity = optionalRole.get();
 
             if (user.getRoles().contains(roleEntity)) {
-                logger.info("User {} already has role: {}", email, role);
+                throw new UserAlreadyHasRoleException(roleEntity.toString());
             } else {
                 user.getRoles().add(roleEntity);
                 userRepository.save(user);
@@ -135,10 +136,7 @@ public class UserService {
             }
         } else {
             if (optionalUser.isEmpty()) {
-                logger.info("User with email {} not found.", email);
-            }
-            if (optionalRole.isEmpty()) {
-                logger.info("Role {} not found.", role);
+                logger.info("User with email {} not found!", email);
             }
         }
     }
@@ -192,7 +190,7 @@ public class UserService {
     public Page<UserDisplayView> getBlacklistedUsers(int page, int size) {
         // Fetch blacklisted users
         Page<Blacklist> blacklistPage = blacklistRepository.findAllFetchUsers(PageRequest.of(page, size));
-        
+
         List<UserDisplayView> userDisplayViews = blacklistPage.getContent().stream()
                 .map(blacklistEntry -> {
                     UserEntity user = blacklistEntry.getUser();
@@ -219,5 +217,15 @@ public class UserService {
         Blacklist blacklist = blacklistRepository.findByUserId(userId)
                 .orElseThrow(() -> new UserNotInBlacklistException(userId));
         blacklistRepository.delete(blacklist);
+    }
+
+    @Transactional
+    public void makeModerator(UserDisplayView userDisplayView) throws UserAlreadyHasRoleException {
+
+        if ("Admin".equals(userDisplayView.getRole())) {
+            throw new UserAlreadyHasRoleException("ADMIN");
+        }
+
+        addRoleToUser(userDisplayView.getEmail(), UserRoleEnum.MODERATOR);
     }
 }

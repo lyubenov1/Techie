@@ -36,7 +36,9 @@ public class AdminRestController {
     }
 
     @PostMapping("/blacklist/post")
-    public ResponseEntity<String> blacklistUser(@RequestBody UserDisplayView userDisplayView) {
+    public ResponseEntity<String> blacklistUser(@RequestBody UserDisplayView userDisplayView)
+                                                  throws UsernameNotFoundException, UserAlreadyBlacklistedException,
+                                                      AdminModeratorBlacklistException {
         try {
             userService.blacklistUser(userDisplayView);
             return ResponseEntity.ok().body("User blacklisted");
@@ -71,6 +73,19 @@ public class AdminRestController {
             return ResponseEntity.ok("User successfully removed from blacklist");
         } catch (UserNotInBlacklistException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/moderator/post")
+    public ResponseEntity<String> makeModerator(@RequestBody UserDisplayView userDisplayView)
+                                                  throws UserAlreadyHasRoleException {
+        try {
+            userService.makeModerator(userDisplayView);
+            return ResponseEntity.ok("User successfully made moderator");
+        } catch (UserAlreadyHasRoleException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }

@@ -11,7 +11,7 @@ public class UserDisplayView {
     private Long id;
     private String username;
     private String email;
-    private String role;
+    private String role;  // Highest role of a user
     private String firstName;
     private String lastName;
     private String profileImage;

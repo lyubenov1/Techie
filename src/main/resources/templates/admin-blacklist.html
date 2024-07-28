@@ -14,7 +14,7 @@
 <body class="bg-dark text-white">
 
     <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
+    <input type="hidden" id="pageType" value="blacklist">
     <header th:replace="~{fragments/header :: header}"></header>
     <div class = "container-lg">
         <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
