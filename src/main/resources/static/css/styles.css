@@ -3548,6 +3548,7 @@ hr {
     background-color: rgba(250, 235, 235, 0.1);
     border-color: rgba(255, 255, 255, 0.5);
     caret-color: white;
+    color: white;
 }
 
 .profile-main-content.admin.blacklist .error {
@@ -3712,4 +3713,120 @@ hr {
 
 #errorMessageModal {
     margin-top: 7px;
+}
+
+.blacklist-listing {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.blacklist-listing .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blacklist-listing .header-container .pagination-info {
+    font-size: 18px;
+}
+
+.blacklist-listing .blacklist-pagination {
+    align-self: flex-end;
+}
+
+.blacklist-pagination {
+    display: flex;
+    align-self: flex-end;
+    gap: 10px;
+}
+
+.blacklist-pagination button {
+    width: 48px;
+    height: 48px;
+    background-color: #555;
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.blacklist-pagination button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.blacklist-listing .blacklist-container {
+    border: 1px solid grey;
+}
+
+.blacklist-container .user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid grey;
+}
+
+.blacklist-container .user-row .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.user-info span:not(:first-child):not(:last-child)::after {
+    content: "|";
+    margin: 8px;
+}
+
+.blacklist-container .user-row .img-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.blacklist-container .user-row .reason {
+    max-width: 380px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.blacklist-container .user-row .delete-btn {
+    margin-right: 10px;
+}
+
+.blacklist-container .user-row .delete-btn button {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 100px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.blacklist-container .user-row .delete-btn button:hover {
+    background-color: #505050;
+    color: white;
+    border-color: white;
+}
+
+
+.blacklist-error-message {
+    background-color: inherit;
+    color: #cc0000;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.blacklist-success-message {
+    background-color: inherit;
+    color: #009f00;
+    font-size: 20px;
+    padding: 10px;
 }

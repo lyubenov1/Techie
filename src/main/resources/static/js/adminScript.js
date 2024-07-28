@@ -80,7 +80,7 @@ function blacklistUser() {
 
     selectedUser.reason = document.getElementById('blacklistReason').value;
 
-    fetch('/api/admin/post', {
+    fetch('/api/admin/blacklist/post', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -119,15 +119,6 @@ function handleErrorModal(message) {
     }, 5000);
 }
 
-function handleError(message) {
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
-    errorMessage.style.display = 'block';
-    setTimeout(() => {
-        errorMessage.style.display = 'none';
-    }, 5000);
-}
-
 function closeDropdown() {
     const dropdown = document.getElementById('userDropdown');
     dropdown.style.display = 'none';
@@ -148,4 +139,145 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.style.display = 'none';
         }
     });
+});
+
+
+let currentPage = 0;
+const pageSize = 6;
+
+function fetchBlacklistedUsers(page) {
+    fetch(`/api/admin/blacklist/get?p=${page}&s=${pageSize}`)
+        .then(response => response.json())
+        .then(data => {
+            displayBlacklistedUsers(data.content, data.number, data.totalPages, data.totalElements);
+        })
+        .catch(error => {
+            console.error('Error fetching blacklisted users:', error);
+        });
+}
+
+function displayBlacklistedUsers(users, currentPage, totalPages, totalUsers) {
+    const listingDiv = document.getElementById('blacklist-listing');
+    listingDiv.innerHTML = ''; // Clear existing content
+
+    const headerContainer = document.createElement('div');
+    headerContainer.className = 'header-container';
+    listingDiv.appendChild(headerContainer);
+
+    const header = document.createElement('h3');
+    header.textContent = 'List of blacklisted users';
+    headerContainer.appendChild(header);
+
+    const paginationInfo = document.createElement('span');
+    paginationInfo.id = 'paginationInfo';
+    paginationInfo.className = 'pagination-info';
+    headerContainer.appendChild(paginationInfo);
+
+    const container = document.createElement('div');
+    container.id = 'blacklist-container';
+    container.className = 'blacklist-container';
+    listingDiv.appendChild(container);
+
+    users.forEach(user => {
+        const userRow = document.createElement('div');
+        userRow.className = 'user-row';
+        userRow.innerHTML = `
+            <div class="user-info">
+                <span class="img"><img src="${user.profileImage}" alt="Profile Image" class="img-thumbnail"></span>
+                <span class="email">${user.email}</span>
+                <span class="timestamp">${user.blacklistTimestamp}</span>
+                <span class="reason">Reason: ${user.reason}</span>
+            </div>
+            <div class="delete-btn"><button onclick="removeFromBlacklist(${user.id})">Remove</button></div>
+        `;
+        container.appendChild(userRow);
+    });
+
+    const paginationDiv = document.createElement('div');
+    paginationDiv.id = 'blacklistPagination';
+    paginationDiv.className = 'blacklist-pagination';
+    listingDiv.appendChild(paginationDiv);
+
+    createPagination(currentPage, totalPages, totalUsers);
+}
+
+async function removeFromBlacklist(userId) {
+    try {
+        const response = await fetch(`/api/admin/blacklist/delete?userId=${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
+
+        const data = await response.text();
+
+        if (!response.ok) {
+            throw new Error(data);
+        }
+
+        console.log('User removed from blacklist successfully:', data);
+        handleSuccess(data);
+        fetchBlacklistedUsers(currentPage); // Refresh the list
+    } catch (error) {
+        console.error('Error removing user from blacklist:', error);
+        handleError(error.message);
+    }
+}
+
+function handleError(message) {
+    showMessage(message, 'error');
+}
+
+function handleSuccess(message) {
+    showMessage(message, 'success');
+}
+
+function showMessage(message, type) {
+    const messageElement = document.getElementById('infoMessage');
+    messageElement.textContent = message;
+    messageElement.className = type === 'error' ? 'blacklist-error-message' : 'blacklist-success-message';
+    messageElement.style.display = 'block';
+    setTimeout(() => {
+        messageElement.style.display = 'none';
+    }, 5000);
+}
+
+function createPagination(currentPage, totalPages, totalUsers) {
+    const paginationDiv = document.getElementById('blacklistPagination');
+    paginationDiv.innerHTML = ''; // Clear existing content
+
+    const prevButton = document.createElement('button');
+    prevButton.textContent = '<';
+    prevButton.onclick = () => {
+        if (currentPage > 0) {
+            fetchBlacklistedUsers(currentPage - 1);
+        }
+    };
+    prevButton.disabled = currentPage === 0;
+
+    const nextButton = document.createElement('button');
+    nextButton.textContent = '>';
+    nextButton.onclick = () => {
+        if (currentPage < totalPages - 1) {
+            fetchBlacklistedUsers(currentPage + 1);
+        }
+    };
+    nextButton.disabled = currentPage === totalPages - 1;
+
+    paginationDiv.appendChild(prevButton);
+    paginationDiv.appendChild(nextButton);
+
+    // Update pagination info
+    const start = currentPage * pageSize + 1;
+    const end = Math.min((currentPage + 1) * pageSize, totalUsers);
+    const paginationInfo = document.getElementById('paginationInfo');
+    paginationInfo.textContent = `${start}-${end} out of ${totalUsers}`;
+}
+
+
+// Call the function to load the first page of blacklisted users when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchBlacklistedUsers(currentPage);
 });

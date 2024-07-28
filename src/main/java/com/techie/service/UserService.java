@@ -8,6 +8,7 @@ import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.userdetails.*;
@@ -15,8 +16,11 @@ import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.time.*;
+import java.time.format.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 @Service
 public class UserService {
@@ -164,7 +168,7 @@ public class UserService {
 
     @Transactional
     public void blacklistUser(UserDisplayView userDisplayView)
-                               throws UsernameNotFoundException, UserAlreadyBlacklistedException, AdminBlacklistException {
+                               throws UsernameNotFoundException, UserAlreadyBlacklistedException, AdminModeratorBlacklistException {
         UserEntity user = findByUsernameNoFetches(userDisplayView.getEmail());
 
         // Check if the user is already blacklisted
@@ -173,8 +177,8 @@ public class UserService {
         }
 
         // Prevent blacklisting admin
-        if ("Admin".equals(userDisplayView.getRole())) {
-            throw new AdminBlacklistException();
+        if ("Admin".equals(userDisplayView.getRole()) || "Moderator".equals(userDisplayView.getRole())) {
+            throw new AdminModeratorBlacklistException();
         }
 
         // Create and save blacklist entity
@@ -183,5 +187,37 @@ public class UserService {
                 .reason(userDisplayView.getReason())
                 .build();
         blacklistRepository.save(blacklist);
+    }
+
+    public Page<UserDisplayView> getBlacklistedUsers(int page, int size) {
+        // Fetch blacklisted users
+        Page<Blacklist> blacklistPage = blacklistRepository.findAllFetchUsers(PageRequest.of(page, size));
+        
+        List<UserDisplayView> userDisplayViews = blacklistPage.getContent().stream()
+                .map(blacklistEntry -> {
+                    UserEntity user = blacklistEntry.getUser();
+                    UserDisplayView userView = convertToView(user);
+
+                    // Set blacklist-specific fields
+                    userView.setReason(blacklistEntry.getReason());
+                    userView.setBlacklistTimestamp(formatDateTime(blacklistEntry.getTimestamp()));
+
+                    return userView;
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(userDisplayViews, blacklistPage.getPageable(), blacklistPage.getTotalElements());
+    }
+
+    private String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm", Locale.ENGLISH);
+        return dateTime.format(formatter);
+    }
+
+    @Transactional
+    public void removeFromBlacklist(Long userId) {
+        Blacklist blacklist = blacklistRepository.findByUserId(userId)
+                .orElseThrow(() -> new UserNotInBlacklistException(userId));
+        blacklistRepository.delete(blacklist);
     }
 }

@@ -5,6 +5,7 @@ import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +35,44 @@ public class AdminRestController {
         }
     }
 
-    @PostMapping("/post")
+    @PostMapping("/blacklist/post")
     public ResponseEntity<String> blacklistUser(@RequestBody UserDisplayView userDisplayView) {
         try {
             userService.blacklistUser(userDisplayView);
             return ResponseEntity.ok().body("User blacklisted");
-        } catch (UsernameNotFoundException | UserAlreadyBlacklistedException | AdminBlacklistException e) {
+        } catch (UsernameNotFoundException | UserAlreadyBlacklistedException | AdminModeratorBlacklistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while blacklisting the user");
         }
     }
 
+    @GetMapping("/blacklist/get")
+    public ResponseEntity<?> getBlacklistedUsers(@RequestParam(name = "p", required = false) int page,
+                                                 @RequestParam(name = "s", required = false) int size) {
+        try {
+            Page<UserDisplayView> users = userService.getBlacklistedUsers(page, size);
+            Map<String, Object> response = new HashMap<>();
+            response.put("content", users.getContent());
+            response.put("number", users.getNumber());
+            response.put("totalPages", users.getTotalPages());
+            response.put("totalElements", users.getTotalElements());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/blacklist/delete")
+    public ResponseEntity<String> removeFromBlacklist(@RequestParam Long userId)
+                                                        throws UserNotInBlacklistException {
+        try {
+            userService.removeFromBlacklist(userId);
+            return ResponseEntity.ok("User successfully removed from blacklist");
+        } catch (UserNotInBlacklistException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
 }
