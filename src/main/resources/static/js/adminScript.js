@@ -86,7 +86,7 @@ function blacklistUser() {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         },
-        body: JSON.stringify(selectedUser)
+        body: JSON.stringify(selectedUser),
     })
         .then(response => {
             if (!response.ok) {
@@ -98,24 +98,34 @@ function blacklistUser() {
                     }
                 });
             }
-            return response.json();
+            return response.text();
         })
         .then(data => {
             console.log('User blacklisted successfully:', data);
-            var modal = bootstrap.Modal.getInstance(document.getElementById('blacklistModal'));
-            modal.hide();
-            // Update the UI if necessary
+            window.location.reload();
         })
         .catch(error => {
             console.error('Error blacklisting user:', error);
-            handleError(error.message);
+            handleErrorModal(error.message);
         });
+}
+
+function handleErrorModal(message) {
+    const errorMessage = document.getElementById('errorMessageModal');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+    setTimeout(() => {
+        errorMessage.style.display = 'none';
+    }, 5000);
 }
 
 function handleError(message) {
     const errorMessage = document.getElementById('errorMessage');
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
+    setTimeout(() => {
+        errorMessage.style.display = 'none';
+    }, 5000);
 }
 
 function closeDropdown() {

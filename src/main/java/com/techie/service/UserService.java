@@ -162,9 +162,10 @@ public class UserService {
                 .toList();
     }
 
-    public UserDisplayView blacklistUser(UserDisplayView userDisplayView) {
-        UserEntity user = userRepository.findByEmailFetchRoles(userDisplayView.getEmail())
-                .orElseThrow(() -> new UserNotFoundException(userDisplayView.getEmail()));
+    @Transactional
+    public void blacklistUser(UserDisplayView userDisplayView)
+                               throws UsernameNotFoundException, UserAlreadyBlacklistedException, AdminBlacklistException {
+        UserEntity user = findByUsernameNoFetches(userDisplayView.getEmail());
 
         // Check if the user is already blacklisted
         if (blacklistRepository.findByUserId(user.getId()).isPresent()) {
@@ -172,7 +173,7 @@ public class UserService {
         }
 
         // Prevent blacklisting admin
-        if (user.getRoles().contains("ROLE_ADMIN")) {
+        if ("Admin".equals(userDisplayView.getRole())) {
             throw new AdminBlacklistException();
         }
 
@@ -182,7 +183,5 @@ public class UserService {
                 .reason(userDisplayView.getReason())
                 .build();
         blacklistRepository.save(blacklist);
-
-        return null;
     }
 }

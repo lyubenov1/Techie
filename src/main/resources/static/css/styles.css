@@ -3709,3 +3709,7 @@ hr {
 .blacklist-modal .btn.btn-secondary:hover {
     background-color: #4c0404;
 }
+
+#errorMessageModal {
+    margin-top: 7px;
+}

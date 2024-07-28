@@ -3,8 +3,10 @@ package com.techie.web.rest;
 import com.techie.domain.model.*;
 import com.techie.exceptions.*;
 import com.techie.service.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,6 +16,7 @@ import java.util.*;
 public class AdminRestController {
 
     private final UserService userService;
+    private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
 
     @Autowired
     public AdminRestController(UserService userService) {
@@ -32,14 +35,15 @@ public class AdminRestController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> blacklistUser(@RequestBody UserDisplayView userDisplayView) {
+    public ResponseEntity<String> blacklistUser(@RequestBody UserDisplayView userDisplayView) {
         try {
-            UserDisplayView user = userService.blacklistUser(userDisplayView);
-            return ResponseEntity.ok(user);
-        } catch (UserNotFoundException | UserAlreadyBlacklistedException | AdminBlacklistException e) {
+            userService.blacklistUser(userDisplayView);
+            return ResponseEntity.ok().body("User blacklisted");
+        } catch (UsernameNotFoundException | UserAlreadyBlacklistedException | AdminBlacklistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while blacklisting the user");
         }
     }
+
 }
