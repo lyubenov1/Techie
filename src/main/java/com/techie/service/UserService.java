@@ -9,6 +9,7 @@ import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
@@ -169,6 +170,7 @@ public class UserService {
                 .toList();
     }
 
+    @CachePut(value = "userBlacklist", key = "#userDisplayView.id")
     @Transactional
     public void blacklistUser(UserDisplayView userDisplayView)
                                throws UsernameNotFoundException, UserAlreadyBlacklistedException, AdminModeratorBlacklistException {
@@ -217,11 +219,17 @@ public class UserService {
         return dateTime.format(formatter);
     }
 
+    @CacheEvict(value = "userBlacklist", key = "#userId")
     @Transactional
     public void removeFromBlacklist(Long userId) {
+        logger.info("Attempting to remove user {} from blacklist", userId);
         Blacklist blacklist = blacklistRepository.findByUserId(userId)
-                .orElseThrow(() -> new UserNotInBlacklistException(userId));
+                .orElseThrow(() -> {
+                    logger.warn("User {} not found in blacklist", userId);
+                    return new UserNotInBlacklistException(userId);
+                });
         blacklistRepository.delete(blacklist);
+        logger.info("User {} successfully removed from blacklist", userId);
     }
 
     @Transactional
@@ -259,4 +267,13 @@ public class UserService {
             logger.info("User {} is not a moderator, no action taken", userId);
         }
     }
+
+    @Cacheable(value = "userBlacklist", key = "#userId")
+    public boolean isBlacklisted(Long userId) {
+        logger.debug("Checking if user {} is blacklisted", userId);
+        boolean blacklisted = blacklistRepository.findByUserId(userId).isPresent();
+        logger.info("User {} is {}blacklisted", userId, blacklisted ? "" : "not ");
+        return blacklisted;
+    }
+
 }

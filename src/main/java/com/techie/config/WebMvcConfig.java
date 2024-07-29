@@ -9,14 +9,18 @@ import org.springframework.web.servlet.config.annotation.*;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final BreadcrumbInterceptor breadcrumbInterceptor;
+    private final UserBlacklistInterceptor userBlacklistInterceptor;
 
     @Autowired
-    public WebMvcConfig(BreadcrumbInterceptor breadcrumbInterceptor) {
-        this.breadcrumbInterceptor = breadcrumbInterceptor;;
+    public WebMvcConfig(BreadcrumbInterceptor breadcrumbInterceptor,
+                        UserBlacklistInterceptor userBlacklistInterceptor) {
+        this.breadcrumbInterceptor = breadcrumbInterceptor;
+        this.userBlacklistInterceptor = userBlacklistInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(breadcrumbInterceptor);
+        registry.addInterceptor(userBlacklistInterceptor);
     }
 }

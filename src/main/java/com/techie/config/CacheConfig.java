@@ -23,6 +23,15 @@ public class CacheConfig {
     }
 
     @Bean
+    public CacheManager cacheManagerBlacklist() {
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("userBlacklist");
+        cacheManager.setCaffeine(Caffeine.newBuilder()
+                .expireAfterWrite(1, TimeUnit.HOURS)
+                .maximumSize(1000));
+        return cacheManager;
+    }
+
+    @Bean
     public CacheManager cacheManagerCart() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager("shoppingCart");
         cacheManager.setCaffeine(Caffeine.newBuilder()
