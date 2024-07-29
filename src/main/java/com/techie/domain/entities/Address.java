@@ -12,12 +12,16 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "address")
+@Table(name = "address",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))   // Unique names of the addresses for a given user
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", nullable = false, length = 25)
+    private String name;
 
     @Column(name = "address_line_1", nullable = false, length = 512)
     private String addressLine1;

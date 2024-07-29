@@ -25,7 +25,8 @@
             <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
         </aside>
         <div class="profile-main-content">
-            <h1>Wishlists</h1>
+            <h1 class="wishlist-header">Wishlists</h1>
+            <h5 class="wishlist-description">You can create multiple wishlists, rename them and organize products you like however you want.</h5>
 
             <div th:if="${successMessage}" class="wishlist-success alert alert-success">
                 <p th:text="${successMessage}"></p>
@@ -100,7 +101,6 @@
                 </div>
                 <form id="editWishlistForm" th:action="@{/users/profile/wishlist/edit}" method="POST">
                     <input type="hidden" name="_method" value="PATCH" />
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <input type="hidden" id="editWishlistId" name="wishlistId" />
                     <div class="modal-body">
                         <label for="editWishlistName" class="form-label">Rename or delete a wishlist</label>
@@ -118,7 +118,6 @@
     <!-- Hidden form for delete action -->
     <form id="deleteWishlistForm" th:action="@{/users/profile/wishlist/delete}" method="POST" style="display: none;">
         <input type="hidden" name="_method" value="DELETE" />
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <input type="hidden" id="deleteWishlistId" name="wishlistId" />
     </form>
 

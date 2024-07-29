@@ -42,8 +42,8 @@ public class WishlistRestController {
     public ResponseEntity<String> addToWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
                                                 @AuthenticationPrincipal UserDetails userDetails)
                                                   throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException {
-        UserEntity user = userService.findByUsername(userDetails.getUsername());
         try {
+            UserEntity user = userService.findByUsername(userDetails.getUsername());
             wishlistService.addProductToWishlist(user, wishlistId, productId);
             return ResponseEntity.ok("Product successfully added to wishlist");
         } catch (ProductNotFoundException | WishlistNotFoundException e) {
@@ -57,8 +57,8 @@ public class WishlistRestController {
     public ResponseEntity<String> removeFromWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
                                                      @AuthenticationPrincipal UserDetails userDetails)
                                                        throws WishlistNotFoundException, ProductNotFoundException {
-        UserEntity user = userService.findByUsername(userDetails.getUsername());
         try {
+            UserEntity user = userService.findByUsername(userDetails.getUsername());
             wishlistService.removeProductFromWishlist(user, wishlistId, productId);
             return ResponseEntity.ok("Product successfully removed from wishlist");
         } catch (WishlistNotFoundException | ProductNotFoundException e) {
@@ -72,8 +72,8 @@ public class WishlistRestController {
     @DeleteMapping("/removeAll/{wishlistId}")
     public ResponseEntity<String> removeAllFromWishlist(@PathVariable Long wishlistId,
                                                         @AuthenticationPrincipal UserDetails userDetails) {
-        UserEntity user = userService.findByUsername(userDetails.getUsername());
         try {
+            UserEntity user = userService.findByUsername(userDetails.getUsername());
             wishlistService.removeAllProductsFromWishlist(user, wishlistId);
             return ResponseEntity.ok("All products successfully removed from wishlist");
         } catch (WishlistNotFoundException e) {

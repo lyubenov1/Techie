@@ -52,7 +52,7 @@ public class WishlistService {
 
 
 
-    public WishlistDTO convertToDto(Wishlist wishlist) {
+    public WishlistDTO convertToDTO(Wishlist wishlist) {
         Set<Product> products = wishlist.getProducts();
         logger.info("Products in wishlist {}: {}", wishlist.getId(), products);
         setImageForEachProduct(products);  // Since we cannot directly fetch the productImages list from the database due to MultipleBagFetchException.
@@ -80,7 +80,7 @@ public class WishlistService {
         List<Wishlist> wishlists = wishlistRepository.findByUserEmail(username);
         logger.info("Fetched wishlists: {}", wishlists);
         return wishlists.stream()
-                .map(this::convertToDto)
+                .map(this::convertToDTO)
                 .sorted(Comparator.comparing(WishlistDTO::getId))
                 .toList();
     }

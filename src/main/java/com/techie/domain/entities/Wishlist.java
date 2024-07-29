@@ -13,7 +13,7 @@ import java.util.*;
 @Entity
 @Builder
 @Table(name = "wishlist",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))   // Unique names of the wishlists for a given user.
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))   // Unique names of the wishlists for a given user
 public class Wishlist {
 
     @Id

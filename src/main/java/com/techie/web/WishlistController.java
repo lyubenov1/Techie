@@ -26,7 +26,6 @@ public class WishlistController {
                                  @RequestParam String wishlistName,
                                  RedirectAttributes redirectAttributes) throws InvalidWishlistNameException, DuplicateWishlistException {
         UserEntity user = userService.findByUsername(userDetails.getUsername());
-
         try {
             wishlistService.createWishlist(user, wishlistName);
             redirectAttributes.addFlashAttribute("successMessage", "Wishlist created successfully!");

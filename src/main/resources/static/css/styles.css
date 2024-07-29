@@ -2651,14 +2651,16 @@ a.rating-info span:first-child {
     width: 100%;
 }
 
-.profile-main .wishlist-container {
+.profile-main .wishlist-container,
+.profile-main .address-container {
     display: flex;
     flex-direction: column;
     background-color: inherit;
     color: rgb(225, 222, 218);
 }
 
-.profile-main .wishlist-items {
+.profile-main .wishlist-items,
+.profile-main .address-items {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -2666,7 +2668,8 @@ a.rating-info span:first-child {
     margin-bottom: 15px;
 }
 
-.profile-main .wishlist-item {
+.profile-main .wishlist-item,
+.profile-main .address-item {
     flex: 0 0 calc(25% - 1rem);
     box-sizing: border-box;
     display: flex;
@@ -2674,17 +2677,20 @@ a.rating-info span:first-child {
     position: relative;
 }
 
-.profile-main .wishlist-item.selected {
+.profile-main .wishlist-item.selected,
+.profile-main .address-item.selected {
     border: 1px solid rgb(225, 222, 218);
 }
 
-.profile-main .wishlist-item-content {
+.profile-main .wishlist-item-content,
+.profile-main .address-item-content {
     border: 1px solid grey;
     padding: 15px;
     flex-grow: 1;
 }
 
-.profile-main .wishlist-item-text {
+.profile-main .wishlist-item-text,
+.profile-main .address-item-text {
     white-space: pre-line;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2695,23 +2701,27 @@ a.rating-info span:first-child {
     font-size: 19px;
 }
 
-.profile-main .wishlist-item-text.create {
+.profile-main .wishlist-item-text.create,
+.profile-main .address-item-text.create {
     font-size: 16px;
 }
 
 @media (min-width: 501px) and (max-width: 768px) {
-    .profile-main .wishlist-item {
+    .profile-main .wishlist-item,
+    .profile-main .address-item {
         flex: 0 0 calc(33% - 1rem);
     }
 }
 
 @media (max-width: 501px) {
-    .profile-main .wishlist-item {
+    .profile-main .wishlist-item,
+    .profile-main .address-item {
         flex: 0 0 calc(50% - 1rem);
     }
 }
 
-.profile-main .new-wishlist button {
+.profile-main .new-wishlist button,
+.profile-main .new-address button {
     flex-grow: 1;
     overflow: hidden;
     width: 100%;
@@ -2727,18 +2737,21 @@ a.rating-info span:first-child {
     padding: 15px;
 }
 
-.profile-main .new-wishlist button span:first-child {
+.profile-main .new-wishlist button span:first-child,
+.profile-main .new-address button span:first-child {
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-.profile-main .wishlist-content {
+.profile-main .wishlist-content,
+.profile-main .address-content {
     background-color: inherit;
     border: 1px solid grey;
     padding: 20px;
 }
 
-.profile-main .wishlist-content .header {
+.profile-main .wishlist-content .header,
+.profile-main .address-content .header {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -2750,11 +2763,13 @@ a.rating-info span:first-child {
     transform: translateY(4px);
 }
 
-.profile-main .wishlist-actions {
+.profile-main .wishlist-actions,
+.profile-main .address-actions {
     margin-left: auto;
 }
 
-.profile-main .wishlist-content .wishlist-actions button {
+.profile-main .wishlist-content .wishlist-actions button,
+.profile-main .address-content .address-actions button {
     background-color: inherit;
     padding: 5px 20px;
     border: 1px solid grey;
@@ -2763,12 +2778,14 @@ a.rating-info span:first-child {
     transition: 0.3s;
 }
 
-.profile-main .wishlist-content .wishlist-actions button:hover {
+.profile-main .wishlist-content .wishlist-actions button:hover,
+.profile-main .address-content .address-actions button:hover {
     background-color: #666;
 }
 
 @media (max-width: 501px) {
-    .profile-main .wishlist-content .header {
+    .profile-main .wishlist-content .header,
+    .profile-main .address-content .header {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -2776,17 +2793,20 @@ a.rating-info span:first-child {
     }
 
     .profile-main .wishlist-content .header h2,
+    .profile-main .address-content .header h2,
     .profile-main .wishlist-content .header h5 {
         margin-bottom: 0;
     }
 }
 
-.wishlist-item.clickable {
+.wishlist-item.clickable,
+.address-item.clickable {
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.wishlist-item.clickable:hover {
+.wishlist-item.clickable:hover,
+.address-item.clickable:hover {
     background-color: #444;
 }
 
@@ -2802,7 +2822,9 @@ a.rating-info span:first-child {
 }
 
 .add-wishlist.modal .modal-content,
-.edit-wishlist.modal .modal-content {
+.edit-wishlist.modal .modal-content,
+.add-address.modal .modal-content,
+.edit-address.modal .modal-content {
     background-color: rgb(32, 32, 32);
     border: 1px solid grey;
     color: rgb(225, 222, 218);
@@ -2811,12 +2833,16 @@ a.rating-info span:first-child {
 
 .add-wishlist.modal .modal-content .modal-header h5,
 .edit-wishlist.modal .modal-content .modal-header h5,
+.add-address.modal .modal-content .modal-header h5,
+.edit-address.modal .modal-content .modal-header h5,
 .blacklist-modal .modal-content .modal-header h5 {
     text-decoration-color: black;
 }
 
 .add-wishlist.modal .btn-close,
-.edit-wishlist.modal .btn-close {
+.edit-wishlist.modal .btn-close,
+.add-address.modal .btn-close,
+.edit-address.modal .btn-close {
     font-size: 1.2rem;
     width: 1.2rem;
     height: 1.2rem;
@@ -2831,6 +2857,42 @@ a.rating-info span:first-child {
     caret-color: rgb(225, 222, 218);
     color: rgb(225, 222, 218);
     font-family: 'Roboto Condensed', serif;
+}
+
+.add-address.modal .modal-body .form-group input,
+.edit-address.modal .modal-body .form-group input {
+    background-color: inherit;
+    border: 1px solid grey;
+    transition: background-color 0.3s, border-color 0.3s;
+    caret-color: rgb(225, 222, 218);
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.add-address.modal .modal-body .form-group,
+.edit-address.modal .modal-body .form-group {
+    margin-bottom: 10px;
+}
+
+.add-address.modal .modal-body .form-group input::placeholder ,
+.edit-address.modal .modal-body .form-group input::placeholder {
+    color: #aeaeae;
+    font-size: 15px;
+    font-family: 'Roboto Condensed', serif;
+    padding-left: 8px;
+}
+
+.add-address.modal .modal-body .form-group input:focus ,
+.edit-address.modal .modal-body .form-group input:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.add-address.modal .modal-body .form-group input:hover ,
+.edit-address.modal .modal-body .form-group input:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .add-wishlist.modal .modal-body #wishlistName::placeholder,
@@ -2855,7 +2917,8 @@ a.rating-info span:first-child {
 }
 
 .add-wishlist.modal .modal-body .btn.btn-primary,
-.edit-wishlist.modal .modal-body .btn.btn-primary {
+.edit-wishlist.modal .modal-body .btn.btn-primary,
+.edit-address.modal .modal-body .btn.btn-primary {
     background-color: inherit;
     border: 1px solid grey;
     color: rgb(225, 222, 218);
@@ -2866,7 +2929,19 @@ a.rating-info span:first-child {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.edit-wishlist.modal .modal-body .btn.btn-danger {
+.add-address.modal .modal-body .btn.btn-primary {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 130px;
+    margin-top: 20px;
+    padding: 5px 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.edit-wishlist.modal .modal-body .btn.btn-danger,
+.edit-address.modal .modal-body .btn.btn-danger {
     color: rgb(225, 222, 218);
     margin-top: 20px;
     width: 90px;
@@ -2874,7 +2949,8 @@ a.rating-info span:first-child {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.edit-wishlist.modal .modal-body .button-container {
+.edit-wishlist.modal .modal-body .button-container,
+.edit-address.modal .modal-body .button-container {
     display: flex;
     justify-content: flex-end;
     gap: 15px;
@@ -2882,17 +2958,21 @@ a.rating-info span:first-child {
 }
 
 .add-wishlist.modal .modal-body .btn.btn-primary:hover,
-.edit-wishlist.modal .modal-body .btn.btn-primary:hover {
+.edit-wishlist.modal .modal-body .btn.btn-primary:hover,
+.add-address.modal .modal-body .btn.btn-primary:hover,
+.edit-address.modal .modal-body .btn.btn-primary:hover {
     background-color: #505050;
     color: white;
     border-color: white;
 }
 
-.edit-wishlist.modal .modal-body .btn.btn-danger:hover {
+.edit-wishlist.modal .modal-body .btn.btn-danger:hover,
+.edit-address.modal .modal-body .btn.btn-danger:hover {
     background-color: #4c0404;
 }
 
-#editWishlistForm, #deleteWishlistForm {
+#editWishlistForm, #deleteWishlistForm,
+#editAddressForm, #deleteAddressForm {
     margin-bottom: 0;
 }
 
@@ -4043,4 +4123,54 @@ hr {
     color: #009f00;
     font-size: 20px;
     padding: 10px;
+}
+
+.profile-main-content .wishlist-header,
+.profile-main-content .address-header {
+    margin-bottom: 0;
+}
+
+.profile-main-content .wishlist-description,
+.profile-main-content .address-description {
+    margin-bottom: 20px;
+    color: #9e9696;
+}
+
+.profile-main-content .address-content .address-details {
+    margin-top: 20px;
+    font-size: 17px;
+}
+
+.address-modal-error {
+    display: none;
+    color: red;
+    margin-top: 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.address-success {
+    font-family: 'Roboto Condensed', serif;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 19px;
+    text-align: center;
+    border-radius: 10px;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.address-success.show {
+    display: flex;
+    opacity: 1;
+}
+
+.address-success p {
+    margin: 0;
 }

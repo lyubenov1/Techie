@@ -97,7 +97,10 @@ public class UserService {
     }
 
     private Address createAddress(RegisterModel registrationDTO, UserEntity userEntity) {
+        String defaultAddressName = "Address 1";
+
         return Address.builder()
+                .name(defaultAddressName)
                 .addressLine1(registrationDTO.getAddressLine1())
                 .addressLine2(registrationDTO.getAddressLine2())
                 .city(registrationDTO.getCity())
