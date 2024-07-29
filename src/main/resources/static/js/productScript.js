@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const wishlistId = wishlists[0].id;
                 const csrfToken = document.getElementById('csrf-token').value;
                 fetch(`/api/wishlist/add/${wishlistId}/${productId}`, {
-                    method: 'POST',
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrfToken

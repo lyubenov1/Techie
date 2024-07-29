@@ -58,8 +58,7 @@ public class ReviewController {
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(createdReview.getId()).toUri();
-
-            return ResponseEntity.created(location).body(createdReview);
+            return ResponseEntity.created(location).body("Review successfully created!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

@@ -11,9 +11,7 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.*;
 
-import java.net.*;
 import java.util.*;
 
 @RestController
@@ -41,17 +39,14 @@ public class WishlistRestController {
         }
     }
 
-    @PostMapping("/add/{wishlistId}/{productId}")
+    @PatchMapping("/add/{wishlistId}/{productId}")
     public ResponseEntity<String> addToWishlist(@PathVariable Long wishlistId, @PathVariable Long productId,
                                                 @AuthenticationPrincipal UserDetails userDetails)
                                                   throws WishlistNotFoundException, ProductNotFoundException, ProductAlreadyInWishlistException {
         try {
             UserEntity user = userService.findByUsername(userDetails.getUsername());
             wishlistService.addProductToWishlist(user, wishlistId, productId);
-
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .buildAndExpand(wishlistId).toUri();
-            return ResponseEntity.created(location).body("Product successfully added to wishlist");
+            return ResponseEntity.ok().body("Product successfully added to wishlist");
 
         } catch (ProductNotFoundException | WishlistNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
