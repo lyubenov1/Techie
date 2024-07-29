@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.product;
 
 public class ProductAlreadyDiscountedException extends RuntimeException {
     public ProductAlreadyDiscountedException(Long productId) {

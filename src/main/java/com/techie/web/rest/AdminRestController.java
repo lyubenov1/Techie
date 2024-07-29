@@ -1,7 +1,8 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.role.*;
+import com.techie.exceptions.user.*;
 import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
@@ -38,7 +39,7 @@ public class AdminRestController {
     @PostMapping("/blacklist/post")
     public ResponseEntity<String> blacklistUser(@RequestBody UserDisplayView userDisplayView)
                                                   throws UsernameNotFoundException, UserAlreadyBlacklistedException,
-                                                      AdminModeratorBlacklistException {
+            AdminModeratorBlacklistException {
         try {
             userService.blacklistUser(userDisplayView);
             return ResponseEntity.ok().body("User blacklisted");

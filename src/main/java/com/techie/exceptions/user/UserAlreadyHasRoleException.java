@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.user;
 
 public class UserAlreadyHasRoleException extends RuntimeException {
     public UserAlreadyHasRoleException(String role) {

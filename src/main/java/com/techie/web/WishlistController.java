@@ -1,7 +1,7 @@
 package com.techie.web;
 
 import com.techie.domain.entities.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.wishlist.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.annotation.*;

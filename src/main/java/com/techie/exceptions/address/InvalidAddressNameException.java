@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.address;
 
 public class InvalidAddressNameException extends RuntimeException {
     public InvalidAddressNameException() {

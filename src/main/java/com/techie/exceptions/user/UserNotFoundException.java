@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {

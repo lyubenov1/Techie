@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.user;
 
 public class UserNotInBlacklistException extends RuntimeException {
     public UserNotInBlacklistException(Long id) {

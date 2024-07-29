@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.review;
 
 public class InvalidRatingException extends RuntimeException {
     public InvalidRatingException(int ratingValue) {

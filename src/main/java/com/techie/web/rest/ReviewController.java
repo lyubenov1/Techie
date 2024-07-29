@@ -1,7 +1,9 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.other.*;
+import com.techie.exceptions.review.*;
+import com.techie.exceptions.role.*;
 import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;

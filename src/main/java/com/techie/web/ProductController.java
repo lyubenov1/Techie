@@ -2,7 +2,8 @@ package com.techie.web;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.category.*;
+import com.techie.exceptions.product.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;

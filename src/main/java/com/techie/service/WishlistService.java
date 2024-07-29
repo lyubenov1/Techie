@@ -2,7 +2,8 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.product.*;
+import com.techie.exceptions.wishlist.*;
 import com.techie.repository.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;

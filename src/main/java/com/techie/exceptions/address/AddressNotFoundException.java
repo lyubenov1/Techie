@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.address;
 
 public class AddressNotFoundException extends RuntimeException {
     public AddressNotFoundException(Long addressId) {

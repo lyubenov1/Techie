@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.role;
 
 public class AdminModeratorBlacklistException extends RuntimeException {
     public AdminModeratorBlacklistException() {

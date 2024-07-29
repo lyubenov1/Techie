@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.review;
 
 public class OneReviewPerUserException extends RuntimeException {
     public OneReviewPerUserException() {

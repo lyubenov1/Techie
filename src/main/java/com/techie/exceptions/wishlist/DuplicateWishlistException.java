@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.wishlist;
 
 public class DuplicateWishlistException extends RuntimeException {
     public DuplicateWishlistException(String wishlistName) {

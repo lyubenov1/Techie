@@ -2,7 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.address.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.slf4j.*;

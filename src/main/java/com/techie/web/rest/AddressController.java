@@ -3,7 +3,7 @@ package com.techie.web.rest;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.address.*;
 import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;

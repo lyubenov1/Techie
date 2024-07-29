@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.other;
 
 public class CloudinaryImageDeletionException extends RuntimeException {
     public CloudinaryImageDeletionException(String message) {

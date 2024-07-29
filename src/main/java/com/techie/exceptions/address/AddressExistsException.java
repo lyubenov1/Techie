@@ -1,4 +1,4 @@
-package com.techie.exceptions;
+package com.techie.exceptions.address;
 
 public class AddressExistsException extends RuntimeException {
     public AddressExistsException(String addressName) {

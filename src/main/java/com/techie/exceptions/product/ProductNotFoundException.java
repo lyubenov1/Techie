@@ -1,4 +1,6 @@
-package com.techie.exceptions;
+package com.techie.exceptions.product;
+
+import com.techie.exceptions.*;
 
 public class ProductNotFoundException extends ObjectNotFoundException {
     public ProductNotFoundException(String productName) {
