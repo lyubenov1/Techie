@@ -17,6 +17,11 @@ public class HomeController {
         return "about-us";
     }
 
+    @GetMapping("/moderator")
+    public String moderatorPage() {
+        return "moderator";
+    }
+
     @GetMapping("/terms-of-use")
     public String termsOfUsePage() {
         return "terms-of-use";

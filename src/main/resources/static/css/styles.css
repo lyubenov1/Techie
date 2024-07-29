@@ -3633,9 +3633,19 @@ hr {
 
 .admin.blacklist .user-details,
 .admin.dashboard .user-details,
-.admin.promotion .product-details {
+.admin.promotion .product-details-admin {
     display: flex;
     flex-direction: column;
+}
+
+.admin.promotion .dropdown-menu {
+    max-width: 450px;
+}
+
+.admin.promotion .dropdown-menu .dropdown-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .admin.blacklist .user-email,
@@ -3708,8 +3718,7 @@ hr {
     color: white !important;
 }
 
-.blacklist-modal .btn.btn-primary,
-.promotion-modal .btn.btn-primary {
+.blacklist-modal .btn.btn-primary {
     background-color: inherit;
     border: 1px solid grey;
     color: rgb(225, 222, 218);
@@ -3720,14 +3729,42 @@ hr {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.blacklist-modal .btn.btn-secondary,
-.promotion-modal .btn.btn-secondary {
+.blacklist-modal .btn.btn-secondary {
     color: rgb(225, 222, 218);
     margin-top: 20px;
     width: 100px;
     padding: 7px 15px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+
+.promotion-modal .btn.btn-primary {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 150px;
+    margin-top: 20px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.promotion-modal .btn.btn-secondary {
+    color: rgb(225, 222, 218);
+    margin-top: 20px;
+    width: 150px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.promotion-modal #discountInput {
+    background-color: inherit;
+    caret-color: white;
+    color: white !important;
+}
+
+.promotion-modal #discountHelp {
+     color: white !important;
+ }
 
 .blacklist-modal .modal-footer,
 .promotion-modal .modal-footer {
@@ -3855,7 +3892,7 @@ hr {
 
 .blacklist-container .user-row .delete-btn,
 .moderator-container .user-row .delete-btn,
-.product-container .product-row .delete-btn {
+.product-container .product-row .discount-btn {
     margin-right: 10px;
 }
 
@@ -3869,8 +3906,7 @@ hr {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-.moderator-container .user-row .delete-btn button,
-.product-container .product-row .delete-btn button {
+.moderator-container .user-row .delete-btn button {
     background-color: inherit;
     border: 1px solid grey;
     color: rgb(225, 222, 218);
@@ -3880,9 +3916,19 @@ hr {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
+.product-container .product-row .discount-btn button {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 150px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
 .blacklist-container .user-row .delete-btn button:hover,
 .moderator-container .user-row .delete-btn button:hover,
-.product-container .product-row .delete-btn button:hover {
+.product-container .product-row .discount-btn button:hover {
     background-color: #505050;
     color: white;
     border-color: white;

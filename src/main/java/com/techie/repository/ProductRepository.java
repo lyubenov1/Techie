@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByNameContaining(@Param("query") String query);
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages pi " +
-            "WHERE LOWER(p.name) LIKE LOWER(:query) AND pi.isPrimary = true AND p.discount IS NULL")
+            "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) AND pi.isPrimary = true AND p.discount IS NULL")
     List<Product> findByNameForAdminView(@Param("query") String query);
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages pi " +

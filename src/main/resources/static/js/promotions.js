@@ -1,53 +1,35 @@
 csrfToken = document.getElementById('csrf-token').value;
 selectedProduct = null;
 fetchTimeout = null;
-currentPageType = 'promotion';
-
-// Configuration object
-pageConfig = {
-    promotion: {
-        fetchUrl: '/api/products/promotion/get',
-        onProductSelect: openModal
-    }
-};
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetchFilteredProducts();
+    fetchFilteredProducts(currentPage);
 });
 
-function fetchFilteredProducts() {
-    fetchFilteredProductsWithPagination(currentPage);
-}
 
 function fetchProducts() {
     const query = document.getElementById('productName').value;
     const dropdown = document.getElementById('productDropdown');
 
-    if (fetchTimeout) {
-        clearTimeout(fetchTimeout);
-    }
-
-    fetchTimeout = setTimeout(() => {
-        fetch(`${pageConfig[currentPageType].fetchUrl}?query=${encodeURIComponent(query)}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        if (response.headers.get('content-type')?.includes('text/html')) {
-                            throw new Error('Server returned an HTML error page');
-                        } else {
-                            throw new Error(text || 'Failed to fetch products');
-                        }
-                    });
-                }
-                return response.json();
-            })
-            .then(products => {
-                populateDropdown(products, dropdown);
-            })
-            .catch(error => {
-                handleError(error.message);
-            });
-    }, 300);
+    fetch(`/api/products/promotion/get?query=${encodeURIComponent(query)}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    if (response.headers.get('content-type')?.includes('text/html')) {
+                        throw new Error('Server returned an HTML error page');
+                    } else {
+                        throw new Error(text || 'Failed to fetch products');
+                    }
+                });
+            }
+            return response.json();
+        })
+        .then(products => {
+            populateDropdown(products, dropdown);
+        })
+        .catch(error => {
+            handleError(error.message);
+        });
 }
 
 function populateDropdown(products, dropdown) {
@@ -56,7 +38,7 @@ function populateDropdown(products, dropdown) {
         const option = document.createElement('div');
         option.className = 'dropdown-item';
         option.innerHTML = createProductHTML(product);
-        option.addEventListener('click', () => pageConfig[currentPageType].onProductSelect(product));
+        option.addEventListener('click', () => openModal(product));
         dropdown.appendChild(option);
     });
     dropdown.style.display = 'block';
@@ -66,9 +48,9 @@ function createProductHTML(product) {
     return `
         <div class="product-item">
             <img src="${product.imageUrls[0]}" alt="Product Image" class="product-image">
-            <div class="product-details">
+            <div class="product-details-admin">
                 <div class="product-name">${product.name}</div>
-                <div class="product-price">Price: ${product.price.toFixed(2)} $</div>
+                <div class="product-price">Price: ${product.originalPrice.toFixed(2)} $</div>
             </div>
         </div>
     `;
@@ -80,17 +62,27 @@ function openModal(product) {
     selectedProduct = product;
     document.getElementById('productImage').src = product.imageUrls[0];
     document.getElementById('productNameModal').innerText = product.name;
-    document.getElementById('originalPrice').innerText = `${product.price.toFixed(2)} $`;
-    document.getElementById('discountPercentage').value = '';
+    document.getElementById('originalPrice').innerText = `${product.originalPrice.toFixed(2)} $`;
+
+    document.getElementById('discountInput').value = product.discount || '';
 
     var modal = new bootstrap.Modal(document.getElementById('promotionsModal'));
     modal.show();
 }
 
+
 function applyDiscount() {
     if (!selectedProduct) return;
 
-    selectedProduct.discount = document.getElementById('discountPercentage').value;
+    // Retrieve the discount value from the input field
+    const discountValue = document.getElementById('discountInput').value;
+    // Validate the discount value
+    if (discountValue === '' || isNaN(discountValue) || discountValue < 0 || discountValue > 100) {
+        handleErrorModal('Please enter a valid discount percentage between 0 and 100.');
+        return;
+    }
+    // Attach the discount value to the selected product
+    selectedProduct.discount = parseFloat(discountValue);
 
     fetch('/api/products/promotion/post', {
         method: 'POST',
@@ -115,12 +107,20 @@ function applyDiscount() {
         .then(data => {
             console.log('Discount applied successfully:', data);
             handleSuccess('Discount applied successfully');
-            fetchFilteredProducts(); // Refresh the list
+            fetchFilteredProducts(currentPage); // Refresh the list
+            closeModal();
         })
         .catch(error => {
             console.error('Error applying discount:', error);
             handleErrorModal(error.message);
         });
+}
+
+function closeModal() {
+    var modal = bootstrap.Modal.getInstance(document.getElementById('promotionsModal'));
+    if (modal) {
+        modal.hide();
+    }
 }
 
 function handleErrorModal(message) {
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 currentPage = 0;
 pageSize = 6;
 
-function fetchFilteredProductsWithPagination(page) {
+function fetchFilteredProducts(page) {
     const url = `/api/products/discount/get?p=${page}&s=${pageSize}`;
 
     fetch(url)
@@ -200,9 +200,11 @@ function displayProducts(products, currentPage, totalPages, totalProducts) {
         productRow.className = 'product-row';
         productRow.innerHTML = `
             <div class="product-info">
-                <span class="img"><img src="${product.image}" alt="Product Image" class="img-thumbnail"></span>
+                <span class="img"><img src="${product.imageUrls[0]}" alt="Product Image" class="img-thumbnail"></span>
                 <span class="name">${product.name}</span>
-                <span class="price">Price: $${product.price.toFixed(2)}</span>
+                <span class="price">Price: $${product.originalPrice.toFixed(2)}</span>
+                <span class="product-discount">Discount: ${product.discount.toFixed(2)} %</span>
+                <span class="product-discounted-price">Discounted price: ${product.discountedPrice.toFixed(2)} $</span>
             </div>
             <div class="discount-btn"><button onclick="removeDiscount(${product.id})">Remove discount</button></div>
         `;
@@ -237,7 +239,7 @@ function showMessage(message, type) {
 
 async function removeDiscount(productId) {
     try {
-        const response = await fetch(`/api/products/discount/delete?productId=${productId}`, {
+        const response = await fetch(`/api/products/promotion/delete?productId=${productId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -245,20 +247,26 @@ async function removeDiscount(productId) {
             }
         });
 
-        const data = await response.text();
+        const contentType = response.headers.get('content-type');
+        const data = contentType.includes('application/json') ? await response.json() : await response.text();
 
         if (!response.ok) {
-            throw new Error(data);
+            if (contentType.includes('text/html')) {
+                throw new Error('Server returned an HTML error page');
+            } else {
+                throw new Error(data.message || 'Failed to remove discount');
+            }
         }
 
         console.log('Successfully removed discount from product: ', data);
-        handleSuccess(data);
-        fetchFilteredProducts() // Refresh the list
+        handleSuccess('Discount removed successfully');
+        fetchFilteredProducts(currentPage); // Refresh the list
     } catch (error) {
         console.error('Error removing discount from product:', error);
         handleError(error.message);
     }
 }
+
 
 function createPagination(currentPage, totalPages, totalProducts) {
     const paginationDiv = document.getElementById('productPagination');
@@ -268,7 +276,7 @@ function createPagination(currentPage, totalPages, totalProducts) {
     prevButton.textContent = '<';
     prevButton.onclick = () => {
         if (currentPage > 0) {
-            fetchFilteredProductsWithPagination(currentPage - 1);
+            fetchFilteredProducts(currentPage - 1);
         }
     };
     prevButton.disabled = currentPage === 0;
@@ -277,7 +285,7 @@ function createPagination(currentPage, totalPages, totalProducts) {
     nextButton.textContent = '>';
     nextButton.onclick = () => {
         if (currentPage < totalPages - 1) {
-            fetchFilteredProductsWithPagination(currentPage + 1);
+            fetchFilteredProducts(currentPage + 1);
         }
     };
     nextButton.disabled = currentPage === totalPages - 1;

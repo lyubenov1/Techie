@@ -353,20 +353,26 @@ async function removeFromBlacklist(userId) {
             }
         });
 
-        const data = await response.text();
+        const contentType = response.headers.get('content-type');
+        const data = contentType.includes('application/json') ? await response.json() : await response.text();
 
         if (!response.ok) {
-            throw new Error(data);
+            if (contentType.includes('text/html')) {
+                throw new Error('Server returned an HTML error page');
+            } else {
+                throw new Error(data.message || 'Failed to remove user from blacklist');
+            }
         }
 
         console.log('User removed from blacklist successfully:', data);
-        handleSuccess(data);
-        fetchFilteredUsersWithType() // Refresh the list
+        handleSuccess('User removed from blacklist successfully');
+        fetchFilteredUsersWithType(); // Refresh the list
     } catch (error) {
         console.error('Error removing user from blacklist:', error);
         handleError(error.message);
     }
 }
+
 
 function handleError(message) {
     showMessage(message, 'error');

@@ -49,7 +49,11 @@
                         <img id="productImage" src="" alt="Product Image" class="img-thumbnail mb-3">
                         <p><strong>Product name:</strong> <span id="productNameModal"></span></p>
                         <p><strong>Original price:</strong> <span id="originalPrice"></span></p>
-                        <p><strong>Discount %:</strong> <span id="discountPercentage"></span></p>
+                        <p>
+                            <label for="discountInput"><strong>Discount % :</strong></label>
+                            <input type="number" id="discountInput" class="form-control" min="0" max="100" step="1" aria-describedby="discountHelp">
+                            <small id="discountHelp" class="form-text text-muted">Enter the discount percentage (0-100)</small>
+                        </p>
                     </div>
                     <div id="errorMessageModal" class="discount-error" style="display: none;"></div>
                 </div>

@@ -226,7 +226,6 @@ public class ProductService {
         productRepository.updateAverageRating(productId, newAverageRating);
     }
 
-
     public List<ProductAdminView> getProductsAdmin(String query) {
         List<Product> products;
 
@@ -290,6 +289,7 @@ public class ProductService {
         }
 
         product.setDiscount(null);
+        product.setDiscountedPrice(null);
         productRepository.save(product);
     }
 
