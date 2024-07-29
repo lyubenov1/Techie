@@ -10,7 +10,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductAdminView {
+public class ProductAdminView {  // Product DTO for the admin and moderator pages
     private Long id;
     private String name;
     private BigDecimal originalPrice;

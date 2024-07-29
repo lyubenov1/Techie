@@ -23,4 +23,6 @@ public class ProductDTO {
     private Map<Integer, Integer> ratings;  // Map of individual ratings from 1-5, along with their count
     private Integer reviewCount;
     private String url;
+    private BigDecimal discountedPrice;
+    private BigDecimal discount;
 }

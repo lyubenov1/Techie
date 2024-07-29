@@ -69,6 +69,8 @@ public class ProductConversionUtils {
         productDTO.setDescription(product.getDescription());
         productDTO.setAverageRating(product.getAverageRating());
         productDTO.setUrl(encodedUrl);
+        productDTO.setDiscountedPrice(product.getDiscountedPrice());
+        productDTO.setDiscount(product.getDiscount());
     }
 
     private static ChargerDTO convertToChargerDTO(Charger charger) {

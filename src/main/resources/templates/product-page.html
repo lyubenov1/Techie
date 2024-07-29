@@ -51,7 +51,12 @@
                               th:text="'(' + ${product.reviewCount} + ' ' + ${reviewText} + ')'">0 reviews</span>
                     </a>
                 </div>
-                <div class="price-box">
+                <div class="price-box" th:if="${product.discount != null}">
+                    <span class="original-price-discount" th:text="'$' + ${product.originalPrice}">Original price</span>
+                    <span class="discounted-price" th:text="'$' + ${product.discountedPrice}">Discounted price</span>
+                    <span class="discount-percentage" th:text="'-' + ${product.discount} + '%'">Discount</span>
+                </div>
+                <div class="price-box" th:unless="${product.discount != null}">
                     <span class="original-price" th:text="'$' + ${product.originalPrice}">Original price</span>
                 </div>
                 <div class="cart-and-favourites">

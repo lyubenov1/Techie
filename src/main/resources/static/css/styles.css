@@ -1470,12 +1470,38 @@ a.rating-info span:first-child {
     font-size: 40px;
     font-family: 'RobotoCondensed', serif;
     font-weight: 500;
-    margin-bottom: 20px;
     color: rgb(225, 222, 218);
+}
+
+.product-info .price-box .original-price-discount {
+    font-size: 30px;
+    font-family: 'RobotoCondensed', serif;
+    font-weight: 500;
+    color: #888;
+    text-decoration: line-through;
+}
+
+.product-info .price-box .discounted-price {
+    font-size: 40px;
+    font-family: 'RobotoCondensed', serif;
+    font-weight: 500;
+    color: rgb(225, 222, 218);
+}
+
+.product-info .price-box .discount-percentage {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff6600;
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
 .product-info .price-box {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .cart-and-favourites {
