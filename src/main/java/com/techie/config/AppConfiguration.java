@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
 
 @Configuration
+@EnableAspectJAutoProxy
 public class AppConfiguration {
 
     @Bean
