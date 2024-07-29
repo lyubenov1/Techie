@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.lang.reflect.*;
+import java.math.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -68,21 +69,32 @@ public class ProductFilterService {
     private void applySorting(List<ProductDTO> products, String sort) {
         switch (sort) {
             case "price-low-high":
-                products.sort(Comparator.comparing(ProductDTO::getOriginalPrice));
+                products.sort(priceComparator(false));
                 break;
             case "price-high-low":
-                products.sort(Comparator.comparing(ProductDTO::getOriginalPrice).reversed());
+                products.sort(priceComparator(true));
                 break;
             case "rating":
                 products.sort(Comparator.comparing(ProductDTO::getAverageRating).reversed());
                 break;
-            case "newest":
+            case "discount":
+                products.sort(Comparator.comparing(ProductDTO::getDiscount, Comparator.nullsLast(Comparator.reverseOrder())));
+                break;
             default:
                 sortByNewest(products);
                 break;
         }
     }
 
+    private Comparator<ProductDTO> priceComparator(boolean descending) {
+        Comparator<ProductDTO> comparator = (p1, p2) -> {
+            BigDecimal price1 = p1.getDiscountedPrice() != null ? p1.getDiscountedPrice() : p1.getOriginalPrice();
+            BigDecimal price2 = p2.getDiscountedPrice() != null ? p2.getDiscountedPrice() : p2.getOriginalPrice();
+            return price1.compareTo(price2);
+        };
+
+        return descending ? comparator.reversed() : comparator;
+    }
 
     private void applyFilters(List<ProductDTO> products, Map<String, List<String>> filters) {
         for (String key : filters.keySet()) {

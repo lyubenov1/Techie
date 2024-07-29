@@ -32,11 +32,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/weekly-deals")
-    public String weeklyDealsPage() {
-        return "weekly-deals";
-    }
-
     @GetMapping("/search")
     public String searchProducts(@RequestParam(name = "q", required = false) String query,
                                  @RequestParam(required = false) Map<String, String> filters,
