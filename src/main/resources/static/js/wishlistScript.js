@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                         <div class="card-title">${product.name}</div>
-                        <div class="card-text">${product.originalPrice.toFixed(2)} $</div>
+                        ${createPriceElement(product).outerHTML}
                     </div>
                 </div>
             `;
@@ -297,3 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchAndPopulateWishlists();
 });
+
+

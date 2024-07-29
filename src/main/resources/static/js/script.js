@@ -743,9 +743,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </div>
                                 </div>
                                 <div class="card-title">${product.name}</div>
-                                <div class="card-text">
-                                    <span>${product.originalPrice.toFixed(2)} $</span>
-                                </div>
+                                ${createPriceElement(product).outerHTML}
                             </div>
                         </div>
                     </a>
@@ -759,6 +757,42 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSimilarProducts();
 });
 
+function createPriceElement(product) {
+    const cardText = document.createElement('div');
+    cardText.className = 'card-text';
+
+    if (product.discount !== null && product.discount !== undefined) {
+        // Case when there's a discount
+        const originalPrice = document.createElement('span');
+        originalPrice.className = 'original-price-discount';
+        originalPrice.textContent = `${product.originalPrice.toFixed(2)} $`;
+
+        const discountedPrice = document.createElement('span');
+        discountedPrice.className = 'discounted-price';
+        discountedPrice.textContent = `${product.discountedPrice.toFixed(2)} $`;
+
+        const discountPercentage = document.createElement('span');
+        discountPercentage.className = 'discount-percentage';
+        discountPercentage.textContent = `-${product.discount}%`;
+
+        cardText.appendChild(originalPrice);
+        cardText.appendChild(discountedPrice);
+        cardText.appendChild(discountPercentage);
+    } else {
+        // Case when there's no discount
+        const originalPrice = document.createElement('span');
+        originalPrice.className = 'original-price';
+        originalPrice.textContent = `${product.originalPrice.toFixed(2)} $`;
+
+        cardText.appendChild(originalPrice);
+    }
+
+    return cardText;
+}
+
+// Usage
+const priceElement = createPriceElement(product);
+// Append priceElement to your card or container
 
 document.addEventListener('DOMContentLoaded', function () {
 

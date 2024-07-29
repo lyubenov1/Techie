@@ -90,8 +90,13 @@
                                     </div>
                                 </div>
                                 <div class="card-title" th:text="${product.name}">Product Name</div>
-                                <div class="card-text">
-                                    <span th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
+                                <div class="card-text" th:if="${product.discount != null}">
+                                    <span class="original-price-discount" th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Original price</span>
+                                    <span class="discounted-price" th:text="${#numbers.formatDecimal(product.discountedPrice, 1, 2)} + ' $'">Discounted price</span>
+                                    <span class="discount-percentage" th:text="'-' + ${product.discount} + '%'">Discount</span>
+                                </div>
+                                <div class="card-text" th:unless="${product.discount != null}">
+                                    <span class="original-price" th:text="${#numbers.formatDecimal(product.originalPrice, 1, 2)} + ' $'">Product Price</span>
                                 </div>
                             </div>
                         </div>

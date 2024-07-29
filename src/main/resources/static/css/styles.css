@@ -994,6 +994,7 @@ body.register .form-check-label {
 
 .category-products .card-body,
 .wishlist-products .card-body  {
+    font-family: 'Roboto Condensed', serif;
     flex: 1;
     padding: 0;
 }
@@ -1005,6 +1006,63 @@ body.register .form-check-label {
     justify-content: space-between;
     padding-top: 5px;
 }
+
+.category-products .card-text,
+.wishlist-products .card-text{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.category-products .card-text .original-price-discount,
+.wishlist-products .card-text .original-price-discount {
+    font-weight: 500;
+    color: #a5a4a4;
+    position: relative;
+}
+
+.category-products .card-text .original-price-discount:before,
+.wishlist-products .card-text .original-price-discount:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 2px solid;
+    border-color: inherit;
+    -ms-transform:rotate(10deg);
+    transform:rotate(10deg);
+}
+
+.category-products .card-text .discounted-price,
+.wishlist-products .card-text .discounted-price {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: rgb(225, 222, 218);
+}
+
+.category-products .card-text .discount-percentage,
+.wishlist-products .card-text .discount-percentage {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff6600;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+@media (max-width: 490px) {
+    .category-products .card-text .original-price-discount,
+    .wishlist-products .card-text .original-price-discount {
+        display: none;
+    }
+
+    .category-products .card-text .discount-percentage,
+    .wishlist-products .card-text .discount-percentage {
+        display: none;
+    }
+}
+
 
 .wishlist-and-shopping-cart {
     display: flex;
@@ -1477,8 +1535,20 @@ a.rating-info span:first-child {
     font-size: 30px;
     font-family: 'RobotoCondensed', serif;
     font-weight: 500;
-    color: #888;
-    text-decoration: line-through;
+    color: #a5a4a4;
+    position:relative;
+}
+
+.product-info .price-box .original-price-discount:before{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 2px solid;
+    border-color: inherit;
+    -ms-transform:rotate(10deg);
+    transform:rotate(10deg);
 }
 
 .product-info .price-box .discounted-price {
