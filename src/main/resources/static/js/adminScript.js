@@ -87,8 +87,8 @@ function createUserHTML(user) {
 }
 
 function makeModerator(user) {
-    fetch('/api/admin/moderator/post', {
-        method: 'POST',
+    fetch('/api/admin/moderator/patch', {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken

@@ -63,11 +63,11 @@ public class ProductRestController {
         }
     }
 
-    @PostMapping("/promotion/post")
-    public ResponseEntity<?> postPromotionProducts(@RequestBody ProductAdminView productAdminView)
+    @PatchMapping("/promotion/patch")
+    public ResponseEntity<?> discountProducts(@RequestBody ProductAdminView productAdminView)
                                                      throws ProductNotFoundException, ProductAlreadyDiscountedException {
         try {
-            productService.discountProduct(productAdminView);
+            productService.discountProduct(productAdminView); // Assuming you return the discounted product
             return ResponseEntity.ok().body("Product discounted");
         } catch (ProductNotFoundException | ProductAlreadyDiscountedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

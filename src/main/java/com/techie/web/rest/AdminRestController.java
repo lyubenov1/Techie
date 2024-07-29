@@ -74,7 +74,7 @@ public class AdminRestController {
         }
     }
 
-    @PostMapping("/moderator/post")
+    @PatchMapping("/moderator/patch")
     public ResponseEntity<String> makeModerator(@RequestBody UserDisplayView userDisplayView)
                                                   throws UserAlreadyHasRoleException {
         try {

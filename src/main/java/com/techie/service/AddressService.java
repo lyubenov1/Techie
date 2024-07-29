@@ -29,7 +29,7 @@ public class AddressService {
     }
 
     @Transactional
-    public void createAddress(UserEntity user, AddressDTO addressDTO)
+    public AddressDTO createAddress(UserEntity user, AddressDTO addressDTO)
                                 throws AddressExistsException, InvalidAddressNameException {
         if (addressRepository.existsByNameAndUserUsername(addressDTO.getName(), user.getUsername())) {
             throw new AddressExistsException(addressDTO.getName());
@@ -41,7 +41,9 @@ public class AddressService {
 
         Address address = AddressConversionUtil.convertToEntity(addressDTO);
         address.setUser(user);
-        addressRepository.save(address);
+
+        Address savedAddress = addressRepository.save(address);
+        return AddressConversionUtil.convertToDTO(savedAddress);
     }
 
     @Transactional

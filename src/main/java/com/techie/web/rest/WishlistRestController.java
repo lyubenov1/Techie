@@ -11,7 +11,9 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.*;
 
+import java.net.*;
 import java.util.*;
 
 @RestController
@@ -46,7 +48,11 @@ public class WishlistRestController {
         try {
             UserEntity user = userService.findByUsername(userDetails.getUsername());
             wishlistService.addProductToWishlist(user, wishlistId, productId);
-            return ResponseEntity.ok("Product successfully added to wishlist");
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .buildAndExpand(wishlistId).toUri();
+            return ResponseEntity.created(location).body("Product successfully added to wishlist");
+
         } catch (ProductNotFoundException | WishlistNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (ProductAlreadyInWishlistException e) {

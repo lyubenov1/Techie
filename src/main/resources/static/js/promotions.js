@@ -84,8 +84,8 @@ function applyDiscount() {
     // Attach the discount value to the selected product
     selectedProduct.discount = parseFloat(discountValue);
 
-    fetch('/api/products/promotion/post', {
-        method: 'POST',
+    fetch('/api/products/promotion/patch', {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken

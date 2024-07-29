@@ -11,7 +11,9 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.*;
 
+import java.net.*;
 import java.util.*;
 
 @RestController
@@ -43,8 +45,15 @@ public class AddressController {
                                            @RequestBody AddressDTO addressDTO) {
         try {
             UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
-            addressService.createAddress(user, addressDTO);
-            return ResponseEntity.ok("Address successfully created!");
+            AddressDTO createdAddress = addressService.createAddress(user, addressDTO);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}") // Add the address ID to the path
+                    .buildAndExpand(createdAddress.getId()) // Assuming addressDTO has an ID
+                    .toUri();
+
+            // Return 201 Created with the location of the new address and the created address object
+            return ResponseEntity.created(location).body(createdAddress);
+
         } catch (AddressExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (InvalidAddressNameException e) {

@@ -569,7 +569,7 @@ function handleVoteClick(event) {
     }
 
     fetch(`/api/reviews/vote/${reviewId}?isUpvote=${isUpvote}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken

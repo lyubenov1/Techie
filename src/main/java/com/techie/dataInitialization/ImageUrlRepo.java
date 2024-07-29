@@ -1,15 +1,14 @@
 package com.techie.dataInitialization;
 
 import com.techie.dataInitialization.data.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class ImageUrlRepo {
 
+    // A map to store image URLs, keyed by a list of product models
     private final Map<List<String>, List<String>> imageMap = new HashMap<>();
 
     public ImageUrlRepo() {

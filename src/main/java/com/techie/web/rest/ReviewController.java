@@ -13,8 +13,10 @@ import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
+import org.springframework.web.servlet.support.*;
 
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 @RestController
@@ -44,15 +46,20 @@ public class ReviewController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createReview(@RequestParam(value = "review-comment", required = false) String comment,
+    public ResponseEntity<?> createReview(@RequestParam(value = "review-comment", required = false) String comment,
                                                     @RequestParam("rate") int rating,
                                                     @RequestParam("productId") Long productId,
                                                     @RequestParam(value = "image-upload", required = false) MultipartFile[] images,
                                                     @AuthenticationPrincipal UserDetails userDetails)
                                                         throws InvalidRatingException, OneReviewPerUserException, IOException {
         try {
-            reviewService.createReview(comment, rating, productId, images, userDetails);
-            return ResponseEntity.ok("Review successfully created!");
+            ReviewModel createdReview = reviewService.createReview(comment, rating, productId, images, userDetails);
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(createdReview.getId()).toUri();
+
+            return ResponseEntity.created(location).body(createdReview);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -91,7 +98,7 @@ public class ReviewController {
         }
     }
 
-    @PostMapping("/vote/{reviewId}")
+    @PatchMapping("/vote/{reviewId}")
     public ResponseEntity<?> voteReview(@PathVariable Long reviewId,
                                         @RequestParam boolean isUpvote,
                                         @AuthenticationPrincipal UserDetails userDetails) {

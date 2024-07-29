@@ -100,7 +100,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void createReview(String comment, int rating, Long productId, MultipartFile[] images, UserDetails userDetails)
+    public ReviewModel createReview(String comment, int rating, Long productId, MultipartFile[] images, UserDetails userDetails)
             throws ProductNotFoundException, IOException, InvalidRatingException, OneReviewPerUserException {
 
         Product product = getProductById(productId);
@@ -114,8 +114,8 @@ public class ReviewService {
 
         review.setImages(reviewImages);
         Review savedReview = reviewRepository.save(review);
-        eventPublisher.publishEvent(new ReviewEvent(productId));  // // Event which updates the product's average rating
-        convertToModel(savedReview);
+        eventPublisher.publishEvent(new ReviewEvent(productId));  // Event which updates the product's average rating
+        return convertToModel(savedReview);
     }
 
     private String formatDateTime(Review review) {

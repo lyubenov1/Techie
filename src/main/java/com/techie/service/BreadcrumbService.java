@@ -10,6 +10,10 @@ import org.springframework.stereotype.*;
 import java.util.*;
 import java.util.stream.*;
 
+
+/**
+ * Service class responsible for generating breadcrumbs for navigation.
+ */
 @Service
 public class BreadcrumbService {
 
@@ -22,6 +26,9 @@ public class BreadcrumbService {
         this.productService = productService;
     }
 
+    /**
+     * Represents a breadcrumb item with its original label, capitalized label, and URL.
+     */
     @Getter
     public static class BreadcrumbItem {
         private final String original;
@@ -34,6 +41,12 @@ public class BreadcrumbService {
             this.url = url;
         }
 
+        /**
+         * Capitalizes the first letter of the given string.
+         *
+         * @param str the string to capitalize
+         * @return the capitalized string
+         */
         private String capitalize(String str) {
             if (str == null || str.isEmpty()) {
                 return str;
@@ -42,13 +55,24 @@ public class BreadcrumbService {
         }
     }
 
+    /**
+     * Generates a list of breadcrumb items based on the current URL from the request.
+     *
+     * @param request the HTTP request containing the current URL
+     * @return a list of breadcrumb items
+     */
     public List<BreadcrumbItem> getBreadcrumbs(HttpServletRequest request) {
         String currentUrl = extractCurrentUrl(request);
 
         return buildBreadcrumbs(currentUrl, request);
     }
 
-
+    /**
+     * Extracts the current URL from the HTTP request.
+     *
+     * @param request the HTTP request
+     * @return the current URL
+     */
     private String extractCurrentUrl(HttpServletRequest request) {
         try {
             return request.getRequestURI().split("\\?")[0];
@@ -58,6 +82,10 @@ public class BreadcrumbService {
 
     }
 
+    /**
+     * Constructs breadcrumbs based on the current URL.
+     * @return a list of breadcrumb items
+     */
     private List<BreadcrumbItem> buildBreadcrumbs(String currentUrl, HttpServletRequest request) {
         List<BreadcrumbItem> breadcrumbs = new ArrayList<>();
         String[] urlParts = currentUrl.split("/");
@@ -81,11 +109,25 @@ public class BreadcrumbService {
         return breadcrumbs;
     }
 
+    /**
+     * Determines if the current part of the URL is a search part.
+     *
+     * @param part the current URL part
+     * @param index the index of the current part
+     * @param parts the array of URL parts
+     * @return true if it's the search part, false otherwise
+     */
     private boolean isSearchPart(String part, int index, String[] parts) {
         return part.equals("search") && index == parts.length - 1;
     }
 
-    // Add a breadcrumb for the search page
+    /**
+     * Adds a breadcrumb for the search page.
+     *
+     * @param breadcrumbs the list of breadcrumb items
+     * @param url the URL for the search page
+     * @param request the HTTP request containing search query parameter
+     */
     private void addSearchBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, HttpServletRequest request) {
         String query = request.getParameter("q");
         String text = (query != null && !query.isEmpty()) ?
@@ -93,7 +135,13 @@ public class BreadcrumbService {
         breadcrumbs.add(new BreadcrumbItem(text, url));
     }
 
-    // Add a regular breadcrumb (product or formatted string). If the part is "users", it is omitted.
+    /**
+     * Adds a regular breadcrumb based on whether it represents a product or a category.
+     *
+     * @param breadcrumbs the list of breadcrumb items
+     * @param url the URL for the breadcrumb
+     * @param part the URL part to add as a breadcrumb
+     */
     private void addRegularBreadcrumb(List<BreadcrumbItem> breadcrumbs, String url, String part) {
         Optional<Product> productOpt = productService.findByName(part);
 
@@ -107,7 +155,12 @@ public class BreadcrumbService {
         }
     }
 
-    // Format URL part: capitalize words and replace hyphens with spaces
+    /**
+     * Formats a URL part by capitalizing words and replacing hyphens with spaces.
+     *
+     * @param part the URL part to format
+     * @return the formatted string
+     */
     private String formatUrlPart(String part) {
         if (!part.contains("-")) return part;
 
@@ -152,7 +205,9 @@ public class BreadcrumbService {
         );
     }
 
-    // Inserts a new breadcrumb for the parent category
+    /**
+     * Inserts a new breadcrumb for the parent category into the breadcrumbs list.
+     */
     private void insertParentBreadcrumb(List<BreadcrumbItem> breadcrumbs, Category parentCategory, String parentUrl) {
         breadcrumbs.add(breadcrumbs.size() - 1, new BreadcrumbItem(parentCategory.getName(), parentUrl));
     }
