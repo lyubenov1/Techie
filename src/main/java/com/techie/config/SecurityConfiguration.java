@@ -43,13 +43,13 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/products/**").permitAll()
                         .requestMatchers("/login/**", "/register", "/login-error").anonymous()
-                        .requestMatchers("/terms-of-use", "/unauthorized",
+                        .requestMatchers("/terms-of-use", "/unauthorized", "blacklisted",
                                          "/privacy-policy", "/about-us", "example/test").permitAll()
-                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/users/**").authenticated()
+                        .requestMatchers("/admin/**", "/api/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers("/moderator").hasAnyAuthority("ROLE_MODERATOR")
+                        .requestMatchers("/users/**","api/reviews/vote/**").authenticated()
                         .requestMatchers("/api/categories", "/api/products/**",
-                                           "/api/search", "/api/reviews/get/**",
-                                             "api/reviews/vote/**").permitAll()
+                                           "/api/search", "/api/reviews/get/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form

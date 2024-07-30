@@ -11,27 +11,27 @@ import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.servlet.*;
-import org.thymeleaf.spring6.view.*;
-
-import java.util.*;
 
 @Component
 public class UserBlacklistInterceptor implements HandlerInterceptor {
 
     private final UserService userService;
-    private final ThymeleafViewResolver resolver;
     private static final Logger log = LoggerFactory.getLogger(UserBlacklistInterceptor.class);
 
     @Autowired
-    public UserBlacklistInterceptor(UserService userService, ThymeleafViewResolver resolver) {
+    public UserBlacklistInterceptor(UserService userService) {
         this.userService = userService;
-        this.resolver = resolver;
     }
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request,
                              @NonNull HttpServletResponse response,
                              @NonNull Object handler) throws Exception {
+        String path = request.getRequestURI();
+        if (path.equals("/blacklisted")) {
+            return true; // Allow this path to proceed without checking
+        }
+
         String username = getUsernameFromRequest();
         if (username != null) {
             UserEntity user = userService.findByUsernameNoFetches(username);
@@ -39,22 +39,19 @@ public class UserBlacklistInterceptor implements HandlerInterceptor {
                 boolean isBlacklisted = userService.isBlacklisted(user.getId());
                 if (isBlacklisted) {
                     log.info("Blocked access attempt by blacklisted user: {}", username);
-                    View blockedView = resolver.resolveViewName("unauthorized", Locale.getDefault());
-                    if (blockedView != null) {
-                        blockedView.render(Map.of(), request, response);
-                    }
+                    response.sendRedirect("/blacklisted");
                     return false;
                 }
             }
         }
-
         return true;
     }
 
     private String getUsernameFromRequest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails userDetails) {
-            return userDetails.getUsername(); // This will be the email
+        if (authentication != null && authentication.isAuthenticated() &&
+                authentication.getPrincipal() instanceof UserDetails userDetails) {
+            return userDetails.getUsername();
         }
         return null;
     }

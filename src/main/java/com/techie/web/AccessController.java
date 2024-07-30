@@ -10,4 +10,9 @@ public class AccessController {
     public String unauthorized() {
         return "error-pages/unauthorized";
     }
+
+    @GetMapping("/blacklisted")
+    public String blacklisted() {
+        return "error-pages/blacklisted";
+    }
 }

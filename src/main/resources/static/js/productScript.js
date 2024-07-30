@@ -113,10 +113,6 @@ document.getElementById('save-to-wishlist').addEventListener('click', function(e
         // Fetch the user's wishlists
         fetch('/api/wishlist/get')
             .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url; // Redirect to the login page
-                    return;
-                }
                 return response.json();
             })
             .then(wishlists => {
