@@ -218,6 +218,10 @@ public class ReviewService {
     }
 
 
+    /**
+     * Updates an existing review based on the provided update request.
+     * @return A ReviewModel representing the updated review
+     */
     @Transactional
     public ReviewModel updateReview(Long reviewId, ReviewUpdateRequest updateRequest, UserDetails userDetails)
                                       throws CloudinaryImageDeletionException, ReviewNotFoundException, UnauthorizedException {
@@ -244,6 +248,13 @@ public class ReviewService {
         return convertToModel(review);
     }
 
+    /**
+     * Updates the images associated with a review based on the remaining image URLs.
+     * Removes images that are no longer present in the remaining URLs list.
+     *
+     * @param review The review whose images are to be updated
+     * @param remainingImageUrls A list of image URLs that should remain associated with the review
+     */
     private void updateReviewImages(Review review, List<String> remainingImageUrls) {
         List<ReviewImage> currentImages = review.getImages();
         List<ReviewImage> imagesToRemove = new ArrayList<>();
@@ -256,13 +267,11 @@ public class ReviewService {
                 imagesToRemove.add(image);
             }
         }
-
         // Remove images from Cloudinary and the review
         for (ReviewImage image : imagesToRemove) {
             deleteImageFromCloudinary(image.getPublicId());
             currentImages.remove(image);
         }
-
         review.setImages(currentImages);
     }
 

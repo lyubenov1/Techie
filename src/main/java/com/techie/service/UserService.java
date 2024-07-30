@@ -150,12 +150,6 @@ public class UserService {
         return UserConversionUtils.convertToView(user);
     }
 
-    public void updateProfileImage(Long userId, String newProfileImageUrl) {  // TODO
-        UserEntity user = userRepository.findById(userId).orElseThrow();
-        user.setProfileImageUrl(newProfileImageUrl);
-        userRepository.save(user);
-    }
-
     public List<UserDisplayView> getUsers(String query) {
         List<UserEntity> users;
 
@@ -274,6 +268,12 @@ public class UserService {
         boolean blacklisted = blacklistRepository.findByUserId(userId).isPresent();
         logger.info("User {} is {}blacklisted", userId, blacklisted ? "" : "not ");
         return blacklisted;
+    }
+
+    public void updateProfileImage(Long userId, String newProfileImageUrl) {  // TODO
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+        user.setProfileImageUrl(newProfileImageUrl);
+        userRepository.save(user);
     }
 
 }

@@ -46,6 +46,9 @@ public class UserEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "is_subscribed", nullable = false)
+    private boolean isSubscribed = false;  // Indicates if the user is subscribed to the newsletter (default: false)
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "users_roles",

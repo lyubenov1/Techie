@@ -4275,12 +4275,14 @@ hr {
     background-color: #555;
 }
 
-.profile-main-content .user-password {
+.profile-main-content .user-password,
+.profile-main-content .delete-account {
     margin-left: 30px;
     margin-bottom: 30px;
 }
 
-.profile-main-content .user-password .btn.btn-primary {
+.profile-main-content .user-password .btn.btn-primary,
+.profile-main-content .delete-account .btn.btn-primary {
     background-color: inherit;
     color: rgb(225, 222, 218);
     border: 1px solid grey;
@@ -4292,11 +4294,13 @@ hr {
     transition: background-color 0.3s;
 }
 
-.profile-main-content .user-password .btn.btn-primary:hover {
+.profile-main-content .user-password .btn.btn-primary:hover,
+.profile-main-content .delete-account .btn.btn-primary:hover {
     background-color: #555;
 }
 
-.profile-main-content .user-password .btn.btn-primary i {
+.profile-main-content .user-password .btn.btn-primary i,
+.profile-main-content .delete-account .btn.btn-primary i {
     margin-right: 7px;
 }
 
@@ -4304,6 +4308,7 @@ hr {
     border: 1px solid grey;
     margin-left: 30px;
     padding: 20px 30px;
+    margin-bottom: 30px;
 }
 
 .profile-main-content .email-preferences .checkbox-container {

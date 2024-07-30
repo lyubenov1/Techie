@@ -53,7 +53,6 @@ public class AddressController {
 
             // Return 201 Created with the location of the new address and the created address object
             return ResponseEntity.created(location).body(createdAddress);
-
         } catch (AddressExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (InvalidAddressNameException e) {
