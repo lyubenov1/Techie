@@ -29,7 +29,7 @@ public class UserBlacklistInterceptor implements HandlerInterceptor {
                              @NonNull Object handler) throws Exception {
         String path = request.getRequestURI();
         if (path.equals("/blacklisted")) {
-            return true; // Allow this path to proceed without checking
+            return true; // Allow this path to proceed without checking. This avoids too many redirects error
         }
 
         String username = getUsernameFromRequest();
