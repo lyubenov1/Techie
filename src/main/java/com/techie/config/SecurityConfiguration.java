@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/admin/**", "/api/admin/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/moderator").hasAnyAuthority("ROLE_MODERATOR")
                         .requestMatchers("/users/**","api/reviews/vote/**").authenticated()
-                        .requestMatchers("/api/categories", "/api/products/**",
+                        .requestMatchers("/api/categories", "/api/products/**", "/api/settings/subscription/change/email",
                                            "/api/search", "/api/reviews/get/**").permitAll()
                         .anyRequest().authenticated()
                 )

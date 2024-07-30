@@ -22,6 +22,7 @@ public class UserConversionUtils {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .profileImage(user.getProfileImageUrl())
+                .isSubscribed(user.isSubscribed())
                 .build();
     }
 

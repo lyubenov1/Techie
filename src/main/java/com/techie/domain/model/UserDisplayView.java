@@ -18,4 +18,5 @@ public class UserDisplayView {
     private String createdAt;  // date and time the user created his profile
     private String reason;  // reasoning of potential blacklisting
     private String blacklistTimestamp;
+    private boolean isSubscribed;  // subscription status to newsletter
 }

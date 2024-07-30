@@ -1,9 +1,7 @@
 package com.techie.validation;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.PropertyAccessorFactory;
+import jakarta.validation.*;
+import org.springframework.beans.*;
 
 public class PasswordMatcher implements ConstraintValidator<PasswordMatch, Object> {
 
@@ -27,7 +25,6 @@ public class PasswordMatcher implements ConstraintValidator<PasswordMatch, Objec
         Object passwordValue = beanWrapper.getPropertyValue(this.password);
         Object confirmPasswordValue = beanWrapper.getPropertyValue(this.confirmPassword);
 
-
         if (passwordValue != null && passwordValue.equals(confirmPasswordValue)) {
             return true;
         }
@@ -36,7 +33,6 @@ public class PasswordMatcher implements ConstraintValidator<PasswordMatch, Objec
                 .addPropertyNode(confirmPassword)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
-
 
         return false;
     }
