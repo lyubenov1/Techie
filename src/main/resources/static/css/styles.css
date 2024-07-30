@@ -4378,10 +4378,12 @@ hr {
     margin-top: 10px;
     border-radius: 5px;
     text-align: center;
+    display: none;
 }
 
 .footer-message.show, .settings-subscription-message.show {
     opacity: 1;
+    display: block;
 }
 
 .footer-message.success, .settings-subscription-message.success {

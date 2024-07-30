@@ -1,5 +1,3 @@
-const csrfToken = document.getElementById('csrf-token').value;
-
 document.addEventListener('DOMContentLoaded', function() {
     // Select all wishlist icons
     document.querySelectorAll('.add-to-wishlist').forEach(icon => {
@@ -53,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!wishlists) return; // Exit if already redirected
                 // Add product to the first wishlist (index 0)
                 const wishlistId = wishlists[0].id;
-                const csrfToken = document.getElementById('csrf-token').value;
                 fetch(`/api/wishlist/add/${wishlistId}/${productId}`, {
                     method: 'PATCH',
                     headers: {

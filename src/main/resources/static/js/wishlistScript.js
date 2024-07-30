@@ -204,8 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function deleteAllProductFromWishlist(wishlistId) {
-            const csrfToken = document.getElementById('csrf-token').value;
-
             fetch(`/api/wishlist/removeAll/${wishlistId}`, {
                 method: 'DELETE',
                 headers: {
@@ -252,8 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteProductFromWishlist(wishlistId, productId) {
-        const csrfToken = document.getElementById('csrf-token').value;
-
         fetch(`/api/wishlist/remove/${wishlistId}/${productId}`, {
             method: 'DELETE',
             headers: {

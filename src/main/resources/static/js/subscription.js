@@ -1,52 +1,47 @@
-const csrfToken = document.getElementById('csrf-token').value;
+document.addEventListener('DOMContentLoaded', function() {
+    const subscriptionForm = document.getElementById('subscriptionForm');
+    if (subscriptionForm) {
+        subscriptionForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('form5Example2').value;
 
-document.getElementById('subscriptionForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const email = document.getElementById('form5Example2').value;
-
-    fetch('/api/settings/subscription/change/email', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({ email: email })
-    })
-        .then(response => {
-            // Check if the response is JSON
-            if (response.headers.get('Content-Type')?.includes('application/json')) {
-                return response.json().then(data => ({ status: response.status, data: data }));
-            } else {
-                return response.text().then(text => ({ status: response.status, data: text }));
-            }
-        })
-        .then(result => {
-            if (result.status === 200) {
-                successMessage(result.data);
-            } else {
-                errorMessage(result.data);
-            }
-        })
-        .catch(() => {
-            errorMessage('An error occurred while updating your subscription.');
+            fetch('/api/settings/subscription/change/email', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({ email: email })
+            })
+                .then(response => {
+                    if (response.headers.get('Content-Type')?.includes('application/json')) {
+                        return response.json().then(data => ({ status: response.status, data: data }));
+                    } else {
+                        return response.text().then(text => ({ status: response.status, data: text }));
+                    }
+                })
+                .then(result => {
+                    if (result.status === 200) {
+                        showMessageFooter(result.data, 'footer', 'success');
+                    } else {
+                        showMessageFooter(result.data, 'footer', 'error');
+                    }
+                })
+                .catch(() => {
+                    showMessageFooter('An error occurred while updating your subscription.', 'footer', 'error');
+                });
         });
+    }
 });
 
-function successMessage(message) {
-    showMessage(message, 'success');
-}
+function showMessageFooter(message, source, type) {
+    const footerMessageDiv = document.querySelector('.footer-message');
+    if (source === 'footer' && footerMessageDiv) {
+        footerMessageDiv.textContent = message;
+        footerMessageDiv.className = `footer-message ${type} show`;
 
-function errorMessage(message) {
-    showMessage(message, 'error');
-}
-
-function showMessage(message, type) {
-    const messageDiv = document.querySelector('.footer-message');
-    messageDiv.textContent = message;
-    messageDiv.className = `footer-message ${type} show`;
-
-    setTimeout(() => {
-        messageDiv.classList.remove('show');
-    }, 5000);
+        setTimeout(() => {
+            footerMessageDiv.classList.remove('show');
+        }, 5000);
+    }
 }

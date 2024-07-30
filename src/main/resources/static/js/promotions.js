@@ -1,4 +1,3 @@
-csrfToken = document.getElementById('csrf-token').value;
 selectedProduct = null;
 fetchTimeout = null;
 

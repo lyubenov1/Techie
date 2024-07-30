@@ -34,8 +34,6 @@ function deleteAccount() {
 document.querySelector('.delete-account button').addEventListener('click', handleAccountDeleteClick);
 
 
-const csrfToken = document.getElementById('csrf-token').value;
-
 document.getElementById('savePreferences').addEventListener('click', function() {
     const status = document.getElementById('newsletter-checkbox').checked;
 
@@ -57,31 +55,26 @@ document.getElementById('savePreferences').addEventListener('click', function() 
         })
         .then(result => {
             if (result.status === 200) {
-                successMessage(result.data);
+                showMessageSettings(result.data, 'settings', 'success');
             } else {
-                errorMessage(result.data);
+                showMessageSettings(result.data, 'settings', 'error');
             }
         })
         .catch(() => {
-            errorMessage('An error occurred while updating your subscription.');
+            showMessageSettings('An error occurred while updating your subscription.', 'settings', 'error');
         });
 });
-function successMessage(message) {
-    showMessage(message, 'success');
-}
 
-function errorMessage(message) {
-    showMessage(message, 'error');
-}
+function showMessageSettings(message, source, type) {
+    const settingsMessageDiv = document.querySelector('.settings-subscription-message');
+    if (source === 'settings' && settingsMessageDiv) {
+        settingsMessageDiv.textContent = message;
+        settingsMessageDiv.className = `settings-subscription-message ${type} show`;
 
-function showMessage(message, type) {
-    const messageDiv = document.querySelector(`.settings-subscription-message`);
-    messageDiv.textContent = message;
-    messageDiv.className = `settings-subscription-message show ${type}`;
-
-    setTimeout(() => {
-        messageDiv.classList.remove('show');
-    }, 5000);
+        setTimeout(() => {
+            settingsMessageDiv.classList.remove('show');
+        }, 5000);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {

@@ -1,7 +1,7 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
-import com.techie.exceptions.user.*;
+import com.techie.exceptions.subscription.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;

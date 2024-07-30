@@ -1,3 +1,5 @@
+const csrfToken = document.getElementById('csrf-token').value;
+
 function updateTime() {
     var now = new Date();
     var hours = String(now.getHours()).padStart(2, '0');

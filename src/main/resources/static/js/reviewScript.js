@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const reviewForm = document.getElementById('review-form');
-    const csrfToken = document.querySelector('#csrf-token').value;
     const spinner = document.getElementById('upload-spinner');
 
     reviewForm.addEventListener('submit', function(event) {

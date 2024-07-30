@@ -1,4 +1,3 @@
-let csrfToken = document.getElementById('csrf-token').value;
 let selectedUser = null;
 let fetchTimeout = null;
 let currentPageType = '';

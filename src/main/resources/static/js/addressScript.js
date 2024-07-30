@@ -125,8 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function createNewAddress() {
-        const csrfToken = document.getElementById('csrf-token').value;
-
         // Create an AddressDTO object from form inputs
         const addressDTO = {
             name: document.getElementById('addressName').value,
@@ -205,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateAddress() {
         const addressId = document.getElementById('editAddressId').value;
-        const csrfToken = document.getElementById('csrf-token').value;
 
         // Create an updated AddressDTO object
         const updatedAddressDTO = {
@@ -254,8 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteAddress(addressId) {
-        const csrfToken = document.getElementById('csrf-token').value;
-
         fetch(`/api/address/delete/${addressId}`, {
             method: 'DELETE',
             headers: {
