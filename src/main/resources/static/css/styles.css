@@ -3230,15 +3230,15 @@ hr {
 
 .reviewer-info .reviewer {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .blue-check {
-    position: absolute;
-    bottom: 4px;
-    right: 18px;
     width: 15px;
     height: 15px;
+    margin-left: 6px;
+    transform: translateY(1px);
 }
 
 .review .review-body .stars {
@@ -4148,7 +4148,7 @@ hr {
     transition: opacity 0.5s ease-in-out;
 }
 
-.address-success {
+.address-success, .settings-success {
     font-family: 'Roboto Condensed', serif;
     justify-content: center;
     align-items: center;
@@ -4166,11 +4166,202 @@ hr {
     margin: 10px 0;
 }
 
-.address-success.show {
+.address-success.show, .settings-success-show {
     display: flex;
     opacity: 1;
 }
 
-.address-success p {
+.address-success p, .settings-success p {
     margin: 0;
+}
+
+.user-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.user-main .settings-profile-image {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+}
+
+.user-main .profile-picture-change {
+    display: flex;
+    align-items: center;
+}
+
+.user-main .change-picture-text {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 17px;
+    margin-top: 5px;
+}
+
+.user-main .change-picture-text:hover {
+    color: #0056b3;
+}
+
+.user-main .settings-user-role {
+    font-size: 20px;
+    margin-right: 30px;
+}
+
+.profile-data {
+    margin: 30px;
+    padding: 20px;
+    border: 1px solid grey;
+}
+
+.profile-data .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-data .user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-data .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+    padding: 20px 30px;
+}
+
+.profile-data .user-info:last-child {
+    border-bottom: none;
+}
+
+.profile-data .icon {
+    font-size: 24px;
+    margin-right: 40px;
+}
+
+.profile-data .text {
+    flex: 1;
+}
+
+.profile-data .label {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.profile-data .value {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.profile-data .edit-button {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    border: 1px solid grey;
+    width: 120px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+}
+
+.profile-data .edit-button:hover {
+    background-color: #555;
+}
+
+.profile-main-content .user-password {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-main-content .user-password .btn.btn-primary {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    border: 1px solid grey;
+    width: 250px;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+}
+
+.profile-main-content .user-password .btn.btn-primary:hover {
+    background-color: #555;
+}
+
+.profile-main-content .user-password .btn.btn-primary i {
+    margin-right: 7px;
+}
+
+.profile-main-content .email-preferences {
+    border: 1px solid grey;
+    margin-left: 30px;
+    padding: 20px 30px;
+}
+
+.profile-main-content .email-preferences .checkbox-container {
+    margin-bottom: 15px;
+    margin-top: 10px;
+    position: relative;
+    display: block;
+}
+
+.profile-main-content .checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.profile-main-content .checkbox-container label {
+    display: inline-block;
+    position: relative;
+    padding-left: 28px;
+}
+
+.profile-main-content .checkbox-container label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    background-color: transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.profile-main-content .checkbox-container input[type="checkbox"]:checked + label::after {
+    content: '✓';
+    position: absolute;
+    left: 3px;
+    top: 49%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: inherit;
+}
+
+.profile-main-content .email-preferences button {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    border: 1px solid grey;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+}
+
+.profile-main-content .email-preferences button:hover {
+    background-color: #555;
 }

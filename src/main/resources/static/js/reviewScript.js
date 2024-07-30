@@ -205,7 +205,9 @@ function createReviewElement(review) {
                 <img src="${review.reviewer.profileImage}" alt="Profile Picture" class="user-profile-image-review">
             </span>
             <span class="reviewer">${review.reviewer.firstName} ${review.reviewer.lastName}
-                ${review.reviewer.role === 'Moderator' || review.reviewer.role === 'Admin' ? '<img src="/images/blue-check.png" alt="Verified" class="blue-check">' : ''}  
+                                   ${review.reviewer.role === 'Moderator' || review.reviewer.role === 'Admin' ? 
+                                       '<img src="/images/blue-check.png" alt="Verified" class="blue-check">' : 
+                                       ''}  
             </span>
             <span class="review-date">${review.date}</span>
             <span class="reviewer-role">Role: <span class="role">${review.reviewer.role}</span></span>
