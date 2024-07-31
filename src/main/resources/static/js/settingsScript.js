@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (editDetailsBtn && editDetailsModal && editDetailsForm) {
         editDetailsBtn.addEventListener('click', () => openModal(editDetailsModal));
-        editDetailsForm.addEventListener('submit', (e) => handleFormSubmit(e, editDetailsForm, '/api/settings/details/change', 'PATCH', 'change-details-modal-error'));
+        editDetailsForm.addEventListener('submit', (e) => handleFormSubmit(
+            e, editDetailsForm, '/api/settings/details/change', 'PATCH', 'change-details-modal-error'));
     }
 
     // Change Password Modal
@@ -96,7 +97,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     if (changePasswordBtn && changePasswordModal && changePasswordForm) {
         changePasswordBtn.addEventListener('click', () => openModal(changePasswordModal));
-        changePasswordForm.addEventListener('submit', (e) => handleFormSubmit(e, changePasswordForm, '/api/settings/password/change', 'PATCH', 'change-password-modal-error'));
+        changePasswordForm.addEventListener('submit', (e) => handleFormSubmit(
+            e, changePasswordForm, '/api/settings/password/change', 'PATCH', 'change-password-modal-error'));
     }
 });
 

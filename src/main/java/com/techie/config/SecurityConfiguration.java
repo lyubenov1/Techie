@@ -39,17 +39,30 @@ public class SecurityConfiguration {
         http
                 // Define authorization rules
                 .authorizeHttpRequests(authorize -> authorize
-                        // allow access to all static files (images, CSS, js)
+                        // Allow access to all static files (images, CSS, js)
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/products/**").permitAll()
+
+                        // Public pages
+                        .requestMatchers("/", "/products/**", "/terms-of-use", "/unauthorized", "/blacklisted",
+                                "/privacy-policy", "/about-us", "/example/test").permitAll()
+
+                        // Authentication pages
                         .requestMatchers("/login/**", "/register", "/login-error").anonymous()
-                        .requestMatchers("/terms-of-use", "/unauthorized", "blacklisted",
-                                         "/privacy-policy", "/about-us", "example/test").permitAll()
-                        .requestMatchers("/admin/**", "/api/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers("/moderator").hasAnyAuthority("ROLE_MODERATOR")
-                        .requestMatchers("/users/**","api/reviews/vote/**").authenticated()
+
+                        // Public API endpoints
                         .requestMatchers("/api/categories", "/api/products/**", "/api/settings/subscription/change/email",
-                                           "/api/search", "/api/reviews/get/**").permitAll()
+                                "/api/search", "/api/reviews/get/**").permitAll()
+
+                        // Admin and Moderator specific endpoints
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/moderator", "/api/admin/promotion/**",
+                                "/api/admin/discount/**").hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN")
+                        .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
+
+                        // Authenticated user endpoints
+                        .requestMatchers("/users/**", "/api/reviews/vote/**").authenticated()
+
+                        // Any other request
                         .anyRequest().authenticated()
                 )
                 // configure login with HTML form

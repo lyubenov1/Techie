@@ -72,5 +72,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void updateAverageRating(@Param("productId") Long productId, @Param("averageRating") Double averageRating);
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.productImages WHERE p.discount IS NOT NULL")
-    Page<Product> findAllDiscountedProducts(Pageable pageable);
+    List<Product> findAllDiscountedProducts(Pageable pageable);
+
+    @Query("SELECT COUNT(DISTINCT p) FROM Product p WHERE p.discount IS NOT NULL")
+    long countDiscountedProducts();
 }

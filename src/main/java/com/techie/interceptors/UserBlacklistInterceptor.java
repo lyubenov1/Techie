@@ -16,11 +16,13 @@ import org.springframework.web.servlet.*;
 public class UserBlacklistInterceptor implements HandlerInterceptor {
 
     private final UserService userService;
+    private final AdminService adminService;
     private static final Logger log = LoggerFactory.getLogger(UserBlacklistInterceptor.class);
 
     @Autowired
-    public UserBlacklistInterceptor(UserService userService) {
+    public UserBlacklistInterceptor(UserService userService, AdminService adminService) {
         this.userService = userService;
+        this.adminService = adminService;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class UserBlacklistInterceptor implements HandlerInterceptor {
         if (username != null) {
             UserEntity user = userService.findByUsernameNoFetches(username);
             if (user != null) {
-                boolean isBlacklisted = userService.isBlacklisted(user.getId());
+                boolean isBlacklisted = adminService.isBlacklisted(user.getId());
                 if (isBlacklisted) {
                     log.info("Blocked access attempt by blacklisted user: {}", username);
                     response.sendRedirect("/blacklisted");

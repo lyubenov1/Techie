@@ -28,13 +28,20 @@ public class SettingsController {
     //public ResponseEntity<?> changeProfileImage(@AuthenticationPrincipal UserDetails userDetails) {
 //
     //}
-//
+
     //@PatchMapping("/details/change")
     //public ResponseEntity<?> changeDetails(@AuthenticationPrincipal UserDetails userDetails,
-    //                                       @RequestBody UserDetailsChangeModel model) {
+    //                                       @RequestBody DetailsChangeRequest request) {
+    //    String firstName = request.getFirstName();
+    //    String lastName = request.getLastName();
+    //    String username = request.getUsername();
+    //    try {
 //
+    //    } catch {
+//
+    //    }
     //}
-//
+
     //@PatchMapping("/password/change")
     //public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserDetails userDetails,
     //                                        @RequestBody @Valid ChangePasswordModel model) {

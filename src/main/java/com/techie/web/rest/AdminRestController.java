@@ -1,6 +1,7 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.*;
+import com.techie.exceptions.product.*;
 import com.techie.exceptions.role.*;
 import com.techie.exceptions.user.*;
 import com.techie.service.*;
@@ -17,19 +18,19 @@ import java.util.*;
 @RequestMapping("/api/admin")
 public class AdminRestController {
 
-    private final UserService userService;
+    private final AdminService adminService;
     private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
 
     @Autowired
-    public AdminRestController(UserService userService) {
-        this.userService = userService;
+    public AdminRestController(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @GetMapping("/get")
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String query)
                                         throws UserAlreadyBlacklistedException {
         try {
-            List<UserDisplayView> users = userService.getUsers(query);
+            List<UserDisplayView> users = adminService.getUsers(query);
             return ResponseEntity.ok(users);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -41,7 +42,7 @@ public class AdminRestController {
                                                   throws UsernameNotFoundException, UserAlreadyBlacklistedException,
             AdminModeratorBlacklistException {
         try {
-            userService.blacklistUser(userDisplayView);
+            adminService.blacklistUser(userDisplayView);
             return ResponseEntity.ok().body("User blacklisted");
         } catch (UsernameNotFoundException | UserAlreadyBlacklistedException | AdminModeratorBlacklistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -54,7 +55,7 @@ public class AdminRestController {
     public ResponseEntity<?> getBlacklistedUsers(@RequestParam(name = "p", required = false) int page,
                                                  @RequestParam(name = "s", required = false) int size) {
         try {
-            Page<UserDisplayView> users = userService.getBlacklistedUsers(page, size);
+            Page<UserDisplayView> users = adminService.getBlacklistedUsers(page, size);
             return getResponseEntity(users);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -65,7 +66,7 @@ public class AdminRestController {
     public ResponseEntity<String> removeFromBlacklist(@RequestParam Long userId)
                                                         throws UserNotInBlacklistException {
         try {
-            userService.removeFromBlacklist(userId);
+            adminService.removeFromBlacklist(userId);
             return ResponseEntity.ok("User successfully removed from blacklist");
         } catch (UserNotInBlacklistException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -78,7 +79,7 @@ public class AdminRestController {
     public ResponseEntity<String> makeModerator(@RequestBody UserDisplayView userDisplayView)
                                                   throws UserAlreadyHasRoleException {
         try {
-            userService.makeModerator(userDisplayView);
+            adminService.makeModerator(userDisplayView);
             return ResponseEntity.ok("User successfully made moderator");
         } catch (UserAlreadyHasRoleException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409
@@ -87,36 +88,84 @@ public class AdminRestController {
         }
     }
 
-
     @GetMapping("/moderator/get")
     public ResponseEntity<?> getModerators(@RequestParam(name = "p", required = false) int page,
                                                  @RequestParam(name = "s", required = false) int size) {
         try {
-            Page<UserDisplayView> users = userService.getModerators(page, size);
+            Page<UserDisplayView> users = adminService.getModerators(page, size);
             return getResponseEntity(users);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    private ResponseEntity<?> getResponseEntity(Page<UserDisplayView> users) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("content", users.getContent());
-        response.put("number", users.getNumber());
-        response.put("totalPages", users.getTotalPages());
-        response.put("totalElements", users.getTotalElements());
-        return ResponseEntity.ok(response);
-    }
-
     @DeleteMapping("/moderator/remove")
     public ResponseEntity<String> removeModerator(@RequestParam Long userId) throws UserNotFoundException {
         try {
-            userService.removeModeratorRoleFromUser(userId);
+            adminService.removeModeratorRoleFromUser(userId);
             return ResponseEntity.ok("Moderator role removed successfully");
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/promotion/get")
+    public ResponseEntity<?> getPromotionProducts(@RequestParam(required = false) String query) {
+        try {
+            List<ProductAdminView> products = adminService.getProductsAdmin(query);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/discount/get")
+    public ResponseEntity<?> getDiscountedProducts(@RequestParam(name = "p", required = false) int page,
+                                                   @RequestParam(name = "s", required = false) int size) {
+        try {
+            Page<ProductAdminView> products = adminService.getDiscountedProducts(page, size);
+            long totalElements = products.getTotalElements();
+            System.out.println("Total discounted products: " + totalElements);
+            return getResponseEntity(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/promotion/patch")
+    public ResponseEntity<?> discountProducts(@RequestBody ProductAdminView productAdminView)
+            throws ProductNotFoundException, ProductAlreadyDiscountedException {
+        try {
+            adminService.discountProduct(productAdminView);
+            return ResponseEntity.ok().body("Product discounted");
+        } catch (ProductNotFoundException | ProductAlreadyDiscountedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while discounting the product");
+        }
+    }
+
+    @DeleteMapping("/promotion/delete")
+    public ResponseEntity<String> deletePromotionProducts(@RequestParam Long productId)
+            throws ProductNotFoundException {
+        try {
+            adminService.removeDiscount(productId);
+            return ResponseEntity.ok("Discount successfully removed from product");
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+    private <T> ResponseEntity<?> getResponseEntity(Page<T> page) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", page.getContent());
+        response.put("number", page.getNumber());
+        response.put("totalPages", page.getTotalPages());
+        response.put("totalElements", page.getTotalElements());
+        return ResponseEntity.ok(response);
     }
 }

@@ -10,7 +10,7 @@ function fetchProducts() {
     const query = document.getElementById('productName').value;
     const dropdown = document.getElementById('productDropdown');
 
-    fetch(`/api/products/promotion/get?query=${encodeURIComponent(query)}`)
+    fetch(`/api/admin/promotion/get?query=${encodeURIComponent(query)}`)
         .then(response => {
             if (!response.ok) {
                 return response.text().then(text => {
@@ -83,7 +83,7 @@ function applyDiscount() {
     // Attach the discount value to the selected product
     selectedProduct.discount = parseFloat(discountValue);
 
-    fetch('/api/products/promotion/patch', {
+    fetch('/api/admin/promotion/patch', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -154,14 +154,29 @@ currentPage = 0;
 pageSize = 6;
 
 function fetchFilteredProducts(page) {
-    const url = `/api/products/discount/get?p=${page}&s=${pageSize}`;
+    const url = `/api/admin/discount/get?p=${page}&s=${pageSize}`;
 
     fetch(url)
         .then(response => {
+            const contentType = response.headers.get('content-type');
             if (!response.ok) {
-                throw new Error('Failed to fetch products');
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                } else if (contentType && contentType.includes('text/html')) {
+                    throw new Error('An unexpected error occurred');
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Failed to fetch products');
+                    });
+                }
             }
-            return response.json();
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text();
+            }
         })
         .then(data => {
             displayProducts(data.content, data.number, data.totalPages, data.totalElements);
@@ -238,7 +253,7 @@ function showMessage(message, type) {
 
 async function removeDiscount(productId) {
     try {
-        const response = await fetch(`/api/products/promotion/delete?productId=${productId}`, {
+        const response = await fetch(`/api/admin/promotion/delete?productId=${productId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
