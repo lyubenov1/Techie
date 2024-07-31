@@ -4148,7 +4148,7 @@ hr {
     transition: opacity 0.5s ease-in-out;
 }
 
-.address-success, .settings-success {
+.address-success {
     font-family: 'Roboto Condensed', serif;
     justify-content: center;
     align-items: center;
@@ -4166,12 +4166,12 @@ hr {
     margin: 10px 0;
 }
 
-.address-success.show, .settings-success-show {
+.address-success.show {
     display: flex;
     opacity: 1;
 }
 
-.address-success p, .settings-success p {
+.address-success p {
     margin: 0;
 }
 
@@ -4259,7 +4259,7 @@ hr {
     margin-bottom: 0;
 }
 
-.profile-data .edit-button {
+.profile-data .edit-details-button {
     background-color: inherit;
     color: rgb(225, 222, 218);
     border: 1px solid grey;
@@ -4271,7 +4271,7 @@ hr {
     transition: background-color 0.3s;
 }
 
-.profile-data .edit-button:hover {
+.profile-data .edit-details-button:hover {
     background-color: #555;
 }
 
@@ -4396,4 +4396,134 @@ hr {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.change-details.modal .modal-content,
+.change-password.modal .modal-content {
+    background-color: rgb(32, 32, 32);
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.change-details.modal .btn-close,
+.change-password.modal .btn-close {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    filter: invert(1) brightness(150%) grayscale(50%);
+}
+
+.change-details .modal-body .form-group input,
+.change-password .modal-body .form-group input {
+    background-color: inherit;
+    border: 1px solid grey;
+    transition: background-color 0.3s, border-color 0.3s;
+    caret-color: rgb(225, 222, 218);
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.change-details.modal .modal-body .form-group,
+.change-password.modal .modal-body .form-group {
+    margin-bottom: 10px;
+}
+
+.change-details.modal .modal-body .form-group input::placeholder ,
+.change-password.modal .modal-body .form-group input::placeholder {
+    color: #aeaeae;
+    font-size: 15px;
+    font-family: 'Roboto Condensed', serif;
+    padding-left: 8px;
+}
+
+.change-details.modal .modal-body .form-group input:focus ,
+.change-password.modal .modal-body .form-group input:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.change-details.modal .modal-body .form-group input:hover ,
+.change-password.modal .modal-body .form-group input:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.change-details.modal .modal-body #wishlistName::placeholder,
+.change-password.modal .modal-body #editWishlistName::placeholder {
+    color: #aeaeae;
+    font-size: 15px;
+    font-family: 'Roboto Condensed', serif;
+    padding-left: 8px;
+}
+
+.change-details.modal .modal-body #wishlistName:focus,
+.change-password.modal .modal-body #editWishlistName:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.change-details.modal .modal-body .btn.btn-primary,
+.change-password.modal .modal-body .btn.btn-primary {
+    background-color: inherit;
+    border: 1px solid grey;
+    color: rgb(225, 222, 218);
+    float: right;
+    width: 90px;
+    margin-top: 20px;
+    padding: 5px 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.change-details.modal .modal-body .button-container,
+.change-password.modal .modal-body .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.change-details.modal .modal-body .btn.btn-primary:hover,
+.change-password.modal .modal-body .btn.btn-primary:hover {
+    background-color: #505050;
+    color: white;
+    border-color: white;
+}
+
+.change-details-modal-error,
+.change-password-modal-error {
+    display: none;
+    color: red;
+    margin-top: 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.change-details-modal-error.show,
+.change-password-modal-error.show {
+    display: block;
+}
+
+.settings-success {
+    font-family: 'Roboto Condensed', serif;
+    justify-content: center;
+    align-items: center;
+    height: 39px;
+    font-size: 19px;
+    text-align: center;
+    border-radius: 10px;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #c2ddc6;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.settings-success.show {
+    display: block;
+    opacity: 1;
 }
