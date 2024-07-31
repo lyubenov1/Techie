@@ -34,6 +34,10 @@
                             <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;">
                         </div>
                     </div>
+                    <!-- Spinner during file upload -->
+                    <div id="upload-spinner-settings" class="spinner-border" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </form>
                 <div class="user-role">
                     <span th:text="'Role: ' + ${loggedUser.role}" class="settings-user-role"></span>

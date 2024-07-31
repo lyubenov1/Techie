@@ -202,8 +202,10 @@ function showMessageSettings(message, type, errorSpanClass) {
     }
 }
 
+const spinner = document.getElementById('upload-spinner-settings');
 
 document.getElementById('image-upload').addEventListener('change', function() {
+    spinner.style.display = 'block';
     var form = document.getElementById('profileImageForm');
     var formData = new FormData(form);
 
@@ -242,7 +244,11 @@ document.getElementById('image-upload').addEventListener('change', function() {
         })
         .catch((error) => {
             showErrorMessageProfileImage(error.message);
-        });
+        })
+        .finally(() => {
+        // Hide the spinner
+        spinner.style.display = 'none';
+    });
 });
 
 function showErrorMessageProfileImage(message) {

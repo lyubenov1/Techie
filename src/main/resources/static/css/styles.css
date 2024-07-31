@@ -4540,3 +4540,12 @@ hr {
     display: grid;
     opacity: 1;
 }
+
+#profileImageForm {
+    margin-bottom: 0;
+}
+
+#upload-spinner-settings {
+    margin-top: 7px;
+    margin-left: 70px;
+}
