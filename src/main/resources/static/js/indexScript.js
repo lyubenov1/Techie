@@ -19,4 +19,24 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = `/products?brandName=${brand}`;
         });
     });
+
+    const messageDiv = document.querySelector('.message-info');
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+
+    if (message) {
+        showMessage(messageDiv, decodeURIComponent(message), 'info');
+    } else {
+        showMessage(messageDiv, 'An unexpected error occurred', 'error');
+    }
 });
+
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `message-info ${type}`;
+    setTimeout(() => {
+        setTimeout(() => {
+            element.textContent = '';
+        }, 1000);
+    }, 5000);
+}

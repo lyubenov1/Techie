@@ -4,11 +4,13 @@ import com.techie.domain.model.*;
 import com.techie.exceptions.subscription.*;
 import com.techie.exceptions.user.*;
 import com.techie.service.*;
+import jakarta.servlet.http.*;
 import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
@@ -21,12 +23,18 @@ public class SettingsController {
     private final UserService userService;
     private final SubscriptionService subscriptionService;
     private final SettingsService settingsService;
+    private final MailService mailService;
+    private final TokenService tokenService;
+
 
     @Autowired
-    public SettingsController(UserService userService, SubscriptionService subscriptionService, SettingsService settingsService) {
-        this.userService = userService;
+    public SettingsController(SubscriptionService subscriptionService, SettingsService settingsService,
+                              MailService mailService, TokenService tokenService, UserService userService) {
         this.subscriptionService = subscriptionService;
         this.settingsService = settingsService;
+        this.mailService = mailService;
+        this.tokenService = tokenService;
+        this.userService = userService;
     }
 
     @PatchMapping("/profile-image/change")
@@ -107,9 +115,28 @@ public class SettingsController {
         }
     }
 
-    //@DeleteMapping("account/delete")
-    //public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
-//
-    //}
+    @DeleteMapping("account/delete")
+    public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        String token = tokenService.createToken(username);
+        mailService.sendConfirmationEmail(userDetails.getUsername(), token);
+        return ResponseEntity.ok("Confirmation email sent.");
+    }
+
+    @Transactional
+    @GetMapping("/confirm-delete")
+    public ResponseEntity<?> confirmDelete(@RequestParam("token") String token, HttpServletResponse response) throws IOException {
+        String username = tokenService.getUsernameByToken(token);
+
+        if (username != null) {
+            userService.deleteByUsername(username);
+            tokenService.removeToken(token);
+            response.sendRedirect("/homepage?message=Account+deleted");
+            return ResponseEntity.ok().build();
+        } else {
+            response.sendRedirect("/homepage?message=Invalid+token");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }

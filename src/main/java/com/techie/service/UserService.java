@@ -154,4 +154,8 @@ public class UserService {
     public void saveUser(UserEntity user) {
         userRepository.save(user);
     }
+
+    public void deleteByUsername(String username) {
+        userRepository.deleteByUsername(username);
+    }
 }

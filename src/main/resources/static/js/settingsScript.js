@@ -12,6 +12,8 @@ function handleAccountDeleteClick() {
     });
 }
 
+document.querySelector('.delete-account button').addEventListener('click', handleAccountDeleteClick);
+
 function createConfirmDialog(message) {
     const dialog = document.createElement('div');
     dialog.className = 'custom-confirm-dialog';
@@ -28,10 +30,46 @@ function createConfirmDialog(message) {
 }
 
 function deleteAccount() {
-    console.log('Account deleted');
-    //
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const url = '/api/settings/account/delete';
+
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+        .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (!response.ok) {
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                } else if (contentType && contentType.includes('text/html')) {
+                    throw new Error('An unexpected error occurred');
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Failed to initialize the deletion');
+                    });
+                }
+            }
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text();
+            }
+        })
+        .then(result => {
+            localStorage.setItem('settingsSuccessMessage', result.message || result);
+            window.location.reload();
+        })
+        .catch((error) => {
+            localStorage.setItem('settingsErrorMessage', error.message || error);
+            window.location.reload();
+        });
 }
-document.querySelector('.delete-account button').addEventListener('click', handleAccountDeleteClick);
 
 document.getElementById('savePreferences').addEventListener('click', function() {
     const status = document.getElementById('newsletter-checkbox').checked;
@@ -79,6 +117,7 @@ function showMessageSettingsSubscription(message, source, type) {
 document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('newsletter-checkbox').checked = document.getElementById('userIsSubscribed').value === 'true';
     checkAndDisplaySuccessMessage();
+    checkAndDisplayErrorMessage();
 
     // Edit Details Modal
     const editDetailsBtn = document.querySelector('.edit-details-button');
@@ -103,7 +142,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             e, editDetailsForm, '/api/settings/details/change', 'PATCH', 'change-details-modal-error'));
     }
 
-// Change Password Modal
+    // Change Password Modal
     const changePasswordBtn = document.querySelector('.change-password-btn');
     const changePasswordModal = document.getElementById('changePasswordModal');
     const changePasswordForm = document.getElementById('changePasswordForm');
@@ -170,6 +209,14 @@ function checkAndDisplaySuccessMessage() {
     if (successMessage) {
         showMessageSettings(successMessage, 'success');
         localStorage.removeItem('settingsSuccessMessage');
+    }
+}
+
+function checkAndDisplayErrorMessage() {
+    const errorMessage = localStorage.getItem('settingsErrorMessage');
+    if (errorMessage) {
+        showErrorMessage(errorMessage.message);
+        localStorage.removeItem('settingsErrorMessage');
     }
 }
 
@@ -243,7 +290,7 @@ document.getElementById('image-upload').addEventListener('change', function() {
             window.location.reload();
         })
         .catch((error) => {
-            showErrorMessageProfileImage(error.message);
+            showErrorMessage(error.message);
         })
         .finally(() => {
         // Hide the spinner
@@ -251,7 +298,7 @@ document.getElementById('image-upload').addEventListener('change', function() {
     });
 });
 
-function showErrorMessageProfileImage(message) {
+function showErrorMessage(message) {
     const errorDiv = document.querySelector('.settings-success');
 
     if (errorDiv) {

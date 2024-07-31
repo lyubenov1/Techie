@@ -4549,3 +4549,21 @@ hr {
     margin-top: 7px;
     margin-left: 70px;
 }
+
+.message-info {
+    opacity: 0;
+    transition: opacity 1s;
+    display: none;
+}
+
+.message-info.info {
+    display: grid;
+    color: green;
+    opacity: 1;
+}
+
+.message-info.error {
+    display: grid;
+    color: red;
+    opacity: 1;
+}
