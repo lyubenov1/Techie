@@ -57,6 +57,10 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + username + " not found!"));
     }
 
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     @Transactional
     public void registerUser(RegisterModel registerModel, Consumer<Authentication> successfulLoginProcessor) {
         UserEntity userEntity = createUserEntity(registerModel);

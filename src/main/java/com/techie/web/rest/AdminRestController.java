@@ -126,8 +126,6 @@ public class AdminRestController {
                                                    @RequestParam(name = "s", required = false) int size) {
         try {
             Page<ProductAdminView> products = adminService.getDiscountedProducts(page, size);
-            long totalElements = products.getTotalElements();
-            System.out.println("Total discounted products: " + totalElements);
             return getResponseEntity(products);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -139,7 +137,7 @@ public class AdminRestController {
             throws ProductNotFoundException, ProductAlreadyDiscountedException {
         try {
             adminService.discountProduct(productAdminView);
-            return ResponseEntity.ok().body("Product discounted");
+            return ResponseEntity.ok().body("Product successfully discounted");
         } catch (ProductNotFoundException | ProductAlreadyDiscountedException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {

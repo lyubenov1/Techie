@@ -17,11 +17,13 @@ public class SettingsController {
 
     private final UserService userService;
     private final SubscriptionService subscriptionService;
+    private final SettingsService settingsService;
 
     @Autowired
-    public SettingsController(UserService userService, SubscriptionService subscriptionService) {
+    public SettingsController(UserService userService, SubscriptionService subscriptionService, SettingsService settingsService) {
         this.userService = userService;
         this.subscriptionService = subscriptionService;
+        this.settingsService = settingsService;
     }
 
     //@PatchMapping("/profile-image/change")
@@ -29,18 +31,33 @@ public class SettingsController {
 //
     //}
 
-    //@PatchMapping("/details/change")
-    //public ResponseEntity<?> changeDetails(@AuthenticationPrincipal UserDetails userDetails,
-    //                                       @RequestBody DetailsChangeRequest request) {
-    //    String firstName = request.getFirstName();
-    //    String lastName = request.getLastName();
-    //    String username = request.getUsername();
-    //    try {
-//
-    //    } catch {
-//
-    //    }
-    //}
+    @PatchMapping("/details/change")
+    public ResponseEntity<?> changeDetails(@AuthenticationPrincipal UserDetails userDetails,
+                                           @RequestBody DetailsChangeRequest request) {
+        String firstName = request.getFirstName();
+        String lastName = request.getLastName();
+        String username = request.getUsername();
+
+        // Validate that at least one field is present
+        if (firstName == null && lastName == null && username == null) {
+            return ResponseEntity.badRequest().body("At least one field must be provided for update");
+        }
+
+        try {
+            boolean isUpdated = settingsService.changeUserDetails(userDetails.getUsername(), firstName, lastName, username);
+            if (isUpdated) {
+                return ResponseEntity.ok("You have successfully changed your details!");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No changes were made");
+            }
+        } catch (UsernameAlreadyTakenException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating details");
+        }
+    }
 
     //@PatchMapping("/password/change")
     //public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserDetails userDetails,
@@ -58,6 +75,8 @@ public class SettingsController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");
         }
     }
 
@@ -70,6 +89,8 @@ public class SettingsController {
             return ResponseEntity.ok("Subscription status updated successfully.");
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");
         }
     }
 
@@ -78,8 +99,4 @@ public class SettingsController {
 //
     //}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-    }
 }

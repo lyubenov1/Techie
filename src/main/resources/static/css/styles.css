@@ -4507,23 +4507,18 @@ hr {
 
 .settings-success {
     font-family: 'Roboto Condensed', serif;
-    justify-content: center;
-    align-items: center;
-    height: 39px;
     font-size: 19px;
-    text-align: center;
     border-radius: 10px;
     display: none;
     opacity: 0;
+    text-align: center;
     transition: opacity 0.5s ease-in-out;
     background-color: #c2ddc6;
     color: #155724;
     border: 1px solid #c3e6cb;
-    padding: 10px;
-    margin: 10px 0;
 }
 
 .settings-success.show {
-    display: block;
+    display: grid;
     opacity: 1;
 }

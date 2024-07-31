@@ -78,19 +78,32 @@ function showMessageSettingsSubscription(message, source, type) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('newsletter-checkbox').checked = document.getElementById('userIsSubscribed').value === 'true';
+    checkAndDisplaySuccessMessage();
 
     // Edit Details Modal
     const editDetailsBtn = document.querySelector('.edit-details-button');
     const editDetailsModal = document.getElementById('changeDetailsModal');
     const editDetailsForm = document.getElementById('changeDetailsForm');
+    const userDetailsDiv = document.querySelector('.user-details');
 
-    if (editDetailsBtn && editDetailsModal && editDetailsForm) {
-        editDetailsBtn.addEventListener('click', () => openModal(editDetailsModal));
+    if (editDetailsBtn && editDetailsModal && editDetailsForm && userDetailsDiv) {
+        editDetailsBtn.addEventListener('click', () => {
+            // Pre-populate the form fields before opening the modal
+            const firstName = userDetailsDiv.dataset.firstname;
+            const lastName = userDetailsDiv.dataset.lastname;
+            const username = userDetailsDiv.dataset.username;
+
+            editDetailsForm.querySelector('input[name="firstName"]').value = firstName;
+            editDetailsForm.querySelector('input[name="lastName"]').value = lastName;
+            editDetailsForm.querySelector('input[name="username"]').value = username;
+
+            openModal(editDetailsModal);
+        });
         editDetailsForm.addEventListener('submit', (e) => handleFormSubmit(
             e, editDetailsForm, '/api/settings/details/change', 'PATCH', 'change-details-modal-error'));
     }
 
-    // Change Password Modal
+// Change Password Modal
     const changePasswordBtn = document.querySelector('.change-password-btn');
     const changePasswordModal = document.getElementById('changePasswordModal');
     const changePasswordForm = document.getElementById('changePasswordForm');
@@ -131,7 +144,7 @@ function handleFormSubmit(e, form, url, method, errorSpanClass) {
                     throw new Error('An unexpected error occurred');
                 } else {
                     return response.text().then(text => {
-                        throw new Error(text || 'Failed to make change');
+                        throw new Error(text || 'Failed to make the change');
                     });
                 }
             }
@@ -142,12 +155,22 @@ function handleFormSubmit(e, form, url, method, errorSpanClass) {
             }
         })
         .then(result => {
-            showMessageSettings(result.message || result, 'success');
             closeModal(form.closest('.modal'));
+            // Store the success message in localStorage
+            localStorage.setItem('settingsSuccessMessage', result.message || result);
+            window.location.reload();
         })
         .catch((error) => {
             showMessageSettings(error.message, 'error', errorSpanClass);
         });
+}
+
+function checkAndDisplaySuccessMessage() {
+    const successMessage = localStorage.getItem('settingsSuccessMessage');
+    if (successMessage) {
+        showMessageSettings(successMessage, 'success');
+        localStorage.removeItem('settingsSuccessMessage');
+    }
 }
 
 function closeModal(modal) {

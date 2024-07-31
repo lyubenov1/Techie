@@ -222,7 +222,7 @@ public class AdminService {
                 .orElseThrow(() -> new RuntimeException("Moderator role not found"));
 
         if (user.getRoles().remove(moderatorRole)) {
-            userRepository.save(user);
+            userService.saveUser(user);
         } else {
             log.info("User {} is not a moderator, no action taken", userId);
         }
