@@ -10,6 +10,9 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
+
+import java.io.*;
 
 @RestController
 @RequestMapping("/api/settings")
@@ -26,10 +29,20 @@ public class SettingsController {
         this.settingsService = settingsService;
     }
 
-    //@PatchMapping("/profile-image/change")
-    //public ResponseEntity<?> changeProfileImage(@AuthenticationPrincipal UserDetails userDetails) {
-//
-    //}
+    @PatchMapping("/profile-image/change")
+    public ResponseEntity<?> changeProfileImage(@AuthenticationPrincipal UserDetails userDetails,
+                                                @RequestParam("image") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("Please select a file to upload");
+        }
+
+        try {
+            settingsService.changeProfileImage(userDetails, file);
+            return ResponseEntity.ok().body("Profile image updated successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image: " + e.getMessage());
+        }
+    }
 
     @PatchMapping("/details/change")
     public ResponseEntity<?> changeDetails(@AuthenticationPrincipal UserDetails userDetails,

@@ -156,7 +156,7 @@ public class ReviewService {
         if (images == null || images.length == 0) {
             return reviewImages;
         }
-        String folderPath = "reviews/" + productId;
+        String folderPath = "project/reviews/" + productId;
 
         for (MultipartFile image : images) {
             if (image.isEmpty()) {

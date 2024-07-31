@@ -145,9 +145,9 @@ public class UserService {
         return UserConversionUtils.convertToView(user);
     }
 
-    public void updateProfileImage(Long userId, String newProfileImageUrl) {  // TODO
-        UserEntity user = userRepository.findById(userId).orElseThrow();
-        user.setProfileImageUrl(newProfileImageUrl);
+    public void updateProfileImage(UserEntity user, String imageUrl, String publicId) {
+        user.setProfileImageUrl(imageUrl);
+        user.setPublicId(publicId);
         userRepository.save(user);
     }
 

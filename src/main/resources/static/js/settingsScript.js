@@ -203,3 +203,62 @@ function showMessageSettings(message, type, errorSpanClass) {
 }
 
 
+document.getElementById('image-upload').addEventListener('change', function() {
+    var form = document.getElementById('profileImageForm');
+    var formData = new FormData(form);
+
+    fetch('/api/settings/profile-image/change', {
+        method: 'PATCH',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: formData
+    })
+        .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (!response.ok) {
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                } else if (contentType && contentType.includes('text/html')) {
+                    throw new Error('An unexpected error occurred');
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Failed to change profile image');
+                    });
+                }
+            }
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text();
+            }
+        })
+        .then(result => {
+            // Store the success message in localStorage
+            localStorage.setItem('settingsSuccessMessage', result.message || result);
+            window.location.reload();
+        })
+        .catch((error) => {
+            showErrorMessageProfileImage(error.message);
+        });
+});
+
+function showErrorMessageProfileImage(message) {
+    const errorDiv = document.querySelector('.settings-success');
+
+    if (errorDiv) {
+        errorDiv.textContent = message;
+
+        errorDiv.classList.remove('settings-success');
+        errorDiv.classList.add('settings-error');
+
+        errorDiv.classList.add('show');
+        setTimeout(() => {
+            errorDiv.classList.remove('show');
+            errorDiv.classList.remove('settings-error');
+            errorDiv.classList.add('settings-success');
+        }, 5000);
+    }
+}

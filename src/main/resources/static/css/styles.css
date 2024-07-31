@@ -2441,6 +2441,7 @@ a.rating-info span:first-child {
     width: 28px;
     height: 28px;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 #profile-dropdown-logged .greet {
@@ -3226,6 +3227,7 @@ hr {
     width: 40px;
     height: 40px;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 .reviewer-info .reviewer {
@@ -3869,6 +3871,7 @@ hr {
     padding: 0;
     background-color: transparent;
     border: none;
+    border-radius: 50%;
 }
 
 .blacklist-modal label,
@@ -4058,6 +4061,7 @@ hr {
     padding: 0;
     background-color: transparent;
     border: none;
+    border-radius: 50%;
 }
 
 .blacklist-container .user-row .reason {
@@ -4179,7 +4183,6 @@ hr {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 40px;
     margin-left: 30px;
     margin-top: 20px;
 }
@@ -4188,6 +4191,8 @@ hr {
     width: 160px;
     height: 160px;
     object-fit: cover;
+    margin-left: 10px;
+    border-radius: 50%;
 }
 
 .user-main .profile-picture-change {
@@ -4518,7 +4523,20 @@ hr {
     border: 1px solid #c3e6cb;
 }
 
-.settings-success.show {
+.settings-success {
+    font-family: 'Roboto Condensed', serif;
+    font-size: 19px;
+    border-radius: 10px;
+    display: none;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #f48e8e;
+    color: #c60a1d;
+    border: 1px solid white;
+}
+
+.settings-success.show, .settings-error.show {
     display: grid;
     opacity: 1;
 }

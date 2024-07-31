@@ -26,13 +26,15 @@
         <div class="profile-main-content" >
             <h1 class="settings-header">Settings</h1>
             <div class="user-main">
-                <div class="profile-picture">
-                    <img th:src="${loggedUser.profileImage}" alt="User Profile" class="settings-profile-image">
-                    <div class="profile-picture-change">
-                        <label for="image-upload" class="change-picture-text">Change your profile picture</label>
-                        <input type="file" id="image-upload" name="image-upload" accept="image/*" style="display: none;">
+                <form id="profileImageForm" enctype="multipart/form-data">
+                    <div class="profile-picture">
+                        <img th:src="${loggedUser.profileImage}" alt="User Profile" class="settings-profile-image">
+                        <div class="profile-picture-change">
+                            <label for="image-upload" class="change-picture-text">Change your profile picture</label>
+                            <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;">
+                        </div>
                     </div>
-                </div>
+                </form>
                 <div class="user-role">
                     <span th:text="'Role: ' + ${loggedUser.role}" class="settings-user-role"></span>
                 </div>

@@ -43,6 +43,9 @@ public class UserEntity {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
+    @Column(name = "public_id")
+    private String publicId;  // Cloudinary public ID for a given asset (photo)
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
