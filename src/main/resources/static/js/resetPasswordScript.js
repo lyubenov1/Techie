@@ -54,12 +54,15 @@ function sendResetPasswordStepOneRequest(email) {
 }
 
 function sendResetPasswordStepTwoRequest(password, confirmPassword) {
+    const token = document.getElementById('token').value;
     return sendRequest('/api/password/reset-password/step-two',
-        { password: password, confirmPassword: confirmPassword }, 'reset-password-msg', () => {
-        window.location.href = '/';
-    });
+        { password: password, confirmPassword: confirmPassword, token: token },
+        'reset-password-msg',
+        () => {
+            window.location.href = '/login'; // Redirect to login page after successful reset
+        }
+    );
 }
-
 
 document.getElementById('resetPasswordButton').addEventListener('click', function(event) {
     const email = document.getElementById('email').value;
@@ -68,7 +71,8 @@ document.getElementById('resetPasswordButton').addEventListener('click', functio
         .catch((error) => console.error('Step one request failed', error));
 });
 
-document.getElementById('submitButton').addEventListener('click', function() {
+document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+    event.preventDefault();
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     sendResetPasswordStepTwoRequest(password, confirmPassword)
@@ -76,3 +80,7 @@ document.getElementById('submitButton').addEventListener('click', function() {
         .catch((error) => console.error('Step two request failed', error));
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('token').value = urlParams.get('token');
+});

@@ -40,10 +40,10 @@ public class PasswordResetController {
     }
 
     @PostMapping("/reset-password/step-two")
-    public ResponseEntity<String> resetPasswordStepTwo(@RequestBody @Valid ResetPasswordRequest request, @RequestBody String email) {
+    public ResponseEntity<String> resetPasswordStepTwo(@RequestBody @Valid ResetPasswordRequest request) {
 
         try {
-            settingsService.resetPasswordStepTwo(email, request);
+            settingsService.resetPasswordStepTwo(request);
             return ResponseEntity.ok("Password successfully reset!");
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

@@ -4,6 +4,7 @@ import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
@@ -48,4 +49,21 @@ public class EmailLinkController {
         }
         return "redirect:/";
     }
+
+
+    @GetMapping("/reset-password")
+    public String resetPassword(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            settingsService.verifyToken(token);
+            model.addAttribute("token", token);
+            return "reset-password";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("messageError", e.getMessage());
+            return "redirect:/";
+        }  catch (Exception e) {
+            redirectAttributes.addFlashAttribute("messageError", "An error occurred while processing your request.");
+            return "redirect:/";
+        }
+    }
 }
+
