@@ -98,4 +98,16 @@ public class MailService {
         Resource resource = new ClassPathResource("templates/" + "product-discount-email.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
+
+    public void sendInformativeEmail(String to) {
+        String subject = "Password change";
+        String message = "Your password has been changed. If it wasn't you, contact us immediately.";
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(to);
+        email.setSubject(subject);
+        email.setText(message);
+
+        mailSender.send(email);
+    }
 }

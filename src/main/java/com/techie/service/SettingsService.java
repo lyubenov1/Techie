@@ -132,6 +132,7 @@ public class SettingsService {
         // Update the user's password
         user.setPassword(encodedPassword);
         userService.saveUser(user);
+        mailService.sendInformativeEmail(userDetails.getUsername());
     }
 
     public void deleteAccount(UserDetails userDetails) {
