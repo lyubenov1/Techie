@@ -4567,12 +4567,12 @@ hr {
 }
 
 .main-content .message-success {
-    color: #39d53b;
+    color: #0a470a;
     background-color: #cefdce;
 }
 
 .main-content .message-error {
-    color: #f12f2a;
+    color: #40110e;
     background-color: #ffcaca;
 }
 

@@ -20,12 +20,15 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final UserService userService;
+    private final TokenService tokenService;
     private static final Logger log = LoggerFactory.getLogger(MailService.class);
 
     @Autowired
-    public MailService(JavaMailSender mailSender, UserService userService) {
+    public MailService(JavaMailSender mailSender, UserService userService,
+                       TokenService tokenService) {
         this.mailSender = mailSender;
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     public void sendConfirmationEmail(String to, String token) {
@@ -57,7 +60,7 @@ public class MailService {
     private void sendEmail(String to, Product product) {
         try {
             String subject = "Discount on Product: " + product.getName();
-            String body = buildEmailBody(product);
+            String body = buildEmailBody(to, product);
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
@@ -72,13 +75,17 @@ public class MailService {
         }
     }
 
-    private String buildEmailBody(Product product) throws IOException {
+    private String buildEmailBody(String userEmail, Product product) throws IOException {
         String template = loadTemplate();
+        String unsubscribeToken = tokenService.createToken(userEmail);
+        String unsubscribeUrl = "http://localhost:8080/email/unsubscribe?token=" + unsubscribeToken;
+
         return template
                 .replace("{{productImageUrl}}", product.getProductImages().getFirst().getImageUrl())
                 .replace("{{productName}}", product.getName())
                 .replace("{{originalPrice}}", product.getOriginalPrice().toString())
-                .replace("{{discountedPrice}}", product.getDiscountedPrice().toString());
+                .replace("{{discountedPrice}}", product.getDiscountedPrice().toString())
+                .replace("{{unsubscribeUrl}}", unsubscribeUrl);
     }
 
     private String loadTemplate() throws IOException {

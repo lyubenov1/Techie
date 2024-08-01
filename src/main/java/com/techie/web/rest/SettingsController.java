@@ -87,7 +87,7 @@ public class SettingsController {
     public ResponseEntity<?> changeSubscriptionStatusFooter(@Valid @RequestBody SubscriptionUpdateRequest request) {
         String email = request.getEmail();
         try {
-            subscriptionService.changeSubscriptionStatusFooter(email);
+            subscriptionService.subscribeFromFooter(email);
             return ResponseEntity.ok("You have successfully subscribed to our newsletter!");
         } catch (UserIsAlreadySubscribedException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

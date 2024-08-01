@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.*;
 public class SubscriptionService {
 
     private final UserService userService;
+    private final TokenService tokenService;
 
     @Autowired
-    public SubscriptionService(UserService userService) {
+    public SubscriptionService(UserService userService, TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @Transactional
@@ -30,7 +32,7 @@ public class SubscriptionService {
     }
 
     @Transactional
-    public void changeSubscriptionStatusFooter(String email)
+    public void subscribeFromFooter(String email)
             throws UsernameNotFoundException, UserIsAlreadySubscribedException {
         UserEntity user = userService.findByUsernameNoFetches(email);
 
@@ -40,5 +42,20 @@ public class SubscriptionService {
             user.setSubscribed(true);
             userService.saveUser(user);
         }
+    }
+
+    @Transactional
+    public void unsubscribe(String token) throws UsernameNotFoundException, IllegalArgumentException {
+        String userEmail = tokenService.getEmailByToken(token);
+
+        if (userEmail == null) {
+            throw new IllegalArgumentException("Invalid or expired token");
+        }
+
+        UserEntity user = userService.findByUsernameNoFetches(userEmail);
+        user.setSubscribed(false);
+
+        tokenService.removeToken(token);
+        userService.saveUser(user);
     }
 }
