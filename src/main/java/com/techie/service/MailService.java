@@ -1,7 +1,7 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
-import com.techie.exceptions.subscription.*;
+import com.techie.exceptions.email.*;
 import jakarta.mail.internet.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
@@ -34,16 +34,20 @@ public class MailService {
     }
 
     public void sendConfirmationEmail(String to, String token) {
-        String subject = "Confirm your account deletion";
-        String confirmationUrl = "http://localhost:8080/email/confirm-delete?token=" + token;
-        String message = "To confirm your account deletion, please click the link below:\n" + confirmationUrl;
+        try {
+            String subject = "Confirm your account deletion";
+            String confirmationUrl = "http://localhost:8080/email/confirm-delete?token=" + token;
+            String message = "To confirm your account deletion, please click the link below:\n" + confirmationUrl;
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(to);
-        email.setSubject(subject);
-        email.setText(message);
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(to);
+            email.setSubject(subject);
+            email.setText(message);
 
-        mailSender.send(email);
+            mailSender.send(email);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
     }
 
     @Async
@@ -100,14 +104,38 @@ public class MailService {
     }
 
     public void sendInformativeEmail(String to) {
-        String subject = "Password change";
-        String message = "Your password has been changed. If it wasn't you, contact us immediately.";
+        try {
+            String subject = "Password change";
+            String message = "Your password has been changed. If it wasn't you, contact us immediately.";
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(to);
-        email.setSubject(subject);
-        email.setText(message);
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(to);
+            email.setSubject(subject);
+            email.setText(message);
 
-        mailSender.send(email);
+            mailSender.send(email);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
+    }
+
+    public void sendResetPasswordEmail(String to, String resetToken) {
+        try {
+            String subject = "Reset Your Password";
+            String resetUrl = "http://localhost:8080/email/reset-password?token=" + resetToken;
+            String htmlBody = "<p>Click the link below to reset your password:</p>"
+                    + "<p><a href=\"" + resetUrl + "\">Reset Password</a></p>";
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true); // Set to true for HTML content
+
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
     }
 }

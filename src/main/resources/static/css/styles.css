@@ -4677,6 +4677,7 @@ hr {
     transition: background-color 0.3s, border-color 0.3s;
     margin-bottom: 8px;
     caret-color: white;
+    color: white;
 }
 
 .forgot-password-container .text-center p {
@@ -4685,7 +4686,7 @@ hr {
 
 .forgot-password-container .form-control::placeholder {
     padding-left: 4px;
-    color: white;
+    color: #a8a8a8;
 }
 
 .forgot-password-container .form-control:focus {
@@ -4700,9 +4701,27 @@ hr {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
+.forgot-password-container .forgot-password-button {
+    margin-bottom: 40px;
+}
+
 .forgot-password-container .btn-primary {
     transition: background-color 0.3s;
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+}
+
+.forgot-password-msg, .reset-password-msg {
+    transition: opacity 0.5s ease;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.forgot-password-msg.success, .reset-password-msg.success {
+    color: #2acc2a;
+}
+
+.forgot-password-msg.error, .reset-password-msg.error {
+    color: red;
 }
 

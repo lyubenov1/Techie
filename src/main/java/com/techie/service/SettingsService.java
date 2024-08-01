@@ -140,4 +140,33 @@ public class SettingsService {
         String token = tokenService.createToken(username);
         mailService.sendConfirmationEmail(userDetails.getUsername(), token);
     }
+
+    @Transactional
+    public void resetPasswordStepOne(String email) {
+        // This will throw UsernameNotFoundException if the user is not found
+        userService.findByUsernameNoFetches(email);
+
+        String token = tokenService.createToken(email);
+        mailService.sendResetPasswordEmail(email, token);
+    }
+
+    public void verifyToken(String token) {
+        String email = tokenService.getEmailByToken(token);
+        if (email == null) {
+            throw new IllegalArgumentException("Invalid or expired token");
+        }
+    }
+
+    @Transactional
+    public void resetPasswordStepTwo(String email, ResetPasswordRequest request) {
+        UserEntity user = userService.findByUsernameNoFetches(email);
+
+        // Encode the new password
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        // Update the user's password
+        user.setPassword(encodedPassword);
+        userService.saveUser(user);
+        mailService.sendInformativeEmail(email);
+    }
 }
