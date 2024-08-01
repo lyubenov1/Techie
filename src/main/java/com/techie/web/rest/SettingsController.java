@@ -21,17 +21,13 @@ public class SettingsController {
 
     private final SubscriptionService subscriptionService;
     private final SettingsService settingsService;
-    private final MailService mailService;
-    private final TokenService tokenService;
+
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
 
     @Autowired
-    public SettingsController(SubscriptionService subscriptionService, SettingsService settingsService,
-                              MailService mailService, TokenService tokenService) {
+    public SettingsController(SubscriptionService subscriptionService, SettingsService settingsService) {
         this.subscriptionService = subscriptionService;
         this.settingsService = settingsService;
-        this.mailService = mailService;
-        this.tokenService = tokenService;
     }
 
     @PatchMapping("/profile-image/change")
@@ -70,19 +66,23 @@ public class SettingsController {
             }
         } catch (UsernameAlreadyTakenException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating details");
         }
     }
 
-    //@PatchMapping("/password/change")
-    //public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserDetails userDetails,
-    //                                        @RequestBody @Valid ChangePasswordModel model) {
-//
-    //}
-//
+    @PatchMapping("/password/change")
+    public ResponseEntity<?> changePassword(@AuthenticationPrincipal UserDetails userDetails,
+                                            @RequestBody @Valid ChangePasswordRequest request) {
+
+        try {
+            settingsService.changePassword(userDetails, request);
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating password");
+        }
+    }
+
     @PatchMapping("/subscription/change/email")
     public ResponseEntity<?> changeSubscriptionStatusFooter(@Valid @RequestBody SubscriptionUpdateRequest request) {
         String email = request.getEmail();
@@ -105,8 +105,6 @@ public class SettingsController {
         try {
             subscriptionService.changeSubscriptionStatusSettings(userDetails.getUsername(), status);
             return ResponseEntity.ok("Subscription status updated successfully.");
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");
         }
@@ -114,10 +112,11 @@ public class SettingsController {
 
     @DeleteMapping("account/delete")
     public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        String token = tokenService.createToken(username);
-        mailService.sendConfirmationEmail(userDetails.getUsername(), token);
-        return ResponseEntity.ok("Confirmation email sent.");
+        try {
+            settingsService.deleteAccount(userDetails);
+            return ResponseEntity.ok("Confirmation email sent.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");
+        }
     }
-
 }

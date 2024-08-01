@@ -8,9 +8,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
-public class ChangePasswordModel {
+public class ChangePasswordRequest {
 
-    @NotBlank
+    @NotBlank(message = "Old password is required.")
     private String oldPassword;
 
     @NotBlank(message = "Password is required.")

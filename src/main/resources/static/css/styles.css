@@ -4582,13 +4582,6 @@ hr {
     transition: opacity 0.5s ease-out;
 }
 
-
-
-
-
-
-
-
 .email-body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -4609,7 +4602,7 @@ hr {
 .email-container .email-header {
     background-color: #007bff;
     color: #ffffff;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
 }
 
@@ -4631,10 +4624,6 @@ hr {
     color: #777777;
 }
 
-.email-content {
-
-}
-
 .email-content .product {
     display:flex;
     flex-direction: column;
@@ -4647,6 +4636,24 @@ hr {
     margin-left: 10px;
 }
 
-.email-content .product .product-info {
-
+.change-password.modal .form-group {
+    position: relative;
 }
+
+.change-password.modal .btn-toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(1px);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgb(225, 222, 218);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+

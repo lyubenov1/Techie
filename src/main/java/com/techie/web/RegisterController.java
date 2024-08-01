@@ -18,12 +18,12 @@ import org.springframework.web.servlet.mvc.support.*;
 public class RegisterController {
 
     private static final String BINDING_RESULT_PATH = "org.springframework.validation.BindingResult.";
-    private final UserService userService;
+    private final RegisterService registerService;
     private final SecurityContextRepository securityContextRepository;
 
     @Autowired
-    public RegisterController(UserService userService, SecurityContextRepository securityContextRepository) {
-        this.userService = userService;
+    public RegisterController(RegisterService registerService, SecurityContextRepository securityContextRepository) {
+        this.registerService = registerService;
         this.securityContextRepository = securityContextRepository;
     }
 
@@ -54,7 +54,7 @@ public class RegisterController {
             return "redirect:/register";
         }
 
-        userService.registerUser(registerModel, successfulAuth -> {
+        registerService.registerUser(registerModel, successfulAuth -> {
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
             SecurityContext context = strategy.createEmptyContext();

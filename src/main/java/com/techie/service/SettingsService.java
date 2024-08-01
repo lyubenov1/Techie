@@ -3,11 +3,14 @@ package com.techie.service;
 import com.cloudinary.*;
 import com.cloudinary.utils.*;
 import com.techie.domain.entities.*;
+import com.techie.domain.model.*;
 import com.techie.exceptions.other.*;
+import com.techie.exceptions.settings.*;
 import com.techie.exceptions.user.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
@@ -20,12 +23,20 @@ public class SettingsService {
 
     private final UserService userService;
     private final Cloudinary cloudinary;
+    private final MailService mailService;
+    private final TokenService tokenService;
+    private final PasswordEncoder passwordEncoder;
     private static final Logger log = LoggerFactory.getLogger(SettingsService.class);
 
     @Autowired
-    public SettingsService(UserService userService, Cloudinary cloudinary) {
+    public SettingsService(UserService userService, Cloudinary cloudinary,
+                           MailService mailService, TokenService tokenService,
+                           PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.cloudinary = cloudinary;
+        this.mailService = mailService;
+        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean changeUserDetails(String email, String firstName, String lastName, String newUsername)
@@ -104,5 +115,28 @@ public class SettingsService {
         String publicId = (String) uploadResult.get("public_id");
 
         userService.updateProfileImage(user, imageUrl, publicId);
+    }
+
+    @Transactional
+    public void changePassword(UserDetails userDetails, ChangePasswordRequest request) {
+        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
+
+        // Check if the old password is correct
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new IncorrectPasswordException();
+        }
+
+        // Encode the new password
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        // Update the user's password
+        user.setPassword(encodedPassword);
+        userService.saveUser(user);
+    }
+
+    public void deleteAccount(UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        String token = tokenService.createToken(username);
+        mailService.sendConfirmationEmail(userDetails.getUsername(), token);
     }
 }

@@ -13,11 +13,14 @@ public class EmailLinkController {
 
     private final UserService userService;
     private final SubscriptionService subscriptionService;
+    private final SettingsService settingsService;
 
     @Autowired
-    public EmailLinkController(UserService userService, SubscriptionService subscriptionService) {
+    public EmailLinkController(UserService userService, SubscriptionService subscriptionService,
+                               SettingsService settingsService) {
         this.userService = userService;
         this.subscriptionService = subscriptionService;
+        this.settingsService = settingsService;
     }
 
     @GetMapping("/confirm-delete")
@@ -45,5 +48,4 @@ public class EmailLinkController {
         }
         return "redirect:/";
     }
-
 }
