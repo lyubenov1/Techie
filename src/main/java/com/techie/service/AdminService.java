@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
-import java.io.*;
 import java.math.*;
 import java.time.*;
 import java.time.format.*;
@@ -76,7 +75,7 @@ public class AdminService {
 
     @Transactional
     public void discountProduct(ProductAdminView productAdminView)
-            throws ProductNotFoundException, ProductAlreadyDiscountedException, IOException {
+            throws ProductNotFoundException, ProductAlreadyDiscountedException {
 
         Product product = productRepository.findById(productAdminView.getId())
                 .orElseThrow(() -> new ProductNotFoundException(productAdminView.getId()));

@@ -4572,7 +4572,7 @@ hr {
 }
 
 .main-content .message-error {
-    color: #40110e;
+    color: #f12f2a;
     background-color: #ffcaca;
 }
 
@@ -4629,4 +4629,24 @@ hr {
     text-align: center;
     font-size: 12px;
     color: #777777;
+}
+
+.email-content {
+
+}
+
+.email-content .product {
+    display:flex;
+    flex-direction: column;
+}
+
+.email-content .product .product-image {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.email-content .product .product-info {
+
 }

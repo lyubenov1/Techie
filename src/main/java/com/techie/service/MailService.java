@@ -2,6 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.exceptions.subscription.*;
+import jakarta.mail.internet.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.core.io.*;
@@ -13,6 +14,7 @@ import org.springframework.util.*;
 
 import java.io.*;
 import java.nio.charset.*;
+import java.text.*;
 import java.util.*;
 
 @Service
@@ -60,17 +62,17 @@ public class MailService {
     private void sendEmail(String to, Product product) {
         try {
             String subject = "Discount on Product: " + product.getName();
-            String body = buildEmailBody(to, product);
+            String htmlBody = buildEmailBody(to, product);
 
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(body);
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            mailSender.send(message);
-            log.info("Discount notification email sent to {}", to);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true); // Set to true for HTML content
+
+            mailSender.send(mimeMessage);
         } catch (Exception e) {
-            log.error("Failed to send email to {}. Error: {}", to, e.getMessage(), e);
             throw new EmailNotificationException("Failed to send email.", e);
         }
     }
@@ -80,11 +82,15 @@ public class MailService {
         String unsubscribeToken = tokenService.createToken(userEmail);
         String unsubscribeUrl = "http://localhost:8080/email/unsubscribe?token=" + unsubscribeToken;
 
+        DecimalFormat priceFormat = new DecimalFormat("#,##0.00");
+        DecimalFormat discountFormat = new DecimalFormat("#");
+
         return template
                 .replace("{{productImageUrl}}", product.getProductImages().getFirst().getImageUrl())
                 .replace("{{productName}}", product.getName())
-                .replace("{{originalPrice}}", product.getOriginalPrice().toString())
-                .replace("{{discountedPrice}}", product.getDiscountedPrice().toString())
+                .replace("{{originalPrice}}", "$" + priceFormat.format(product.getOriginalPrice()))
+                .replace("{{discountedPrice}}", "$" + priceFormat.format(product.getDiscountedPrice()))
+                .replace("{{discount}}", discountFormat.format(product.getDiscount()) + "%")
                 .replace("{{unsubscribeUrl}}", unsubscribeUrl);
     }
 
