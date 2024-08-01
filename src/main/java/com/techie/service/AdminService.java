@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.io.*;
 import java.math.*;
 import java.time.*;
 import java.time.format.*;
@@ -30,18 +31,21 @@ public class AdminService {
     private final UserService userService;
     private final BlacklistRepository blacklistRepository;
     private final RoleRepository roleRepository;
+    private final MailService mailService;
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 
     @Autowired
     public AdminService(ProductRepository productRepository, ProductService productService,
                         BlacklistRepository blacklistRepository, UserRepository userRepository,
-                        UserService userService, RoleRepository roleRepository) {
+                        UserService userService, RoleRepository roleRepository,
+                        MailService mailService) {
         this.productRepository = productRepository;
         this.productService = productService;
         this.blacklistRepository = blacklistRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.roleRepository = roleRepository;
+        this.mailService = mailService;
     }
 
     public List<ProductAdminView> getProductsAdmin(String query) {
@@ -72,7 +76,7 @@ public class AdminService {
 
     @Transactional
     public void discountProduct(ProductAdminView productAdminView)
-            throws ProductNotFoundException, ProductAlreadyDiscountedException {
+            throws ProductNotFoundException, ProductAlreadyDiscountedException, IOException {
 
         Product product = productRepository.findById(productAdminView.getId())
                 .orElseThrow(() -> new ProductNotFoundException(productAdminView.getId()));
@@ -87,6 +91,9 @@ public class AdminService {
         product.setDiscountedPrice(discountedPrice);
 
         productRepository.save(product);
+
+        // Notify subscribed users asynchronously
+        mailService.sendDiscountNotification(product);
     }
 
     private static BigDecimal getDiscountedPrice(ProductAdminView productAdminView, Product product) {

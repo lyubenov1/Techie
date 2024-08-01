@@ -25,11 +25,16 @@
     </div>
 
     <main class="container main-content">
-        <!-- Display success message if available -->
+        <!-- Display messages if available -->
         <div th:if="${successMessage}" class="custom-alert-homepage custom-alert-success" role="alert">
             <span th:text="${successMessage}"></span>
         </div>
-        <div class="message-info"></div>
+        <div th:if="${messageSuccess}" class="message message-success" id="message-success">
+            <p th:text="${messageSuccess}"></p>
+        </div>
+        <div th:if="${messageError}" class="message message-error" id="message-error">
+            <p th:text="${messageError}"></p>
+        </div>
 
         <!-- Hero Section -->
         <section>

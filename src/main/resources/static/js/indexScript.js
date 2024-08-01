@@ -20,23 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const messageDiv = document.querySelector('.message-info');
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
-
-    if (message) {
-        showMessage(messageDiv, decodeURIComponent(message), 'info');
-    } else {
-        showMessage(messageDiv, 'An unexpected error occurred', 'error');
-    }
+    setTimeout(function() {
+        const successMessage = document.querySelector('.message-success');
+        const errorMessage = document.querySelector('.message-error');
+        if (successMessage) {
+            successMessage.classList.add('fade-out');
+        }
+        if (errorMessage) {
+            errorMessage.classList.add('fade-out');
+        }
+    }, 5000); // 5 seconds
 });
-
-function showMessage(element, message, type) {
-    element.textContent = message;
-    element.className = `message-info ${type}`;
-    setTimeout(() => {
-        setTimeout(() => {
-            element.textContent = '';
-        }, 1000);
-    }, 5000);
-}

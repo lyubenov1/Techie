@@ -44,7 +44,7 @@ public class SecurityConfiguration {
 
                         // Public pages
                         .requestMatchers("/", "/products/**", "/terms-of-use", "/unauthorized", "/blacklisted",
-                                "/privacy-policy", "/about-us", "/example/test").permitAll()
+                                "/privacy-policy", "/about-us", "/example/test", "/email/confirm-delete").permitAll()
 
                         // Authentication pages
                         .requestMatchers("/login/**", "/register", "/login-error").anonymous()
@@ -60,7 +60,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
 
                         // Authenticated user endpoints
-                        .requestMatchers("/users/**", "/api/reviews/vote/**").authenticated()
+                        .requestMatchers("/users/**", "/api/reviews/vote/**", "/api/settings/**").authenticated()
 
                         // Any other request
                         .anyRequest().authenticated()

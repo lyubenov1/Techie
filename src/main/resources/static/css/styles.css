@@ -4512,7 +4512,7 @@ hr {
 
 .settings-success {
     font-family: 'Roboto Condensed', serif;
-    font-size: 19px;
+    font-size: 22px;
     border-radius: 10px;
     display: none;
     opacity: 0;
@@ -4523,9 +4523,9 @@ hr {
     border: 1px solid #c3e6cb;
 }
 
-.settings-success {
+.settings-error {
     font-family: 'Roboto Condensed', serif;
-    font-size: 19px;
+    font-size: 22px;
     border-radius: 10px;
     display: none;
     opacity: 0;
@@ -4550,20 +4550,83 @@ hr {
     margin-left: 70px;
 }
 
-.message-info {
+.main-content .message-success,
+.main-content .message-error {
+    padding: 10px;
+    display: grid;
+    border-radius: 5px;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.main-content .message-success p,
+.main-content .message-error p {
+    margin: auto;
+    font-family: 'Roboto Condensed', serif;
+    font-size: 21px;
+}
+
+.main-content .message-success {
+    color: #39d53b;
+    background-color: #cefdce;
+}
+
+.main-content .message-error {
+    color: #f12f2a;
+    background-color: #ffcaca;
+}
+
+.main-content .message-success.fade-out,
+.main-content .message-error.fade-out {
     opacity: 0;
-    transition: opacity 1s;
-    display: none;
+    transition: opacity 0.5s ease-out;
 }
 
-.message-info.info {
-    display: grid;
-    color: green;
-    opacity: 1;
+
+
+
+
+
+
+
+.email-body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-.message-info.error {
-    display: grid;
-    color: red;
-    opacity: 1;
+.email-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.email-container .email-header {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+.email-container .email-content {
+    padding: 20px;
+}
+
+.email-container .product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.email-container .footer {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #777777;
 }

@@ -30,7 +30,6 @@ function createConfirmDialog(message) {
 }
 
 function deleteAccount() {
-    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
     const url = '/api/settings/account/delete';
 
     fetch(url, {

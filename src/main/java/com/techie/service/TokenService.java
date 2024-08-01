@@ -2,6 +2,7 @@ package com.techie.service;
 
 import org.springframework.stereotype.*;
 
+import java.time.*;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -17,19 +18,33 @@ import java.util.concurrent.*;
 @Service
 public class TokenService {
 
-    private final Map<String, String> tokenStorage = new ConcurrentHashMap<>();
+    private static final long TOKEN_EXPIRATION_MINUTES = 30;
+    private final Map<String, TokenInfo> tokenStorage = new ConcurrentHashMap<>();
 
-    public String createToken(String username) {
+    public String createToken(String email) {
         String token = UUID.randomUUID().toString();
-        tokenStorage.put(token, username);
+        LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(TOKEN_EXPIRATION_MINUTES);
+        tokenStorage.put(token, new TokenInfo(email, expirationTime));
         return token;
     }
 
-    public String getUsernameByToken(String token) {
-        return tokenStorage.get(token);
+    public String getEmailByToken(String token) {
+        TokenInfo tokenInfo = tokenStorage.get(token);
+        if (tokenInfo == null || tokenInfo.isExpired()) {
+            tokenStorage.remove(token); // Clean up expired token
+            return null;
+        }
+        return tokenInfo.email();
     }
 
     public void removeToken(String token) {
         tokenStorage.remove(token);
     }
+
+    private record TokenInfo(String email, LocalDateTime expirationTime) {
+
+        boolean isExpired() {
+                return LocalDateTime.now().isAfter(expirationTime);
+            }
+        }
 }

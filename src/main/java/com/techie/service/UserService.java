@@ -6,12 +6,15 @@ import com.techie.domain.model.*;
 import com.techie.exceptions.user.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
+import jakarta.servlet.http.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
+import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;
+import org.springframework.security.web.authentication.logout.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
@@ -27,19 +30,26 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final AddressRepository addressRepository;
     private final WishlistService wishlistService;
+    private final TokenService tokenService;
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService, RoleRepository roleRepository,
-                       AddressRepository addressRepository, WishlistService wishlistService) {
+                       AddressRepository addressRepository, WishlistService wishlistService,
+                       TokenService tokenService, HttpServletRequest request, HttpServletResponse response) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
         this.addressRepository = addressRepository;
         this.wishlistService = wishlistService;
+        this.tokenService = tokenService;
+        this.request = request;
+        this.response = response;
     }
 
     public UserEntity findByUsername(String username) {
@@ -155,7 +165,33 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteByUsername(String username) {
-        userRepository.deleteByUsername(username);
+    @Transactional
+    public void confirmDelete(String token) {
+        String email = tokenService.getEmailByToken(token);
+        if (email == null) {
+            throw new IllegalArgumentException("Invalid or expired token");
+        }
+
+        try {
+            // Proceed with user deletion
+            userRepository.deleteByEmail(email);
+            tokenService.removeToken(token);
+
+            // Programmatic logout
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null) {
+                SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+                logoutHandler.logout(request, response, authentication);
+            }
+
+            logger.info("User with email {} deleted and logged out.", email);
+        } catch (Exception e) {
+            logger.error("Error during user deletion and logout: ", e);
+            throw new RuntimeException("An error occurred while processing the deletion.");
+        }
+    }
+
+    public List<UserEntity> getSubscribedUsers() {
+        return userRepository.findSubscribedUsers();
     }
 }
