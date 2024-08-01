@@ -4645,15 +4645,64 @@ hr {
     right: 10px;
     top: 50%;
     transform: translateY(1px);
-    background: none;
     border: none;
     cursor: pointer;
-    color: rgb(225, 222, 218);
-    z-index: 10;
+    color: rgb(225, 222, 217);
+    z-index: 11;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 24px;
     height: 24px;
+    background: none;
+}
+
+.forgot-password-container {
+    display: flex;
+    justify-content: center;
+    font-family: 'Roboto Condensed', serif;
+    margin-top: 40px;
+}
+
+.forgot-password-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.forgot-password-container .form-control {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 8px;
+    caret-color: white;
+}
+
+.forgot-password-container .text-center p {
+    font-size: 18px;
+}
+
+.forgot-password-container .form-control::placeholder {
+    padding-left: 4px;
+    color: white;
+}
+
+.forgot-password-container .form-control:focus {
+    outline: none;
+    background-color: rgba(250, 235, 235, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.forgot-password-container .form-control:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.forgot-password-container .btn-primary {
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 50px;
 }
 
