@@ -138,4 +138,7 @@ public class MailService {
             throw new EmailNotificationException("Failed to send email.", e);
         }
     }
+
+    public void sendLoginAttemptWarning(String userId) {
+    }
 }

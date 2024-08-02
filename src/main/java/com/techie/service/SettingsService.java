@@ -150,13 +150,11 @@ public class SettingsService {
         mailService.sendResetPasswordEmail(email, token);
     }
 
-    @Transactional
     public void verifyToken(String token) {
         String email = tokenService.getEmailByToken(token);
         if (email == null) {
             throw new IllegalArgumentException("Invalid or expired token");
         }
-        tokenService.removeToken(token);
     }
 
     @Transactional
@@ -171,5 +169,6 @@ public class SettingsService {
         user.setPassword(encodedPassword);
         userService.saveUser(user);
         mailService.sendInformativeEmail(user.getEmail());
+        tokenService.removeToken(token);
     }
 }

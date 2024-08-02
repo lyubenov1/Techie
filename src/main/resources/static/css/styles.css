@@ -2482,6 +2482,7 @@ a.rating-info span:first-child {
 }
 
 .your-profile .alert-success p {
+    font-size: 18px;
     margin-bottom: 0;
 }
 
