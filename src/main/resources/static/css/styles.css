@@ -4566,6 +4566,10 @@ hr {
     font-size: 19px;
 }
 
+.fade-out {
+    opacity: 0;
+}
+
 .main-content .message-success {
     color: #0a470a;
     background-color: #cefdce;

@@ -124,7 +124,7 @@ public class MailService {
             String subject = "Reset Your Password";
             String resetUrl = "http://localhost:8080/email/reset-password?token=" + resetToken;
             String htmlBody = "<p>Click the link below to reset your password:</p>"
-                    + "<p><a href=\"" + resetUrl + "\">Reset Password</a></p>";
+                    + "<p><a href=\"" + resetUrl + "\" style=\"text-decoration: none; color: #007bff;\">Reset Password</a></p>";
 
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");

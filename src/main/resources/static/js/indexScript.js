@@ -20,14 +20,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+
     setTimeout(function() {
         const successMessage = document.querySelector('.message-success');
         const errorMessage = document.querySelector('.message-error');
         if (successMessage) {
             successMessage.classList.add('fade-out');
+            // After the fade-out transition, hide the element
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 500);
         }
         if (errorMessage) {
             errorMessage.classList.add('fade-out');
+            // After the fade-out transition, hide the element
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 500);
         }
     }, 5000); // 5 seconds
+
 });
