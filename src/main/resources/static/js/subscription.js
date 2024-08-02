@@ -32,6 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         });
     }
+
+    const alertDiv = document.querySelector('.alert-success');
+
+    if (alertDiv) {
+        setTimeout(() => {
+            alertDiv.classList.add('hide');
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 1000);
+        }, 5000);
+    }
 });
 
 function showMessageFooter(message, source, type) {
