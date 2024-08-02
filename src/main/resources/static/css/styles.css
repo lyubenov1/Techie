@@ -4770,7 +4770,6 @@ hr {
     height: 40px;
     caret-color: white;
     color: white;
-    cursor: pointer;
     padding: 10px 10px 10px 15px;
 }
 
@@ -4844,4 +4843,18 @@ hr {
     width: 24px;
     height: 24px;
     background: none;
+}
+
+.reset-password-container .reset-password-msg {
+    margin-top: 10px;
+}
+
+.message-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message-list li {
+    margin-bottom: 15px;
 }

@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.ui.*;
+import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.*;
@@ -49,6 +50,18 @@ public class GlobalAdvice {
     public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException ex) {
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)  // 413 status code
                 .body("File size exceeds the maximum limit.");
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+        ex.getBindingResult().getGlobalErrors().forEach(error ->
+                errors.put(error.getObjectName(), error.getDefaultMessage())
+        );
+        return ResponseEntity.badRequest().body(errors);
     }
 
     // Catch-all for other exceptions

@@ -40,8 +40,7 @@ public class PasswordResetController {
     }
 
     @PostMapping("/reset-password/step-two")
-    public ResponseEntity<String> resetPasswordStepTwo(@RequestBody @Valid ResetPasswordRequest request) {
-
+    public ResponseEntity<?> resetPasswordStepTwo(@RequestBody @Valid ResetPasswordRequest request) {
         try {
             settingsService.resetPasswordStepTwo(request);
             return ResponseEntity.ok("Password successfully reset!");
