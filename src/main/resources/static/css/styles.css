@@ -4563,7 +4563,7 @@ hr {
 .main-content .message-error p {
     margin: auto;
     font-family: 'Roboto Condensed', serif;
-    font-size: 21px;
+    font-size: 19px;
 }
 
 .main-content .message-success {
@@ -4572,8 +4572,8 @@ hr {
 }
 
 .main-content .message-error {
-    color: #ff0500;
-    background-color: #ffcaca;
+    color: #f81d19;
+    background-color: #ffeeee;
 }
 
 .main-content .message-success.fade-out,
@@ -4725,3 +4725,123 @@ hr {
     color: red;
 }
 
+.reset-password-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    align-items: center;
+    color: rgb(225, 222, 218);
+    font-family: 'Roboto Condensed', serif;
+}
+
+.reset-password-container .reset-password-card {
+    background: inherit;
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid grey;
+}
+
+.reset-password-container h2.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reset-password-container .input-div {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.reset-password-container .inputLabel {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.reset-password-container .input-div input {
+    width: calc(100%);
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 8px;
+    height: 40px;
+    caret-color: white;
+    color: white;
+    cursor: pointer;
+    padding: 10px 10px 10px 15px;
+}
+
+.reset-password-container .input-div input::placeholder {
+    padding-left: 4px;
+    color: #a8a8a8;
+}
+
+.reset-password-container .input-div input:focus {
+    outline: none;
+    background-color: rgba(250, 235, 235, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.reset-password-container .input-div input:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.reset-password-container .btn-toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.reset-password-container .buttonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.reset-password-container .reset-submit-btn {
+    background-color: inherit;
+    color: rgb(225, 222, 218);
+    border: 1px solid grey;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s background-color;
+}
+
+.reset-password-container #resetPasswordForm {
+    margin-bottom: 0;
+}
+
+.reset-password-container .reset-submit-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.reset-password-container .input-div {
+    position: relative;
+}
+
+.reset-password-container .btn-toggle-password {
+    position: absolute;
+    right: 17px;
+    top: 50%;
+    border: none;
+    cursor: pointer;
+    color: rgb(225, 222, 218);
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+}
