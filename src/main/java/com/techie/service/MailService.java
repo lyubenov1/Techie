@@ -156,4 +156,38 @@ public class MailService {
             throw new EmailNotificationException("Failed to send email.", e);
         }
     }
+
+    private String loadRegistrationTemplate() throws IOException {
+        Resource resource = new ClassPathResource("templates/" + "registration-email.html");
+        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+    }
+
+    public void sendRegistrationEmail(UserEntity user) {
+        try {
+            String subject = "Successful registration";
+            String htmlBody = buildRegistrationEmailBody(user);
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(user.getEmail());
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true); // Set to true for HTML content
+
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
+    }
+
+    private String buildRegistrationEmailBody(UserEntity user) throws IOException {
+        String template = loadRegistrationTemplate();
+        String homePageUrl = "http://localhost:8080/";
+        String techieLogoSrc = "https://res.cloudinary.com/dztiecgdt/image/upload/v1716808742/Techie%20logos/Untitled_design_oy7iys.png";
+
+        return template
+                .replace("{{logo}}", techieLogoSrc)
+                .replace("{{user}}", user.getFirstName())
+                .replace("{{homePageUrl}}", homePageUrl);
+    }
 }

@@ -24,17 +24,20 @@ public class RegisterService {
     private final WishlistService wishlistService;
     private final UserDetailsService userDetailsService;
     private final RoleRepository roleRepository;
+    private final MailService mailService;
 
     @Autowired
     public RegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                            AddressRepository addressRepository, WishlistService wishlistService,
-                           UserDetailsService userDetailsService, RoleRepository roleRepository) {
+                           UserDetailsService userDetailsService, RoleRepository roleRepository,
+                           MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
         this.wishlistService = wishlistService;
         this.userDetailsService = userDetailsService;
         this.roleRepository = roleRepository;
+        this.mailService = mailService;
     }
 
     @Transactional
@@ -50,6 +53,8 @@ public class RegisterService {
 
         Authentication authentication = authenticateUser(registerModel.getEmail());
         successfulLoginProcessor.accept(authentication);
+
+        mailService.sendRegistrationEmail(userEntity);
     }
 
     private UserEntity createUserEntity(RegisterModel registrationModel) {

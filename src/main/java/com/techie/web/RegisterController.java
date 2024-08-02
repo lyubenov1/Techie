@@ -65,7 +65,7 @@ public class RegisterController {
             securityContextRepository.saveContext(context, request, response);
         });
 
-        redirectAttributes.addFlashAttribute("successMessage", "Registration successful!");
+        redirectAttributes.addFlashAttribute("messageSuccess", "Registration successful!");
         return "redirect:/";
     }
 }
