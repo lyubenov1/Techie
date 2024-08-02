@@ -1,0 +1,73 @@
+/* Styles for terms-of-use, privacy-policy and about-us pages */
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+h1 {
+    font-size: 2.5rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #7f8c8d;
+    margin-bottom: 2rem;
+}
+
+ul {
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+.terms-of-use h2,
+.privacy-policy h2 {
+    color: #e74c3c;
+}
+
+.about-us .values ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.about-us .values li:before {
+    content: "✓ ";
+    color: #2ecc71;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+@media (max-width: 768px) {
+    .container-md {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
