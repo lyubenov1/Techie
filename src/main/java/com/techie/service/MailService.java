@@ -56,17 +56,17 @@ public class MailService {
 
         for (UserEntity user : subscribedUsers) {
             try {
-                sendEmail(user.getEmail(), product);
+                sendDiscountEmail(user.getEmail(), product);
             } catch (Exception e) {
                 log.error("Failed to send discount notification email to user: {}. Error: {}", user.getEmail(), e.getMessage(), e);
             }
         }
     }
 
-    private void sendEmail(String to, Product product) {
+    private void sendDiscountEmail(String to, Product product) {
         try {
             String subject = "Discount on Product: " + product.getName();
-            String htmlBody = buildEmailBody(to, product);
+            String htmlBody = buildDiscountEmailBody(to, product);
 
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -81,8 +81,8 @@ public class MailService {
         }
     }
 
-    private String buildEmailBody(String userEmail, Product product) throws IOException {
-        String template = loadTemplate();
+    private String buildDiscountEmailBody(String userEmail, Product product) throws IOException {
+        String template = loadDiscountTemplate();
         String unsubscribeToken = tokenService.createToken(userEmail);
         String unsubscribeUrl = "http://localhost:8080/email/unsubscribe?token=" + unsubscribeToken;
 
@@ -98,7 +98,7 @@ public class MailService {
                 .replace("{{unsubscribeUrl}}", unsubscribeUrl);
     }
 
-    private String loadTemplate() throws IOException {
+    private String loadDiscountTemplate() throws IOException {
         Resource resource = new ClassPathResource("templates/" + "product-discount-email.html");
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
@@ -139,6 +139,21 @@ public class MailService {
         }
     }
 
-    public void sendLoginAttemptWarning(String userId) {
+    public void sendLoginAttemptWarning(String to) {
+        try {
+            String subject = "Suspicious activity";
+            String message = "We have detected suspicious activity regarding your account. " +
+                    "5 or more unsuccessful login attempts were made. " +
+                    "If it wasn't you, contact us immediately.";
+
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(to);
+            email.setSubject(subject);
+            email.setText(message);
+
+            mailSender.send(email);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
     }
 }

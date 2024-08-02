@@ -1924,18 +1924,20 @@ a.rating-info span:first-child {
     color: rgb(225, 222, 218);
 }
 
-.search-error {
+.error-page {
     text-align: center;
     padding: 50px 0;
     color: rgb(225, 222, 218);
     font-family: 'Roboto Condensed', serif;
+    margin-top: 200px;
+    margin-bottom: 70px;
 }
 
-.search-error h1 {
+.error-page h1 {
     margin-bottom: 20px;
 }
 
-.search-error h2 {
+.error-page h2 {
     font-size: 27px;
 }
 

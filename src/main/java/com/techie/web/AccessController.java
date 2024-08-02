@@ -15,4 +15,9 @@ public class AccessController {
     public String blacklisted() {
         return "error-pages/blacklisted";
     }
+
+    @GetMapping("/too-many-requests")
+    public String handleTooManyRequestsByEmail() {
+        return "error-pages/too-many-requests";
+    }
 }

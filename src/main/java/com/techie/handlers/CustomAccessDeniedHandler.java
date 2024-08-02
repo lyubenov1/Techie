@@ -1,4 +1,4 @@
-package com.techie.config;
+package com.techie.handlers;
 
 import jakarta.servlet.http.*;
 import org.springframework.security.access.*;

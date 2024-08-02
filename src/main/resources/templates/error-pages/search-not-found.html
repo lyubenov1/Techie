@@ -15,11 +15,7 @@
 
 <header th:replace="~{fragments/header :: header}"></header>
 
-<div class = "container">
-    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-</div>
-
-<div class="search-error container-md">
+<div class="error-page container-md">
     <h1 class="display-4 mb-4" th:text="${'No results found for &quot;' + searchQuery + '&quot;'}"></h1>
     <p class="lead">We couldn't find any products matching your search.</p>
 

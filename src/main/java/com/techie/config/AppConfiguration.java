@@ -3,12 +3,14 @@ package com.techie.config;
 import com.techie.repository.*;
 import com.techie.service.*;
 import org.springframework.context.annotation.*;
+import org.springframework.scheduling.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
 
 @Configuration
 @EnableAspectJAutoProxy
+@EnableScheduling
 public class AppConfiguration {
 
     @Bean

@@ -1,5 +1,7 @@
 package com.techie.config;
 
+import com.techie.filters.*;
+import com.techie.handlers.*;
 import com.techie.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.security.servlet.*;
@@ -24,19 +26,22 @@ public class SecurityConfiguration {
     private final ApplicationUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final DataSource dataSource;
+    private final RateLimitFilter rateLimitFilter;
 
     @Autowired
-    public SecurityConfiguration(ApplicationUserDetailsService userDetailsService,
-                                 PasswordEncoder passwordEncoder, DataSource dataSource) {
+    public SecurityConfiguration(ApplicationUserDetailsService userDetailsService, PasswordEncoder passwordEncoder,
+                                 DataSource dataSource, RateLimitFilter rateLimitFilter) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.dataSource = dataSource;
+        this.rateLimitFilter = rateLimitFilter;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            SecurityContextRepository securityContextRepository) throws Exception {
         http
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                 // Define authorization rules
                 .authorizeHttpRequests(authorize -> authorize
                         // Allow access to all static files (images, CSS, js)
@@ -47,7 +52,7 @@ public class SecurityConfiguration {
                                 "/privacy-policy", "/about-us", "/example/test", "/email/**").permitAll()
 
                         // Authentication pages
-                        .requestMatchers("/login/**", "/register", "/login-error").anonymous()
+                        .requestMatchers("/login/**", "/too-many-requests", "/register", "/login-error").anonymous()
 
                         // Public API endpoints
                         .requestMatchers("/api/categories", "/api/products/**", "/api/settings/subscription/change/email",
