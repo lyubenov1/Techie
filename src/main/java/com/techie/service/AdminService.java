@@ -3,6 +3,7 @@ package com.techie.service;
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
 import com.techie.domain.model.*;
+import com.techie.events.*;
 import com.techie.exceptions.product.*;
 import com.techie.exceptions.role.*;
 import com.techie.exceptions.user.*;
@@ -10,6 +11,7 @@ import com.techie.repository.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.cache.annotation.*;
+import org.springframework.context.*;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
@@ -31,13 +33,14 @@ public class AdminService {
     private final BlacklistRepository blacklistRepository;
     private final RoleRepository roleRepository;
     private final MailService mailService;
+    private ApplicationEventPublisher eventPublisher;
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 
     @Autowired
     public AdminService(ProductRepository productRepository, ProductService productService,
                         BlacklistRepository blacklistRepository, UserRepository userRepository,
                         UserService userService, RoleRepository roleRepository,
-                        MailService mailService) {
+                        MailService mailService, ApplicationEventPublisher eventPublisher) {
         this.productRepository = productRepository;
         this.productService = productService;
         this.blacklistRepository = blacklistRepository;
@@ -45,6 +48,7 @@ public class AdminService {
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.mailService = mailService;
+        this.eventPublisher = eventPublisher;
     }
 
     public List<ProductAdminView> getProductsAdmin(String query) {
@@ -90,6 +94,7 @@ public class AdminService {
         product.setDiscountedPrice(discountedPrice);
 
         productRepository.save(product);
+        eventPublisher.publishEvent(new ProductPriceChangeEvent(product.getId(), discountedPrice, true));
 
         // Notify subscribed users asynchronously
         mailService.sendDiscountNotification(product);
