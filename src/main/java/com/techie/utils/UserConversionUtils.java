@@ -2,7 +2,7 @@ package com.techie.utils;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 
 import java.time.format.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.techie.domain.model;
+package com.techie.domain.model.models;
 
 import com.techie.domain.enums.*;
 import lombok.*;

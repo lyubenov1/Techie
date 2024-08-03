@@ -2,7 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.enums.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.exceptions.user.*;
 import com.techie.repository.*;
 import com.techie.utils.*;

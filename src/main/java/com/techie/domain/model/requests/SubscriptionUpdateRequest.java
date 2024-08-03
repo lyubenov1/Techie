@@ -1,4 +1,4 @@
-package com.techie.domain.model;
+package com.techie.domain.model.requests;
 
 import jakarta.validation.constraints.*;
 import lombok.*;

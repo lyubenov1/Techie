@@ -1,4 +1,4 @@
-package com.techie.domain.model;
+package com.techie.domain.model.models;
 
 import lombok.*;
 

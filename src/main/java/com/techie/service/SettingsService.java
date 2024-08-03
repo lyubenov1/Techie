@@ -3,7 +3,7 @@ package com.techie.service;
 import com.cloudinary.*;
 import com.cloudinary.utils.*;
 import com.techie.domain.entities.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.requests.*;
 import com.techie.exceptions.other.*;
 import com.techie.exceptions.settings.*;
 import com.techie.exceptions.user.*;

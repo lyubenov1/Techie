@@ -1,6 +1,6 @@
 package com.techie.web.rest;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.requests.*;
 import com.techie.service.*;
 import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.*;

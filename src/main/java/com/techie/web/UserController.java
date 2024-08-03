@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/cart")
     public String getUserCart(Model model) {
         model.addAttribute("activeMenuItem", "cart");
-        return "cart";
+        return "loggedUser-cart";
     }
 
     @GetMapping("/wishlist")

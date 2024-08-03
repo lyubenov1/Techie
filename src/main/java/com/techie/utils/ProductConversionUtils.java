@@ -5,7 +5,7 @@ import com.techie.domain.entities.products.*;
 import com.techie.domain.entities.products.accessories.*;
 import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.DTOs.productsDTOs.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.exceptions.product.*;
 import org.slf4j.*;
 import org.springframework.web.util.*;

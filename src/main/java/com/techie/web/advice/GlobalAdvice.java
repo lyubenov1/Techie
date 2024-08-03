@@ -1,7 +1,7 @@
 package com.techie.web.advice;
 
 import com.techie.domain.entities.*;
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.exceptions.*;
 import com.techie.service.*;
 import org.slf4j.*;

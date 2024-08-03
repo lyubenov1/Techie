@@ -1,6 +1,6 @@
 package com.techie.validation;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.repository.*;
 import jakarta.validation.*;
 

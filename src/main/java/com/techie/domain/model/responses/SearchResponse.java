@@ -1,4 +1,4 @@
-package com.techie.domain.model;
+package com.techie.domain.model.responses;
 
 import com.techie.domain.model.DTOs.*;
 import lombok.*;

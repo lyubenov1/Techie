@@ -1,10 +1,11 @@
 package com.techie.domain.entities;
 
-import com.techie.events.listeners.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.proxy.*;
 
 import java.math.*;
+import java.time.*;
 import java.util.*;
 
 @Setter
@@ -12,7 +13,6 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")
-@EntityListeners(CartListener.class) // TODO: implement 'save abandoned carts' logic
 public class Cart {
 
     @Id
@@ -20,28 +20,49 @@ public class Cart {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Column(unique = true)
+    private String anonymousId;
+
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @Column(name = "updated_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;  // Timestamp of last cart update
+    private LocalDateTime updatedAt;  // Timestamp of last cart update
 
     @Column(name = "grand_total", precision = 10, scale = 2)
-    private BigDecimal grandTotal;
+    private BigDecimal grandTotal = BigDecimal.ZERO;
 
-    public void addItem(CartItem item) {
-        cartItems.add(item);
-        item.setCart(this);
+    @PrePersist
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
-    public void removeItem(CartItem item) {
-        cartItems.remove(item);
-        item.setCart(null);
+    // Constructors for authenticated and anonymous users
+    public Cart(UserEntity user) {
+        this.user = user;
     }
 
+    public Cart(String anonymousId) {
+        this.anonymousId = anonymousId;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Cart cart = (Cart) o;
+        return getId() != null && Objects.equals(getId(), cart.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

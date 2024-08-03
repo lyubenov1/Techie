@@ -33,7 +33,7 @@ public class CacheConfig {
 
     @Bean
     public CacheManager cacheManagerCart() {
-        CaffeineCacheManager cacheManager = new CaffeineCacheManager("shoppingCart");
+        CaffeineCacheManager cacheManager = new CaffeineCacheManager("cartCache");
         cacheManager.setCaffeine(Caffeine.newBuilder()
                 .initialCapacity(50)
                 .maximumSize(200)

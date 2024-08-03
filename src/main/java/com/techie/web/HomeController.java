@@ -12,6 +12,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/cart")
+    public String getAnonymousUserCart() {
+        return "anonymousUser-cart";
+    }
+
     @GetMapping("/about-us")
     public String aboutUsPage() {
         return "about-us";

@@ -1,6 +1,6 @@
 package com.techie.web;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.service.*;
 import jakarta.servlet.http.*;
 import jakarta.validation.*;

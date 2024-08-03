@@ -1,4 +1,4 @@
-package com.techie.domain.model;
+package com.techie.domain.model.requests;
 
 import com.techie.validation.*;
 import jakarta.validation.constraints.*;
@@ -8,10 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
-public class ChangePasswordRequest {
-
-    @NotBlank(message = "Old password is required.")
-    private String oldPassword;
+public class ResetPasswordRequest {
 
     @NotBlank(message = "Password is required.")
     @Pattern(
@@ -23,4 +20,7 @@ public class ChangePasswordRequest {
 
     @NotBlank(message = "Confirm password is required.")
     private String confirmPassword;
+
+    @NotBlank
+    private String token;
 }

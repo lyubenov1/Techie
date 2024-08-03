@@ -1,6 +1,6 @@
 package com.techie.web.rest;
 
-import com.techie.domain.model.*;
+import com.techie.domain.model.models.*;
 import com.techie.exceptions.product.*;
 import com.techie.exceptions.role.*;
 import com.techie.exceptions.user.*;
