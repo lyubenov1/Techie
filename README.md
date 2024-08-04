@@ -1,18 +1,49 @@
 # Techie - E-commerce website for tech products
 
-### Running the Application
+## Getting Started
 
 To get the application up and running, follow these steps:
 
-1. **Connect to your database:** In the `application.properties` file, replace `${DB_DATABASE}`, `${DB_USER}`, and `${DB_PASSWORD}` with your schema name and database credentials. The schema will be created automatically when the application starts.
+## 1. Configure Your Cloudinary Details
+- Ensure you have a Cloudinary account and have noted your Cloudinary credentials (`cloud_name`, `api_key`, and `api_secret`).
+- Update the Cloudinary parameters in `application.properties` (located in `src/main/resources`) with these details.
+```properties
+     cloudinary.cloud_name=${CLOUDINARY_NAME}
+     cloudinary.api_key=${CLOUDINARY_API_KEY}
+     cloudinary.api_secret=${CLOUDINARY_API_SECRET}
+```
 
-2. **Create Database Tables:** The application is configured to automatically create the necessary database tables on startup using Hibernate. Simply launch the application, and it will handle this for you. Stop it afterward.
+## 2. Configure and Populate the Database
 
-3. **Populate Tables with Initial Data:** Execute the `data.sql` file located in the `src/main/resources` directory of the project. This will populate the tables with essential data.
+1. **Connect to Your Database**
+    - Replace the placeholders `${DB_DATABASE}`, `${DB_USER}`, and `${DB_PASSWORD}` with your schema name and database credentials (in `application.properties`).
+      ```properties
+      spring.datasource.url=jdbc:mysql://localhost:3306/your_database
+      spring.datasource.username=your_username
+      spring.datasource.password=your_password
+      ```
 
-4. **Start the Application:** Now that the tables are created and populated, you can launch the application again. Additional data will be populated during startup using `@PostConstruct` methods (takes about 17 seconds).
+2. **Create Database Tables**
+    - The application uses Hibernate to automatically create the necessary database tables upon startup.
+    - Launch the application; it will create the tables for you. You can stop the application after this step.
 
-That's it!
+3. **Populate Tables with Initial Data**
+    - Execute the `data.sql` file located in the `src/main/resources` directory.
+    - This step will populate your tables with the essential initial data.
+
+4. **Start the Application**
+    - After creating and populating the database tables, start the application again.
+    - Additional data will be populated during startup using `@PostConstruct` methods. This process takes about 17 seconds.
+
+## 3. Run a MailHog Server
+
+- Ensure you have a MailHog server running. Otherwise, you won't be able to register.
+- You can download and run MailHog from [MailHog's GitHub repository](https://github.com/mailhog/MailHog).
+
+---
+
+That’s it! Your application should now be configured and running.
+
 
 
 ### Product page sample
