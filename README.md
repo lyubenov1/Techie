@@ -37,7 +37,7 @@ To get the application up and running, follow these steps:
 
 ## 3. Run a MailHog Server
 
-- Ensure you have a MailHog server running. Otherwise, you won't be able to register.
+- To test the email functionalities, ensure you have a MailHog server running. The application is configured to use MailHog for email testing purposes and is not set up for real email providers.
 - You can download and run MailHog from [MailHog's GitHub repository](https://github.com/mailhog/MailHog).
 
 ---
