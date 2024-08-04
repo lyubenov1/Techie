@@ -225,5 +225,14 @@ public class ProductService {
     public void updateAverageRating(Long productId, Double newAverageRating) {
         productRepository.updateAverageRating(productId, newAverageRating);
     }
+
+    public void updateStockQuantity(Product product, int quantity, boolean isIncrement) {
+        if (!isIncrement) {
+            product.setStock(product.getStock() - quantity);
+        } else {
+            product.setStock(product.getStock() + quantity);
+        }
+        productRepository.save(product);
+    }
 }
 

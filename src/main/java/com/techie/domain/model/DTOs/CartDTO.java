@@ -14,5 +14,6 @@ public class CartDTO {
     private Long id;
     private List<CartItemDTO> cartItems;
     private String updatedAt;
+    private BigDecimal nonDiscountTotal;
     private BigDecimal grandTotal;
 }

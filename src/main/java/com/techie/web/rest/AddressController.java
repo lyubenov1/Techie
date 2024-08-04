@@ -48,7 +48,7 @@ public class AddressController {
             AddressDTO createdAddress = addressService.createAddress(user, addressDTO);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}") // Add the address ID to the path
-                    .buildAndExpand(createdAddress.getId()) // Assuming addressDTO has an ID
+                    .buildAndExpand(createdAddress.getId())
                     .toUri();
 
             // Return 201 Created with the location of the new address and the created address object
