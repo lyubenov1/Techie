@@ -3,6 +3,7 @@ package com.techie.events.listeners;
 import com.techie.domain.entities.*;
 import com.techie.events.*;
 import com.techie.repository.*;
+import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.scheduling.annotation.*;
@@ -15,14 +16,17 @@ import java.util.*;
 public class ProductPriceChangeListener {
 
     private final CartRepository cartRepository;
+    private final CartService cartService;
     private final CartItemRepository cartItemRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProductPriceChangeListener.class);
 
 
     @Autowired
-    public ProductPriceChangeListener(CartRepository cartRepository, CartItemRepository cartItemRepository) {
+    public ProductPriceChangeListener(CartRepository cartRepository, CartItemRepository cartItemRepository,
+                                      CartService cartService) {
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
+        this.cartService = cartService;
     }
 
     @Async
@@ -41,11 +45,11 @@ public class ProductPriceChangeListener {
 
         for (CartItem item : affectedCartItems) {
             try {
-                item.recalculateTotalPrice();
+                cartService.calculateTotalPrice(item);
                 logger.debug("Recalculated price for cart item ID: {}", item.getId());
 
                 Cart cart = item.getCart();
-                cart.recalculateGrandTotal();
+                cartService.calculateGrandTotal(cart);
                 cartRepository.save(cart);  // This will cascade save the CartItem as well
                 logger.debug("Updated cart ID: {}", cart.getId());
             } catch (Exception e) {

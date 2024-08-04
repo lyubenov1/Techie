@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(createdItem => {
                 console.log('Product added to cart successfully:', createdItem);
+                updateCartBadge()
                 showTickIcon(icon);
             })
             .catch(error => {
@@ -280,6 +281,7 @@ function updateCart() {
                         showMessage('An unexpected error occurred.', true);
                     } else {
                         console.log(message);
+                        updateCartBadge()
                         showMessage("Product added successfully to your cart!", false); // Show success message
                     }
                 } else if (response.status === 409) {

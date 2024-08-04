@@ -32,8 +32,6 @@ public class CartController {
             Cart cart = cartService.getOrCreateCart(cartId);
             CartItemDTO createdItem = cartService.addItem(cart, itemDTO);
 
-            System.out.println("Created item ID: " + createdItem.getId());
-
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(createdItem.getId())
@@ -44,6 +42,7 @@ public class CartController {
         } catch (NotEnoughInStockException | ProductAlreadyInCartException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -63,12 +62,13 @@ public class CartController {
         }
     }
 
-    @GetMapping("/cart/get")
+    @GetMapping("/get")
     public ResponseEntity<?> getCart(HttpServletRequest request) {
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
             Cart cart = cartService.getOrCreateCart(cartId);
-            return ResponseEntity.ok().body(cartService.getCartDTO(cart));
+            CartDTO cartDTO = cartService.getCartDTO(cart);
+            return ResponseEntity.ok().body(cartDTO);
         }  catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
