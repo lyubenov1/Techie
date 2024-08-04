@@ -60,6 +60,15 @@
                 </div>
                 <div class="cart-and-favourites">
                     <input type="hidden" id="product-id" th:value="${product.id}">
+                    <!-- Stock Message -->
+                    <div class="product-stock" th:if="${product.stock > 0}">
+                        <div th:if="${product.stock < 10}">
+                            <p>There are only <span th:text="${product.stock}">X</span> items left!</p>
+                        </div>
+                    </div>
+                    <div class="product-stock" th:if="${product.stock == 0}">
+                        <p>Out of stock</p>
+                    </div>
                     <button class="add-to-cart">
                         <i class="fas fa-shopping-cart fa-md text-white"></i> Add to Cart
                     </button>

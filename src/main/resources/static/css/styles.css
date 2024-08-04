@@ -4932,3 +4932,9 @@ hr {
         font-size: 1rem;
     }
 }
+
+.product-main .cart-and-favourites .product-stock {
+    font-size: 18px;
+    color: rgb(197, 18, 40);
+    font-weight: bold;
+}
