@@ -76,9 +76,13 @@ public class GlobalAdvice {
 
     private void addUserToModel(UserDetails userDetails, Map<String, Object> model) {
         if (userDetails != null) {
-            UserEntity user = userService.findByUsername(userDetails.getUsername());
-            UserDisplayView userDisplayView = userService.convertToView(user);
-            model.put("loggedUser", userDisplayView);
+            try {
+                UserEntity user = userService.findByUsername(userDetails.getUsername());
+                UserDisplayView userDisplayView = userService.convertToView(user);
+                model.put("loggedUser", userDisplayView);
+            } catch (UsernameNotFoundException e) {
+                logger.warn("User not found: {}", userDetails.getUsername());
+            }
         }
     }
 }

@@ -36,14 +36,18 @@ public class UserBlacklistInterceptor implements HandlerInterceptor {
 
         String username = getUsernameFromRequest();
         if (username != null) {
-            UserEntity user = userService.findByUsernameNoFetches(username);
-            if (user != null) {
-                boolean isBlacklisted = adminService.isBlacklisted(user.getId());
-                if (isBlacklisted) {
-                    log.info("Blocked access attempt by blacklisted user: {}", username);
-                    response.sendRedirect("/blacklisted");
-                    return false;
+            try {
+                UserEntity user = userService.findByUsernameNoFetches(username);
+                if (user != null) {
+                    boolean isBlacklisted = adminService.isBlacklisted(user.getId());
+                    if (isBlacklisted) {
+                        log.info("Blocked access attempt by blacklisted user: {}", username);
+                        response.sendRedirect("/blacklisted");
+                        return false;
+                    }
                 }
+            } catch (UsernameNotFoundException e) {
+                log.warn("User not found: {}", username);
             }
         }
         return true;
