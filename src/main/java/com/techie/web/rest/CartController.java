@@ -32,26 +32,28 @@ public class CartController {
             Cart cart = cartService.getOrCreateCart(cartId);
             CartItemDTO createdItem = cartService.addItem(cart, itemDTO);
 
+            System.out.println("Created item ID: " + createdItem.getId());
+
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}") // Add the address ID to the path
+                    .path("/{id}")
                     .buildAndExpand(createdItem.getId())
                     .toUri();
 
             // Return 201 Created with the location of the new cartItem and the created item object
             return ResponseEntity.created(location).body(createdItem);
-        } catch (NotEnoughInStockException e) {
+        } catch (NotEnoughInStockException | ProductAlreadyInCartException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 
-    @PatchMapping("/items/{itemId}")
-    public ResponseEntity<String> updateCartItem(@PathVariable Long itemId, @RequestBody CartItemDTO itemDTO, HttpServletRequest request) {
+    @PatchMapping("/items/update")
+    public ResponseEntity<String> updateCartItem(@RequestBody CartItemDTO itemDTO, HttpServletRequest request) {
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
             Cart cart = cartService.getOrCreateCart(cartId);
-            cartService.updateItem(cart, itemId, itemDTO);
+            cartService.updateItem(cart, itemDTO);
 
             return ResponseEntity.ok().body("Successfully updated quantity");
         } catch (NotEnoughInStockException e) {

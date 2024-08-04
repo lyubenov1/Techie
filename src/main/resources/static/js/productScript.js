@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             event.stopPropagation();
             const productId = this.dataset.productId;
-            // addProductToCart(productId, this);
+            addProductToCart(productId, this);
         });
 
         // Enlarge the icon on hover
@@ -36,6 +36,39 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'scale(1)';
         });
     });
+
+    function addProductToCart(productId, icon) {
+        const itemDTO = {
+            productId: productId,
+            quantity: 1
+        };
+
+        fetch('/api/cart/items', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(itemDTO)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(message => {
+                        throw new Error(message || 'Failed to add product to cart');
+                    });
+                }
+            })
+            .then(createdItem => {
+                console.log('Product added to cart successfully:', createdItem);
+                showTickIcon(icon);
+            })
+            .catch(error => {
+                console.error('Error adding product to cart:', error.message);
+                shakeIcon(icon);
+            });
+    }
 
     function addProductToWishlist(productId, icon) {    // Different function than the original addToWishlist.
                                                              // This one is designed for product cards
@@ -95,6 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.remove('shake');
         }, 500); // Duration of the shake animation
     }
+
+    const addToCartButton = document.querySelector('.add-to-cart');
+
+    addToCartButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        updateCart();
+    });
 });
 
 let isDropdownOpen = false;
@@ -184,16 +224,22 @@ function addToWishlist(wishlistId) {    // Function designed specifically for th
     const productId = document.getElementById('product-id').value;
 
     fetch(`/api/wishlist/add/${wishlistId}/${productId}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         }
     })
         .then(response => {
+            // Check if the response is HTML
+            const contentType = response.headers.get('Content-Type');
             return response.text().then(message => {
                 if (response.ok) {
-                    showMessage(message, false); // Show success message
+                    if (contentType.includes('text/html')) {
+                        showMessage('An unexpected error occurred.', true);
+                    } else {
+                        showMessage(message, false); // Show success message
+                    }
                 } else if (response.status === 409) {
                     showMessage(message, true); // Show error message for conflict
                 } else {
@@ -211,27 +257,39 @@ function addToWishlist(wishlistId) {    // Function designed specifically for th
     isDropdownOpen = false;
 }
 
-
-document.getElementById('add-to-cart').addEventListener('click', function(event) {
-    event.preventDefault();
-    addToCart();
-});
-
-function addToCart() {
+function updateCart() {
     const productId = document.getElementById('product-id').value;
 
-    fetch(`/api/cart/add/${productId}`, {
+    const itemDTO = {
+        productId: productId,
+        quantity: 1  // Default quantity
+    };
+
+    fetch('/api/cart/items', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
-        }
+        },
+        body: JSON.stringify(itemDTO)
     })
         .then(response => {
-            if (response.ok) {
-                alert('Product added to cart');
-            } else {
-                alert('Failed to add product to cart');
-            }
+            return response.text().then(message => {
+                if (response.ok) {
+                    if (response.headers.get('content-type')?.includes('text/html')) {
+                        showMessage('An unexpected error occurred.', true);
+                    } else {
+                        console.log(message);
+                        showMessage("Product added successfully to your cart!", false); // Show success message
+                    }
+                } else if (response.status === 409) {
+                    showMessage(message, true); // Show error message for conflict (e.g., not enough stock)
+                } else {
+                    throw new Error(message || 'Failed to add product to cart');
+                }
+            });
+        })
+        .catch(error => {
+            showMessage(error.message, true);
         });
 }

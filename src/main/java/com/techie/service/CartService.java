@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.cache.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
@@ -20,11 +21,16 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final ProductService productService;
+    private final CartItemRepository cartItemRepository;
+    private final UserService userService;
 
     @Autowired
-    public CartService(CartRepository cartRepository, ProductService productService) {
+    public CartService(CartRepository cartRepository, ProductService productService,
+                       CartItemRepository cartItemRepository, UserService userService) {
         this.cartRepository = cartRepository;
         this.productService = productService;
+        this.cartItemRepository = cartItemRepository;
+        this.userService = userService;
     }
 
     @Cacheable(value = "cartCache", key = "#cartId")
@@ -32,7 +38,8 @@ public class CartService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             // Authenticated user
-            UserEntity user = (UserEntity) auth.getPrincipal();
+            User authUser = (User) auth.getPrincipal();
+            UserEntity user = userService.findByUsernameNoFetches(authUser.getUsername());
             return cartRepository.findByUser(user)
                     .orElseGet(() -> cartRepository.save(new Cart(user)));
         } else {
@@ -48,6 +55,13 @@ public class CartService {
         Product product = productService.findById(itemDTO.getProductId())
                 .orElseThrow(() -> new ProductNotFoundException(itemDTO.getProductId()));
 
+        boolean productAlreadyInCart = cart.getCartItems().stream()
+                .anyMatch(cartItem -> cartItem.getProduct().getId().equals(product.getId()));
+
+        if (productAlreadyInCart) {
+            throw new ProductAlreadyInCartException("Product is already added to your cart. You can adjust the quantity before checkout");
+        }
+
         if (product.getStock() < 1) {
             throw new NotEnoughInStockException();
         }
@@ -57,25 +71,28 @@ public class CartService {
         CartItem newItem = new CartItem();
         newItem.setCart(cart);
         newItem.setProduct(product);
-        newItem.setQuantity(itemDTO.getQuantity());
+        newItem.setQuantity(1);
         cart.getCartItems().add(newItem);
+
 
         calculateTotalPrice(newItem);
         calculateGrandTotal(cart);
+
+        cartItemRepository.save(newItem);
         cartRepository.save(cart);
         return CartConversionUtils.convertToItemDTO(newItem);
     }
 
     @Transactional
-    public void updateItem(Cart cart, Long itemId, CartItemDTO itemDTO)
+    public void updateItem(Cart cart, CartItemDTO itemDTO)
                             throws ObjectNotFoundException, NotEnoughInStockException {
         Product product = productService.findById(itemDTO.getProductId())
                 .orElseThrow(() -> new ProductNotFoundException(itemDTO.getProductId()));
 
         CartItem item = cart.getCartItems().stream()
-                .filter(i -> i.getId().equals(itemId))
+                .filter(cartItem -> cartItem.getProduct().getId().equals(product.getId()))
                 .findFirst()
-                .orElseThrow(() -> new ObjectNotFoundException("CartItem not found with id: " + itemId));
+                .orElseThrow(() -> new ObjectNotFoundException("CartItem not found"));
 
         if (item.getQuantity() < itemDTO.getQuantity()) {
             int quantityToRemove = itemDTO.getQuantity() - item.getQuantity();
@@ -91,11 +108,13 @@ public class CartService {
         item.setQuantity(itemDTO.getQuantity());
         calculateTotalPrice(item);
         calculateGrandTotal(cart);
+
+        cartItemRepository.save(item);
         cartRepository.save(cart);
     }
 
 
-    private void calculateTotalPrice(CartItem item) {
+    public void calculateTotalPrice(CartItem item) {
         if (item.getProduct() != null) {
             BigDecimal priceToUse = item.getProduct().getDiscountedPrice() != null ?
                     item.getProduct().getDiscountedPrice() : item.getProduct().getOriginalPrice();
@@ -103,7 +122,7 @@ public class CartService {
         }
     }
 
-    private void calculateGrandTotal(Cart cart) {
+    public void calculateGrandTotal(Cart cart) {
         cart.setGrandTotal(cart.getCartItems().stream()
                 .map(CartItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add));

@@ -74,11 +74,6 @@ public class UserEntity {
         wishlist.setUser(this);
     }
 
-    public void removeWishlist(Wishlist wishlist) {
-        wishlists.remove(wishlist);
-        wishlist.setUser(null);
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
