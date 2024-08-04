@@ -24,6 +24,7 @@ public class MailService {
     private final UserService userService;
     private final TokenService tokenService;
     private static final Logger log = LoggerFactory.getLogger(MailService.class);
+    private static final String FROM_ADDRESS = "techie@email.com";
 
     @Autowired
     public MailService(JavaMailSender mailSender, UserService userService,
@@ -33,6 +34,7 @@ public class MailService {
         this.tokenService = tokenService;
     }
 
+    @Async
     public void sendConfirmationEmail(String to, String token) {
         try {
             String subject = "Confirm your account deletion";
@@ -41,6 +43,7 @@ public class MailService {
 
             SimpleMailMessage email = new SimpleMailMessage();
             email.setTo(to);
+            email.setFrom(FROM_ADDRESS);
             email.setSubject(subject);
             email.setText(message);
 
@@ -72,6 +75,7 @@ public class MailService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             helper.setTo(to);
+            helper.setFrom(FROM_ADDRESS);
             helper.setSubject(subject);
             helper.setText(htmlBody, true); // Set to true for HTML content
 
@@ -103,6 +107,7 @@ public class MailService {
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
 
+    @Async
     public void sendInformativeEmail(String to) {
         try {
             String subject = "Password change";
@@ -110,6 +115,7 @@ public class MailService {
 
             SimpleMailMessage email = new SimpleMailMessage();
             email.setTo(to);
+            email.setFrom(FROM_ADDRESS);
             email.setSubject(subject);
             email.setText(message);
 
@@ -119,6 +125,7 @@ public class MailService {
         }
     }
 
+    @Async
     public void sendResetPasswordEmail(String to, String resetToken) {
         try {
             String subject = "Reset Your Password";
@@ -131,6 +138,7 @@ public class MailService {
 
             helper.setTo(to);
             helper.setSubject(subject);
+            helper.setFrom(FROM_ADDRESS);
             helper.setText(htmlBody, true); // Set to true for HTML content
 
             mailSender.send(mimeMessage);
@@ -139,6 +147,7 @@ public class MailService {
         }
     }
 
+    @Async
     public void sendLoginAttemptWarning(String to) {
         try {
             String subject = "Suspicious activity";
@@ -148,6 +157,7 @@ public class MailService {
 
             SimpleMailMessage email = new SimpleMailMessage();
             email.setTo(to);
+            email.setFrom(FROM_ADDRESS);
             email.setSubject(subject);
             email.setText(message);
 
@@ -162,6 +172,7 @@ public class MailService {
         return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
 
+    @Async
     public void sendRegistrationEmail(UserEntity user) {
         try {
             String subject = "Successful registration";
@@ -171,6 +182,7 @@ public class MailService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             helper.setTo(user.getEmail());
+            helper.setFrom(FROM_ADDRESS);
             helper.setSubject(subject);
             helper.setText(htmlBody, true); // Set to true for HTML content
 
