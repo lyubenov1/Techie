@@ -12,7 +12,9 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "cart")
+@Table(name = "cart", indexes = {
+        @Index(name = "idx_anonymous_id", columnList = "anonymousId")
+})
 public class Cart {
 
     @Id

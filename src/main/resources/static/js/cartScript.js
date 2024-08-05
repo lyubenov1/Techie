@@ -4,7 +4,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function updateCartBadge() {
     fetch('/api/cart/get')
-        .then(response => response.json())
+        .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (!response.ok) {
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                } else if (contentType && contentType.includes('text/html')) {
+                    throw new Error('An unexpected error occurred');
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Failed to fetch cart');
+                    });
+                }
+            }
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text();
+            }
+        })
         .then(cart => {
             const totalQuantity = cart.cartItems.reduce((sum, item) => sum + item.quantity, 0);
             const badgeElement = document.querySelector('.badge-notification');
@@ -16,7 +36,7 @@ function updateCartBadge() {
             }
         })
         .catch(error => {
-            console.error('Error fetching cart data:', error);
-            document.querySelector('.badge-notification').style.display = 'none'; // Hide the badge on error
+            console.error('Error fetching cart data:', error.message);
+            document.querySelector('.badge-notification').style.display = 'none';
         });
 }

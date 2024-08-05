@@ -7,7 +7,6 @@ import com.techie.exceptions.product.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.cache.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
@@ -33,20 +32,61 @@ public class CartService {
         this.userService = userService;
     }
 
-    @Cacheable(value = "cartCache", key = "#cartId")
+    @Transactional
     public Cart getOrCreateCart(String cartId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             // Authenticated user
             User authUser = (User) auth.getPrincipal();
             UserEntity user = userService.findByUsernameNoFetches(authUser.getUsername());
-            return cartRepository.findByUser(user)
+            Cart userCart = cartRepository.findByUserEmail(user.getEmail())
                     .orElseGet(() -> cartRepository.save(new Cart(user)));
+
+            // Check if there's an anonymous cart
+            Cart anonymousCart = cartRepository.findByAnonymousId(cartId).orElse(null);
+            if (anonymousCart != null && !anonymousCart.equals(userCart)) {
+                // Merge anonymous cart into user's cart
+                mergeAnonymousCartIntoUserCart(anonymousCart, userCart);
+            }
+
+            return userCart;
         } else {
             // Unauthenticated user
             return cartRepository.findByAnonymousId(cartId)
                     .orElseGet(() -> cartRepository.save(new Cart(cartId)));
         }
+    }
+
+    private void mergeAnonymousCartIntoUserCart(Cart anonymousCart, Cart userCart) {
+        for (CartItem anonymousItem : anonymousCart.getCartItems()) {
+            boolean itemExists = false;
+            for (CartItem userItem : userCart.getCartItems()) {
+                if (userItem.getProduct().getId().equals(anonymousItem.getProduct().getId())) {
+                    // Update quantity if the product already exists in the user's cart
+                    userItem.setQuantity(userItem.getQuantity() + anonymousItem.getQuantity());
+                    itemExists = true;
+                    break;
+                }
+            }
+            if (!itemExists) {
+                // Create a new CartItem for the user's cart
+                CartItem newUserItem = new CartItem();
+                newUserItem.setCart(userCart);
+                newUserItem.setProduct(anonymousItem.getProduct());
+                newUserItem.setQuantity(anonymousItem.getQuantity());
+
+                // Add the new item to the user's cart
+                userCart.getCartItems().add(newUserItem);
+                calculateTotalPrice(newUserItem);
+                cartItemRepository.save(newUserItem);
+            }
+        }
+
+        calculateGrandTotal(userCart);
+        cartRepository.save(userCart);
+
+        // Delete anonymous cart
+        cartRepository.delete(anonymousCart);
     }
 
     @Transactional
