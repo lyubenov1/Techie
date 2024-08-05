@@ -144,6 +144,11 @@ document.getElementById('save-to-wishlist').addEventListener('click', function(e
     event.preventDefault();
     const dropdown = document.getElementById('wishlist-dropdown');
 
+    if (!isUserAuthenticated()) {
+        window.location.href = '/login';
+        return;
+    }
+
     if (isDropdownOpen) {
         dropdown.style.display = 'none';
         isDropdownOpen = false;
