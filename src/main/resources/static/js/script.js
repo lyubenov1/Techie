@@ -11,6 +11,12 @@ setInterval(updateTime, 60000); // Update every 60000 milliseconds (1 minute)
 updateTime(); // Initial call
 
 document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById('compareButton').addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
+    });
+
     // Last scroll position
     var lastScrollTop = 0;
 
@@ -792,10 +798,6 @@ function createPriceElement(product) {
     return cardText;
 }
 
-// Usage
-const priceElement = createPriceElement(product);
-// Append priceElement to your card or container
-
 document.addEventListener('DOMContentLoaded', function () {
 
     function setupSearchBar(searchBar, searchResults, updateUrlFunction, categoryName = null) {
@@ -913,12 +915,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const compareSearchResults = document.getElementById(`searchResults${id.charAt(id.length - 1)}`);
         setupSearchBar(compareSearchBar, compareSearchResults, compareSearchUrl, selectedCategory);
     });
-});
-
-
-document.getElementById('compareButton').addEventListener('click', function() {
-    const productId = this.getAttribute('data-product-id');
-    window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
 });
 
 function togglePassword(fieldId, toggleBtn) {

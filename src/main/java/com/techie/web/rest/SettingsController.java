@@ -91,7 +91,7 @@ public class SettingsController {
             return ResponseEntity.ok("You have successfully subscribed to our newsletter!");
         } catch (UserIsAlreadySubscribedException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (UserNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");

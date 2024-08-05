@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         showMessageFooter(result.data, 'footer', 'error');
                     }
                 })
-                .catch(() => {
-                    showMessageFooter('An error occurred while updating your subscription.', 'footer', 'error');
+                .catch((error) => {
+                    showMessageFooter(error.message, 'footer', 'error');
                 });
         });
     }
