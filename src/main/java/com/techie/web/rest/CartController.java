@@ -70,6 +70,7 @@ public class CartController {
             CartDTO cartDTO = cartService.getCartDTO(cart);
             return ResponseEntity.ok().body(cartDTO);
         }  catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }

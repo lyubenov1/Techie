@@ -23,8 +23,22 @@
         <aside class="profile-aside">
             <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
         </aside>
-        <div class="profile-main-content" >
-            aaaa
+        <div class="profile-main-content cart">
+            <h1 class="cart-header">Shopping cart</h1>
+            <div class="cart-container">
+                <div class="cart-items"></div>
+                <div class="cart-details">
+                    <div class="voucher-section">
+                        <label for="voucher">Add Voucher</label>
+                        <input type="text" id="voucher" placeholder="Enter voucher code">
+                    </div>
+                    <div class="total-summary">
+                        <p>Subtotal: <span class="subtotal"></span></p>
+                        <p>Total: <span class="total"></span></p>
+                    </div>
+                    <button class="checkout-button">Proceed to Checkout</button>
+                </div>
+            </div>
         </div>
     </main>
 

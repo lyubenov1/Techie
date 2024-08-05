@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                                 "/privacy-policy", "/about-us", "/example/test", "/email/**").permitAll()
 
                         // Authentication pages
-                        .requestMatchers("/login/**", "/too-many-requests", "/register", "/login-error").anonymous()
+                        .requestMatchers("/login/**", "/too-many-requests", "/register", "/login-error", "/cart").anonymous()
 
                         // Public API endpoints
                         .requestMatchers("/api/categories", "/api/products/**", "/api/settings/subscription/change/email",

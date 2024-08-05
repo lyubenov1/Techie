@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
     var dropdownToggle = document.getElementById('navbarDropdown');
     var barsIcon = document.querySelector('.bars-icon');

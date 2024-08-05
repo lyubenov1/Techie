@@ -1,5 +1,6 @@
 package com.techie.domain.entities;
 
+import com.techie.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,17 @@ public class Order {
 
     @Column(nullable = false)
     private String userEmail;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaymentMethod paymentMethod;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_address_id")
+    private Address deliveryAddress;
+
+    @Column
+    private String anonymousAddress;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

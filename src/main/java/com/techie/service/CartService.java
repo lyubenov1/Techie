@@ -114,13 +114,14 @@ public class CartService {
         newItem.setQuantity(1);
         cart.getCartItems().add(newItem);
 
-
         calculateTotalPrice(newItem);
         calculateGrandTotal(cart);
-
         cartItemRepository.save(newItem);
         cartRepository.save(cart);
-        return CartConversionUtils.convertToItemDTO(newItem);
+
+        CartItemDTO newItemDTO = CartConversionUtils.convertToItemDTO(newItem);
+        newItemDTO.setProduct(productService.convertToDTO(product));
+        return newItemDTO;
     }
 
     @Transactional
@@ -169,8 +170,21 @@ public class CartService {
     }
 
     public CartDTO getCartDTO(Cart cart) {
-        return CartConversionUtils.convertToDTO(cart);
+        CartDTO cartDTO = CartConversionUtils.convertToDTO(cart);
+
+        // Set the product for each cart item
+        for (CartItem cartItem : cart.getCartItems()) {
+            Product product = productService.findById(cartItem.getProduct().getId())
+                    .orElseThrow(() -> new ProductNotFoundException(cartItem.getProduct().getId()));
+            ProductDTO productDTO = productService.convertToDTO(product);
+
+            // Find the corresponding CartItemDTO and set its product
+            cartDTO.getCartItems().stream()
+                    .filter(itemDTO -> itemDTO.getId().equals(cartItem.getId()))
+                    .findFirst()
+                    .ifPresent(itemDTO -> itemDTO.setProduct(productDTO));
+        }
+
+        return cartDTO;
     }
-
-
 }

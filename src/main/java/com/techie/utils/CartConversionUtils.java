@@ -32,7 +32,6 @@ public class CartConversionUtils {
     public static CartItemDTO convertToItemDTO(CartItem item) {
         return CartItemDTO.builder()
                 .id(item.getId())
-                .productId(item.getProduct().getId())
                 .quantity(item.getQuantity())
                 .originalPrice(item.getProduct().getOriginalPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .totalPrice(item.getTotalPrice())
