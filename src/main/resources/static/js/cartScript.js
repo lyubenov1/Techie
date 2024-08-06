@@ -342,6 +342,10 @@ function finishOrder() {
     const paymentMethod = document.getElementById('paymentMethod').value;
     const deliveryAddressId = document.getElementById('deliveryAddress').value;
 
+    console.log('deliveryAddressId:', deliveryAddressId);
+    console.log('Parsed addressId:', parseInt(deliveryAddressId, 10));
+
+
     // Client-side validation
     if (!paymentMethod) {
         alert('Please select a payment method');
@@ -372,11 +376,11 @@ function finishOrder() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.text();
+            return response.json();
         })
-        .then(data => {
-            window.location.href = '/order';
-            console.log('Order placed successfully:', data);
+        .then(order => {
+            window.location.href = `/order?id=${order.orderId}`;
+            console.log('Order placed successfully:', order);
         })
         .catch(error => {
             console.error('Error placing order:', error)

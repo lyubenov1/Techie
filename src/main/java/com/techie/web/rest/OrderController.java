@@ -1,6 +1,7 @@
 package com.techie.web.rest;
 
 import com.techie.domain.entities.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.requests.*;
 import com.techie.exceptions.address.*;
 import com.techie.exceptions.order.*;
@@ -10,6 +11,9 @@ import jakarta.servlet.http.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.*;
+
+import java.net.*;
 
 @RestController
 @RequestMapping("/api/order")
@@ -25,12 +29,19 @@ public class OrderController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> addOrder(@RequestBody OrderRequest orderRequest, HttpServletRequest request) {
+    public ResponseEntity<?> CreateOrder(@RequestBody OrderRequest orderRequest, HttpServletRequest request) {
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
             Cart cart = cartService.getOrCreateCart(cartId);
-            orderService.finishOrder(orderRequest, cart);
-            return ResponseEntity.ok("");
+            Order createdOrder = orderService.finishOrder(orderRequest, cart);
+            OrderDTO orderDTO = orderService.convertToDTO(createdOrder);
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(createdOrder.getId())
+                    .toUri();
+
+            return ResponseEntity.created(location).body(orderDTO);
         } catch (AddressNotFoundException e) {
             return ResponseEntity.badRequest().body("Invalid address");
         } catch (InvalidOrderException e) {
@@ -40,4 +51,5 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your order");
         }
     }
+
 }

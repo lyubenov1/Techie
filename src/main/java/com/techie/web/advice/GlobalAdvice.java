@@ -7,6 +7,7 @@ import com.techie.service.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.lang.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.ui.*;
@@ -39,7 +40,7 @@ public class GlobalAdvice {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ModelAndView onObjectNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal UserDetails userDetails) {
+    public ModelAndView onObjectNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal @Nullable UserDetails userDetails) {
         logger.info("ObjectNotFoundException: {}", ex.getMessage(), ex);
         ModelAndView modelAndView = new ModelAndView("error-pages/not-found");
         addUserToModel(userDetails, modelAndView.getModel());

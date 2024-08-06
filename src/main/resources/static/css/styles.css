@@ -5214,3 +5214,24 @@ hr {
 .custom-alert-cart .custom-alert-content button:hover {
     background-color: #45a049;
 }
+
+.header {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+.content {
+    padding: 20px;
+}
+.content p {
+    color: #555555;
+    line-height: 1.6;
+}
+.content p strong {
+    color: #000000;
+}

@@ -1,10 +1,12 @@
 package com.techie.service;
 
 import com.techie.domain.entities.*;
+import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.requests.*;
 import com.techie.exceptions.address.*;
 import com.techie.exceptions.order.*;
 import com.techie.repository.*;
+import com.techie.utils.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
@@ -40,20 +42,22 @@ public class OrderService {
     }
 
     @Transactional
-    public void finishOrder(OrderRequest orderRequest, Cart cart) {
+    public Order finishOrder(OrderRequest orderRequest, Cart cart) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Order order;
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             // Authenticated user
             User authUser = (User) auth.getPrincipal();
             UserEntity user = userService.findByUsernameNoFetches(authUser.getUsername());
-            finishAuthenticatedOrder(orderRequest, cart, user);
+            order = finishAuthenticatedOrder(orderRequest, cart, user);
         } else {
             // Unauthenticated user
-            finishAnonymousOrder(orderRequest, cart);
+            order = finishAnonymousOrder(orderRequest, cart);
         }
+        return order;
     }
 
-    private void finishAuthenticatedOrder(OrderRequest orderRequest, Cart cart, UserEntity user) {
+    private Order finishAuthenticatedOrder(OrderRequest orderRequest, Cart cart, UserEntity user) {
         Order order = createOrder(orderRequest, cart);
         order.setUserEmail(user.getEmail());
 
@@ -68,9 +72,10 @@ public class OrderService {
         saveOrderAndClearCart(order, cart);
         initializeProductImages(order);
         mailService.sendOrderConfirmationEmail(user.getEmail(), order);
+        return order;
     }
 
-    private void finishAnonymousOrder(OrderRequest orderRequest, Cart cart) {
+    private Order finishAnonymousOrder(OrderRequest orderRequest, Cart cart) {
         if (orderRequest.getAnonymousAddress() == null || orderRequest.getAnonymousAddress().isEmpty()) {
             throw new InvalidOrderException("No delivery address provided for anonymous order");
         }
@@ -83,6 +88,7 @@ public class OrderService {
 
         initializeProductImages(order);
         mailService.sendOrderConfirmationEmail(orderRequest.getAnonymousEmail(), order);
+        return order;
     }
 
     private Order createOrder(OrderRequest orderRequest, Cart cart) {
@@ -126,5 +132,13 @@ public class OrderService {
                     productImageRepository.findPrimaryImagesByProductId(item.getProduct().getId())
             );
         }
+    }
+
+    public Order getOrderById(Long orderId) {
+        return orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+    }
+
+    public OrderDTO convertToDTO(Order order) {
+        return OrderConversionUtils.convertToDTO(order);
     }
 }
