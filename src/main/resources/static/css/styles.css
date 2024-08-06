@@ -4136,33 +4136,6 @@ hr {
     transition: opacity 0.5s ease-in-out;
 }
 
-.address-success {
-    font-family: 'Roboto Condensed', serif;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    font-size: 19px;
-    text-align: center;
-    border-radius: 10px;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 10px;
-    margin: 10px 0;
-}
-
-.address-success.show {
-    display: flex;
-    opacity: 1;
-}
-
-.address-success p {
-    margin: 0;
-}
-
 .user-main {
     display: flex;
     align-items: center;
@@ -5195,4 +5168,8 @@ hr {
 .change-details-modal-error.show,
 .change-password-modal-error.show {
     display: block;
+}
+
+#modalTotalAmount, #modalDeliveryDate {
+    font-weight: bold;
 }

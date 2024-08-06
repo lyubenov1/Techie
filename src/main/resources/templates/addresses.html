@@ -13,146 +13,140 @@
 
 <body class="bg-dark text-white">
 
-    <header th:replace="~{fragments/header :: header}"></header>
-    <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <div class = "container-lg">
-        <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
-    </div>
+<header th:replace="~{fragments/header :: header}"></header>
+<input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<div class = "container-lg">
+    <div th:insert="~{fragments/breadcrumb :: breadcrumb}"></div>
+</div>
 
-    <main class="profile-main container-xl">
-        <aside class="profile-aside">
-            <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
-        </aside>
-        <div class="profile-main-content">
-            <h1 class="address-header">Addresses</h1>
-            <h5 class="address-description">Here you can see your addresses. Edit them, add new, delete old ones.</h5>
-
-            <div class="address-success alert alert-success">
-                <p></p>
+<main class="profile-main container-xl">
+    <aside class="profile-aside">
+        <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
+    </aside>
+    <div class="profile-main-content">
+        <h1 class="address-header">Addresses</h1>
+        <h5 class="address-description">Here you can see your addresses. Edit them, add new, delete old ones.</h5>
+        <div class="address-container">
+            <div class="address-items">
+                <!-- Each address will be populated here via JavaScript -->
+                <!-- A new wishlist create div will be created and inserted as well -->
             </div>
 
-            <div class="address-container">
-                <div class="address-items">
-                    <!-- Each address will be populated here via JavaScript -->
-                    <!-- A new wishlist create div will be created and inserted as well -->
+            <div class="address-content">
+                <div class="header">
+                    <h2 id="address-name">Address</h2>
+                    <div class="address-actions">
+                        <button id="deleteAddress">
+                            <i class="far fa-trash-can fa-lg"></i>
+                            Delete
+                        </button>
+                        <button id="editAddress">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            Edit
+                        </button>
+                    </div>
+                </div>
+                <div class="address-details">
+                    <div class="address-details-inner" id="addressDetails">
+                        <!-- These fields will be populated via JavaScript as well / List the products if there are any -->
+                    </div>
                 </div>
 
-                <div class="address-content">
-                    <div class="header">
-                        <h2 id="address-name">Address</h2>
-                        <div class="address-actions">
-                            <button id="deleteAddress">
-                                <i class="far fa-trash-can fa-lg"></i>
-                                Delete
-                            </button>
-                            <button id="editAddress">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                                Edit
-                            </button>
-                        </div>
-                    </div>
-                    <div class="address-details">
-                        <div class="address-details-inner" id="addressDetails">
-                            <!-- These fields will be populated via JavaScript as well / List the products if there are any -->
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Create Address Modal -->
-    <div class="add-address modal fade" id="createAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create a new address</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="createAddressForm">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="addressName">Name</label>
-                            <input type="text" id="addressName" name="addressName" class="form-control" placeholder="e.g., Home, Work, etc." required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addressLine1">Address Line 1</label>
-                            <input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="Street address, P.O. box, etc." required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addressLine2">Address Line 2</label>
-                            <input type="text" id="addressLine2" name="addressLine2" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
-                        </div>
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" id="city" name="city" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="country">Country</label>
-                            <input type="text" id="country" name="country" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="zipcode">Zip/Postal Code</label>
-                            <input type="text" id="zipcode" name="zipcode" class="form-control" required>
-                        </div>
-                        <span class="address-modal-error"></span>
-                        <button type="submit" class="btn btn-primary" id="saveAddressBtn">Save Address</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
+</main>
 
-    <!-- Edit Address Modal -->
-    <div class="edit-address modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editAddressLabel">Edit Address</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="editAddressForm">
-                    <input type="hidden" id="editAddressId" name="AddressId" />
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="editAddressName">Name</label>
-                            <input type="text" id="editAddressName" name="addressName" class="form-control" placeholder="e.g., Home, Work, etc." required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editAddressLine1">Address Line 1</label>
-                            <input type="text" id="editAddressLine1" name="addressLine1" class="form-control" placeholder="Street address, P.O. box, etc." required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editAddressLine2">Address Line 2</label>
-                            <input type="text" id="editAddressLine2" name="addressLine2" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
-                        </div>
-                        <div class="form-group">
-                            <label for="editCity">City</label>
-                            <input type="text" id="editCity" name="city" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editCountry">Country</label>
-                            <input type="text" id="editCountry" name="country" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editZipcode">Zip/Postal Code</label>
-                            <input type="text" id="editZipcode" name="zipcode" class="form-control" required>
-                        </div>
-                        <span class="address-modal-error"></span>
-                        <div class="button-container">
-                            <button type="button" class="btn btn-danger" id="deleteAddressBtn">Delete</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
+<!-- Create Address Modal -->
+<div class="add-address modal fade" id="createAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create a new address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form id="createAddressForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="addressName">Name</label>
+                        <input type="text" id="addressName" name="addressName" class="form-control" placeholder="e.g., Home, Work, etc." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressLine1">Address Line 1</label>
+                        <input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="Street address, P.O. box, etc." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressLine2">Address Line 2</label>
+                        <input type="text" id="addressLine2" name="addressLine2" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode">Zip/Postal Code</label>
+                        <input type="text" id="zipcode" name="zipcode" class="form-control" required>
+                    </div>
+                    <span class="address-modal-error"></span>
+                    <button type="submit" class="btn btn-primary" id="saveAddressBtn">Save Address</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="container-fluid footer-wrapper">
-        <footer th:replace="~{/fragments/footer::footer}"></footer>
+<!-- Edit Address Modal -->
+<div class="edit-address modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAddressLabel">Edit Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editAddressForm">
+                <input type="hidden" id="editAddressId" name="AddressId" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editAddressName">Name</label>
+                        <input type="text" id="editAddressName" name="addressName" class="form-control" placeholder="e.g., Home, Work, etc." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddressLine1">Address Line 1</label>
+                        <input type="text" id="editAddressLine1" name="addressLine1" class="form-control" placeholder="Street address, P.O. box, etc." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddressLine2">Address Line 2</label>
+                        <input type="text" id="editAddressLine2" name="addressLine2" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCity">City</label>
+                        <input type="text" id="editCity" name="city" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCountry">Country</label>
+                        <input type="text" id="editCountry" name="country" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editZipcode">Zip/Postal Code</label>
+                        <input type="text" id="editZipcode" name="zipcode" class="form-control" required>
+                    </div>
+                    <span class="address-modal-error"></span>
+                    <div class="button-container">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+<div class="container-fluid footer-wrapper">
+    <footer th:replace="~{/fragments/footer::footer}"></footer>
+</div>
 
 <script src="/js/script.js"></script>
 <script src="/js/addressScript.js"></script>

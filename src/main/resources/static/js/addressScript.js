@@ -156,33 +156,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.text();
             })
             .then(data => {
+                window.location.reload()
                 console.log(data);
-                showSuccessMessage("Address created successfully!");
-                // Close the modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('createAddressModal'));
-                modal.hide();
-                // Reset the form
-                createAddressForm.reset();
-                // Refresh the address list
-                fetchAndPopulateAddresses();
             })
             .catch(error => {
+                showErrorMessage(error.message);
                 console.error('Error:', error);
-                showErrorMessage("An error occurred while creating the address: " + error.message);
             });
     }
 
     const editAddressForm = document.getElementById('editAddressForm');
-    const deleteAddressBtn = document.getElementById('deleteAddressBtn');
 
     editAddressForm.addEventListener('submit', function(event) {
         event.preventDefault();
         updateAddress();
-    });
-
-    deleteAddressBtn.addEventListener('click', function() {
-        const addressId = document.getElementById('editAddressId').value;
-        deleteAddress(addressId);
     });
 
     function openEditModal(address) {
@@ -236,17 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.text();
             })
             .then(data => {
+                window.location.reload()
                 console.log(data);
-                showSuccessMessage("Address updated successfully!");
-                // Close the modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editAddressModal'));
-                modal.hide();
-                // Refresh the address list
-                fetchAndPopulateAddresses();
             })
             .catch(error => {
+                showErrorMessage(error.message);
                 console.error('Error:', error);
-                showErrorMessage("An error occurred while updating the address: " + error.message);
             });
     }
 
@@ -271,31 +253,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.text();
             })
             .then(data => {
+                window.location.reload()
                 console.log(data);
-                showSuccessMessage("Address deleted successfully!");
-                // Close the modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('editAddressModal'));
-                modal.hide();
-                // Refresh the address list
-                fetchAndPopulateAddresses();
             })
             .catch(error => {
+                showErrorMessage(error.message);
                 console.error('Error:', error);
-                showErrorMessage("An error occurred while deleting the address: " + error.message);
             });
-    }
-
-
-    function showSuccessMessage(message) {
-        const successDiv = document.querySelector('.address-success');
-        const successP = successDiv.querySelector('p');
-        successP.textContent = message;
-
-        successDiv.classList.add('show');
-
-        setTimeout(() => {
-            successDiv.classList.remove('show');
-        }, 5500);
     }
 
     function showErrorMessage(message) {
