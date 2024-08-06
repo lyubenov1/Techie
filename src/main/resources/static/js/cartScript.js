@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCartBadge();
     fetchCart();
     fetchAddresses();
+    document.getElementById('finishOrderBtn').addEventListener('click', finishOrder);
 });
 
 document.querySelector('.checkout-button').addEventListener('click', openCheckoutModal);
@@ -32,9 +33,16 @@ function fetchCartData() {
 }
 
 function openCheckoutModal() {
-    const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
-    document.getElementById('modalTotalAmount').textContent = document.querySelector('.cart-details .total').textContent;
-    checkoutModal.show();
+    fetchCartData()
+        .then(cart => {
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            document.getElementById('modalTotalAmount').textContent = `${cart.grandTotal.toFixed(2)} $`;
+            document.getElementById('checkoutModal').dataset.cartData = JSON.stringify(cart);
+            checkoutModal.show();
+        })
+        .catch(error => {
+            console.error('Error fetching cart data:', error.message);
+        });
 }
 
 function fetchAddresses() {
@@ -326,4 +334,61 @@ function removeItem(cartItemId) {
         .catch(error => {
             console.error('Error removing item:', error.message);
         });
+}
+
+function finishOrder() {
+    const modal = document.getElementById('checkoutModal');
+    const cart = JSON.parse(modal.dataset.cartData);
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const deliveryAddressId = document.getElementById('deliveryAddress').value;
+
+    // Client-side validation
+    if (!paymentMethod) {
+        alert('Please select a payment method');
+        return;
+    }
+
+    if (!deliveryAddressId) {
+        alert('Please select a delivery address');
+        return;
+    }
+
+    const orderData = {
+        total: cart.grandTotal,
+        addressId: parseInt(deliveryAddressId, 10),
+        paymentMethod: paymentMethod,
+        cartDTO: cart
+    };
+
+    fetch('/api/order/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify(orderData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            window.location.href = '/order';
+            console.log('Order placed successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error placing order:', error)
+            showCustomAlert(error.message || 'An error occurred while placing the order');
+        });
+}
+
+function showCustomAlert(message) {
+    document.getElementById('custom-alert-message').textContent = message;
+    document.getElementById('custom-alert').style.display = 'block';
+}
+
+function closeCustomAlert() {
+    document.getElementById('custom-alert').style.display = 'none';
 }

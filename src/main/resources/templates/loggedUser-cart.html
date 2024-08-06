@@ -13,6 +13,13 @@
 
 <body class="bg-dark text-white">
 
+<div id="custom-alert-cart" class="custom-alert-cart">
+    <div class="custom-alert-content">
+        <p id="custom-alert-message"></p>
+        <button onclick="closeCustomAlert()">OK</button>
+    </div>
+</div>
+
     <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <header th:replace="~{fragments/header :: header}"></header>
     <div class = "container-lg">
@@ -75,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="finishOrder()">Finish order</button>
+                    <button type="button" class="btn btn-primary"  id="finishOrderBtn">Finish order</button>
                 </div>
             </div>
         </div>

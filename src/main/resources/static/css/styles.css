@@ -5173,3 +5173,44 @@ hr {
 #modalTotalAmount, #modalDeliveryDate {
     font-weight: bold;
 }
+
+.custom-alert-cart {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.custom-alert-cart .custom-alert-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.custom-alert-cart .custom-alert-content p {
+    margin-bottom: 20px;
+}
+
+.custom-alert-cart .custom-alert-content button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.custom-alert-cart .custom-alert-content button:hover {
+    background-color: #45a049;
+}

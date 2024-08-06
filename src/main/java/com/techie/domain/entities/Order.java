@@ -37,11 +37,11 @@ public class Order {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "order_cart_items",
+            name = "order_order_items",
             joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "cart_item_id")
+            inverseJoinColumns = @JoinColumn(name = "order_item_id")
     )
-    private Set<CartItem> cartItems = new LinkedHashSet<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

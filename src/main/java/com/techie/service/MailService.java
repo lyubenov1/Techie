@@ -15,6 +15,7 @@ import org.springframework.util.*;
 import java.io.*;
 import java.nio.charset.*;
 import java.text.*;
+import java.time.format.*;
 import java.util.*;
 
 @Service
@@ -201,5 +202,79 @@ public class MailService {
                 .replace("{{logo}}", techieLogoSrc)
                 .replace("{{user}}", user.getFirstName())
                 .replace("{{homePageUrl}}", homePageUrl);
+    }
+
+    private String loadOrderTemplate() throws IOException {
+        Resource resource = new ClassPathResource("templates/" + "order-email.html");
+        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+    }
+
+    @Async
+    public void sendOrderConfirmationEmail(String to, Order order) {
+        try {
+            String subject = "Order successfully placed";
+            String htmlBody = buildOrderEmailBody(order);
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(to);
+            helper.setFrom(FROM_ADDRESS);
+            helper.setSubject(subject);
+            helper.setText(htmlBody, true); // Set to true for HTML content
+
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            throw new EmailNotificationException("Failed to send email.", e);
+        }
+    }
+
+    private String buildOrderEmailBody(Order order) throws IOException {
+        String template = loadOrderTemplate();
+        String productPageUrl = "http://localhost:8080/products";
+        String techieLogoSrc = "https://res.cloudinary.com/dztiecgdt/image/upload/v1716808742/Techie%20logos/Untitled_design_oy7iys.png";
+
+        // Format the order date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm", Locale.ENGLISH);
+        String formattedDate = order.getCreatedAt().format(formatter);
+
+        String email = template
+                .replace("{{logo}}", techieLogoSrc)
+                .replace("{{orderId}}", order.getId().toString())
+                .replace("{{orderDate}}", formattedDate)
+                .replace("{{grandTotal}}", order.getGrandTotal().toString())
+                .replace("{{paymentMethod}}", order.getPaymentMethod().toString())
+                .replace("{{productPageUrl}}", productPageUrl);
+
+        // Handle delivery address using ternary-like logic
+        String deliveryAddress = order.getDeliveryAddress() != null ?
+                order.getDeliveryAddress().getName() : order.getAnonymousAddress();
+        email = email.replace("{{deliveryAddress}}", deliveryAddress);
+
+        // Generate order items HTML
+        StringBuilder orderItemsHtml = getOrderItemsHtml(order);
+        email = email.replace("{{orderItems}}", orderItemsHtml.toString());
+
+        return email;
+    }
+
+    private static StringBuilder getOrderItemsHtml(Order order) {
+        StringBuilder orderItemsHtml = new StringBuilder();
+        for (OrderItem item : order.getOrderItems()) {
+            if (item.getProduct() != null && !item.getProduct().getProductImages().isEmpty()) {
+                String itemHtml = "<tr>" +
+                        "<td style=\"padding: 10px; border-bottom: 1px solid #dddddd; width: 60px;\">" +
+                        "<img src=\"" + item.getProduct().getProductImages().getFirst().getImageUrl() + "\" alt=\"" + item.getProduct().getName() + "\" style=\"width: 50px; height: auto; vertical-align: top;\">" +
+                        "</td>" +
+                        "<td style=\"padding: 10px; border-bottom: 1px solid #dddddd; vertical-align: top;\">" +
+                        item.getProduct().getName() +
+                        "</td>" +
+                        "<td style=\"padding: 10px; text-align: right; border-bottom: 1px solid #dddddd; vertical-align: top;\">" + item.getQuantity() + "</td>" +
+                        "<td style=\"padding: 10px; text-align: right; border-bottom: 1px solid #dddddd; vertical-align: top;\">$" + item.getTotalPrice() + "</td>" +
+                        "</tr>";
+                orderItemsHtml.append(itemHtml);
+            }
+        }
+        return orderItemsHtml;
     }
 }

@@ -17,6 +17,11 @@ public class HomeController {
         return "anonymousUser-cart";
     }
 
+    @GetMapping("/order")
+    public String getSuccessfulOrderPage() {
+        return "order";
+    }
+
     @GetMapping("/about-us")
     public String aboutUsPage() {
         return "about-us";

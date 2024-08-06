@@ -90,4 +90,8 @@ public class AddressService {
                 .sorted(Comparator.comparing(AddressDTO::getId))
                 .toList();
     }
+
+    public Optional<Address> findById(Long addressId) {
+        return addressRepository.findById(addressId);
+    }
 }

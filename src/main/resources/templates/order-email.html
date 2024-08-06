@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Confirmation | Techie.com</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+<div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #dddddd; border-radius: 8px; overflow: hidden;">
+    <div style="background-color: #007bff; color: #ffffff; padding-top: 15px; text-align: center;">
+        <h1 style="margin: 0; font-size: 24px;">Order Confirmation</h1>
+        <img src="{{logo}}" alt="Techie logo" style="max-width: 150px; height: auto;">
+    </div>
+    <div style="padding: 20px;">
+        <p style="color: #555555; line-height: 1.6;">Thank you for your order! Here are the details:</p>
+
+        <p><strong>Order ID:</strong> {{orderId}}</p>
+        <p><strong>Order Date:</strong> {{orderDate}}</p>
+
+        <h2 style="color: #007bff;">Order Items:</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+            <tr style="background-color: #f4f4f4;">
+                <th style="padding: 10px; text-align: left; width: 60px;">Image</th>
+                <th style="padding: 10px; text-align: left;">Product</th>
+                <th style="padding: 10px; text-align: right;">Quantity</th>
+                <th style="padding: 10px; text-align: right;">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{orderItems}}
+            </tbody>
+        </table>
+
+        <p style="text-align: right; font-weight: bold; margin-top: 20px;">Total: ${{grandTotal}}</p>
+
+        <h2 style="color: #007bff;">Delivery Information:</h2>
+        <p><strong>Delivery Address:</strong> {{deliveryAddress}}</p>
+
+        <p><strong>Payment Method:</strong> {{paymentMethod}}</p>
+
+        <p style="margin-top: 20px;">Your package will be delivered as soon as possible.</p>
+
+        <p><a href="{{productPageUrl}}" style="color: #007bff; text-decoration: none;">Check out our product catalog for more great deals!</a></p>
+    </div>
+    <div style="background-color: #f4f4f4; padding: 10px; text-align: center; font-size: 12px; color: #777777;">
+        <p>&copy; 2024 Techie.com</p>
+    </div>
+</div>
+</body>
+</html>
