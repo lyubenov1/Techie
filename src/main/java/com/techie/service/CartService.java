@@ -2,7 +2,7 @@ package com.techie.service;
 
 import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
-import com.techie.exceptions.*;
+import com.techie.exceptions.cart.*;
 import com.techie.exceptions.product.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
@@ -91,7 +91,7 @@ public class CartService {
 
     @Transactional
     public CartItemDTO addItem(Cart cart, CartItemDTO itemDTO)
-                                throws ProductNotFoundException, NotEnoughInStockException{
+                                throws ProductNotFoundException, NotEnoughInStockException {
         Product product = productService.findById(itemDTO.getProductId())
                 .orElseThrow(() -> new ProductNotFoundException(itemDTO.getProductId()));
 
@@ -125,32 +125,32 @@ public class CartService {
     }
 
     @Transactional
-    public void updateItem(Cart cart, CartItemDTO itemDTO)
-                            throws ObjectNotFoundException, NotEnoughInStockException {
-        Product product = productService.findById(itemDTO.getProductId())
-                .orElseThrow(() -> new ProductNotFoundException(itemDTO.getProductId()));
-
-        CartItem item = cart.getCartItems().stream()
-                .filter(cartItem -> cartItem.getProduct().getId().equals(product.getId()))
+    public void updateItem(Cart cart, CartItemDTO cartItemDTO)
+                            throws ItemNotInCartException, NotEnoughInStockException {
+        // Find the product in the cart
+        CartItem cartItem = cart.getCartItems().stream()
+                .filter(item -> item.getId().equals(cartItemDTO.getId()))
                 .findFirst()
-                .orElseThrow(() -> new ObjectNotFoundException("CartItem not found"));
+                .orElseThrow(() -> new ItemNotInCartException("Item not found in cart"));
 
-        if (item.getQuantity() < itemDTO.getQuantity()) {
-            int quantityToRemove = itemDTO.getQuantity() - item.getQuantity();
+        Product product = cartItem.getProduct();
+
+        if (cartItem.getQuantity() < cartItemDTO.getQuantity()) {
+            int quantityToRemove = cartItemDTO.getQuantity() - cartItem.getQuantity();
             if (product.getStock() < quantityToRemove) {
                 throw new NotEnoughInStockException();
             }
             productService.updateStockQuantity(product, quantityToRemove, false);
-        } else if (item.getQuantity() > itemDTO.getQuantity()) {
-            int quantityToAdd = item.getQuantity() - itemDTO.getQuantity();
+        } else if (cartItem.getQuantity() > cartItemDTO.getQuantity()) {
+            int quantityToAdd = cartItem.getQuantity() - cartItemDTO.getQuantity();
             productService.updateStockQuantity(product, quantityToAdd, true);
         }
 
-        item.setQuantity(itemDTO.getQuantity());
-        calculateTotalPrice(item);
+        cartItem.setQuantity(cartItemDTO.getQuantity());
+        calculateTotalPrice(cartItem);
         calculateGrandTotal(cart);
 
-        cartItemRepository.save(item);
+        cartItemRepository.save(cartItem);
         cartRepository.save(cart);
     }
 
@@ -187,4 +187,26 @@ public class CartService {
 
         return cartDTO;
     }
+
+    @Transactional
+    public void removeCartItem(CartItemDTO cartItemDTO, Cart cart) throws ProductNotFoundException, ItemNotInCartException {
+        // Find the product in the cart
+        CartItem cartItem = cart.getCartItems().stream()
+                .filter(item -> item.getId().equals(cartItemDTO.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ItemNotInCartException("Item not found in cart"));
+
+        Product product = cartItem.getProduct();
+
+        cart.getCartItems().remove(cartItem);
+
+        // Update the product stock
+        productService.updateStockQuantity(product, cartItem.getQuantity(), true);
+
+        cartItemRepository.delete(cartItem);
+
+        calculateGrandTotal(cart);
+        cartRepository.save(cart);
+    }
+
 }

@@ -28,10 +28,6 @@
             <div class="cart-container">
                 <div class="cart-items"></div>
                 <div class="cart-details">
-                    <div class="voucher-section">
-                        <label for="voucher">Add Voucher</label>
-                        <input type="text" id="voucher" placeholder="Enter voucher code">
-                    </div>
                     <div class="total-summary">
                         <p>Subtotal: <span class="subtotal"></span></p>
                         <p>Total: <span class="total"></span></p>
@@ -41,6 +37,51 @@
             </div>
         </div>
     </main>
+
+    <!-- Cart Checkout Modal -->
+    <div class="checkout-modal modal" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="checkoutInfo">
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment method:</label>
+                            <select id="paymentMethod" class="form-select">
+                                <option value="DEBIT_CARD">Debit Card</option>
+                                <option value="CREDIT_CARD">Credit Card</option>
+                                <option value="CASH">Cash</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                                <option value="PAYPAL">PayPal</option>
+                                <option value="BITCOIN">Bitcoin</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deliveryAddress" class="form-label">Choose address for the delivery:</label>
+                            <select id="deliveryAddress" class="form-select">
+                                <!-- Addresses will be populated here by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p>Total: <span id="modalTotalAmount"></span></p>
+                        </div>
+                        <div class="mb-3">
+                            <p>Delivery date: <span>Soon</span></p>
+                        </div>
+                        <div id="errorMessageModal" class="checkout-error" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="finishOrder()">Finish order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>

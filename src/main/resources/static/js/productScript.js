@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             quantity: 1
         };
 
-        fetch('/api/cart/items', {
+        fetch('/api/cart/items/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ function updateCart() {
         quantity: 1  // Default quantity
     };
 
-    fetch('/api/cart/items', {
+    fetch('/api/cart/items/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

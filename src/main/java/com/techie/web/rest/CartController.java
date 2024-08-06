@@ -25,7 +25,7 @@ public class CartController {
     }
 
 
-    @PostMapping("/items")
+    @PostMapping("/items/add")
     public ResponseEntity<?> addToCart(@RequestBody CartItemDTO itemDTO, HttpServletRequest request) {
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
@@ -48,16 +48,17 @@ public class CartController {
     }
 
     @PatchMapping("/items/update")
-    public ResponseEntity<String> updateCartItem(@RequestBody CartItemDTO itemDTO, HttpServletRequest request) {
+    public ResponseEntity<String> updateCartItem(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest request) {
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
             Cart cart = cartService.getOrCreateCart(cartId);
-            cartService.updateItem(cart, itemDTO);
+            cartService.updateItem(cart, cartItemDTO);
 
             return ResponseEntity.ok().body("Successfully updated quantity");
         } catch (NotEnoughInStockException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -69,6 +70,19 @@ public class CartController {
             Cart cart = cartService.getOrCreateCart(cartId);
             CartDTO cartDTO = cartService.getCartDTO(cart);
             return ResponseEntity.ok().body(cartDTO);
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+    }
+
+    @DeleteMapping("/items/remove")
+    public ResponseEntity<String> removeCartItem(@RequestBody CartItemDTO cartItemDTO, HttpServletRequest request) {
+        try {
+            String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
+            Cart cart = cartService.getOrCreateCart(cartId);
+            cartService.removeCartItem(cartItemDTO, cart);
+            return ResponseEntity.ok().body("Cart item has been removed");
         }  catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
