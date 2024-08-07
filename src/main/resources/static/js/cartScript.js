@@ -145,6 +145,9 @@ function populateCartPage(cart) {
 
         if (product.discountedPrice !== null && product.discountedPrice !== undefined) {
             // Case when there's a discount
+            const priceWrapper = document.createElement('div');
+            priceWrapper.className = 'price-wrapper';
+
             const originalPriceSpan = document.createElement('span');
             originalPriceSpan.className = 'original-price-discount';
             originalPriceSpan.textContent = `${product.originalPrice.toFixed(2)} $`;
@@ -153,19 +156,19 @@ function populateCartPage(cart) {
             discountedPriceSpan.className = 'discounted-price';
             discountedPriceSpan.textContent = `${product.discountedPrice.toFixed(2)} $`;
 
+            priceP.appendChild(priceLabelSpan);
             priceP.appendChild(originalPriceSpan);
-            priceP.appendChild(document.createTextNode(' ')); // Add a space between prices
-            priceP.appendChild(discountedPriceSpan);
-            priceP.appendChild(discountPercentageSpan);
+            priceP.appendChild(priceWrapper);
+            priceWrapper.appendChild(discountedPriceSpan);
         } else {
-            // Case when there's no discount
+            // Case when there's no discount (unchanged)
             const originalPriceSpan = document.createElement('span');
             originalPriceSpan.className = 'original-price';
             originalPriceSpan.textContent = `${cartItem.originalPrice.toFixed(2)} $`;
 
+            priceP.appendChild(priceLabelSpan);
             priceP.appendChild(originalPriceSpan);
         }
-
 
         itemPriceDiv.appendChild(priceP);
 
