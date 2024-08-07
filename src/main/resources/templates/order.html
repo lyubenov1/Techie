@@ -25,7 +25,7 @@
     </div>
     <div class="content">
         <p>Thank you for choosing us! Your order has been confirmed!</p>
-        <p>We have sent a confirmation email to the following address: <span th:text="${order.userEmail}"></span></p>
+        <p>We have sent a confirmation email to the following address: <span class="email" th:text="${order.userEmail}"></span></p>
         <p><strong>Order ID:</strong> <span th:text="${order.orderId}"></span></p>
         <p><strong>Order Date:</strong> <span th:text="${order.createdAt}"></span></p>
         <p>Expect the delivery soon!</p>
