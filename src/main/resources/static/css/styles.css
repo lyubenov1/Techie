@@ -5101,6 +5101,12 @@ hr {
     color: #d81414;
 }
 
+.checkout-modal .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+}
+
 .checkout-modal .modal-content {
     background-color: rgb(32, 32, 32);
     border: 1px solid grey;
@@ -5174,10 +5180,22 @@ hr {
     font-weight: bold;
 }
 
+#deliveryAddressAnonymous, #emailAddressAnonymous {
+    background-color: #b8b8b8;
+    color: #373737;
+    border-color: #555;
+    font-size: 16px;
+}
+
+.checkout-modal .form-control:hover {
+    border-color: rgba(101, 100, 100, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
 .custom-alert-cart {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -5187,8 +5205,7 @@ hr {
 }
 
 .custom-alert-cart .custom-alert-content {
-    background-color: #fefefe;
-    margin: 15% auto;
+    background-color: rgb(32, 32, 32);
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -5196,6 +5213,10 @@ hr {
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .custom-alert-cart .custom-alert-content p {
@@ -5213,25 +5234,4 @@ hr {
 
 .custom-alert-cart .custom-alert-content button:hover {
     background-color: #45a049;
-}
-
-.header {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 20px;
-    text-align: center;
-}
-.header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-.content {
-    padding: 20px;
-}
-.content p {
-    color: #555555;
-    line-height: 1.6;
-}
-.content p strong {
-    color: #000000;
 }

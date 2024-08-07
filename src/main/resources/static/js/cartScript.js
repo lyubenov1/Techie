@@ -340,29 +340,49 @@ function finishOrder() {
     const modal = document.getElementById('checkoutModal');
     const cart = JSON.parse(modal.dataset.cartData);
     const paymentMethod = document.getElementById('paymentMethod').value;
-    const deliveryAddressId = document.getElementById('deliveryAddress').value;
 
-    console.log('deliveryAddressId:', deliveryAddressId);
-    console.log('Parsed addressId:', parseInt(deliveryAddressId, 10));
+    let orderData;
+    const isAnonymous = !document.getElementById('deliveryAddress');
 
+    if (!isAnonymous) {
+        // Authenticated user
+        const deliveryAddressId = document.getElementById('deliveryAddress').value;
+        orderData = {
+            total: cart.grandTotal,
+            addressId: parseInt(deliveryAddressId, 10),
+            paymentMethod: paymentMethod,
+            cartDTO: cart
+        };
+    } else {
+        // Unauthenticated user
+        const deliveryAddressInput = document.getElementById('deliveryAddressAnonymous');
+        const emailAddressInput = document.getElementById('emailAddressAnonymous');
 
-    // Client-side validation
-    if (!paymentMethod) {
-        alert('Please select a payment method');
-        return;
+        // Client-side validation
+        if (!paymentMethod) {
+            showCustomAlert('Please select a payment method');
+            return;
+        }
+
+        if (!deliveryAddressInput || !deliveryAddressInput.value) {
+            showCustomAlert('Please enter a delivery address');
+            return;
+        }
+
+        if (!emailAddressInput || !emailAddressInput.value) {
+            showCustomAlert('Please enter an email address');
+            return;
+        }
+
+        orderData = {
+            total: cart.grandTotal,
+            anonymousAddress: deliveryAddressInput.value,
+            anonymousEmail: emailAddressInput.value,
+            paymentMethod: paymentMethod,
+            cartDTO: cart
+        };
     }
-
-    if (!deliveryAddressId) {
-        alert('Please select a delivery address');
-        return;
-    }
-
-    const orderData = {
-        total: cart.grandTotal,
-        addressId: parseInt(deliveryAddressId, 10),
-        paymentMethod: paymentMethod,
-        cartDTO: cart
-    };
+    console.log('Order Data:', orderData);
 
     fetch('/api/order/post', {
         method: 'POST',
@@ -374,7 +394,7 @@ function finishOrder() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.json().then(errors => { throw errors; });
             }
             return response.json();
         })
@@ -382,17 +402,33 @@ function finishOrder() {
             window.location.href = `/order?id=${order.orderId}`;
             console.log('Order placed successfully:', order);
         })
-        .catch(error => {
-            console.error('Error placing order:', error)
-            showCustomAlert(error.message || 'An error occurred while placing the order');
+        .catch(errors => {
+            console.error('Error placing order:', errors);
+            if (isAnonymous) {
+                if (Array.isArray(errors)) {
+                    showCustomAlert(errors.join('\n'));
+                } else {
+                    showCustomAlert(errors.message || 'An error occurred while placing the order');
+                }
+            } else {
+                console.error('An error occurred while placing the order');
+            }
         });
 }
 
 function showCustomAlert(message) {
-    document.getElementById('custom-alert-message').textContent = message;
-    document.getElementById('custom-alert').style.display = 'block';
+    const alertElement = document.getElementById('custom-alert-cart');
+    if (alertElement) {
+        document.getElementById('custom-alert-message').textContent = message;
+        alertElement.style.display = 'block';
+    } else {
+        console.error('Custom alert element not found');
+    }
 }
 
 function closeCustomAlert() {
-    document.getElementById('custom-alert').style.display = 'none';
+    const alertElement = document.getElementById('custom-alert-cart');
+    if (alertElement) {
+        alertElement.style.display = 'none';
+    }
 }

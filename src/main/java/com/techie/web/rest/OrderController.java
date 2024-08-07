@@ -8,12 +8,16 @@ import com.techie.exceptions.order.*;
 import com.techie.service.*;
 import com.techie.utils.*;
 import jakarta.servlet.http.*;
+import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.*;
 
 import java.net.*;
+import java.util.*;
+import java.util.stream.*;
 
 @RestController
 @RequestMapping("/api/order")
@@ -29,7 +33,15 @@ public class OrderController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> CreateOrder(@RequestBody OrderRequest orderRequest, HttpServletRequest request) {
+    public ResponseEntity<?> CreateOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         try {
             String cartId = AnonymousCartIdentifier.getOrCreateIdentifier(request);
             Cart cart = cartService.getOrCreateCart(cartId);
@@ -43,12 +55,12 @@ public class OrderController {
 
             return ResponseEntity.created(location).body(orderDTO);
         } catch (AddressNotFoundException e) {
-            return ResponseEntity.badRequest().body("Invalid address");
+            return ResponseEntity.badRequest().body(Collections.singletonList("Invalid address"));
         } catch (InvalidOrderException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Collections.singletonList(e.getMessage()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your order");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonList("An error occurred while processing your order"));
         }
     }
 

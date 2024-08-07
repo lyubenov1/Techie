@@ -13,6 +13,14 @@
 
 <body class="bg-dark text-white">
 
+<div id="custom-alert-cart" class="custom-alert-cart">
+    <div class="custom-alert-content">
+        <p id="custom-alert-message"></p>
+        <button onclick="closeCustomAlert()">OK</button>
+    </div>
+</div>
+
+
     <input type="hidden" id="csrf-token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <header th:replace="~{fragments/header :: header}"></header>
     <div class = "container-lg">
@@ -20,13 +28,66 @@
     </div>
 
     <main class="profile-main container-xl">
-        <aside class="profile-aside">
-            <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
-        </aside>
-        <div class="profile-main-content" >
-            aaaa
+        <div class="profile-main-content cart">
+            <h1 class="cart-header">Shopping cart</h1>
+            <div class="cart-container">
+                <div class="cart-items"></div>
+                <div class="cart-details">
+                    <div class="total-summary">
+                        <p>Subtotal: <span class="subtotal"></span></p>
+                        <p>Total: <span class="total"></span></p>
+                    </div>
+                    <button class="checkout-button">Proceed to Checkout</button>
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- Anonymous Cart Checkout Modal -->
+    <div class="checkout-modal modal" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="mb-3 select-box">
+                            <label for="paymentMethod" class="form-label">Payment method:</label>
+                            <select id="paymentMethod" class="form-select">
+                                <option value="DEBIT_CARD">Debit Card</option>
+                                <option value="CREDIT_CARD">Credit Card</option>
+                                <option value="CASH">Cash</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                                <option value="PAYPAL">PayPal</option>
+                                <option value="BITCOIN">Bitcoin</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deliveryAddressAnonymous" class="form-label">Enter address for the delivery:</label>
+                            <input type="text" id="deliveryAddressAnonymous" class="form-control" placeholder="Enter your delivery address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailAddressAnonymous" class="form-label">Email address:</label>
+                            <input type="email" id="emailAddressAnonymous" class="form-control" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="mb-3">
+                            <p>Total: <span id="modalTotalAmount"></span></p>
+                        </div>
+                        <div class="mb-3">
+                            <p>Delivery date: <span id="modalDeliveryDate">Soon</span></p>
+                        </div>
+                        <div class="anonymous-modal-msg"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="finishOrderBtn">Finish order</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>
