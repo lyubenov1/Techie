@@ -150,11 +150,11 @@ function populateCartPage(cart) {
 
             const originalPriceSpan = document.createElement('span');
             originalPriceSpan.className = 'original-price-discount';
-            originalPriceSpan.textContent = `${product.originalPrice.toFixed(2)} $`;
+            originalPriceSpan.textContent = `${cartItem.originalPrice.toFixed(2)} $`;
 
             const discountedPriceSpan = document.createElement('span');
             discountedPriceSpan.className = 'discounted-price';
-            discountedPriceSpan.textContent = `${product.discountedPrice.toFixed(2)} $`;
+            discountedPriceSpan.textContent = `${cartItem.totalPrice.toFixed(2)} $`;
 
             priceP.appendChild(priceLabelSpan);
             priceP.appendChild(originalPriceSpan);

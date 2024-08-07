@@ -5018,9 +5018,14 @@ hr {
     font-size: 18px;
 }
 
+.grand-total-text {
+    font-size: 20px;
+    transform: translateY(2px);
+}
+
 .cart-container .total-summary .total {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .cart-container .checkout-button {
