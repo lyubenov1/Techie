@@ -266,6 +266,7 @@ function updateCartItem(cartItemId, newQuantity) {
         .then(data => {
             console.log('Item updated successfully:', data);
             fetchCart();
+            updateCartBadge()
         })
         .catch(error => {
             console.error('Error updating item:', error.message);
@@ -330,6 +331,7 @@ function removeItem(cartItemId) {
                 console.log('Item removed successfully:', data.message || data);
             }
             fetchCart();
+            updateCartBadge()
         })
         .catch(error => {
             console.error('Error removing item:', error.message);
