@@ -308,8 +308,15 @@ function createPagination(currentPage, totalPages, totalProducts) {
     paginationDiv.appendChild(nextButton);
 
     // Update pagination info
-    const start = currentPage * pageSize + 1;
-    const end = Math.min((currentPage + 1) * pageSize, totalProducts);
+    let start = 0;
+    let end = 0;
+
+    if (totalProducts > 0) {
+        start = currentPage * pageSize + 1;
+        end = Math.min((currentPage + 1) * pageSize, totalProducts);
+    }
+
     const paginationInfo = document.getElementById('paginationInfo');
-    paginationInfo.textContent = `${start}-${end} out of ${totalProducts}`;
+    paginationInfo.textContent = totalProducts > 0 ? `${start}-${end} out of ${totalProducts}` : '0 out of 0';
+
 }

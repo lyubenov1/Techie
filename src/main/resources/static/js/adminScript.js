@@ -418,8 +418,14 @@ function createPagination(currentPage, totalPages, totalUsers, type) {
     paginationDiv.appendChild(nextButton);
 
     // Update pagination info
-    const start = currentPage * pageSize + 1;
-    const end = Math.min((currentPage + 1) * pageSize, totalUsers);
+    let start = 0;
+    let end = 0;
+
+    if (totalUsers > 0) {
+        start = currentPage * pageSize + 1;
+        end = Math.min((currentPage + 1) * pageSize, totalUsers);
+    }
+
     const paginationInfo = document.getElementById('paginationInfo');
-    paginationInfo.textContent = `${start}-${end} out of ${totalUsers}`;
+    paginationInfo.textContent = totalUsers > 0 ? `${start}-${end} out of ${totalUsers}` : '0 out of 0';
 }
