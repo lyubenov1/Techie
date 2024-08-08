@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.math.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -49,6 +50,11 @@ public class OrderService {
     public Order finishOrder(OrderRequest orderRequest, Cart cart) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Order order;
+
+        if (orderRequest.getTotal().compareTo(BigDecimal.ZERO) == 0) {
+            throw new InvalidOrderException("You can't place an empty order!");
+        }
+
         if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
             // Authenticated user
             User authUser = (User) auth.getPrincipal();

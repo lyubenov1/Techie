@@ -387,6 +387,11 @@ function finishOrder() {
             cartDTO: cart
         };
     }
+
+    if (cart.grandTotal === 0) {
+        showCustomAlert('You can\'t place an empty order!');
+    }
+
     console.log('Order Data:', orderData);
 
     fetch('/api/order/post', {
