@@ -24,12 +24,16 @@
             <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
         </aside>
         <div class="profile-main-content">
-            <h1 class="order-history-header">Order history</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="order-history-header">Order History</h1>
+                <div id="paginationInfo" class="pagination-info"></div>
+            </div>
             <div class="order-history-list">
                 <div class="order-history-item">
 
                 </div>
             </div>
+            <div id="paginationButtons"></div>
         </div>
     </main>
 

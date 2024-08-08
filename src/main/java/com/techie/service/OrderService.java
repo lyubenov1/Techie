@@ -9,6 +9,7 @@ import com.techie.exceptions.product.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
@@ -167,14 +168,19 @@ public class OrderService {
         return orderDTO;
     }
 
-    public List<OrderDTO> getOrderHistoryForUser(UserDetails userDetails) {
+    public Page<OrderDTO> getOrderHistoryForUser(UserDetails userDetails, int page, int size) {
         UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
         String userEmail = user.getEmail();
 
-        List<Order> orders = orderRepository.findAllByUserEmail(userEmail);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Order> ordersPage = orderRepository.findAllByUserEmail(userEmail, pageable);
 
-        return orders.stream()
+        List<OrderDTO> orderDTOs = ordersPage.getContent().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+
+        long totalOrders = orderRepository.countByUserEmail(userEmail);
+
+        return new PageImpl<>(orderDTOs, ordersPage.getPageable(), totalOrders);
     }
 }

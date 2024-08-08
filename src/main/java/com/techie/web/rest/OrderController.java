@@ -10,6 +10,7 @@ import com.techie.utils.*;
 import jakarta.servlet.http.*;
 import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.security.core.userdetails.*;
@@ -66,9 +67,12 @@ public class OrderController {
     }
 
     @GetMapping("/get/all")
-    public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> getOrders(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(name = "p", required = false) int page,
+            @RequestParam(name = "s", required = false) int size) {
         try {
-            List<OrderDTO> orders = orderService.getOrderHistoryForUser(userDetails);
+            Page<OrderDTO> orders = orderService.getOrderHistoryForUser(userDetails, page, size);
             return ResponseEntity.ok(orders);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
