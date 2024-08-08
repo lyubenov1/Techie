@@ -11,6 +11,8 @@ import jakarta.servlet.http.*;
 import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.*;
@@ -59,9 +61,28 @@ public class OrderController {
         } catch (InvalidOrderException e) {
             return ResponseEntity.badRequest().body(Collections.singletonList(e.getMessage()));
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonList("An error occurred while processing your order"));
         }
     }
 
+    @GetMapping("/get/all")
+    public ResponseEntity<?> getOrders(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            List<OrderDTO> orders = orderService.getOrderHistoryForUser(userDetails);
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<?> getOrder(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long orderId) {
+        try {
+            OrderDTO order = orderService.getOrder(orderId, userDetails);
+            return ResponseEntity.ok(order);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+    }
 }

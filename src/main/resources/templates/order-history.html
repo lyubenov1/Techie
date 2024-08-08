@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Order history | Techie.com</title>
+    <title>Order History | Techie.com</title>
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -23,10 +23,53 @@
         <aside class="profile-aside">
             <th:block th:replace="~{fragments/profile-nav :: profileNav}"></th:block>
         </aside>
-        <div class="profile-main-content" >
-            aaaa
+        <div class="profile-main-content">
+            <h1 class="order-history-header">Order history</h1>
+            <div class="order-history-list">
+                <div class="order-history-item">
+
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- Order History Modal -->
+    <div class="order-history modal fade" id="orderHistoryModal" tabindex="-1" aria-labelledby="orderHistoryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailsLabel">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <input type="hidden" id="orderDetailsId" name="orderId"/>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <strong>Created At:</strong>
+                        <span id="orderCreatedAt"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Payment Method:</strong>
+                        <span id="orderPaymentMethod"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Delivery Address:</strong>
+                        <span id="orderAddress"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Grand Total:</strong>
+                        <span id="orderGrandTotal"></span>
+                    </div>
+                    <div class="order-items mb-3">
+                        <h6>Items:</h6>
+                        <ul id="orderItemsList" class="list-group">
+                            <!-- Each item will be injected here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container-fluid footer-wrapper">
         <footer th:replace="~{/fragments/footer::footer}"></footer>
@@ -35,6 +78,7 @@
 <script src="/js/script.js"></script>
 <script src="/js/subscription.js"></script>
 <script src="/js/cartScript.js"></script>
+<script src="/js/orderHistory.js"></script>
 <script src="https://kit.fontawesome.com/5cef8724e6.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

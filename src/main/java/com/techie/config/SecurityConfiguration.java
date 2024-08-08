@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                         // Public API endpoints
                         .requestMatchers("/api/categories", "/api/products/**", "/api/settings/subscription/change/email",
                                 "/api/search", "/api/reviews/get/**", "/api/password/**", "/api/cart/**",
-                                "/api/order/**").permitAll()
+                                "/api/order/post").permitAll()
 
                         // Admin and Moderator specific endpoints
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")

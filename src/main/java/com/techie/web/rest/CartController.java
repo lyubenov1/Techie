@@ -42,7 +42,6 @@ public class CartController {
         } catch (NotEnoughInStockException | ProductAlreadyInCartException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -58,7 +57,6 @@ public class CartController {
         } catch (NotEnoughInStockException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage()); // 409
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -70,8 +68,7 @@ public class CartController {
             Cart cart = cartService.getOrCreateCart(cartId);
             CartDTO cartDTO = cartService.getCartDTO(cart);
             return ResponseEntity.ok().body(cartDTO);
-        }  catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -83,8 +80,7 @@ public class CartController {
             Cart cart = cartService.getOrCreateCart(cartId);
             cartService.removeCartItem(cartItemDTO, cart);
             return ResponseEntity.ok().body("Cart item has been removed");
-        }  catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }

@@ -5,6 +5,7 @@ import com.techie.domain.model.DTOs.*;
 import com.techie.domain.model.requests.*;
 import com.techie.exceptions.address.*;
 import com.techie.exceptions.order.*;
+import com.techie.exceptions.product.*;
 import com.techie.repository.*;
 import com.techie.utils.*;
 import org.springframework.beans.factory.annotation.*;
@@ -24,6 +25,7 @@ public class OrderService {
     private final CartService cartService;
     private final UserService userService;
     private final AddressService addressService;
+    private final ProductService productService;
     private final MailService mailService;
     private final OrderItemRepository orderItemRepository;
     private final ProductImageRepository productImageRepository;
@@ -31,7 +33,8 @@ public class OrderService {
     @Autowired
     public OrderService(OrderRepository orderRepository, CartService cartService,
                         UserService userService, AddressService addressService, MailService mailService,
-                        OrderItemRepository orderItemRepository, ProductImageRepository productImageRepository) {
+                        OrderItemRepository orderItemRepository, ProductImageRepository productImageRepository,
+                        ProductService productService) {
         this.orderRepository = orderRepository;
         this.cartService = cartService;
         this.userService = userService;
@@ -39,6 +42,7 @@ public class OrderService {
         this.mailService = mailService;
         this.orderItemRepository = orderItemRepository;
         this.productImageRepository = productImageRepository;
+        this.productService = productService;
     }
 
     @Transactional
@@ -139,6 +143,40 @@ public class OrderService {
     }
 
     public OrderDTO convertToDTO(Order order) {
-        return OrderConversionUtils.convertToDTO(order);
+        OrderDTO orderDTO = OrderConversionUtils.convertToDTO(order);
+
+        // Set the product for each order item
+        for (OrderItem orderItem : order.getOrderItems()) {
+            Product product = productService.findById(orderItem.getProduct().getId())
+                    .orElseThrow(() -> new ProductNotFoundException(orderItem.getProduct().getId()));
+            ProductDTO productDTO = productService.convertToDTO(product);
+
+                // Find the corresponding OrderItemDTO and set its product
+            orderDTO.getOrderItems().stream()
+                    .filter(itemDTO -> itemDTO.getId().equals(orderItem.getId()))
+                    .findFirst()
+                    .ifPresent(itemDTO -> itemDTO.setProduct(productDTO));
+        }
+
+        return orderDTO;
+    }
+
+    public List<OrderDTO> getOrderHistoryForUser(UserDetails userDetails) {
+        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
+        String userEmail = user.getEmail();
+
+        List<Order> orders = orderRepository.findAllByUserEmail(userEmail);
+
+        return orders.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public OrderDTO getOrder(Long orderId, UserDetails userDetails) {
+        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
+        String userEmail = user.getEmail();
+
+        Order order = orderRepository.findByIdAndUserEmail(orderId, userEmail).orElseThrow(OrderNotFoundException::new);
+        return convertToDTO(order);
     }
 }
