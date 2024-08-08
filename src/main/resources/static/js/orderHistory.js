@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Function to make the GET request
-    function makeGetRequest(url) {
-        return fetch(url)
+    function fetchOrderHistory() {
+        return fetch('/api/order/get/all')
             .then(response => response.json())
             .catch(error => console.error('Error:', error));
     }
@@ -14,48 +14,75 @@ document.addEventListener('DOMContentLoaded', () => {
         orders.forEach(order => {
             const orderElement = document.createElement('div');
             orderElement.classList.add('order-history-item');
-            orderElement.addEventListener('click', () => showOrderDetails(order));
+            orderElement.dataset.orderId = order.orderId;
 
-            const createdAt = new Date(order.createdAt).toLocaleString();
+            const createdAt = order.createdAt;
             const grandTotal = order.grandTotal;
-            const itemCount = order.orderItems.length;
+            const orderId = order.orderId;
+            const itemCount = order.orderItems.reduce((sum, item) => sum + item.quantity, 0);
 
             orderElement.innerHTML = `
-        <h3>Order Created: ${createdAt}</h3>
-        <p>Grand Total: $${grandTotal}</p>
-        <p>Total Items: ${itemCount}</p>
-      `;
+            <p>Order ID: <strong>${orderId}</strong></p>
+            <p>Created: <strong>${createdAt}</strong></p>
+            <p>Grand Total: <strong>$${grandTotal}</strong></p>
+            <p>Total Items: <strong>${itemCount}</strong></p>
+        `;
+
             orderHistoryContainer.appendChild(orderElement);
         });
+
+        // Add event listener to the order history container
+        orderHistoryContainer.addEventListener('click', (event) => {
+            if (event.target.closest('.order-history-item')) {
+                const orderId = event.target.closest('.order-history-item').dataset.orderId;
+                const order = orders.find(o => o.orderId == orderId); // Use == to compare string and number
+                if (order) {
+                    showOrderDetails(order);
+                } else {
+                    console.error('Order not found!');
+                }
+            }
+        });
+
     }
 
     // Function to display the order details in the modal
     function showOrderDetails(order) {
-        const modal = document.getElementById('orderHistoryModal');
+        const modalElement = document.getElementById('orderHistoryModal');
         const orderCreatedAtElement = document.getElementById('orderCreatedAt');
         const orderPaymentMethodElement = document.getElementById('orderPaymentMethod');
         const orderAddressElement = document.getElementById('orderAddress');
         const orderGrandTotalElement = document.getElementById('orderGrandTotal');
         const orderItemsListElement = document.getElementById('orderItemsList');
 
-        orderCreatedAtElement.textContent = new Date(order.createdAt).toLocaleString();
+        orderCreatedAtElement.textContent = order.createdAt;
         orderPaymentMethodElement.textContent = order.paymentMethod;
-        orderAddressElement.textContent = order.deliveryAddress;
+        orderAddressElement.textContent = order.address;
         orderGrandTotalElement.textContent = `$${order.grandTotal}`;
 
         orderItemsListElement.innerHTML = '';
         order.orderItems.forEach(item => {
             const listItem = document.createElement('li');
             listItem.classList.add('list-group-item');
-            listItem.textContent = `${item.product.name} - Quantity: ${item.quantity} - Price: $${item.product.price}`;
+
+            // Set the inner HTML of the list item to have each attribute on a new line with the values in bold
+            listItem.innerHTML = `
+                 <div><strong>Product Name:</strong> ${item.product.name}</div>
+                 <div><strong>Quantity:</strong> ${item.quantity}</div>
+                 <div><strong>Total Price:</strong> $${item.totalPrice}</div>
+            `;
+
             orderItemsListElement.appendChild(listItem);
         });
 
-        modal.style.display = 'block';
+
+        // Use Bootstrap's modal show method
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
     }
 
     // Fetch and display the order history
-    makeGetRequest('/api/order/get/all')
+    fetchOrderHistory()
         .then(data => displayOrderHistory(data))
         .catch(error => console.error('Error fetching order history:', error));
 

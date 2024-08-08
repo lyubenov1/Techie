@@ -35,7 +35,7 @@ public class OrderController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> CreateOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult, HttpServletRequest request) {
+    public ResponseEntity<?> createOrder(@RequestBody @Valid OrderRequest orderRequest, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()
                     .stream()
@@ -70,17 +70,6 @@ public class OrderController {
         try {
             List<OrderDTO> orders = orderService.getOrderHistoryForUser(userDetails);
             return ResponseEntity.ok(orders);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
-        }
-    }
-
-    @GetMapping("/get")
-    public ResponseEntity<?> getOrder(@AuthenticationPrincipal UserDetails userDetails, @RequestParam Long orderId) {
-        try {
-            OrderDTO order = orderService.getOrder(orderId, userDetails);
-            return ResponseEntity.ok(order);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }

@@ -145,7 +145,7 @@ public class OrderService {
     }
 
     public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+        return orderRepository.findByOrderId(orderId).orElseThrow(OrderNotFoundException::new);
     }
 
     public OrderDTO convertToDTO(Order order) {
@@ -176,13 +176,5 @@ public class OrderService {
         return orders.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-    }
-
-    public OrderDTO getOrder(Long orderId, UserDetails userDetails) {
-        UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
-        String userEmail = user.getEmail();
-
-        Order order = orderRepository.findByIdAndUserEmail(orderId, userEmail).orElseThrow(OrderNotFoundException::new);
-        return convertToDTO(order);
     }
 }
