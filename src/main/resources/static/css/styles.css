@@ -4833,13 +4833,13 @@ hr {
     font-size: 2.5rem;
     border-bottom: 2px solid #979797;
     padding-bottom: 0.5rem;
-    color: rgb(225, 222, 218);
+    color: rgb(255, 255, 255);
 }
 
 .privacy-policy h2, .about-us h2, .terms-of-use h2 {
     font-size: 1.8rem;
     margin-top: 2rem;
-    color: #979797;
+    color: #ffffff;
 }
 
 .privacy-policy p, .about-us p, .terms-of-use p {
