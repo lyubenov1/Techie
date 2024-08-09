@@ -46,34 +46,57 @@ That’s it! Your application should now be configured and running.
 
 
 
-### Product page sample
-Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Comparing option with other products of the same category. Rating and reviewing. Similar products.
+### Products page sample
+Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting by different criteria (by price lowest to highest and vice versa, by rating, by discount, by newest) .Pagination of 25 products per page.
+<img src="src/main/resources/static/images/products_sample_1.png" alt="Products page">
 
-<img src="src/main/resources/static/images/products_sample_1.png" alt="Product page">
+### Product page sample № 1
+Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Anonymous and authenticated users can add a product to their shopping cart. Only authenticated users, however, can use their wishlist. If a user has more than one wishlist, clicking on the "Save" button, makes a dropdown menu expand, containing the names of the wishlists.
 
-### Compare products page sample
-If the user navigates from the 'compare' button on a product page, the corresponding product is shown as the first option. Only products from the same category as an already displayed product are suggested.
+<img src="src/main/resources/static/images/products_sample_2.png" alt="Product page">
 
-<img src="src/main/resources/static/images/compare-products-sample.png" alt="Compare products page">
+### Product page sample № 2
+Products of similar price range and of the same category are suggested as "Similar Products".
 
-### Products page sample № 1
-Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting and pagination.
+<img src="src/main/resources/static/images/products_sample_3.png" alt="Product page">
 
-<img src="src/main/resources/static/images/products_sample_2.png" alt="Smartphones page">
+### Product page sample № 3
+Authenticated users can write reviews and upload up to 3 photos per review. They can also vote thumbs up or thumbs down on each reviewer's review. Authors of reviews can edit or delete their own reviews, while moderators and admins can delete any review.
 
-### Products page sample № 2
+<img src="src/main/resources/static/images/products_sample_4.png" alt="Product page">
 
-<img src="src/main/resources/static/images/products_sample_3.png" alt="Smartphones page">
+### Database diagram
+The database is populated with 521 products of different kinds. The product entity is inherited by various child entities (laptop, smartphone, etc.), which add their own fields in addition to the attributes of the parent product entity.
+The `persistent_logins` table is used to support the "Remember Me" functionality for user authentication. When users choose to stay logged in across browser sessions, their login information is stored securely in this table.
 
-### Index page current state
-Header hides when scrolling down and reappears when scrolling up. Search bar shows product suggestions on queries of at least 3 characters. Suggestions are sorted by highest rating.
+<img src="src/main/resources/static/images/diagram.png" alt="Database Diagram">
+
+
+### Index page sample 1
+Header navbar hides when scrolling down and reappears when scrolling up. Search bar shows product suggestions on queries of at least 3 characters. Suggestions are sorted by highest rating.
 
 <img src="src/main/resources/static/images/index_page.png" alt="Index page">
 
-### Database diagram (as of right now)
-The database is populated with 521 products of different kinds. The product entity is inherited by various child entities (laptop, smartphone, etc.), which add their own fields in addition to the attributes of the parent product entity.
+### Index page sample 2
+Custom-designed banners and a gallery containing some of the brands' logos.
 
-<img src="src/main/resources/static/images/diagram.png" alt="Database Diagram">
+<img src="src/main/resources/static/images/index_page_2.png" alt="Index page">
+
+### Index page sample 3
+The footer is present in almost every view of the application. It contains social media buttons and an option for users to subscribe to the application's newsletter. The newsletter consists of emails about product promotions.
+
+<img src="src/main/resources/static/images/index_page_3.png" alt="Index page">
+
+### Shopping cart
+Unauthenticated users can also place orders, and their email addresses are stored in the order history database table. If they later create an account using the same email address, any orders they placed while anonymous are associated with their new account.
+If the order is successful, the user is redirected to a new order confirmation page, which indicates that the order is complete and an email is sent to the user.
+
+<img src="src/main/resources/static/images/shopping_cart.png" alt="Shopping cart page">
+
+### Order history
+The order history page displays all orders made by a given user. It uses pagination, showing 6 order history items per page. When a user clicks on an order history item, the details of that specific order are shown.
+
+<img src="src/main/resources/static/images/order_history.png" alt="Order history page">
 
 ### The products:
 
