@@ -108,9 +108,12 @@ public class AdminService {
         }
 
         // Calculate the discounted price
-        MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
+        MathContext mc = new MathContext(10, RoundingMode.HALF_UP);
         BigDecimal discountFactor = BigDecimal.ONE.subtract(discountPercentage.divide(new BigDecimal("100"), mc));
-        return product.getOriginalPrice().multiply(discountFactor, mc);
+        BigDecimal discountedPrice = product.getOriginalPrice().multiply(discountFactor, mc);
+
+        // Round to two decimal places for currency
+        return discountedPrice.setScale(2, RoundingMode.HALF_UP);
     }
 
     @Transactional
