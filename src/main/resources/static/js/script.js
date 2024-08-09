@@ -11,12 +11,6 @@ setInterval(updateTime, 60000); // Update every 60000 milliseconds (1 minute)
 updateTime(); // Initial call
 
 document.addEventListener("DOMContentLoaded", function() {
-
-    document.getElementById('compareButton').addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-        window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
-    });
-
     // Last scroll position
     var lastScrollTop = 0;
 
@@ -48,6 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Update the last scroll position
         lastScrollTop = st <= 0 ? 0 : st; // Handle mobile and negative scrolling scenarios
+    });
+
+    document.getElementById('compareButton').addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        window.location.href = `/products/compare-products?idProduct1=${encodeURIComponent(productId)}`;
     });
 });
 
