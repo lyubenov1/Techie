@@ -56,7 +56,7 @@ Smooth transition change of main picture when hovering over one of the thumbnail
 
 <img src="src/main/resources/static/images/products_sample_2.png" alt="Product page">
 
-### Compare products page sample
+### Compare products page
 If the user navigates from the 'compare' button on a product page, the corresponding product is shown as the first option. Only products from the same category as an already displayed product are suggested.
 
 <img src="src/main/resources/static/images/compare_products.png" alt="Compare products page">
