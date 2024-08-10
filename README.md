@@ -46,21 +46,22 @@ That’s it! Your application should now be configured and running.
 
 
 
-### Products page sample
-Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting by different criteria (by price lowest to highest and vice versa, by rating, by discount, by newest) .Pagination of 25 products per page.
+### Products page
+Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting by different criteria (by price lowest to highest and vice versa, by rating, by discount, by newest). Pagination of 25 products per page.
+
 <img src="src/main/resources/static/images/products_sample_1.png" alt="Products page">
 
-### Product page sample № 1
+### Product page № 1
 Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Anonymous and authenticated users can add a product to their shopping cart. Only authenticated users, however, can use their wishlist. If a user has more than one wishlist, clicking on the "Save" button, makes a dropdown menu expand, containing the names of the wishlists.
 
 <img src="src/main/resources/static/images/products_sample_2.png" alt="Product page">
 
-### Product page sample № 2
+### Product page № 2
 Products of similar price range and of the same category are suggested as "Similar Products".
 
 <img src="src/main/resources/static/images/products_sample_3.png" alt="Product page">
 
-### Product page sample № 3
+### Product page № 3
 Authenticated users can write reviews and upload up to 3 photos per review. They can also vote thumbs up or thumbs down on each reviewer's review. Authors of reviews can edit or delete their own reviews, while moderators and admins can delete any review.
 
 <img src="src/main/resources/static/images/products_sample_4.png" alt="Product page">
@@ -72,17 +73,17 @@ The `persistent_logins` table is used to support the "Remember Me" functionality
 <img src="src/main/resources/static/images/diagram.png" alt="Database Diagram">
 
 
-### Index page sample 1
+### Index page 1
 Header navbar hides when scrolling down and reappears when scrolling up. Search bar shows product suggestions on queries of at least 3 characters. Suggestions are sorted by highest rating.
 
 <img src="src/main/resources/static/images/index_page.png" alt="Index page">
 
-### Index page sample 2
+### Index page 2
 Custom-designed banners and a gallery containing some of the brands' logos.
 
 <img src="src/main/resources/static/images/index_page_2.png" alt="Index page">
 
-### Index page sample 3
+### Index page 3
 The footer is present in almost every view of the application. It contains social media buttons and an option for users to subscribe to the application's newsletter. The newsletter consists of emails about product promotions.
 
 <img src="src/main/resources/static/images/index_page_3.png" alt="Index page">
@@ -98,9 +99,37 @@ The order history page displays all orders made by a given user. It uses paginat
 
 <img src="src/main/resources/static/images/order_history.png" alt="Order history page">
 
+### Addresses page
+Address line 2 is optional and hidden if empty.
+
+<img src="src/main/resources/static/images/address_page.png" alt="Addresses page">
+
+### Wishlists page
+
+<img src="src/main/resources/static/images/wishlists_page.png" alt="Wishlists page">
+
+### Settings page
+Options to: delete account, change password, change subscription status and edit details
+
+<img src="src/main/resources/static/images/settings.png" alt="Settings page">
+
+### Admin page 1
+Users who do not possess an 'Admin' or 'Moderator' role do not have access to or visibility of the respective 'Admin' or 'Moderator' pages. 
+Admins can add the 'Moderator' role to users via the dashboard. The 'Admin' role can be added programmatically using the RoleAdder class located in the config directory.
+
+<img src="src/main/resources/static/images/admin_1.png" alt="Admin page">
+
+### Admin page 2
+Admins and moderators can apply discounts to products. When this happens, subscribed users receive email notification.
+
+<img src="src/main/resources/static/images/admin_2.png" alt="Admin page">
+
+### Admin page 3
+Admins can blacklist users, but they must provide a reason for doing so. Blacklisted users are restricted from all actions. When they attempt to log in, a predefined blacklisted page is displayed.
+
+<img src="src/main/resources/static/images/admin_3.png" alt="Admin page">
+
 ### The products:
 
 <img src="src/main/resources/static/images/products_diagram.png" alt="Database Diagram">
-
-
 
