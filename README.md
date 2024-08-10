@@ -126,7 +126,7 @@ If an anonymous user tries to do something they don't have permission for, they 
 
 ### Admin page 1
 Users who do not possess an 'Admin' or 'Moderator' role do not have access to or visibility of the respective 'Admin' or 'Moderator' pages. 
-Admins can add the 'Moderator' role to users via the dashboard. The 'Admin' role can be added programmatically using the RoleAdder class located in the config directory.
+Admins can add the 'Moderator' role to users via the dashboard. The 'Admin' role can be added programmatically using the `RoleAdder` class located in the `config` directory.
 
 <img src="src/main/resources/static/images/admin_1.png" alt="Admin page">
 
