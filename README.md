@@ -52,7 +52,8 @@ Dynamic filtering, with filters and filter option counters automatically updatin
 <img src="src/main/resources/static/images/products_sample_1.png" alt="Products page">
 
 ### Product page № 1
-Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Anonymous and authenticated users can add a product to their shopping cart. Only authenticated users, however, can use their wishlist. If a user has more than one wishlist, clicking on the "Save" button, makes a dropdown menu expand, containing the names of the wishlists.
+Smooth transition change of main picture when hovering over one of the thumbnail images. Specs and description. Anonymous and authenticated users can add a product to their shopping cart. Only authenticated users, however, can use their wishlist. 
+If a user has more than one wishlist, clicking on the "Save" button, makes a dropdown menu expand, containing the names of the wishlists.
 
 <img src="src/main/resources/static/images/products_sample_2.png" alt="Product page">
 
@@ -117,6 +118,11 @@ Address line 2 is optional and hidden if empty.
 Options to: delete account, change password, change subscription status and edit details
 
 <img src="src/main/resources/static/images/settings.png" alt="Settings page">
+
+### Login page
+If an anonymous user tries to do something they don't have permission for, they will likely be redirected here.
+
+<img src="src/main/resources/static/images/login_page.png" alt="Login page">
 
 ### Admin page 1
 Users who do not possess an 'Admin' or 'Moderator' role do not have access to or visibility of the respective 'Admin' or 'Moderator' pages. 
