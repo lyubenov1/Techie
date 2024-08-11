@@ -93,7 +93,7 @@ class RegisterControllerTest {
         RegisterModel registerModel = createRegisterModel();
         when(bindingResult.hasErrors()).thenReturn(true);
 
-        // Fix: Ensure that addFlashAttribute returns the mock itself
+        // Ensure that addFlashAttribute returns the mock itself
         when(redirectAttributes.addFlashAttribute(anyString(), any())).thenReturn(redirectAttributes);
 
         String viewName = registerController.postRegister(registerModel, bindingResult, redirectAttributes, request, response);
@@ -103,6 +103,17 @@ class RegisterControllerTest {
         verify(redirectAttributes).addFlashAttribute(startsWith("org.springframework.validation.BindingResult."), eq(bindingResult));
     }
 
+    @Test
+    void postRegister_WhenSuccessfulRegistration_ShouldRedirectToHome() {
+        RegisterModel registerModel = createRegisterModel();
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        String viewName = registerController.postRegister(registerModel, bindingResult, redirectAttributes, request, response);
+
+        assertEquals("redirect:/", viewName);
+        verify(registerService).registerUser(eq(registerModel), any());
+        verify(redirectAttributes).addFlashAttribute("messageSuccess", "Registration successful!");
+    }
 
     @Test
     void postRegister_WhenSuccessfulRegistration_ShouldSetSecurityContext() {
