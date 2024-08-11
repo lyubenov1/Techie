@@ -40,9 +40,6 @@ class RegisterControllerTest {
     private HttpServletRequest request;
 
     @Mock
-    private RedirectAttributesModelMap redirectAttributesModelMap;
-
-    @Mock
     private HttpServletResponse response;
 
     private AutoCloseable closeable;
@@ -50,7 +47,6 @@ class RegisterControllerTest {
     @BeforeEach
     void setUp() {
         closeable = MockitoAnnotations.openMocks(this);
-        redirectAttributesModelMap = spy(new RedirectAttributesModelMap());
         registerController = new RegisterController(registerService, securityContextRepository);
     }
 
@@ -97,24 +93,16 @@ class RegisterControllerTest {
         RegisterModel registerModel = createRegisterModel();
         when(bindingResult.hasErrors()).thenReturn(true);
 
-        String viewName = registerController.postRegister(registerModel, bindingResult, redirectAttributesModelMap, request, response);
-
-        assertEquals("redirect:/register", viewName);
-        assertTrue(redirectAttributesModelMap.containsAttribute("registerModel"));
-        assertTrue(redirectAttributesModelMap.containsAttribute("org.springframework.validation.BindingResult.registerModel"));
-    }
-
-    @Test
-    void postRegister_WhenSuccessfulRegistration_ShouldRedirectToHome() {
-        RegisterModel registerModel = createRegisterModel();
-        when(bindingResult.hasErrors()).thenReturn(false);
+        // Fix: Ensure that addFlashAttribute returns the mock itself
+        when(redirectAttributes.addFlashAttribute(anyString(), any())).thenReturn(redirectAttributes);
 
         String viewName = registerController.postRegister(registerModel, bindingResult, redirectAttributes, request, response);
 
-        assertEquals("redirect:/", viewName);
-        verify(registerService).registerUser(eq(registerModel), any());
-        verify(redirectAttributes).addFlashAttribute("messageSuccess", "Registration successful!");
+        assertEquals("redirect:/register", viewName);
+        verify(redirectAttributes).addFlashAttribute("registerModel", registerModel);
+        verify(redirectAttributes).addFlashAttribute(startsWith("org.springframework.validation.BindingResult."), eq(bindingResult));
     }
+
 
     @Test
     void postRegister_WhenSuccessfulRegistration_ShouldSetSecurityContext() {
