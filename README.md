@@ -111,6 +111,7 @@ Address line 2 is optional and hidden if empty.
 <img src="src/main/resources/static/images/address_page.png" alt="Addresses page">
 
 ### Wishlists page
+The main wishlist doesn't have an 'Edit' button as it isn't editable. Users can edit the name or delete every other wishlist, however.
 
 <img src="src/main/resources/static/images/wishlists_page.png" alt="Wishlists page">
 
