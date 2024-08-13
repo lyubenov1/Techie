@@ -44,6 +44,27 @@ To get the application up and running, follow these steps:
 
 That’s it! Your application should now be configured and running.
 
+## Project Overview
+
+**Techie** is a full-stack e-commerce application developed using Spring Boot. The platform is designed with a focus on user experience and includes the following key features:
+
+- **User Authentication and Authorization:** Secure login and role-based access control.
+- **Session Management:** Ensures a seamless user experience across sessions.
+- **Search and Filtering:** Comprehensive search functionality with dynamic product filtering.
+- **Product Comparison and Wishlist Management:** Users can compare products and create/manage multiple wishlists.
+- **Order History Tracking:** Users can view and manage their order history.
+- **Review System:** Users can submit detailed product reviews, including ratings, comments, and photo uploads, and interact with other reviews through upvotes and downvotes.
+- **Email Functionality:** Users receive emails for key activities, including registration, profile updates, and account security alerts after five or more unsuccessful login attempts. Additionally, a confirmation email is sent upon account deletion. Newsletter subscribers also receive automated promotional emails when products are discounted.
+
+The application follows a RESTful API architecture, ensuring scalability and maintainability. The database, containing over 500 diverse products, is well-structured with schema diagrams provided in the README.
+
+The project is undergoing comprehensive testing with JUnit and Mockito to ensure reliability.
+
+### Technologies Used
+- **Backend:** Java, Spring Boot
+- **Frontend:** Thymeleaf, HTML, CSS, JavaScript
+- **Database:** MySQL
+- **Additional Tools:** Caffeine (cache management), MailHog (email testing), Cloudinary Java SDK (image and photo uploads)
 
 
 ### Products page
