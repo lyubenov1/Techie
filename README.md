@@ -50,7 +50,8 @@ That’s it! Your application should now be configured and running.
 
 - **User Authentication and Authorization:** Secure login and role-based access control.
 - **Session Management:** Ensures a seamless user experience across sessions.
-- **Search and Filtering:** Comprehensive search functionality with dynamic product filtering.
+- **Search:** Comprehensive search functionality.
+- **Filtering and Sorting:** Dynamic product filtering and sorting by various criteria.
 - **Product Comparison and Wishlist Management:** Users can compare products and create/manage multiple wishlists.
 - **Order History Tracking:** Users can view and manage their order history.
 - **Review System:** Users can submit detailed product reviews, including ratings, comments, and photo uploads, and interact with other reviews through upvotes and downvotes.
@@ -66,6 +67,7 @@ The project is undergoing comprehensive testing with JUnit and Mockito to ensure
 - **Database:** MySQL
 - **Additional Tools:** Caffeine (cache management), MailHog (email testing), Cloudinary Java SDK (image and photo uploads)
 
+---
 
 ### Products page
 Dynamic filtering, with filters and filter option counters automatically updating on reload. Sorting by different criteria (by price lowest to highest and vice versa, by rating, by discount, by newest). Pagination of 25 products per page.
