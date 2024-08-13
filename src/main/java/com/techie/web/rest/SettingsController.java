@@ -116,7 +116,7 @@ public class SettingsController {
             settingsService.deleteAccount(userDetails);
             return ResponseEntity.ok("Confirmation email sent.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating subscription status");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
 }
