@@ -35,11 +35,6 @@ public class RegisterController {
         return "register";
     }
 
-    @ModelAttribute("registerModel")
-    public RegisterModel initForm() {
-        return new RegisterModel();
-    }
-
     @PostMapping
     public String postRegister(
             @Valid @ModelAttribute("registerModel") RegisterModel registerModel,

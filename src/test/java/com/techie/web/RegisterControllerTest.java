@@ -82,13 +82,6 @@ class RegisterControllerTest {
     }
 
     @Test
-    void initForm_ShouldReturnNewRegisterModel() {
-        RegisterModel result = registerController.initForm();
-
-        assertEquals(RegisterModel.class, result.getClass());
-    }
-
-    @Test
     void postRegister_WhenBindingHasErrors_ShouldRedirectToRegister() {
         RegisterModel registerModel = createRegisterModel();
         when(bindingResult.hasErrors()).thenReturn(true);

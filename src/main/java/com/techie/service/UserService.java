@@ -106,7 +106,6 @@ public class UserService {
 
         try {
             // Proceed with user deletion
-
             userRepository.deleteByEmail(email);
             tokenService.removeToken(token);
 
