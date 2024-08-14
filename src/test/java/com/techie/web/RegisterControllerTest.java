@@ -53,7 +53,7 @@ class RegisterControllerTest {
     @AfterEach
     void tearDown() throws Exception {
         closeable.close();
-        SecurityContextHolder.clearContext(); // Ensure the SecurityContextHolder is reset after each test
+        SecurityContextHolder.clearContext(); // Clear the SecurityContextHolder to avoid test interference
     }
 
     // Helper method to create a RegisterModel
@@ -119,7 +119,6 @@ class RegisterControllerTest {
         // Set the mocked strategy
         SecurityContextHolder.setContextHolderStrategy(strategy);
 
-        // Use this typed ArgumentCaptor
         @SuppressWarnings("unchecked")
         ArgumentCaptor<Consumer<Authentication>> authConsumerCaptor = ArgumentCaptor.forClass((Class<Consumer<Authentication>>) (Class<?>) Consumer.class);
 
@@ -131,7 +130,6 @@ class RegisterControllerTest {
         Authentication mockAuth = mock(Authentication.class);
         authConsumerCaptor.getValue().accept(mockAuth);
 
-        // Now verify the interactions
         verify(strategy).createEmptyContext();
         verify(securityContext).setAuthentication(mockAuth);
         verify(strategy).setContext(securityContext);
