@@ -43,6 +43,7 @@ public class GlobalAdvice {
     public ModelAndView onObjectNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal @Nullable UserDetails userDetails) {
         logger.info("ObjectNotFoundException: {}", ex.getMessage(), ex);
         ModelAndView modelAndView = new ModelAndView("error-pages/not-found");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
         addUserToModel(userDetails, modelAndView.getModel());
         return modelAndView;
     }
@@ -75,6 +76,7 @@ public class GlobalAdvice {
         return modelAndView;
     }
 
+    // Add user to the model in exception cases
     private void addUserToModel(UserDetails userDetails, Map<String, Object> model) {
         if (userDetails != null) {
             try {
