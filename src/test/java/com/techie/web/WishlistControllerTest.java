@@ -43,7 +43,7 @@ class WishlistControllerTest {
     void createWishlist_ShouldRedirectWithSuccessMessage() throws InvalidWishlistNameException, DuplicateWishlistException {
         // Arrange
         String wishlistName = "My Wishlist";
-        UserEntity user = new UserEntity(); // Assuming a basic constructor for UserEntity
+        UserEntity user = new UserEntity();
         when(userDetails.getUsername()).thenReturn("testUser");
         when(userService.findByUsername("testUser")).thenReturn(user);
         doNothing().when(wishlistService).createWishlist(user, wishlistName);
