@@ -47,7 +47,6 @@ class GlobalAdviceTest {
         closeable.close();
     }
 
-
     @Test
     void addUserToModel_UserDetailsNotNull_AddsLoggedUser() {
         // Arrange
@@ -67,7 +66,10 @@ class GlobalAdviceTest {
     @Test
     void onObjectNotFound_ShouldReturnNotFoundModelAndView() {
         // Arrange
-        ObjectNotFoundException exception = new ObjectNotFoundException("Object not found");
+        ObjectNotFoundException exception = new ObjectNotFoundException("Object not found test");
+        when(userDetails.getUsername()).thenReturn("testUser");
+        when(userService.findByUsername("testUser")).thenReturn(new UserEntity());
+        when(userService.convertToView(any(UserEntity.class))).thenReturn(new UserDisplayView());
 
         // Act
         ModelAndView modelAndView = globalAdvice.onObjectNotFound(exception, userDetails);
@@ -114,11 +116,13 @@ class GlobalAdviceTest {
         assertEquals("Global error message", response.getBody().get("object"));
     }
 
-
     @Test
     void handleGeneralException_ShouldReturnErrorModelAndView() {
         // Arrange
-        Exception exception = new Exception("Unexpected error");
+        Exception exception = new Exception("This is a test error");
+        when(userDetails.getUsername()).thenReturn("testUser");
+        when(userService.findByUsername("testUser")).thenReturn(new UserEntity());
+        when(userService.convertToView(any(UserEntity.class))).thenReturn(new UserDisplayView());
 
         // Act
         ModelAndView modelAndView = globalAdvice.handleGeneralException(exception, userDetails);
@@ -151,6 +155,4 @@ class GlobalAdviceTest {
             globalAdvice.addUserToModel(mockUserDetails, model);
         });
     }
-
-
 }
