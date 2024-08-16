@@ -5,7 +5,6 @@ import com.techie.domain.entities.*;
 import com.techie.domain.model.DTOs.*;
 import com.techie.exceptions.address.*;
 import com.techie.service.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
@@ -22,7 +21,6 @@ public class AddressController {
 
     private final AddressService addressService;
     private final UserService userService;
-    private final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
     @Autowired
     public AddressController(AddressService addressService, UserService userService) {
@@ -40,27 +38,27 @@ public class AddressController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createAddress(@AuthenticationPrincipal UserDetails userDetails,
-                                           @RequestBody AddressDTO addressDTO) {
-        try {
-            UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
-            AddressDTO createdAddress = addressService.createAddress(user, addressDTO);
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}") // Add the address ID to the path
-                    .buildAndExpand(createdAddress.getId())
-                    .toUri();
+     @PostMapping("/create")
+     public ResponseEntity<?> createAddress(@AuthenticationPrincipal UserDetails userDetails,
+                                            @RequestBody AddressDTO addressDTO) {
+         try {
+             UserEntity user = userService.findByUsernameNoFetches(userDetails.getUsername());
+             AddressDTO createdAddress = addressService.createAddress(user, addressDTO);
+             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                     .path("/{id}") // Add the address ID to the path
+                     .buildAndExpand(createdAddress.getId())
+                     .toUri();
 
-            // Return 201 Created with the location of the new address and the created address object
-            return ResponseEntity.created(location).body(createdAddress);
-        } catch (AddressExistsException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (InvalidAddressNameException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
-        }
-    }
+             // Return 201 Created with the location of the new address and the created address object
+             return ResponseEntity.created(location).body(createdAddress);
+         } catch (AddressExistsException e) {
+             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+         } catch (InvalidAddressNameException e) {
+             return ResponseEntity.badRequest().body(e.getMessage());
+         } catch (Exception e) {
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+         }
+     }
 
     @PatchMapping("/edit")
     public ResponseEntity<?> editAddress(@AuthenticationPrincipal UserDetails userDetails,

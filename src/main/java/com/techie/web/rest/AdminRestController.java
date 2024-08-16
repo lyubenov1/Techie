@@ -5,7 +5,6 @@ import com.techie.exceptions.product.*;
 import com.techie.exceptions.role.*;
 import com.techie.exceptions.user.*;
 import com.techie.service.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
@@ -19,7 +18,6 @@ import java.util.*;
 public class AdminRestController {
 
     private final AdminService adminService;
-    private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
 
     @Autowired
     public AdminRestController(AdminService adminService) {
