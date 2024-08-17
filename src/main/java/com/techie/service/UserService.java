@@ -24,20 +24,25 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final TokenService tokenService;
+    private final OrderRepository orderRepository;
     private final HttpServletRequest request;
     private final HttpServletResponse response;
+    private final SecurityContextLogoutHandler logoutHandler;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
                        TokenService tokenService, HttpServletRequest request,
-                       HttpServletResponse response) {
+                       HttpServletResponse response, SecurityContextLogoutHandler logoutHandler,
+                       OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.tokenService = tokenService;
         this.request = request;
         this.response = response;
+        this.logoutHandler = logoutHandler;
+        this.orderRepository = orderRepository;
     }
 
     public UserEntity findByUsername(String username) {
@@ -106,13 +111,14 @@ public class UserService {
 
         try {
             // Proceed with user deletion
+            removeOrderAssociationWithAddress(email);
+
             userRepository.deleteByEmail(email);
             tokenService.removeToken(token);
 
             // Programmatic logout
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null) {
-                SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
                 logoutHandler.logout(request, response, authentication);
             }
 
@@ -120,6 +126,21 @@ public class UserService {
         } catch (Exception e) {
             logger.error("Error during user deletion and logout: ", e);
             throw new RuntimeException("An error occurred while processing the deletion.");
+        }
+    }
+
+    private void removeOrderAssociationWithAddress(String email) {
+        List<Order> userOrders = orderRepository.findAllByUserEmailWithAddresses(email);
+        for (Order order : userOrders) {
+            // Check if the delivery address is not null before trying to access it
+            if (order.getDeliveryAddress() != null) {
+                // Store the address line in anonymousAddress before removing the deliveryAddress reference
+                order.setAnonymousAddress(order.getDeliveryAddress().getAddressLine1());
+                // Remove the reference to deliveryAddress to avoid foreign key constraint violations
+                order.setDeliveryAddress(null);
+            }
+            // Save the updated order to the database
+            orderRepository.save(order);
         }
     }
 

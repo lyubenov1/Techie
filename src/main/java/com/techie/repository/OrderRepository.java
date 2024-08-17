@@ -25,4 +25,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT COUNT(o) FROM Order o WHERE o.userEmail = :userEmail")
     long countByUserEmail(@Param("userEmail") String userEmail);
+
+    @Query("SELECT o FROM Order o " +
+            "LEFT JOIN FETCH o.deliveryAddress " +
+            "WHERE o.userEmail = :userEmail")
+    List<Order> findAllByUserEmailWithAddresses(@Param("userEmail") String userEmail);
 }

@@ -38,6 +38,12 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Address> addresses;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ReviewVote> votes;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Cart cart;
 
