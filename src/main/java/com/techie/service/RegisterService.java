@@ -57,7 +57,7 @@ public class RegisterService {
         mailService.sendRegistrationEmail(userEntity);
     }
 
-    private UserEntity createUserEntity(RegisterModel registrationModel) {
+    UserEntity createUserEntity(RegisterModel registrationModel) {
         UserEntity userEntity = UserEntity.builder()
                 .username(registrationModel.getUsername())
                 .firstName(registrationModel.getFirstName())
@@ -74,7 +74,7 @@ public class RegisterService {
         return userEntity;
     }
 
-    private Address createAddress(RegisterModel registrationDTO, UserEntity userEntity) {
+    Address createAddress(RegisterModel registrationDTO, UserEntity userEntity) {
         String defaultAddressName = "Address 1";
 
         return Address.builder()

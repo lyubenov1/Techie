@@ -131,9 +131,9 @@ class UserServiceTest {
 
     @Test
     void updateProfileImage_shouldUpdateUserProfileImage() {
-        userService.updateProfileImage(testUser, "http://example.com/image.jpg", "public_id");
+        userService.updateProfileImage(testUser, "https://example.com/image.jpg", "public_id");
 
-        assertEquals("http://example.com/image.jpg", testUser.getProfileImageUrl());
+        assertEquals("https://example.com/image.jpg", testUser.getProfileImageUrl());
         assertEquals("public_id", testUser.getPublicId());
         verify(userRepository).save(testUser);
     }

@@ -41,7 +41,6 @@ public class GlobalAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView onObjectNotFound(ObjectNotFoundException ex, @AuthenticationPrincipal @Nullable UserDetails userDetails) {
-        logger.info("ObjectNotFoundException: {}", ex.getMessage(), ex);
         ModelAndView modelAndView = new ModelAndView("error-pages/not-found");
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
         addUserToModel(userDetails, modelAndView.getModel());
@@ -69,7 +68,6 @@ public class GlobalAdvice {
     // Catch-all for other exceptions
     @ExceptionHandler(Exception.class)
     public ModelAndView handleGeneralException(Exception ex, @AuthenticationPrincipal UserDetails userDetails) {
-        logger.error("Unexpected error occurred: ", ex);
         ModelAndView modelAndView = new ModelAndView("error-pages/error");
         modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         addUserToModel(userDetails, modelAndView.getModel());

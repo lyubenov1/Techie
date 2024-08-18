@@ -6,10 +6,11 @@ import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.web.*;
+import org.springframework.web.servlet.*;
 
 @TestConfiguration
 @EnableWebSecurity
-public class TestSecurityConfig {
+public class TestConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -18,4 +19,9 @@ public class TestSecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public ViewResolver viewResolver() {
+        // Return null to prevent Thymeleaf from resolving any templates
+        return (viewName, locale) -> null;
+    }
 }
