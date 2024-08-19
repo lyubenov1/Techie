@@ -19,11 +19,4 @@ public class UserDisplayView {
     private String reason;  // reasoning of potential blacklisting
     private String blacklistTimestamp;
     private boolean isSubscribed;  // subscription status to newsletter
-
-    public UserDisplayView(Long id, String username, String email) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-    }
-
 }

@@ -33,7 +33,7 @@ public class AdminService {
     private final BlacklistRepository blacklistRepository;
     private final RoleRepository roleRepository;
     private final MailService mailService;
-    private ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher eventPublisher;
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 
     @Autowired
@@ -144,7 +144,6 @@ public class AdminService {
                 .toList();
     }
 
-    @CachePut(value = "userBlacklist", key = "#userDisplayView.id")
     @Transactional
     public void blacklistUser(UserDisplayView userDisplayView)
             throws UsernameNotFoundException, UserAlreadyBlacklistedException, AdminModeratorBlacklistException {
