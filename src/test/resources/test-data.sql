@@ -1,4 +1,6 @@
 -- Clearing the existing data
+DELETE FROM review_vote;
+DELETE FROM reviews;
 DELETE FROM product_images;
 DELETE FROM products;
 DELETE FROM categories;
@@ -57,3 +59,11 @@ INSERT INTO product_images (id, product_id, image_url, is_primary)
 VALUES
     (1, 1, 'https://example.com/image1.jpg', true);
 
+INSERT INTO reviews (comment, downvote_count, product_id, product_rating, timestamp, upvote_count, user_id)
+VALUES ('Good product!', 2, 1, 4, NOW(), 3, 1),
+       ('Terrible!', 4, 1, 1, NOW(), 0, 2);
+
+INSERT INTO review_vote (id, is_upvote, review_id, user_id)
+VALUES
+    (1, FALSE, 1, 2),
+    (2, FALSE, 2, 1);
