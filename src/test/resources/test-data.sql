@@ -1,4 +1,5 @@
 -- Clearing the existing data
+DELETE FROM review_images;
 DELETE FROM review_vote;
 DELETE FROM reviews;
 DELETE FROM product_images;
@@ -59,11 +60,14 @@ INSERT INTO product_images (id, product_id, image_url, is_primary)
 VALUES
     (1, 1, 'https://example.com/image1.jpg', true);
 
-INSERT INTO reviews (comment, downvote_count, product_id, product_rating, timestamp, upvote_count, user_id)
-VALUES ('Good product!', 2, 1, 4, NOW(), 3, 1),
-       ('Terrible!', 4, 1, 1, NOW(), 0, 2);
+INSERT INTO reviews (id, comment, downvote_count, product_id, product_rating, timestamp, upvote_count, user_id)
+VALUES (10, 'Good product!', 2, 1, 4, NOW(), 3, 1),
+       (11, 'Terrible!', 4, 1, 1, NOW(), 0, 2);
+
+INSERT INTO review_images (id, image_url, public_id, review_id)
+VALUES (10, 'https://res.cloudinary.com/dztiecgdt/image/upload/v1724228314/project/reviews/1/phrx15rdk0qru9e0sjbs.png', 'project/reviews/1/phrx15rdk0qru9e0sjbs', 11);
 
 INSERT INTO review_vote (id, is_upvote, review_id, user_id)
 VALUES
-    (1, FALSE, 1, 2),
-    (2, FALSE, 2, 1);
+    (5, FALSE, 10, 2),
+    (6, FALSE, 11, 1);

@@ -76,4 +76,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT COUNT(DISTINCT p) FROM Product p WHERE p.discount IS NOT NULL")
     long countDiscountedProducts();
+
+    @Query("SELECT COALESCE(AVG(r.productRating), 0.0) FROM Review r WHERE r.product.id = :productId")
+    Double getProductAverageRating(@Param("productId") Long productId);
 }

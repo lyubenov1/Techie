@@ -17,4 +17,8 @@ public interface ReviewVoteRepository extends JpaRepository<ReviewVote, Long> {
     @Modifying
     @Query("DELETE FROM ReviewVote rv WHERE rv.review.id = :reviewId")
     void deleteByReviewId(@Param("reviewId") Long reviewId);
+
+    List<ReviewVote> findByReviewId(Long reviewId);
+
+    ReviewVote findByReviewIdAndUserId(long l, long l1);
 }
