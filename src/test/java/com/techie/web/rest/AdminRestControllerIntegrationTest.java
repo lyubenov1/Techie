@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.mock.mockito.*;
-import org.springframework.context.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.test.context.support.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import org.springframework.test.context.*;
 import org.springframework.test.context.jdbc.*;
 import org.springframework.test.web.servlet.*;
@@ -24,7 +24,6 @@ import java.util.*;
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import({TestConfig.class})
 @TestPropertySource(properties = {
         "spring.cache.type=none",
         "spring.main.allow-bean-definition-overriding=true"
@@ -42,7 +41,7 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
     private RoleAdder roleAdder;
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testGetUsers_returnAllUsersExcludingBlacklisted() throws Exception {
         mockMvc.perform(get("/api/admin/get")
                         .param("query", ""))
@@ -51,16 +50,17 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
     }
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testGetUsers_returnUsersByQueryExcludingBlacklisted() throws Exception {
         mockMvc.perform(get("/api/admin/get")
-                        .param("query", "testuser"))
+                        .param("query", "testuser")
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1));
     }
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testBlacklistUser_Success() throws Exception {
         UserDisplayView user = UserDisplayView.builder()
                 .id(4L)
@@ -71,13 +71,14 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
 
         mockMvc.perform(post("/api/admin/blacklist/post")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(user)))
+                        .content(JsonUtils.asJsonString(user))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("User blacklisted"));
     }
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testBlacklistUser_UserAlreadyBlacklisted() throws Exception {
         UserDisplayView blacklistedUser = UserDisplayView.builder()
                 .id(3L)
@@ -88,14 +89,15 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
 
         mockMvc.perform(post("/api/admin/blacklist/post")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(blacklistedUser)))
+                        .content(JsonUtils.asJsonString(blacklistedUser))
+                        .with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("User with email: testblacklisted@example.com is already blacklisted"));
     }
 
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testBlacklistUser_ModeratorsAndAdminsCanNotBeBlacklisted() throws Exception {
         UserDisplayView blacklistedUser = UserDisplayView.builder()
                 .id(2L)
@@ -107,13 +109,14 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
 
         mockMvc.perform(post("/api/admin/blacklist/post")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(blacklistedUser)))
+                        .content(JsonUtils.asJsonString(blacklistedUser))
+                        .with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Admins and moderators cannot be blacklisted!"));
     }
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testGetBlacklistedUsers_ReturnsUsers() throws Exception {
         mockMvc.perform(get("/api/admin/blacklist/get")
                         .param("p", "0")
@@ -126,7 +129,7 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
     }
 
     @Test
-    @WithMockUser(username = "testadmin@example.com")
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testDiscountProducts_Success() throws Exception {
         ProductAdminView product = ProductAdminView.builder()
                 .id(1L)
@@ -138,7 +141,8 @@ class AdminRestControllerIntegrationTest { // This test class passes on its own,
 
         mockMvc.perform(patch("/api/admin/promotion/patch")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(product)))
+                        .content(JsonUtils.asJsonString(product))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Product successfully discounted"));
     }

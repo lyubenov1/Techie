@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.mock.mockito.*;
-import org.springframework.context.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.test.context.support.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import org.springframework.test.context.*;
 import org.springframework.test.context.jdbc.*;
 import org.springframework.test.web.servlet.*;
@@ -25,7 +25,6 @@ import java.util.*;
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import({TestConfig.class})
 @TestPropertySource(properties = {
         "spring.cache.type=none",
         "spring.main.allow-bean-definition-overriding=true"
@@ -74,7 +73,8 @@ class AddressControllerIntegrationTest {
 
         mockMvc.perform(post("/api/address/create")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(newAddressDTO)))
+                        .content(asJsonString(newAddressDTO))
+                        .with(csrf()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Example Address"))
                 .andExpect(jsonPath("$.city").value("UserTown"));
@@ -104,7 +104,8 @@ class AddressControllerIntegrationTest {
 
         mockMvc.perform(patch("/api/address/edit")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(updatedAddressDTO)))
+                        .content(asJsonString(updatedAddressDTO))
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Address successfully updated!"));
     }
@@ -112,7 +113,8 @@ class AddressControllerIntegrationTest {
     @Test
     @WithMockUser(username = "testadmin@example.com")
     public void testDeleteAddress() throws Exception {
-        mockMvc.perform(delete("/api/address/delete/" + testAddressId))
+        mockMvc.perform(delete("/api/address/delete/" + testAddressId)
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Address successfully deleted!"));
     }
