@@ -13,7 +13,7 @@ import org.springframework.ui.*;
 
 import java.util.*;
 
-class ProductControllerTest {
+public class ProductControllerTest {
 
     private ProductController productController;
 

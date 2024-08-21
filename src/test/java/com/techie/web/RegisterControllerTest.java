@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.*;
 
 import java.util.function.*;
 
-class RegisterControllerTest {
+public class RegisterControllerTest {
 
     private RegisterController registerController;
 

@@ -6,7 +6,7 @@ import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.springframework.ui.*;
 
-class AdminControllerTest {
+public class AdminControllerTest {
 
     @Mock
     private Model model;

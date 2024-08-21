@@ -29,7 +29,7 @@ import java.util.*;
         "spring.main.allow-bean-definition-overriding=true"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class AdminRestControllerIntegrationTest { // This test class passes on its own, but doesn't when ran along with all tests
+public class AdminRestControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;

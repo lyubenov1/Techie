@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.web.servlet.mvc.support.*;
 
-class WishlistControllerTest {
+public class WishlistControllerTest {
 
     @Mock
     private UserService userService;

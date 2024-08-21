@@ -9,7 +9,7 @@ import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.springframework.ui.*;
 
-class OrderViewControllerTest {
+public class OrderViewControllerTest {
 
     @Mock
     private OrderService orderService;

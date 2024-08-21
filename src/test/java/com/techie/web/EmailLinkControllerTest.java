@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.ui.*;
 import org.springframework.web.servlet.mvc.support.*;
 
-class EmailLinkControllerTest {
+public class EmailLinkControllerTest {
 
     @Mock
     private UserService userService;

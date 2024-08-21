@@ -7,7 +7,7 @@ import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.springframework.web.servlet.mvc.support.*;
 
-class LoginControllerTest {
+public class LoginControllerTest {
 
     private LoginController loginController;
 
