@@ -3,6 +3,7 @@ package com.techie.web.rest;
 import com.techie.domain.model.models.*;
 import com.techie.domain.model.requests.*;
 import com.techie.exceptions.other.*;
+import com.techie.exceptions.product.*;
 import com.techie.exceptions.review.*;
 import com.techie.exceptions.role.*;
 import com.techie.service.*;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.support.*;
 
-import java.io.*;
 import java.net.*;
 import java.util.*;
 
@@ -48,11 +48,10 @@ public class ReviewController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createReview(@RequestParam(value = "review-comment", required = false) String comment,
-                                                    @RequestParam("rate") int rating,
-                                                    @RequestParam("productId") Long productId,
-                                                    @RequestParam(value = "image-upload", required = false) MultipartFile[] images,
-                                                    @AuthenticationPrincipal UserDetails userDetails)
-                                                        throws InvalidRatingException, OneReviewPerUserException, IOException {
+                                          @RequestParam("rate") int rating,
+                                          @RequestParam("productId") Long productId,
+                                          @RequestParam(value = "image-upload", required = false) MultipartFile[] images,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
         try {
             ReviewModel createdReview = reviewService.createReview(comment, rating, productId, images, userDetails);
 
@@ -60,6 +59,12 @@ public class ReviewController {
                     .path("/{id}")
                     .buildAndExpand(createdReview.getId()).toUri();
             return ResponseEntity.created(location).body("Review successfully created!");
+        } catch (ProductNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (InvalidRatingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (OneReviewPerUserException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
