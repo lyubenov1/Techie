@@ -1,4 +1,5 @@
 -- Clearing the existing data
+DELETE FROM cart;
 DELETE FROM review_images;
 DELETE FROM review_vote;
 DELETE FROM reviews;
@@ -52,13 +53,15 @@ INSERT INTO categories (id, name, image_url) VALUES
 INSERT INTO brands (id, name) VALUES
     (1, 'Apple');
 
-INSERT INTO products (id, name, original_price, category_id, brand_id, stock, description)
+INSERT INTO products (id, name, original_price, category_id, brand_id, stock, description, discount)
 VALUES
-    (1, 'iPhone 14 Pro', 999.99, 1, 1, 100, 'The iPhone 14 Pro offers advanced features including a powerful A16 Bionic chip and ProMotion display.');
+    (1, 'iPhone 14 Pro', 999.99, 1, 1, 100, 'The iPhone 14 Pro offers advanced features including a powerful A16 Bionic chip and ProMotion display.', null),
+    (2, 'iPhone 15 Pro', 999.99, 1, 1, 100, 'Test description.', 10.00);
 
 INSERT INTO product_images (id, product_id, image_url, is_primary)
 VALUES
-    (1, 1, 'https://example.com/image1.jpg', true);
+    (1, 1, 'https://example.com/image1.jpg', true),
+    (2, 2, 'https://example.com/image2.jpg', true);
 
 INSERT INTO reviews (id, comment, downvote_count, product_id, product_rating, timestamp, upvote_count, user_id)
 VALUES (10, 'Good product!', 2, 1, 4, NOW(), 3, 1),
@@ -71,3 +74,7 @@ INSERT INTO review_vote (id, is_upvote, review_id, user_id)
 VALUES
     (5, FALSE, 10, 2),
     (6, FALSE, 11, 1);
+
+INSERT INTO cart (id, anonymous_id, updated_at, user_id)
+VALUES
+    (11, null, NOW(), 2);

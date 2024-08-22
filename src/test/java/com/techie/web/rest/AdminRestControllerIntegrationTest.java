@@ -1,9 +1,12 @@
 package com.techie.web.rest;
 
 import com.techie.config.*;
+import com.techie.domain.entities.*;
 import com.techie.domain.model.models.*;
+import com.techie.repository.*;
 import com.techie.service.*;
 import com.techie.utils.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
@@ -19,7 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.math.*;
-import java.util.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -36,6 +38,15 @@ public class AdminRestControllerIntegrationTest {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @MockBean
     private RoleAdder roleAdder;
@@ -130,12 +141,11 @@ public class AdminRestControllerIntegrationTest {
 
     @Test
     @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
-    public void testDiscountProducts_Success() throws Exception {
+    public void testDiscountProduct_Success() throws Exception {
         ProductAdminView product = ProductAdminView.builder()
                 .id(1L)
                 .name("iPhone 14 Pro")
                 .originalPrice(BigDecimal.valueOf(999.99))
-                .imageUrls(List.of("https://example.com/image1.jpg"))
                 .discount(BigDecimal.valueOf(10.00))
                 .build();
 
@@ -145,5 +155,47 @@ public class AdminRestControllerIntegrationTest {
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Product successfully discounted"));
+
+        Product updatedProduct = productRepository.findById(1L).orElseThrow();
+        assertEquals(899.99, updatedProduct.getDiscountedPrice().doubleValue(), 0.01);
+    }
+
+    @Test
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
+    public void testRemoveDiscount_IllegalStateException() throws Exception {
+        // Ensure the product has no discount
+        Long productId = 1L;
+        Product product = productRepository.findById(productId).orElseThrow();
+        product.setDiscount(null);
+        product.setDiscountedPrice(null);
+        productRepository.save(product);
+
+        // Perform the request
+        mockMvc.perform(delete("/api/admin/promotion/delete")
+                        .param("productId", String.valueOf(productId))
+                        .with(csrf()))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().string("Product does not have a discount applied."));
+
+        // Verify the product still has no discount
+        Product updatedProduct = productRepository.findById(productId).orElseThrow();
+        assertNull(updatedProduct.getDiscount());
+        assertNull(updatedProduct.getDiscountedPrice());
+    }
+
+    @Test
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
+    public void testRemoveDiscount_Success() throws Exception {
+        mockMvc.perform(delete("/api/admin/promotion/delete")
+                        .param("productId", String.valueOf(2L))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Discount successfully removed from product"));
+
+        // Verify the product has no discount
+        Product updatedProduct = productRepository.findById(2L).orElseThrow();
+        assertNull(updatedProduct.getDiscount());
+        assertNull(updatedProduct.getDiscountedPrice());
     }
 }
+
