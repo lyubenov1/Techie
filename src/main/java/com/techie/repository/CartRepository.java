@@ -21,4 +21,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("SELECT c FROM Cart c WHERE c.user IS NULL AND c.updatedAt < :threshold")
     List<Cart> findStaleAnonymousCarts(@Param("threshold") LocalDateTime threshold);
+
+    @Query("SELECT c FROM Cart c LEFT JOIN FETCH c.cartItems WHERE :cartItem MEMBER OF c.cartItems")
+    Cart findByCartItem(@Param("cartItem") CartItem cartItem);
 }

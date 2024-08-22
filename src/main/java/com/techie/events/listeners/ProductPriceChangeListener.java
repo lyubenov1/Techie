@@ -8,6 +8,7 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.transaction.event.*;
 
 import java.util.*;
@@ -31,9 +32,8 @@ public class ProductPriceChangeListener {
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handleProductPriceChange(ProductPriceChangeEvent event) {
-        logger.info("Handling price change for product ID: {}", event.productId());
-
         List<CartItem> affectedCartItems;
         try {
             affectedCartItems = cartItemRepository.findByProductId(event.productId());
@@ -46,17 +46,14 @@ public class ProductPriceChangeListener {
         for (CartItem item : affectedCartItems) {
             try {
                 cartService.calculateTotalPrice(item);
-                logger.debug("Recalculated price for cart item ID: {}", item.getId());
-
-                Cart cart = item.getCart();
+                Cart cart = cartRepository.findByCartItem(item);
                 cartService.calculateGrandTotal(cart);
-                cartRepository.save(cart);  // This will cascade save the CartItem as well
-                logger.debug("Updated cart ID: {}", cart.getId());
+
+                cartItemRepository.save(item);
+                cartRepository.save(cart);
             } catch (Exception e) {
                 logger.error("Error updating cart item ID: {}", item.getId(), e);
             }
         }
-
-        logger.info("Completed handling price change for product ID: {}", event.productId());
     }
 }

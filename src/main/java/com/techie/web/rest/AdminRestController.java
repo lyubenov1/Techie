@@ -131,7 +131,7 @@ public class AdminRestController {
     }
 
     @PatchMapping("/promotion/patch")
-    public ResponseEntity<?> discountProducts(@RequestBody ProductAdminView productAdminView)
+    public ResponseEntity<?> discountProduct(@RequestBody ProductAdminView productAdminView)
             throws ProductNotFoundException, ProductAlreadyDiscountedException {
         try {
             adminService.discountProduct(productAdminView);
@@ -144,7 +144,7 @@ public class AdminRestController {
     }
 
     @DeleteMapping("/promotion/delete")
-    public ResponseEntity<String> deletePromotionProducts(@RequestParam Long productId)
+    public ResponseEntity<String> removeDiscount(@RequestParam Long productId)
             throws ProductNotFoundException {
         try {
             adminService.removeDiscount(productId);
@@ -152,7 +152,7 @@ public class AdminRestController {
         } catch (ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 

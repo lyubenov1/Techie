@@ -94,10 +94,11 @@ public class AdminService {
         product.setDiscountedPrice(discountedPrice);
 
         productRepository.save(product);
-        eventPublisher.publishEvent(new ProductPriceChangeEvent(product.getId(), discountedPrice, true));
 
         // Notify subscribed users asynchronously
         mailService.sendDiscountNotification(product);
+
+        eventPublisher.publishEvent(new ProductPriceChangeEvent(product.getId()));
     }
 
     private static BigDecimal getDiscountedPrice(ProductAdminView productAdminView, Product product) {
@@ -128,6 +129,8 @@ public class AdminService {
         product.setDiscount(null);
         product.setDiscountedPrice(null);
         productRepository.save(product);
+
+        eventPublisher.publishEvent(new ProductPriceChangeEvent(product.getId()));
     }
 
     public List<UserDisplayView> getUsers(String query) {
