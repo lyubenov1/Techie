@@ -1,4 +1,5 @@
 -- Clearing the existing data
+DELETE FROM cart_item;
 DELETE FROM cart;
 DELETE FROM review_images;
 DELETE FROM review_vote;
@@ -25,7 +26,7 @@ VALUES
     (1, 'testAdmin', 'testadmin@example.com', 'password123', 'Test', 'Admin', 'https://example.com/profile/testadmin.jpg', 'cloudinary123', NOW(), true),
     (2, 'testUser', 'testuser@example.com', 'password456', 'Test', 'User', NULL, NULL, NOW(), false),
     (3, 'testBlacklistedUser', 'testblacklisted@example.com', 'password456', 'Test', 'Blacklisted', NULL, NULL, NOW(), false),
-    (4, 'testNotYetBlacklistedUser', 'testnotblacklisted@example.com', 'password456', 'Not', 'Blacklisted', NULL, NULL, NOW(), false);
+    (4, 'testNotYetBlacklistedUser', 'testnotblacklisted@example.com', 'password456', 'Not', 'Blacklisted', NULL, NULL, NOW(), true);
 
 -- Associating users with roles
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 3);  -- ADMIN role
@@ -78,3 +79,7 @@ VALUES
 INSERT INTO cart (id, anonymous_id, updated_at, user_id)
 VALUES
     (11, null, NOW(), 2);
+
+INSERT INTO cart_item (id, quantity, total_price, cart_id, product_id)
+VALUES
+    (100, 3, 2999.97, 11, 1)

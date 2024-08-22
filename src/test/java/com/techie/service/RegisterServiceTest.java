@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.function.*;
 
 @ExtendWith(MockitoExtension.class)
-class RegisterServiceTest {
+public class RegisterServiceTest {
 
     @Mock
     private UserRepository userRepository;

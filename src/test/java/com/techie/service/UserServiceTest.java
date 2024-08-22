@@ -21,7 +21,7 @@ import java.time.*;
 import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;

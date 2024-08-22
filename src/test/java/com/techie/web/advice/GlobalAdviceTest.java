@@ -18,7 +18,7 @@ import org.springframework.web.servlet.*;
 
 import java.util.*;
 
-class GlobalAdviceTest {
+public class GlobalAdviceTest {
 
     @Mock
     private UserService userService;

@@ -98,12 +98,14 @@ public class AdminRestController {
     }
 
     @DeleteMapping("/moderator/remove")
-    public ResponseEntity<String> removeModerator(@RequestParam Long userId) throws UserNotFoundException {
+    public ResponseEntity<String> removeModerator(@RequestParam Long userId) {
         try {
             adminService.removeModeratorRoleFromUser(userId);
             return ResponseEntity.ok("Moderator role removed successfully");
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (UserDoesNotHaveRoleException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409 Conflict
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

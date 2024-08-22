@@ -240,7 +240,7 @@ public class AdminService {
         if (user.getRoles().remove(moderatorRole)) {
             userService.saveUser(user);
         } else {
-            log.info("User {} is not a moderator, no action taken", userId);
+            throw new UserDoesNotHaveRoleException("User with ID " + userId + " does not have moderator role");
         }
     }
 
