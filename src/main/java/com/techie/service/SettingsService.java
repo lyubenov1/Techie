@@ -159,8 +159,8 @@ public class SettingsService {
 
     @Transactional
     public void resetPasswordStepTwo(ResetPasswordRequest request) {
-        String token = tokenService.getEmailByToken(request.getToken());
-        UserEntity user = userService.findByUsernameNoFetches(token);
+        String email = tokenService.getEmailByToken(request.getToken());
+        UserEntity user = userService.findByUsernameNoFetches(email);
 
         // Encode the new password
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -169,6 +169,6 @@ public class SettingsService {
         user.setPassword(encodedPassword);
         userService.saveUser(user);
         mailService.sendInformativeEmail(user.getEmail());
-        tokenService.removeToken(token);
+        tokenService.removeToken(request.getToken());
     }
 }

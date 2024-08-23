@@ -7,6 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 public class ResetPasswordRequest {
 
