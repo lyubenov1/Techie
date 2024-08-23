@@ -99,7 +99,7 @@ public class SettingsService {
             // Delete the existing image from Cloudinary
             try {
                 cloudinary.uploader().destroy(user.getPublicId(), ObjectUtils.asMap("invalidate", "true"));
-            } catch (IOException e) {
+            } catch (CloudinaryImageDeletionException e) {
                 log.error("Failed to delete existing image from Cloudinary", e);
                 throw new CloudinaryImageDeletionException("Failed to delete image: " + user.getPublicId());
             }

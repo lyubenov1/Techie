@@ -1,11 +1,11 @@
 package com.techie.web.rest;
 
 import com.techie.domain.model.requests.*;
+import com.techie.exceptions.settings.*;
 import com.techie.exceptions.subscription.*;
 import com.techie.exceptions.user.*;
 import com.techie.service.*;
 import jakarta.validation.*;
-import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
@@ -13,16 +13,12 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
-import java.io.*;
-
 @RestController
 @RequestMapping("/api/settings")
 public class SettingsController {
 
     private final SubscriptionService subscriptionService;
     private final SettingsService settingsService;
-
-    private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
 
     @Autowired
     public SettingsController(SubscriptionService subscriptionService, SettingsService settingsService) {
@@ -40,8 +36,8 @@ public class SettingsController {
         try {
             settingsService.changeProfileImage(userDetails, file);
             return ResponseEntity.ok().body("Profile image updated successfully");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -62,7 +58,7 @@ public class SettingsController {
             if (isUpdated) {
                 return ResponseEntity.ok("You have successfully changed your details!");
             } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No changes were made");
+                return ResponseEntity.ok("No changes were made");
             }
         } catch (UsernameAlreadyTakenException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -78,6 +74,8 @@ public class SettingsController {
         try {
             settingsService.changePassword(userDetails, request);
             return ResponseEntity.ok("Password changed successfully");
+        } catch (IncorrectPasswordException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating password");
         }

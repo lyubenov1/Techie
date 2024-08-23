@@ -26,8 +26,7 @@ import java.util.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {
-        "spring.cache.type=none",
-        "spring.main.allow-bean-definition-overriding=true"
+        "spring.cache.type=none"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class AddressControllerIntegrationTest {

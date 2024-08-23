@@ -23,10 +23,10 @@ INSERT INTO roles (id, role) VALUES (3, 'ADMIN');
 -- Inserting users
 INSERT INTO users (id, username, email_address, password, first_name, last_name, profile_image_url, public_id, created_at, is_subscribed)
 VALUES
-    (1, 'testAdmin', 'testadmin@example.com', 'password123', 'Test', 'Admin', 'https://example.com/profile/testadmin.jpg', 'cloudinary123', NOW(), true),
-    (2, 'testUser', 'testuser@example.com', 'password456', 'Test', 'User', NULL, NULL, NOW(), false),
-    (3, 'testBlacklistedUser', 'testblacklisted@example.com', 'password456', 'Test', 'Blacklisted', NULL, NULL, NOW(), false),
-    (4, 'testNotYetBlacklistedUser', 'testnotblacklisted@example.com', 'password456', 'Not', 'Blacklisted', NULL, NULL, NOW(), true);
+    (1, 'testAdmin', 'testadmin@example.com', 'testPassword1.', 'Test', 'Admin', NULL, NULL, NOW(), true),
+    (2, 'testUser', 'testuser@example.com', 'testPassword1.', 'Test', 'User', NULL, NULL, NOW(), false),
+    (3, 'testBlacklistedUser', 'testblacklisted@example.com', 'testPassword1.', 'Test', 'Blacklisted', NULL, NULL, NOW(), false),
+    (4, 'testNotYetBlacklistedUser', 'testnotblacklisted@example.com', 'testPassword1.', 'Not', 'Blacklisted', NULL, NULL, NOW(), true);
 
 -- Associating users with roles
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 3);  -- ADMIN role

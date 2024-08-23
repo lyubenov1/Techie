@@ -30,8 +30,7 @@ import java.math.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {
-        "spring.cache.type=none",
-        "spring.main.allow-bean-definition-overriding=true"
+        "spring.cache.type=none"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class AdminRestControllerIntegrationTest {
@@ -69,7 +68,7 @@ public class AdminRestControllerIntegrationTest {
     private GreenMail greenMail;
 
     @BeforeEach
-    void setUp() throws InterruptedException {
+    void setUp() {
         greenMail = new GreenMail(new ServerSetup(mailPort, mailHost, "smtp"));
         greenMail.start();
         greenMail.setUser(mailUsername, mailPassword);
