@@ -11,6 +11,7 @@ import org.junit.platform.suite.api.*;
         AdminRestControllerIntegrationTest.class,
         ReviewControllerIntegrationTest.class,
         AddressControllerIntegrationTest.class,
+        SettingsControllerIntegrationTest.class,
         GlobalAdviceTest.class,
         RegisterServiceTest.class,
         UserServiceTest.class,

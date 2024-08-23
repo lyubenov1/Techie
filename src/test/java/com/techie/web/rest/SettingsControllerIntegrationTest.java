@@ -36,7 +36,7 @@ import java.nio.file.*;
         "spring.cache.type=none"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class SettingsControllerIntegrationTest {
+public class SettingsControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
