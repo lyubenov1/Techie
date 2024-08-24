@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.main.allow-bean-definition-overriding=true"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class WishlistRestControllerIntegrationTest {
+public class WishlistRestControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
