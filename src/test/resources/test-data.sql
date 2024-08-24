@@ -1,10 +1,13 @@
 -- Clearing the existing data
+DELETE FROM wishlist_product;
+DELETE FROM wishlist;
 DELETE FROM cart_item;
 DELETE FROM cart;
 DELETE FROM review_images;
 DELETE FROM review_vote;
 DELETE FROM reviews;
 DELETE FROM product_images;
+DELETE FROM smartphones;
 DELETE FROM products;
 DELETE FROM categories;
 DELETE FROM brands;
@@ -48,8 +51,8 @@ SELECT id, 'Violation of terms of service', NOW()
 FROM users
 WHERE username = 'testBlacklistedUser';
 
-INSERT INTO categories (id, name, image_url) VALUES
-    (1, 'Smartphones', 'https://example.com/image1.jpg');
+INSERT INTO categories (id, name, image_url, parent_id) VALUES
+    (1, 'Smartphones', 'https://example.com/image1.jpg', null);
 
 INSERT INTO brands (id, name) VALUES
     (1, 'Apple');
@@ -58,6 +61,10 @@ INSERT INTO products (id, name, original_price, category_id, brand_id, stock, de
 VALUES
     (1, 'iPhone 14 Pro', 999.99, 1, 1, 100, 'The iPhone 14 Pro offers advanced features including a powerful A16 Bionic chip and ProMotion display.', null),
     (2, 'iPhone 15 Pro', 999.99, 1, 1, 100, 'Test description.', 10.00);
+
+INSERT INTO smartphones (id, screen_size, screen_resolution, ram, storage, battery_capacity, front_camera, rear_camera, refresh_rate, color, operating_system, year_of_release) VALUES
+    (1, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'black', 'iOS', 2022),
+    (2, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'white', 'iOS', 2023);
 
 INSERT INTO product_images (id, product_id, image_url, is_primary)
 VALUES
@@ -82,4 +89,15 @@ VALUES
 
 INSERT INTO cart_item (id, quantity, total_price, cart_id, product_id)
 VALUES
-    (100, 3, 2999.97, 11, 1)
+    (100, 3, 2999.97, 11, 1);
+
+INSERT INTO wishlist (id, name, user_id)
+VALUES
+    (1, 'Test user wishlist', 2),
+    (2, 'Test admin wishlist', 1);
+
+INSERT INTO wishlist_product (wishlist_id, product_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (2, 1);

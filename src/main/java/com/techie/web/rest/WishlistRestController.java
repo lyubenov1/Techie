@@ -52,6 +52,8 @@ public class WishlistRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (ProductAlreadyInWishlistException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());  // 409 status code
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 
@@ -66,7 +68,6 @@ public class WishlistRestController {
         } catch (WishlistNotFoundException | ProductNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            logger.error("Unexpected error: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
