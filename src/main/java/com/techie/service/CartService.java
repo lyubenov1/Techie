@@ -121,6 +121,7 @@ public class CartService {
 
         CartItemDTO newItemDTO = CartConversionUtils.convertToItemDTO(newItem);
         newItemDTO.setProduct(productService.convertToDTO(product));
+        newItemDTO.setProductId(product.getId());
         return newItemDTO;
     }
 

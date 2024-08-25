@@ -60,16 +60,22 @@ INSERT INTO brands (id, name) VALUES
 INSERT INTO products (id, name, original_price, category_id, brand_id, stock, description, discount)
 VALUES
     (1, 'iPhone 14 Pro', 999.99, 1, 1, 100, 'The iPhone 14 Pro offers advanced features including a powerful A16 Bionic chip and ProMotion display.', null),
-    (2, 'iPhone 15 Pro', 999.99, 1, 1, 100, 'Test description.', 10.00);
+    (2, 'iPhone 15 Pro', 999.99, 1, 1, 100, 'Test description.', 10.00),
+    (3, 'iPhone X', 499.99, 1, 1, 0, 'Test description.', null),
+    (4, 'iPhone 11', 599.99, 1, 1, 0, 'Test description.', null);
 
 INSERT INTO smartphones (id, screen_size, screen_resolution, ram, storage, battery_capacity, front_camera, rear_camera, refresh_rate, color, operating_system, year_of_release) VALUES
     (1, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'black', 'iOS', 2022),
-    (2, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'white', 'iOS', 2023);
+    (2, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'white', 'iOS', 2023),
+    (3, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'white', 'iOS', 2019),
+    (4, '6.1 inches', '2556 x 1179 pixels', '8 GB', '128 GB', '3274 mAh', '12 MP', '48 + 12 + 12 MP', '120 Hz', 'white', 'iOS', 2020);
 
 INSERT INTO product_images (id, product_id, image_url, is_primary)
 VALUES
     (1, 1, 'https://example.com/image1.jpg', true),
-    (2, 2, 'https://example.com/image2.jpg', true);
+    (2, 2, 'https://example.com/image2.jpg', true),
+    (3, 3, 'https://example.com/image2.jpg', true),
+    (4, 4, 'https://example.com/image2.jpg', true);
 
 INSERT INTO reviews (id, comment, downvote_count, product_id, product_rating, timestamp, upvote_count, user_id)
 VALUES (10, 'Good product!', 2, 1, 4, NOW(), 3, 1),
@@ -85,11 +91,17 @@ VALUES
 
 INSERT INTO cart (id, anonymous_id, updated_at, user_id)
 VALUES
-    (11, null, NOW(), 2);
+    (11, null, NOW(), 2),
+    (10, null, NOW(), 1),
+    (50, '787b105b-8e76-4594-8263-5748b9f7477d', NOW(), null);
 
 INSERT INTO cart_item (id, quantity, total_price, cart_id, product_id)
 VALUES
-    (100, 3, 2999.97, 11, 1);
+    (100, 3, 2999.97, 11, 1),
+    (101, 1, 499.99, 11, 3),
+    (159, 3, 2999.97, 10, 1),
+    (160, 1, 999.99, 50, 1),
+    (161, 3, 2999.97, 50, 2);
 
 INSERT INTO wishlist (id, name, user_id)
 VALUES

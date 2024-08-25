@@ -13,6 +13,8 @@ import org.junit.platform.suite.api.*;
         AddressControllerIntegrationTest.class,
         SettingsControllerIntegrationTest.class,
         WishlistRestControllerIntegrationTest.class,
+        CartControllerIntegrationTest.class,
+        //OrderControllerIntegrationTest.class,
         GlobalAdviceTest.class,
         RegisterServiceTest.class,
         UserServiceTest.class,

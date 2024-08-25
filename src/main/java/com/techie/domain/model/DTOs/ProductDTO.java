@@ -1,5 +1,6 @@
 package com.techie.domain.model.DTOs;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import java.math.*;
@@ -10,6 +11,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDTO {
     private Long id;
     private String name;
