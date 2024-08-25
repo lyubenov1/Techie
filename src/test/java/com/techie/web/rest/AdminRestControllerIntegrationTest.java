@@ -81,6 +81,25 @@ public class AdminRestControllerIntegrationTest {
 
     @Test
     @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
+    public void testBlacklistUser_ModeratorsAndAdminsCanNotBeBlacklisted() throws Exception {
+        UserDisplayView blacklistedUser = UserDisplayView.builder()
+                .id(2L)
+                .username("testUser")
+                .email("testuser@example.com")
+                .role("Moderator")
+                .reason("Violation of rules")
+                .build();
+
+        mockMvc.perform(post("/api/admin/blacklist/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.asJsonString(blacklistedUser))
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Admins and moderators cannot be blacklisted!"));
+    }
+
+    @Test
+    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
     public void testGetUsers_returnAllUsersExcludingBlacklisted() throws Exception {
         mockMvc.perform(get("/api/admin/get")
                         .param("query", ""))
@@ -132,26 +151,6 @@ public class AdminRestControllerIntegrationTest {
                         .with(csrf()))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("User with email: testblacklisted@example.com is already blacklisted"));
-    }
-
-
-    @Test
-    @WithMockUser(username = "testadmin@example.com", roles = {"USER", "ADMIN"})
-    public void testBlacklistUser_ModeratorsAndAdminsCanNotBeBlacklisted() throws Exception {
-        UserDisplayView blacklistedUser = UserDisplayView.builder()
-                .id(2L)
-                .username("testUser")
-                .email("testuser@example.com")
-                .role("Moderator")
-                .reason("Violation of rules")
-                .build();
-
-        mockMvc.perform(post("/api/admin/blacklist/post")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.asJsonString(blacklistedUser))
-                        .with(csrf()))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Admins and moderators cannot be blacklisted!"));
     }
 
     @Test

@@ -58,11 +58,11 @@ public class OrderController {
 
             return ResponseEntity.created(location).body(orderDTO);
         } catch (AddressNotFoundException e) {
-            return ResponseEntity.badRequest().body(Collections.singletonList("Invalid address"));
+            return ResponseEntity.badRequest().body("Invalid address");
         } catch (InvalidOrderException e) {
-            return ResponseEntity.badRequest().body(Collections.singletonList(e.getMessage()));
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonList("An error occurred while processing your order"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your order");
         }
     }
 

@@ -31,7 +31,7 @@ import java.util.*;
         "spring.main.allow-bean-definition-overriding=true"
 })
 @Sql(scripts = "/test-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-class PasswordResetControllerIntegrationTest {
+public class PasswordResetControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;

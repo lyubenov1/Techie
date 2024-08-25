@@ -8,13 +8,14 @@ import org.junit.platform.suite.api.*;
 
 @Suite
 @SelectClasses({
+        OrderControllerIntegrationTest.class,
+        CartControllerIntegrationTest.class,
         AdminRestControllerIntegrationTest.class,
         ReviewControllerIntegrationTest.class,
         AddressControllerIntegrationTest.class,
         SettingsControllerIntegrationTest.class,
+        PasswordResetControllerIntegrationTest.class,
         WishlistRestControllerIntegrationTest.class,
-        CartControllerIntegrationTest.class,
-        //OrderControllerIntegrationTest.class,
         GlobalAdviceTest.class,
         RegisterServiceTest.class,
         UserServiceTest.class,

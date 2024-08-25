@@ -1,4 +1,7 @@
 -- Clearing the existing data
+DELETE FROM order_order_items;
+DELETE FROM order_item;
+DELETE FROM orders;
 DELETE FROM wishlist_product;
 DELETE FROM wishlist;
 DELETE FROM cart_item;
@@ -39,11 +42,12 @@ INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);  -- MODERATOR role
 INSERT INTO users_roles (user_id, role_id) VALUES (3, 1);  -- USER role
 INSERT INTO users_roles (user_id, role_id) VALUES (4, 1);  -- USER role
 
--- Inserting addresses for testAdmin
-INSERT INTO address (name, address_line_1, address_line_2, city, country, zipcode, user_id) VALUES
-    ('Home', '123 Main St', NULL, 'Springfield', 'USA', '12345', 1),
-    ('Work', '456 Corporate Blvd', 'Suite 100', 'Metropolis', 'USA', '67890', 1),
-    ('Vacation Home', '789 Ocean Dr', NULL, 'Miami', 'USA', '54321', 1);
+-- Inserting addresses
+INSERT INTO address (id, name, address_line_1, address_line_2, city, country, zipcode, user_id) VALUES
+    (20, 'Home', '123 Main St', NULL, 'Springfield', 'USA', '12345', 1),
+    (21, 'Work', '456 Corporate Blvd', 'Suite 100', 'Metropolis', 'USA', '67890', 1),
+    (22, 'Vacation Home', '789 Ocean Dr', NULL, 'Miami', 'USA', '54321', 1),
+    (50, 'Home', 'User St.', NULL, 'User City', 'User Country', '54321', 2);
 
 -- Blacklist the user `testBlacklistedUser`
 INSERT INTO blacklist (user_id, reason, timestamp)
