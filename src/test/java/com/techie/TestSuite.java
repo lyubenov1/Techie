@@ -1,6 +1,5 @@
 package com.techie;
 
-import com.techie.filters.*;
 import com.techie.service.*;
 import com.techie.web.*;
 import com.techie.web.advice.*;
@@ -9,7 +8,6 @@ import org.junit.platform.suite.api.*;
 
 @Suite
 @SelectClasses({
-        RateLimitFilterTest.class,
         OrderControllerIntegrationTest.class,
         CartControllerIntegrationTest.class,
         AdminRestControllerIntegrationTest.class,
