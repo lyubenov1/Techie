@@ -38,10 +38,9 @@ public class Address {
     @Column(name = "zipcode", nullable = false, length = 10)
     private String zipcode;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
-
 
     @Override
     public final boolean equals(Object o) {

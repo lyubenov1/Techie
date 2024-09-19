@@ -73,13 +73,15 @@ public class AddressService {
         addressRepository.save(existingAddress);
     }
 
+    // Doesn't delete the address from the database, but rather removes the association with the user.
+    // The address is still needed for the order history of a registered user.
     @Transactional
     public void deleteAddress(UserEntity user, Long addressId) throws AddressNotFoundException {
         Address address = addressRepository.findByIdAndUserUsername(addressId, user.getUsername());
         if (address == null) {
             throw new AddressNotFoundException(addressId);
         }
-        addressRepository.delete(address);
+        address.setUser(null);
     }
 
     public List<AddressDTO> getAndConvertAddresses(String username) {
